@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="50000.0" maxWidth="50000.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewFuncionarioController">
+   <children>
+      <TextField fx:id="txtIdFuncionario" layoutX="174.0" layoutY="61.0" promptText="ID fo funcionário" />
+      <Label layoutX="149.0" layoutY="65.0" text="ID:" />
+      <TextField fx:id="txtNomeFuncionario" layoutX="174.0" layoutY="97.0" promptText="Nome do Funcionário" />
+      <Label layoutX="131.0" layoutY="101.0" text="Nome:" />
+      <TextField fx:id="txtSalarioFuncionario" layoutX="176.0" layoutY="131.0" promptText="Salário do Funcionário" />
+      <Label layoutX="129.0" layoutY="135.0" prefHeight="17.0" prefWidth="50.0" text="Salário:" />
+      <Button fx:id="btCriaFuncionario" layoutX="361.0" layoutY="169.0" mnemonicParsing="false" onAction="#onBtCriaFuncionarioAction" text="Criar" />
+      <Label layoutX="120.0" layoutY="22.0" text="Digite os dados do novo funcionario">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font></Label>
+      <ListView fx:id="listFuncionario" layoutX="25.0" layoutY="256.0" onMouseClicked="#mudaFuncionario1" prefHeight="314.0" prefWidth="209.0" />
+      <ListView fx:id="listExclucaoFuncionario" layoutX="270.0" layoutY="256.0" onMouseClicked="#mudaFuncionario2" prefHeight="314.0" prefWidth="209.0" />
+   </children>
+</AnchorPane>
