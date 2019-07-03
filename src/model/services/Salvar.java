@@ -9,7 +9,7 @@ import model.entities.Funcionario;
 
 public class Salvar {
 	public static void salvarFuncionario() {
-		String caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
+		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
 		File arquivoFuncionario = new File(caminho);
 		try(BufferedWriter bwFuncionario = new BufferedWriter(new FileWriter(arquivoFuncionario))) {
 			

@@ -10,7 +10,7 @@ import model.entities.Funcionario;
 public class Carregar {
 	public static void carregaFuncionario() {
 		String linha = "";
-		String caminho = System.getProperty("user.home") + File.separator + "Documentos" + File.separator + "teste" + File.separator + "funcionario.csv";
+		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "funcionario.csv";
 		try(BufferedReader brFuncionario = new BufferedReader(new FileReader(caminho));) {
 			while((linha = brFuncionario.readLine()) != null) {	
 				String[] linhaFuncionario = linha.split(";");				
