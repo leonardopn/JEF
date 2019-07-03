@@ -20,7 +20,7 @@ public class ViewController implements Initializable{
 	private Button btCriaFuncionario;	
 	
 	@FXML
-	private Button btExcluiFuncionario;
+	private Button btCriaCliente;
 	
 	@FXML
 	private Button btSalvar;
@@ -42,9 +42,9 @@ public class ViewController implements Initializable{
 		}
 	}
 	
-	public void onBtExcluiFuncionarioAction(){
+	public void onBtCriaClienteAction(){
 		try {
-			Parent parent2 = FXMLLoader.load(getClass().getResource("/gui/ViewListaFuncionario.fxml"));
+			Parent parent2 = FXMLLoader.load(getClass().getResource("/gui/ViewCliente.fxml"));
 	    		Scene scene2 = new Scene(parent2);
 	    		Stage stage2 = new Stage();
 	        	stage2.setScene(scene2);
@@ -56,16 +56,16 @@ public class ViewController implements Initializable{
 	}
 	
 	public void onBtSalvarAction(){
-		Salvar.salvarFuncionario();
+		Salvar.salvar();
 	}
 	
 	public void onBtCarregarAction(){
-		Carregar.carregaFuncionario();
+		Carregar.carregar();
 	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Carregar.carregaFuncionario();
+		Carregar.carregar();
 	}
 
 }

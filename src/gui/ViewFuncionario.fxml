@@ -21,7 +21,7 @@
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font></Label>
-      <TableView fx:id="tvFuncionario" layoutX="9.0" layoutY="232.0" prefHeight="316.0" prefWidth="481.0">
+      <TableView fx:id="tvFuncionario" layoutX="9.0" layoutY="232.0" prefHeight="297.0" prefWidth="481.0">
         <columns>
           <TableColumn fx:id="colunaNome" prefWidth="197.0" text="Nome" />
           <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="84.0" text="ID" />
@@ -29,6 +29,7 @@
             <TableColumn fx:id="colunaSelect" prefWidth="92.0" text="Excluir?" />
         </columns>
       </TableView>
-      <Button fx:id="btExcluiFuncionario" layoutX="411.0" layoutY="560.0" mnemonicParsing="false" onAction="#excluirFuncionario" text="Excluir" />
+      <Button fx:id="btExcluiFuncionario" layoutX="217.0" layoutY="559.0" mnemonicParsing="false" onAction="#excluirFuncionario" text="Excluir" />
+      <Label layoutX="23.0" layoutY="529.0" prefHeight="25.0" prefWidth="454.0" text="Selecione os funcionários na coluna &quot;Excluir&quot; e aperte o botão abaixo para deleta-los!" />
    </children>
 </AnchorPane>
