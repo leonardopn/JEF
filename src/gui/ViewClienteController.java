@@ -3,6 +3,7 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,9 @@ public class ViewClienteController implements Initializable{
 	
 	@FXML
 	private Button btCriaCliente;
+	
+	@FXML
+	private Button btVoltar;
 	
 	@FXML
 	private Button btExcluiCliente;
@@ -58,6 +62,10 @@ public class ViewClienteController implements Initializable{
 	@FXML
     private TableColumn<Cliente, CheckBox> colunaSelect;
 	
+	@FXML
+	public void onBtVoltarAction() {
+		Main.trocaTela("main");
+	}
 	
 	@FXML
 	public void onBtCriaClienteAction(){

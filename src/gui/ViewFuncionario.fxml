@@ -6,18 +6,19 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="50000.0" maxWidth="50000.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewFuncionarioController">
    <children>
-      <TextField fx:id="txtIdFuncionario" layoutX="174.0" layoutY="61.0" promptText="ID fo funcionário" />
-      <Label layoutX="149.0" layoutY="65.0" text="ID:" />
-      <TextField fx:id="txtNomeFuncionario" layoutX="174.0" layoutY="97.0" promptText="Nome do Funcionário" />
-      <Label layoutX="127.0" layoutY="101.0" text="Nome:" />
-      <TextField fx:id="txtSalarioFuncionario" layoutX="175.0" layoutY="131.0" promptText="Salário do Funcionário" />
-      <Label layoutX="120.0" layoutY="136.0" prefHeight="17.0" prefWidth="50.0" text="Salário:" />
-      <Button fx:id="btCriaFuncionario" layoutX="361.0" layoutY="169.0" mnemonicParsing="false" onAction="#onBtCriaFuncionarioAction" text="Criar" />
-      <Label layoutX="120.0" layoutY="22.0" text="Digite os dados do novo funcionario">
+      <TextField fx:id="txtIdFuncionario" layoutX="174.0" layoutY="105.0" promptText="ID fo funcionário" />
+      <Label layoutX="149.0" layoutY="109.0" text="ID:" />
+      <TextField fx:id="txtNomeFuncionario" layoutX="174.0" layoutY="141.0" promptText="Nome do Funcionário" />
+      <Label layoutX="127.0" layoutY="145.0" text="Nome:" />
+      <TextField fx:id="txtSalarioFuncionario" layoutX="175.0" layoutY="175.0" promptText="Salário do Funcionário" />
+      <Label layoutX="120.0" layoutY="180.0" prefHeight="17.0" prefWidth="50.0" text="Salário:" />
+      <Button fx:id="btCriaFuncionario" layoutX="340.0" layoutY="176.0" mnemonicParsing="false" onAction="#onBtCriaFuncionarioAction" text="Criar" />
+      <Label layoutX="120.0" layoutY="66.0" text="Digite os dados do novo funcionario">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font></Label>
@@ -31,5 +32,7 @@
       </TableView>
       <Button fx:id="btExcluiFuncionario" layoutX="217.0" layoutY="559.0" mnemonicParsing="false" onAction="#excluirFuncionario" text="Excluir" />
       <Label layoutX="23.0" layoutY="529.0" prefHeight="25.0" prefWidth="454.0" text="Selecione os funcionários na coluna &quot;Excluir&quot; e aperte o botão abaixo para deleta-los!" />
+      <Button fx:id="btVoltar" layoutX="11.0" layoutY="11.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
+      <Line endX="650.0" endY="6.0" layoutX="-150.0" layoutY="41.0" startX="150.2928466796875" startY="6.0" stroke="#827f7f" />
    </children>
 </AnchorPane>

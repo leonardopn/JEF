@@ -3,6 +3,7 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,9 @@ public class ViewFuncionarioController implements Initializable{
 	
 	@FXML
 	private Button btCriaFuncionario;
+	
+	@FXML
+	private Button btVoltar;
 	
 	@FXML
 	private Button btExcluiFuncionario;
@@ -52,6 +56,10 @@ public class ViewFuncionarioController implements Initializable{
 	@FXML
     private TableColumn<Funcionario, CheckBox> colunaSelect;
 	
+	@FXML
+	public void onBtVoltarAction() {
+		Main.trocaTela("main");
+	}
 	
 	@FXML
 	public void onBtCriaFuncionarioAction(){

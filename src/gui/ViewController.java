@@ -1,16 +1,12 @@
 package gui;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import model.services.Carregar;
 import model.services.Salvar;
 
@@ -23,6 +19,9 @@ public class ViewController implements Initializable{
 	private Button btCriaCliente;
 	
 	@FXML
+	private Button btCaixa;
+	
+	@FXML
 	private Button btSalvar;
 	
 	@FXML
@@ -30,29 +29,16 @@ public class ViewController implements Initializable{
 	
 	@FXML
 	public void onBtCriaFuncionarioAction(){
-		try {
-			Parent parent = FXMLLoader.load(getClass().getResource("/gui/ViewFuncionario.fxml"));
-	    		Scene scene = new Scene(parent);
-	    		Stage stage = new Stage();
-	        	stage.setScene(scene);
-	        	stage.show();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+			Main.trocaTela("funcionario");
+		
 	}
 	
 	public void onBtCriaClienteAction(){
-		try {
-			Parent parent2 = FXMLLoader.load(getClass().getResource("/gui/ViewCliente.fxml"));
-	    		Scene scene2 = new Scene(parent2);
-	    		Stage stage2 = new Stage();
-	        	stage2.setScene(scene2);
-	        	stage2.show();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		Main.trocaTela("cliente");
+	}
+	
+	public void onBtAbreCaixaAction(){
+		Main.trocaTela("caixa");
 	}
 	
 	public void onBtSalvarAction(){

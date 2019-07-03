@@ -11,6 +11,7 @@ public class Cadastro {
 	static public TreeSet<Cliente> clientes = new TreeSet<>();
 	static public TreeSet<Funcionario> funcionarios = new TreeSet<>();
 	
+	
 	public static void verificaFuncionario(Funcionario fun) {
 		if(Cadastro.funcionarios.contains(fun)) {
 			Alerts.showAlert("Alerta", "Funcionário já inscrito", "Funcionário não foi adicionado, pois ID já está em uso", AlertType.INFORMATION);

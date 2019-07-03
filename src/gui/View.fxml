@@ -12,5 +12,6 @@
       <Line endX="449.0" layoutX="151.0" layoutY="35.0" startX="-150.0" startY="1.0" stroke="#827f7f" />
       <Line endX="-100.0" endY="469.0" layoutX="223.0" layoutY="31.0" startX="-100.0" startY="5.7071075439453125" stroke="#827f7f" />
       <Button fx:id="btCriaCliente" layoutX="10.0" layoutY="98.0" mnemonicParsing="false" onAction="#onBtCriaClienteAction" prefHeight="45.0" prefWidth="103.0" text="Clientes" />
+      <Button fx:id="btCaixa" layoutX="10.0" layoutY="153.0" mnemonicParsing="false" onAction="#onBtAbreCaixaAction" prefHeight="45.0" prefWidth="103.0" text="Caixa" />
    </children>
 </AnchorPane>
