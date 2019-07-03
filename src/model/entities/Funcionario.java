@@ -2,15 +2,27 @@ package model.entities;
 
 import java.util.Objects;
 
+import javafx.scene.control.CheckBox;
+
 public class Funcionario implements Comparable<Funcionario> {
 	private String nome;
 	private int id;
 	private double salario;
+	private CheckBox select;
 	
 	public Funcionario(String nome, int id, double salario) {
 		this.nome = nome;
 		this.id = id;
 		this.salario = salario;
+		this.select = new CheckBox();
+	}
+
+	public CheckBox getSelect() {
+		return select;
+	}
+
+	public void setSelect(CheckBox select) {
+		this.select = select;
 	}
 
 	public String getNome() {

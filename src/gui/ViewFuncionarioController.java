@@ -1,8 +1,6 @@
 package gui;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import gui.util.Alerts;
@@ -12,35 +10,42 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 
 public class ViewFuncionarioController implements Initializable{
 	
-	private List<Funcionario> listExcluidos = new ArrayList<>();
+	@FXML
+	private TableView<Funcionario> tvFuncionario = new TableView<>();
 	
-	private List<Funcionario> listVoltar = new ArrayList<>();
+	ObservableList<Funcionario> obFuncionario;
+	
+	@FXML
+	private TableColumn<Funcionario, String> colunaNome;
+	
+	@FXML
+    private TableColumn<Funcionario, Integer> colunaId;
+	
+	@FXML
+    private TableColumn<Funcionario, Double> colunaSalario;
+	
+	@FXML
+    private TableColumn<Funcionario, CheckBox> colunaSelect;
 	
 	@FXML
 	private Label labelResultado;;
 	
 	@FXML
-	private ListView<Funcionario> listFuncionario;
-	
-	@FXML
-	private ListView<Funcionario> listExclucaoFuncionario;
-	
-	@FXML
-	private ObservableList<Funcionario> obsExcluirFuncionario;
-	
-	@FXML
-	private ObservableList<Funcionario> obsFuncionario;
-	
-	@FXML
 	private Button btCriaFuncionario;
+	
+	@FXML
+	private Button btExcluiFuncionario;
 	
 	@FXML
 	private TextField txtIdFuncionario;
@@ -61,8 +66,8 @@ public class ViewFuncionarioController implements Initializable{
 			if(Cadastro.funcionarios.contains(fun01)) {
 				Alerts.showAlert("Alerta", "Funcionário já inscrito", "Funcionário não foi adicionado, pois ID já está em uso", AlertType.INFORMATION);
 			}
-			Cadastro.funcionarios.add(fun01 );
-			carregaFuncionarios();
+			Cadastro.funcionarios.add(fun01);
+			carregaFuncionario();
 		}
 		catch (NumberFormatException e) {
 			Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
@@ -70,34 +75,32 @@ public class ViewFuncionarioController implements Initializable{
 		
 	}
 	
-	public void carregaFuncionarios() {
-		obsFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
-		listFuncionario.setItems(obsFuncionario);
-	}
-	
-	public void mudaFuncionario1() {
-			listExcluidos.add(listFuncionario.getSelectionModel().getSelectedItem());
-			obsExcluirFuncionario = FXCollections.observableArrayList(listExcluidos);
-			listExclucaoFuncionario.setItems(obsExcluirFuncionario);
-			listFuncionario.getItems().remove(listFuncionario.getSelectionModel().getSelectedItem());
-			Cadastro.funcionarios.remove(listFuncionario.getSelectionModel().getSelectedItem());
-	}
-	
-	public void mudaFuncionario2() {
-			Cadastro.funcionarios.add(listExclucaoFuncionario.getSelectionModel().getSelectedItem());
-			obsFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
-			listFuncionario.setItems(obsFuncionario);
-			listExclucaoFuncionario.getItems().remove(listExclucaoFuncionario.getSelectionModel().getSelectedItem());
+	public void carregaFuncionario() {
+			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		 	colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+	        colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+	        colunaSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+	        colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
+	        tvFuncionario.setItems(obFuncionario);
+		
 	}
 	
 	public void excluirFuncionario() {
-		Cadastro.funcionarios.remove(listFuncionario.getSelectionModel().getSelectedItem());
-		carregaFuncionarios();
+		ObservableList<Funcionario> obExcluirFuncionario = FXCollections.observableArrayList();
+		
+		for(Funcionario fun : obFuncionario) {
+			if(fun.getSelect().isSelected()) {
+				obExcluirFuncionario.add(fun);
+			}
+		}
+		obFuncionario.removeAll(obExcluirFuncionario);
+		Cadastro.funcionarios.removeAll(obExcluirFuncionario);
+		
 	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		carregaFuncionarios();
+		carregaFuncionario();
 	}
 
 }
