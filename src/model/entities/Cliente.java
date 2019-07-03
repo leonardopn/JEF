@@ -2,43 +2,62 @@ package model.entities;
 
 import java.util.Objects;
 
+import javafx.scene.control.CheckBox;
+
 public class Cliente implements Comparable<Cliente>{
 	private int id;
 	private String nome;
 	private String email;
-	private String redeSocial;
+	private String telefone;
+	private CheckBox select;
 	
-	public Cliente(String nome, String email, String redeSocial, String telefone) {
+	public Cliente(int id, String nome, String email, String telefone) {
+		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.redeSocial = redeSocial;
 		this.telefone = telefone;
+		this.select = new CheckBox();
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public CheckBox getSelect() {
+		return select;
+	}
+
+	public void setSelect(CheckBox select) {
+		this.select = select;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getRedeSocial() {
-		return redeSocial;
-	}
-	public void setRedeSocial(String redeSocial) {
-		this.redeSocial = redeSocial;
-	}
+	
 	public String getTelefone() {
 		return telefone;
 	}
+	
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	private String telefone;
 	
 	@Override
 	public boolean equals(Object outroObjeto) {

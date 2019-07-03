@@ -3,6 +3,7 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -21,28 +21,13 @@ import model.services.Cadastro;
 
 public class ViewFuncionarioController implements Initializable{
 	
-	@FXML
-	private TableView<Funcionario> tvFuncionario = new TableView<>();
-	
 	ObservableList<Funcionario> obFuncionario;
 	
 	@FXML
-	private TableColumn<Funcionario, String> colunaNome;
-	
-	@FXML
-    private TableColumn<Funcionario, Integer> colunaId;
-	
-	@FXML
-    private TableColumn<Funcionario, Double> colunaSalario;
-	
-	@FXML
-    private TableColumn<Funcionario, CheckBox> colunaSelect;
-	
-	@FXML
-	private Label labelResultado;;
-	
-	@FXML
 	private Button btCriaFuncionario;
+	
+	@FXML
+	private Button btVoltar;
 	
 	@FXML
 	private Button btExcluiFuncionario;
@@ -57,15 +42,33 @@ public class ViewFuncionarioController implements Initializable{
 	private TextField txtSalarioFuncionario;
 	
 	@FXML
+	private TableView<Funcionario> tvFuncionario = new TableView<>();
+	
+	@FXML
+	private TableColumn<Funcionario, String> colunaNome;
+	
+	@FXML
+    private TableColumn<Funcionario, Integer> colunaId;
+	
+	@FXML
+    private TableColumn<Funcionario, Double> colunaSalario;
+	
+	@FXML
+    private TableColumn<Funcionario, CheckBox> colunaSelect;
+	
+	@FXML
+	public void onBtVoltarAction() {
+		Main.trocaTela("main");
+	}
+	
+	@FXML
 	public void onBtCriaFuncionarioAction(){
 		try {
 			int id = Integer.parseInt(txtIdFuncionario.getText());
 			String nome = txtNomeFuncionario.getText();
 			Double salario = Double.parseDouble(txtSalarioFuncionario.getText());
 			Funcionario fun01 = new Funcionario(nome, id, salario);
-			if(Cadastro.funcionarios.contains(fun01)) {
-				Alerts.showAlert("Alerta", "Funcionário já inscrito", "Funcionário não foi adicionado, pois ID já está em uso", AlertType.INFORMATION);
-			}
+			Cadastro.verificaFuncionario(fun01);
 			Cadastro.funcionarios.add(fun01);
 			carregaFuncionario();
 		}
@@ -77,12 +80,7 @@ public class ViewFuncionarioController implements Initializable{
 	
 	public void carregaFuncionario() {
 			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
-		 	colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-	        colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
-	        colunaSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
-	        colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 	        tvFuncionario.setItems(obFuncionario);
-		
 	}
 	
 	public void excluirFuncionario() {
@@ -95,12 +93,14 @@ public class ViewFuncionarioController implements Initializable{
 		}
 		obFuncionario.removeAll(obExcluirFuncionario);
 		Cadastro.funcionarios.removeAll(obExcluirFuncionario);
-		
 	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colunaSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+        colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaFuncionario();
 	}
-
 }
