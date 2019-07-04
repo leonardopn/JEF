@@ -39,6 +39,7 @@ public class ViewController implements Initializable{
 	
 	public void onBtAbreCaixaAction(){
 		Main.trocaTela("caixa");
+		
 	}
 	
 	public void onBtSalvarAction(){

@@ -69,10 +69,7 @@ public class Funcionario implements Comparable<Funcionario> {
 	
 	@Override
 	public String toString() {
-		return "\nNome: "+this.nome+
-				"\nId: "+this.id+
-				"\nSalario: R$ "+ this.salario + 
-				" Reais";
+		return this.nome;
 	}
 	
 }

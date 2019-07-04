@@ -12,6 +12,9 @@ public class Carregar {
 	public static void carregaFuncionario() {
 		String linha = "";
 		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "funcionario.csv";
+		if(IdentificadorSO.sistema() == "linux"){
+			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
+		}
 		try(BufferedReader brFuncionario = new BufferedReader(new FileReader(caminho));) {
 			while((linha = brFuncionario.readLine()) != null) {	
 				String[] linhaFuncionario = linha.split(";");				
@@ -31,8 +34,8 @@ public class Carregar {
 	public static void carregaCliente() {
 		String linha = "";
 		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "clientes.csv";
-		if (IdentificadorSO.sistema() == "linux"){
-			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
+		if(IdentificadorSO.sistema() == "linux"){
+			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"clientes.csv";
 		}
 		try(BufferedReader brCliente = new BufferedReader(new FileReader(caminho));) {
 			while((linha = brCliente.readLine()) != null) {	
@@ -49,6 +52,10 @@ public class Carregar {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void carregaTransacao() {
+		
 	}
 	
 	public static void carregar() {

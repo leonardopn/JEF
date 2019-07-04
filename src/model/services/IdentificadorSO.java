@@ -6,18 +6,19 @@ public class IdentificadorSO {
 		if (isWindows()) {
             return "win";
         }
-        else {
+        if(isUnix()){
             return "linux";
         }
+		return SO;
 	}
 	private static String SO = System.getProperty("os.name").toLowerCase();
   
-    //Função que verifica se é windows
+    //Funï¿½ï¿½o que verifica se ï¿½ windows
     public static boolean isWindows() {
         return (SO.indexOf("win") >= 0);
     }
   
-    //Função que verifica se é Unix-Like
+    //Funï¿½ï¿½o que verifica se ï¿½ Unix-Like
     public static boolean isUnix() {
         return (SO.indexOf("nix") >= 0 || SO.indexOf("nux") >= 0 || SO.indexOf("aix") > 0 );
     }
