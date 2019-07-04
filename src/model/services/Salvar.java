@@ -10,7 +10,11 @@ import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Transacao;
 
+
+
 public class Salvar {
+	static File arquivoTransacao;
+	
 	public static void salvarFuncionario() {
 		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
 		if (IdentificadorSO.sistema() == "linux"){
@@ -54,16 +58,18 @@ public class Salvar {
 			if (IdentificadorSO.sistema() == "linux"){
 				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar+ tran.getData()+".csv";
 			}
-			File arquivoTransacao = new File(caminho);
+			arquivoTransacao = new File(caminho);
+			
 			try(BufferedWriter bwTransacao = new BufferedWriter(new FileWriter(arquivoTransacao))) {
 				for(Transacao tran2 : Caixa.caixa) {
-					if(tran2.getData() == tran.getData()) {
+					if(tran2.getData().equals(tran.getData())) {
 						bwTransacao.write(tran2.getId() + ";" + 
-								  tran2.getValor()+ ";" + 
-								  String.valueOf(tran2.getData()) + ";" + 
-								  String.valueOf(tran2.getCliente()) + ";" +
-								  String.valueOf(tran2.getAtendente()) + ";" +
-								  tran2.getFormaPagamento()+ "\n");
+									      tran2.getValor()+ ";" + 
+									      String.valueOf(tran2.getData()) + ";" + 
+									      tran2.getCliente() + ";" +
+									      tran2.getAtendente() + ";" +
+									      tran2.getFormaPagamento()+ "\n");
+						 
 					}
 				}
 			}	

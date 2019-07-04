@@ -11,39 +11,44 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="502.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewCaixaController">
+<AnchorPane prefHeight="557.0" prefWidth="1094.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewCaixaController">
    <children>
       <Button fx:id="btVoltar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
-      <Line endX="821.0000610351562" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
+      <Line endX="968.2928466796875" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
       <Button fx:id="btAbrirFecharCaixa" layoutX="26.0" layoutY="54.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="46.0" prefWidth="111.0" />
-      <Line endX="872.0000610351562" endY="1.0" layoutX="110.0" layoutY="118.0" startX="-110.0" stroke="#827f7f" />
-      <Line endX="100.0" endY="366.0" layoutX="71.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
-      <TextField fx:id="tfId" layoutX="11.0" layoutY="175.0" prefHeight="26.0" prefWidth="150.0" />
-      <Label layoutX="15.0" layoutY="158.0" text="ID:" />
-      <Label layoutX="12.0" layoutY="210.0" text="Cliente:" />
-      <Label layoutX="12.0" layoutY="263.0" text="Atendente:" />
-      <Label layoutX="12.0" layoutY="313.0" text="Data" />
-      <ChoiceBox fx:id="cbCliente" layoutX="11.0" layoutY="227.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="cbFuncionario" layoutX="11.0" layoutY="280.0" prefWidth="150.0" />
-      <DatePicker fx:id="dpData" layoutX="11.0" layoutY="330.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField fx:id="tfValor" layoutX="12.0" layoutY="381.0" prefHeight="26.0" prefWidth="151.0" />
-      <Label layoutX="14.0" layoutY="364.0" text="Valor:" />
-      <Button fx:id="btEnviarTransacao" layoutX="80.0" layoutY="469.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar" />
-      <Label layoutX="34.0" layoutY="125.0" text="Adicione os valores" />
-      <Label layoutX="46.0" layoutY="142.0" text="Das transações" />
-      <TableView fx:id="tvTransacao" layoutX="172.0" layoutY="119.0" prefHeight="383.0" prefWidth="810.0">
+      <Line endX="1018.0" endY="1.0" layoutX="111.0" layoutY="117.0" startX="-110.0" stroke="#827f7f" />
+      <Line endX="100.99998474121094" endY="422.0" layoutX="71.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
+      <TextField fx:id="tfId" layoutX="11.0" layoutY="187.0" prefHeight="26.0" prefWidth="150.0" />
+      <Label layoutX="15.0" layoutY="170.0" text="ID:" />
+      <Label layoutX="12.0" layoutY="222.0" text="Cliente:" />
+      <Label layoutX="12.0" layoutY="275.0" text="Atendente:" />
+      <Label layoutX="12.0" layoutY="325.0" text="Data" />
+      <ChoiceBox fx:id="cbCliente" layoutX="11.0" layoutY="239.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="cbFuncionario" layoutX="12.0" layoutY="292.0" prefWidth="150.0" />
+      <DatePicker fx:id="dpData" layoutX="11.0" layoutY="342.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField fx:id="tfValor" layoutX="12.0" layoutY="393.0" prefHeight="26.0" prefWidth="151.0" />
+      <Label layoutX="14.0" layoutY="376.0" text="Valor:" />
+      <Button fx:id="btEnviarTransacao" layoutX="93.0" layoutY="493.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar" />
+      <Label layoutX="34.0" layoutY="137.0" text="Adicione os valores" />
+      <Label layoutX="46.0" layoutY="154.0" text="Das transações" />
+      <TableView fx:id="tvTransacao" layoutX="172.0" layoutY="120.0" prefHeight="438.0" prefWidth="956.0">
         <columns>
           <TableColumn fx:id="colunaId" prefWidth="49.0" text="ID" />
           <TableColumn fx:id="colunaData" prefWidth="78.00001525878906" text="Data" />
-            <TableColumn fx:id="colunaCliente" prefWidth="188.0" text="Cliente" />
             <TableColumn fx:id="colunaAtendente" prefWidth="150.0" text="Atendente" />
             <TableColumn fx:id="colunaMeioPagamento" prefWidth="162.0" text="Meio de pagamento" />
             <TableColumn fx:id="colunaValor" prefWidth="91.0" text="Valor" />
+            <TableColumn fx:id="colunaCliente" prefWidth="188.0" text="Cliente" />
             <TableColumn fx:id="colunaSelect" text="Excluir?" />
+            <TableColumn prefWidth="75.0" text="Column X">
+               <graphic>
+                  <DatePicker fx:id="dpSelecao" onAction="#onBtAbrirFecharCaixaAction" prefHeight="25.0" prefWidth="150.0" />
+               </graphic>
+            </TableColumn>
         </columns>
       </TableView>
-      <ChoiceBox fx:id="cbFormaPagamento" layoutX="11.0" layoutY="430.0" prefWidth="150.0" />
-      <Label layoutX="11.0" layoutY="412.0" text="Forma de pagamento" />
+      <ChoiceBox fx:id="cbFormaPagamento" layoutX="11.0" layoutY="444.0" prefWidth="150.0" />
+      <Label layoutX="11.0" layoutY="426.0" text="Forma de pagamento" />
       <Label layoutX="87.0" layoutY="5.0" text="Status do caixa:">
          <font>
             <Font size="20.0" />
@@ -54,7 +59,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="678.0" layoutY="41.0" text="Valor total em caixa:">
+      <Label layoutX="840.0" layoutY="37.0" text="Valor total em caixa:">
          <font>
             <Font size="18.0" />
          </font>
@@ -64,27 +69,27 @@
       <Label layoutX="183.0" layoutY="52.0" text="Valor do serviço:" />
       <TextField fx:id="tfDinheiroDado" layoutX="305.0" layoutY="77.0" prefHeight="25.0" prefWidth="79.0" />
       <Label fx:id="lbTroco" layoutX="434.0" layoutY="69.0" text="Troco de: " />
-      <Label layoutX="876.0" layoutY="42.0" text="R$ 250,00" textFill="#10bf24">
+      <Label layoutX="1038.0" layoutY="38.0" text="R$ 250,00" textFill="#10bf24">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="679.0" layoutY="88.0" text="Valor em cartão:">
+      <Label layoutX="841.0" layoutY="84.0" text="Valor em cartão:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="888.0" layoutY="89.0" text="R$ 50,00" textFill="#10bf24">
+      <Label layoutX="1050.0" layoutY="85.0" text="R$ 50,00" textFill="#10bf24">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="679.0" layoutY="64.0" text="Valor em dinheiro:">
+      <Label layoutX="841.0" layoutY="60.0" text="Valor em dinheiro:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="887.0" layoutY="64.0" text="R$ 50,00" textFill="#10bf24">
+      <Label layoutX="1049.0" layoutY="60.0" text="R$ 50,00" textFill="#10bf24">
          <font>
             <Font size="18.0" />
          </font>

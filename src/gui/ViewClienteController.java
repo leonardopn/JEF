@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Cliente;
 import model.services.Cadastro;
+import model.services.Carregar;
 
 public class ViewClienteController implements Initializable{
 	
@@ -28,6 +29,9 @@ public class ViewClienteController implements Initializable{
 	
 	@FXML
 	private Button btVoltar;
+	
+	@FXML
+	private Button btDesfazer;
 	
 	@FXML
 	private Button btExcluiCliente;
@@ -65,6 +69,12 @@ public class ViewClienteController implements Initializable{
 	@FXML
 	public void onBtVoltarAction() {
 		Main.trocaTela("main");
+	}
+	
+	@FXML
+	public void onBtDesfazerAction(){
+		Carregar.carregaCliente();
+		carregaCliente();
 	}
 	
 	@FXML

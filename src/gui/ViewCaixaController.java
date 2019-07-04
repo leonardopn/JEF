@@ -1,5 +1,9 @@
 package gui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -25,6 +29,8 @@ import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Transacao;
 import model.services.Cadastro;
+import model.services.IdentificadorSO;
+import model.services.Salvar;
 
 public class ViewCaixaController implements Initializable {
 	
@@ -33,6 +39,8 @@ public class ViewCaixaController implements Initializable {
 	ObservableList<Funcionario> obFuncionario;
 	
 	ObservableList<Transacao> obTable;
+	
+	ObservableList<Transacao> obTableTemp;
 	
 	ObservableList<String> obFormaPagamento;
 	
@@ -88,6 +96,9 @@ public class ViewCaixaController implements Initializable {
 	private DatePicker dpData;
 	
 	@FXML
+	private DatePicker dpSelecao;
+	
+	@FXML
 	private TableView<Transacao> tvTransacao = new TableView<>();
 	
 	@FXML
@@ -97,10 +108,10 @@ public class ViewCaixaController implements Initializable {
 	private TableColumn<Transacao, LocalDate> colunaData;
 	
 	@FXML
-	private TableColumn<Transacao, Cliente> colunaCliente;
+	private TableColumn<Transacao, String> colunaCliente;
 	
 	@FXML
-    private TableColumn<Transacao, Funcionario> colunaAtendente;
+    private TableColumn<Transacao, String> colunaAtendente;
 	
 	@FXML
     private TableColumn<Transacao, String> colunaMeioPagamento;
@@ -134,6 +145,8 @@ public class ViewCaixaController implements Initializable {
 	@FXML
 	public void onBtAbrirFecharCaixaAction() {
 		btAbrirFecharCaixa.setText("Fechar Caixa");
+		Caixa.caixaTemp.clear();
+		carregaTransacao();
 		carregaCliente();
 		carregaFuncionario();
 		carregaFormaPagamento();
@@ -157,21 +170,51 @@ public class ViewCaixaController implements Initializable {
 	}
 	
 	public void carregaTable() {
-		obTable = FXCollections.observableArrayList(Caixa.caixa);
+		obTable = FXCollections.observableArrayList(Caixa.caixaTemp);
         tvTransacao.setItems(obTable);
 	}
 	
 	@FXML
 	public void onBtEnviarTransacaoAction() {
 		int id = Integer.parseInt(tfId.getText());
-		Cliente cliente = cbCliente.getValue();
-		Funcionario fun = cbFuncionario.getValue();
+		String cliente = cbCliente.getValue().getNome();
+		String fun = cbFuncionario.getValue().getNome();
 		LocalDate data = dpData.getValue();
 		double valor = Double.parseDouble(tfValor.getText());
 		String formaPaga = cbFormaPagamento.getValue();
 		Transacao tran = new Transacao(id, valor, data, cliente, fun, formaPaga);
 		Caixa.caixa.add(tran);
+		Caixa.caixaTemp.add(tran);
+		Salvar.salvarTransacao();
 		carregaTable();
+	}
+	
+	public void carregaTransacao() {
+		String linha = "";
+		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "transacoes" + File.separator + dpSelecao.getValue()+".csv";
+		if(IdentificadorSO.sistema() == "linux"){
+			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separator + "transacoes" + File.separator + dpSelecao.getValue()+".csv";
+		}
+		try(BufferedReader brTransacao = new BufferedReader(new FileReader(caminho));) {
+			while((linha = brTransacao.readLine()) != null) {	
+				String[] linhaTransacao = linha.split(";");	
+				Transacao tran = new Transacao(
+						Integer.parseInt(linhaTransacao[0]),
+						Double.parseDouble(linhaTransacao[1]),
+						LocalDate.parse(linhaTransacao[2]),
+						linhaTransacao[3],
+						linhaTransacao[4],
+						linhaTransacao[5]);
+				
+				Caixa.verificaTransacao(tran);
+				Caixa.caixaTemp.add(tran);
+				Caixa.caixa.add(tran);
+			}
+			brTransacao.close();
+		}
+		catch(IOException e) {
+			System.out.println("Não existe arquivo com esse nome: "+ e.getMessage());
+		}
 	}
 	
 	@Override
