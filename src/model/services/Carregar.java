@@ -68,35 +68,35 @@ public class Carregar {
 	    return dateFormat.format(date);
 	}
 	
-//	public static void carregaTransacao() {
-//		String linha = "";
-//		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "transacoes" + File.separator + ViewCaixaController.dpSelecao.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+".csv";
-//		if(IdentificadorSO.sistema() == "linux"){
-//			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separator + "transacoes" + File.separator + ViewCaixaController.dpSelecao.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+".csv";
-//		}
-//		try(BufferedReader brTransacao = new BufferedReader(new FileReader(caminho));) {
-//			while((linha = brTransacao.readLine()) != null) {	
-//				String[] linhaTransacao = linha.split(";");	
-//				Transacao tran = new Transacao(
-//						Integer.parseInt(linhaTransacao[0]),
-//						Double.parseDouble(linhaTransacao[1]),
-//						LocalDate.parse(linhaTransacao[2]),
-//						linhaTransacao[3],
-//						linhaTransacao[4],
-//						linhaTransacao[5]);
-//						
-//				Caixa.caixa.add(tran);
-//			}
-//			brTransacao.close();
-//		}
-//		catch(IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public static void carregaTransacao() {
+		String linha = "";
+		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "transacoes" + File.separator + "transacoes.csv";
+		if(IdentificadorSO.sistema() == "linux"){
+			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos"+ File.separatorChar + "teste" + File.separator + "transacoes" + File.separator + "transacoes.csv";
+		}
+		try(BufferedReader brTransacao = new BufferedReader(new FileReader(caminho));) {
+			while((linha = brTransacao.readLine()) != null) {	
+				String[] linhaTransacao = linha.split(";");	
+				Transacao tran = new Transacao(
+						Integer.parseInt(linhaTransacao[0]),
+						Double.parseDouble(linhaTransacao[1]),
+						LocalDate.parse(linhaTransacao[2]),
+						linhaTransacao[3],
+						linhaTransacao[4],
+						linhaTransacao[5]);
+						
+				Caixa.caixa.add(tran);
+			}
+			brTransacao.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void carregar() {
 		carregaCliente();
 		carregaFuncionario();
-		//carregaTransacao();
+		carregaTransacao();
 	}
 }

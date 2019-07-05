@@ -183,10 +183,12 @@ public class ViewCaixaController implements Initializable {
 		double valor = Double.parseDouble(tfValor.getText());
 		String formaPaga = cbFormaPagamento.getValue();
 		Transacao tran = new Transacao(id, valor, data, cliente, fun, formaPaga);
+		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
-		Caixa.caixaTemp.add(tran);
 		Salvar.salvarTransacao();
 		carregaTable();
+		
+		
 	}
 	
 	public void carregaTransacao() {
@@ -205,15 +207,12 @@ public class ViewCaixaController implements Initializable {
 						linhaTransacao[3],
 						linhaTransacao[4],
 						linhaTransacao[5]);
-				
-				Caixa.verificaTransacao(tran);
 				Caixa.caixaTemp.add(tran);
-				Caixa.caixa.add(tran);
 			}
 			brTransacao.close();
 		}
 		catch(IOException e) {
-			System.out.println("Não existe arquivo com esse nome: "+ e.getMessage());
+			System.out.println("Nï¿½o existe arquivo com esse nome: "+ e.getMessage());
 		}
 	}
 	

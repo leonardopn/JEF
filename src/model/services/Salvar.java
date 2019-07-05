@@ -54,6 +54,27 @@ public class Salvar {
 	
 	public static void salvarTransacao() {
 		for(Transacao tran : Caixa.caixa) {
+			String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar + "transacoes.csv";
+			if (IdentificadorSO.sistema() == "linux"){
+				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar + "transacoes.csv";
+			}
+			arquivoTransacao = new File(caminho);
+			
+			try(BufferedWriter bwTransacao = new BufferedWriter(new FileWriter(arquivoTransacao))) {
+				for(Transacao tran2 : Caixa.caixa) {
+					bwTransacao.write(tran2.getId() + ";" + 
+						      tran2.getValor()+ ";" + 
+						      String.valueOf(tran2.getData()) + ";" + 
+						      tran2.getCliente() + ";" +
+						      tran2.getAtendente() + ";" +
+						      tran2.getFormaPagamento()+ "\n");
+				}			 
+			}	
+			catch(IOException e) {
+				System.out.println("Ocorreu um erro ao salvar um arquivo de transação: " + e.getMessage());
+			}                  
+		}
+		for(Transacao tran : Caixa.caixa) {
 			String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar+ tran.getData()+".csv";
 			if (IdentificadorSO.sistema() == "linux"){
 				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar+ tran.getData()+".csv";
@@ -75,7 +96,7 @@ public class Salvar {
 			}	
 			catch(IOException e) {
 				System.out.println("Ocorreu um erro ao salvar um arquivo de transação: " + e.getMessage());
-			}
+			}                  
 		}
 	}
 	
