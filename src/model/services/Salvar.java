@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import gui.ViewCaixaController;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;

@@ -24,8 +24,8 @@
          </font></Label>
       <TableView fx:id="tvFuncionario" layoutX="9.0" layoutY="232.0" prefHeight="297.0" prefWidth="481.0">
         <columns>
-          <TableColumn fx:id="colunaNome" prefWidth="197.0" text="Nome" />
           <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="84.0" text="ID" />
+          <TableColumn fx:id="colunaNome" prefWidth="197.0" text="Nome" />
             <TableColumn fx:id="colunaSalario" prefWidth="107.0" text="Salario" />
             <TableColumn fx:id="colunaSelect" prefWidth="92.0" text="Excluir?" />
         </columns>

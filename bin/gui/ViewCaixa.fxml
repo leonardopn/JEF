@@ -11,13 +11,13 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="557.0" prefWidth="1094.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewCaixaController">
+<AnchorPane prefHeight="570.0" prefWidth="1138.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewCaixaController">
    <children>
       <Button fx:id="btVoltar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
-      <Line endX="968.2928466796875" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
+      <Line endX="975.2928466796875" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
       <Button fx:id="btAbrirFecharCaixa" layoutX="26.0" layoutY="54.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="46.0" prefWidth="111.0" />
-      <Line endX="1018.0" endY="1.0" layoutX="111.0" layoutY="117.0" startX="-110.0" stroke="#827f7f" />
-      <Line endX="100.99998474121094" endY="422.0" layoutX="71.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
+      <Line endX="1024.0" endY="1.0" layoutX="111.0" layoutY="117.0" startX="-110.0" stroke="#827f7f" />
+      <Line endX="100.0" endY="436.0" layoutX="71.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
       <TextField fx:id="tfId" layoutX="11.0" layoutY="187.0" prefHeight="26.0" prefWidth="150.0" />
       <Label layoutX="15.0" layoutY="170.0" text="ID:" />
       <Label layoutX="12.0" layoutY="222.0" text="Cliente:" />
@@ -31,30 +31,30 @@
       <Button fx:id="btEnviarTransacao" layoutX="93.0" layoutY="493.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar" />
       <Label layoutX="34.0" layoutY="137.0" text="Adicione os valores" />
       <Label layoutX="46.0" layoutY="154.0" text="Das transações" />
-      <TableView fx:id="tvTransacao" layoutX="172.0" layoutY="120.0" prefHeight="438.0" prefWidth="956.0">
+      <TableView fx:id="tvTransacao" layoutX="172.0" layoutY="118.0" prefHeight="410.0" prefWidth="963.0">
         <columns>
           <TableColumn fx:id="colunaId" prefWidth="49.0" text="ID" />
           <TableColumn fx:id="colunaData" prefWidth="78.00001525878906" text="Data" />
+            <TableColumn fx:id="colunaCliente" prefWidth="188.0" text="Cliente" />
             <TableColumn fx:id="colunaAtendente" prefWidth="150.0" text="Atendente" />
             <TableColumn fx:id="colunaMeioPagamento" prefWidth="162.0" text="Meio de pagamento" />
             <TableColumn fx:id="colunaValor" prefWidth="91.0" text="Valor" />
-            <TableColumn fx:id="colunaCliente" prefWidth="188.0" text="Cliente" />
             <TableColumn fx:id="colunaSelect" text="Excluir?" />
             <TableColumn prefWidth="75.0" text="Column X">
                <graphic>
-                  <DatePicker fx:id="dpSelecao" onAction="#onBtAbrirFecharCaixaAction" prefHeight="25.0" prefWidth="150.0" />
+                  <DatePicker fx:id="dpSelecao" onAction="#carregaTransacao" prefHeight="25.0" prefWidth="150.0" />
                </graphic>
             </TableColumn>
         </columns>
       </TableView>
       <ChoiceBox fx:id="cbFormaPagamento" layoutX="11.0" layoutY="444.0" prefWidth="150.0" />
       <Label layoutX="11.0" layoutY="426.0" text="Forma de pagamento" />
-      <Label layoutX="87.0" layoutY="5.0" text="Status do caixa:">
+      <Label layoutX="208.0" layoutY="5.0" text="Status do caixa:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="256.0" layoutY="4.0" prefHeight="30.0" prefWidth="67.0" text="Aberto" textFill="#10bf24">
+      <Label fx:id="lbStatus" layoutX="353.0" layoutY="6.0" prefHeight="30.0" prefWidth="67.0" text="Aberto" textFill="#10bf24">
          <font>
             <Font size="20.0" />
          </font>
@@ -95,5 +95,9 @@
          </font>
       </Label>
       <Button fx:id="btCalTroco" layoutX="394.0" layoutY="64.0" mnemonicParsing="false" onAction="#calculaTroco" prefHeight="16.0" prefWidth="13.0" text="=" />
+      <Button fx:id="btAtualizar" layoutX="91.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtAtualizarAction" prefHeight="25.0" prefWidth="70.0" text="Atualizar" />
+      <Line endX="1018.0" endY="1.0" layoutX="116.0" layoutY="528.0" startX="56.0" stroke="#827f7f" />
+      <Button fx:id="btExcluir" layoutX="184.0" layoutY="538.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="25.0" prefWidth="70.0" text="Excluir" />
+      <Label layoutX="271.0" layoutY="542.0" text="Excluir transações selecionadas" />
    </children>
 </AnchorPane>
