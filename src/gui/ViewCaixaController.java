@@ -1,11 +1,5 @@
 package gui;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -26,12 +20,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Paint;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Transacao;
 import model.services.Cadastro;
-import model.services.IdentificadorSO;
+import model.services.Carregar;
 import model.services.Salvar;
 
 public class ViewCaixaController implements Initializable {
@@ -45,6 +40,10 @@ public class ViewCaixaController implements Initializable {
 	ObservableList<Transacao> obTableTemp;
 
 	ObservableList<String> obFormaPagamento;
+	
+	double total = 0;
+	double totalDinheiro = 0;
+	double totalCartao = 0;
 
 	@FXML
 	private Button btVoltar;
@@ -98,7 +97,7 @@ public class ViewCaixaController implements Initializable {
 	private Label lbValorDinheiro;
 
 	@FXML
-	private Label lbValorCartão;
+	private Label lbValorCartao;
 
 	@FXML
 	private DatePicker dpData;
@@ -148,6 +147,17 @@ public class ViewCaixaController implements Initializable {
 			}
 		}
 	}
+	
+	public void bloqueiaAdicaoExclusao() {
+		if(Caixa.isStatus() != true) {
+			btEnviarTransacao.setDisable(true);
+			btExcluir.setDisable(true);
+		}
+		else {
+			btEnviarTransacao.setDisable(false);
+			btExcluir.setDisable(false);
+		}
+	}
 
 	@FXML
 	public void onBtAtualizarAction() {
@@ -156,12 +166,66 @@ public class ViewCaixaController implements Initializable {
 		carregaFormaPagamento();
 
 	}
+	
+	public void mudaCaixa() {
+		if(Caixa.isStatus() == false) {
+			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
+			btAbrirFecharCaixa.setText("Abrir Caixa!");
+			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
+			lbStatus.setText("Fechado");
+		}
+		else {
+			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#ff0606"));
+			btAbrirFecharCaixa.setText("Fechar Caixa!");
+			lbStatus.setTextFill(Paint.valueOf("#10bf24"));
+			lbStatus.setText("Aberto");
+		}
+	}
 
 	@FXML
 	public void onBtAbrirFecharCaixaAction() {
-		btAbrirFecharCaixa.setText("Fechar Caixa");
+		if(Caixa.isStatus() == false) {
+			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#ff0606"));
+			btAbrirFecharCaixa.setText("Fechar Caixa!");
+			lbStatus.setTextFill(Paint.valueOf("#10bf24"));
+			lbStatus.setText("Aberto");
+			Caixa.setStatus(true);
+			Salvar.salvarStatus();
+			bloqueiaAdicaoExclusao();
+		}
+		else {
+			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
+			btAbrirFecharCaixa.setText("Abrir Caixa!");
+			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
+			lbStatus.setText("Fechado");
+			Caixa.setStatus(false);
+			Salvar.salvarStatus();
+			bloqueiaAdicaoExclusao();
+			calculaCaixa();
+		}
 
-		carregaTable();
+	}
+	
+	public void calculaCaixa() {
+		total = 0;
+		totalDinheiro = 0;
+		totalCartao = 0;
+		for(Transacao tran : Caixa.caixa) {
+			if(tran.getData().equals(LocalDate.now())) {
+				total += tran.getValor();
+				lbValorTotal.setText("R$ "+String.valueOf(total));
+				if(tran.getFormaPagamento().equals("Dinheiro")) {
+					totalDinheiro += tran.getValor();
+					lbValorDinheiro.setText("R$ "+String.valueOf(totalDinheiro));
+				}
+				else {
+					totalCartao += tran.getValor();
+					lbValorCartao.setText("R$ "+String.valueOf(totalCartao));
+					
+				}
+			}
+		}
+		
 	}
 
 	public void carregaCliente() {
@@ -207,7 +271,6 @@ public class ViewCaixaController implements Initializable {
 			if (tran.getSelect().isSelected()) {
 				obExcluirTransacao.add(tran);
 			}
-			System.out.println();
 		}
 		Caixa.caixa.removeAll(obExcluirTransacao);
 		Caixa.caixaTemp.removeAll(obExcluirTransacao);
@@ -226,72 +289,13 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	public void salvarTransacaoExcluidos() {
-		File arquivoTransacao;
-
-		String caminho = System.getProperty("user.home") + File.separatorChar + "Documents" + File.separatorChar
-				+ "teste" + File.separatorChar + "transacoes" + File.separatorChar + "transacoes.csv";
-		if (IdentificadorSO.sistema() == "linux") {
-			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos" + File.separatorChar + "teste"
-					+ File.separatorChar + "transacoes" + File.separatorChar + "transacoes.csv";
-		}
-		arquivoTransacao = new File(caminho);
-
-		try (BufferedWriter bwTransacao = new BufferedWriter(new FileWriter(arquivoTransacao))) {
-			for (Transacao tran2 : Caixa.caixa) {
-				bwTransacao.write(tran2.getId() + ";" + tran2.getValor() + ";" + String.valueOf(tran2.getData()) + ";"
-						+ tran2.getCliente() + ";" + tran2.getAtendente() + ";" + tran2.getFormaPagamento() + "\n");
-			}
-		} catch (IOException e) {
-			System.out.println("Ocorreu um erro ao salvar um arquivo de transação: " + e.getMessage());
-		}
-
-		caminho = System.getProperty("user.home") + File.separatorChar + "Documents" + File.separatorChar + "teste"
-				+ File.separatorChar + "transacoes" + File.separatorChar + dpSelecao.getValue() + ".csv";
-		if (IdentificadorSO.sistema() == "linux") {
-			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos" + File.separatorChar + "teste"
-					+ File.separatorChar + "transacoes" + File.separatorChar + dpSelecao.getValue() + ".csv";
-		}
-		arquivoTransacao = new File(caminho);
-		if (arquivoTransacao.exists()) {
-			arquivoTransacao.delete();
-		}
-		try (BufferedWriter bwTransacao = new BufferedWriter(new FileWriter(arquivoTransacao))) {
-			for (Transacao tran : Caixa.caixaTemp) {
-				bwTransacao.write(tran.getId() + ";" + tran.getValor() + ";" + String.valueOf(tran.getData()) + ";"
-						+ tran.getCliente() + ";" + tran.getAtendente() + ";" + tran.getFormaPagamento() + "\n");
-
-			}
-		} catch (IOException e) {
-			System.out.println("Ocorreu um erro ao salvar um arquivo de transação: " + e.getMessage());
-		}
+		Salvar.salvarTransacaoExcluidos(dpSelecao.getValue());
 	}
 
 	public void carregaTransacao() {
-		Caixa.caixaTemp.clear();
 		carregaTable();
-		String linha = "";
-		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste"
-				+ File.separator + "transacoes" + File.separator + dpSelecao.getValue() + ".csv";
-		if (IdentificadorSO.sistema() == "linux") {
-			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos" + File.separatorChar + "teste"
-					+ File.separator + "transacoes" + File.separator + dpSelecao.getValue() + ".csv";
-		}
-		File file = new File(caminho);
-		if (file.exists()) {
-			try (BufferedReader brTransacao = new BufferedReader(new FileReader(caminho));) {
-				while ((linha = brTransacao.readLine()) != null) {
-					String[] linhaTransacao = linha.split(";");
-					Transacao tran = new Transacao(Integer.parseInt(linhaTransacao[0]),
-							Double.parseDouble(linhaTransacao[1]), LocalDate.parse(linhaTransacao[2]),
-							linhaTransacao[3], linhaTransacao[4], linhaTransacao[5]);
-					Caixa.caixaTemp.add(tran);
-					carregaTable();
-				}
-				brTransacao.close();
-			} catch (IOException e) {
-				System.out.println("N�o existe arquivo com esse nome: " + e.getMessage());
-			}
-		}
+		Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
+		carregaTable();
 	}
 
 	@Override
@@ -299,9 +303,10 @@ public class ViewCaixaController implements Initializable {
 		carregaCliente();
 		carregaFuncionario();
 		carregaFormaPagamento();
+		mudaCaixa();
+		bloqueiaAdicaoExclusao();
 		dpData.setValue(LocalDate.now());
 		dpSelecao.setValue(LocalDate.now());
-		carregaTransacao();
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
 		colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
@@ -309,6 +314,6 @@ public class ViewCaixaController implements Initializable {
 		colunaMeioPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
-		carregaTable();
+		carregaTransacao();
 	}
 }

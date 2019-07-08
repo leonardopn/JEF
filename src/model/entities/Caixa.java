@@ -27,7 +27,7 @@ public class Caixa {
 	}
 	
 	public static void verificaTransacao(Transacao tran) {
-		if(Caixa.caixaTemp.contains(tran)) {
+		if(Caixa.caixa.contains(tran)) {
 			Alerts.showAlert("Alerta", "Funcionário já inscrito", "Funcionário não foi adicionado, pois ID já está em uso", AlertType.INFORMATION);
 		}
 	}

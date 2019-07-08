@@ -15,7 +15,10 @@
    <children>
       <Button fx:id="btVoltar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
       <Line endX="975.2928466796875" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
-      <Button fx:id="btAbrirFecharCaixa" layoutX="26.0" layoutY="54.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="46.0" prefWidth="111.0" />
+      <Button fx:id="btAbrirFecharCaixa" layoutX="21.0" layoutY="55.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="46.0" prefWidth="130.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
       <Line endX="1024.0" endY="1.0" layoutX="111.0" layoutY="117.0" startX="-110.0" stroke="#827f7f" />
       <Line endX="100.0" endY="436.0" layoutX="71.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
       <TextField fx:id="tfId" layoutX="11.0" layoutY="187.0" prefHeight="26.0" prefWidth="150.0" />
@@ -34,29 +37,32 @@
       <TableView fx:id="tvTransacao" layoutX="172.0" layoutY="118.0" prefHeight="410.0" prefWidth="963.0">
         <columns>
           <TableColumn fx:id="colunaId" prefWidth="49.0" text="ID" />
-          <TableColumn fx:id="colunaData" prefWidth="78.00001525878906" text="Data" />
             <TableColumn fx:id="colunaCliente" prefWidth="188.0" text="Cliente" />
             <TableColumn fx:id="colunaAtendente" prefWidth="150.0" text="Atendente" />
             <TableColumn fx:id="colunaMeioPagamento" prefWidth="162.0" text="Meio de pagamento" />
             <TableColumn fx:id="colunaValor" prefWidth="91.0" text="Valor" />
             <TableColumn fx:id="colunaSelect" text="Excluir?" />
-            <TableColumn prefWidth="75.0" text="Column X">
+            <TableColumn prefWidth="221.0" text="Column X">
                <graphic>
-                  <DatePicker fx:id="dpSelecao" onAction="#carregaTransacao" prefHeight="25.0" prefWidth="150.0" />
+                  <DatePicker fx:id="dpSelecao" editable="false" onAction="#carregaTransacao" prefHeight="25.0" prefWidth="150.0" />
                </graphic>
+               <columns>
+                <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" prefWidth="154.0" sortable="false" text="Data" />
+                  <TableColumn editable="false" minWidth="0.0" prefWidth="0.0" sortable="false" text="Column X" />
+               </columns>
             </TableColumn>
         </columns>
       </TableView>
       <ChoiceBox fx:id="cbFormaPagamento" layoutX="11.0" layoutY="444.0" prefWidth="150.0" />
       <Label layoutX="11.0" layoutY="426.0" text="Forma de pagamento" />
-      <Label layoutX="208.0" layoutY="5.0" text="Status do caixa:">
+      <Label layoutX="186.0" layoutY="3.0" text="Status do caixa:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lbStatus" layoutX="353.0" layoutY="6.0" prefHeight="30.0" prefWidth="67.0" text="Aberto" textFill="#10bf24">
+      <Label fx:id="lbStatus" layoutX="331.0" layoutY="4.0" prefHeight="30.0" prefWidth="151.0" textFill="#10bf24">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
       <Label layoutX="840.0" layoutY="37.0" text="Valor total em caixa:">
@@ -69,9 +75,9 @@
       <Label layoutX="183.0" layoutY="52.0" text="Valor do serviço:" />
       <TextField fx:id="tfDinheiroDado" layoutX="305.0" layoutY="77.0" prefHeight="25.0" prefWidth="79.0" />
       <Label fx:id="lbTroco" layoutX="434.0" layoutY="69.0" text="Troco de: " />
-      <Label layoutX="1038.0" layoutY="38.0" text="R$ 250,00" textFill="#10bf24">
+      <Label fx:id="lbValorTotal" layoutX="1038.0" layoutY="38.0" text="R$ 00,00" textFill="#10bf24">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="841.0" layoutY="84.0" text="Valor em cartão:">
@@ -79,9 +85,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="1050.0" layoutY="85.0" text="R$ 50,00" textFill="#10bf24">
+      <Label fx:id="lbValorCartao" layoutX="1038.0" layoutY="85.0" text="R$ 00,00" textFill="#10bf24">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="841.0" layoutY="60.0" text="Valor em dinheiro:">
@@ -89,9 +95,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="1049.0" layoutY="60.0" text="R$ 50,00" textFill="#10bf24">
+      <Label fx:id="lbValorDinheiro" layoutX="1038.0" layoutY="60.0" text="R$ 00,00" textFill="#10bf24">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Button fx:id="btCalTroco" layoutX="394.0" layoutY="64.0" mnemonicParsing="false" onAction="#calculaTroco" prefHeight="16.0" prefWidth="13.0" text="=" />

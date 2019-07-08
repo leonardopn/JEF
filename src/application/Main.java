@@ -23,6 +23,7 @@ public class Main extends Application {
 
 			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/View.fxml"));
 			main = new Scene(fxmlMain);
+			
 			Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/ViewCaixa.fxml"));
 			caixa = new Scene(fxmlCaixa);
 
