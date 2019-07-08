@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ViewController">
    <children>
       <Button fx:id="btCarregar" layoutX="88.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtCarregarAction" prefHeight="26.0" prefWidth="103.0" text="Carregar" />
       <Button fx:id="btSalvar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtSalvarAction" prefHeight="25.0" prefWidth="70.0" text="Salvar" />

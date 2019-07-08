@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="50000.0" maxWidth="50000.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewFuncionarioController">
+<AnchorPane maxHeight="50000.0" maxWidth="50000.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ViewFuncionarioController">
    <children>
       <TextField fx:id="txtIdFuncionario" layoutX="174.0" layoutY="105.0" promptText="ID fo funcionário" />
       <Label layoutX="149.0" layoutY="109.0" text="ID:" />

@@ -21,16 +21,16 @@ public class Main extends Application {
 		try {
 			stage = primaryStage;
 
-			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/View.fxml"));
+			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/View.fxml"));
 			main = new Scene(fxmlMain);
 			
-			Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/ViewCaixa.fxml"));
+			Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
 			caixa = new Scene(fxmlCaixa);
 
-			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/ViewFuncionario.fxml"));
+			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
 			funcionario = new Scene(fxmlfuncionario);
 
-			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/ViewCliente.fxml"));
+			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
 			cliente = new Scene(fxmlCliente);
 
 			stage.setScene(main);
