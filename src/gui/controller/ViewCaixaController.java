@@ -2,6 +2,7 @@ package gui.controller;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -40,10 +41,6 @@ public class ViewCaixaController implements Initializable {
 	ObservableList<Transacao> obTableTemp;
 
 	ObservableList<String> obFormaPagamento;
-	
-	double total = 0;
-	double totalDinheiro = 0;
-	double totalCartao = 0;
 
 	@FXML
 	private Button btVoltar;
@@ -207,25 +204,30 @@ public class ViewCaixaController implements Initializable {
 	}
 	
 	public void calculaCaixa() {
-		total = 0;
-		totalDinheiro = 0;
-		totalCartao = 0;
+		double total = 0;
+		double totalDinheiro = 0;
+		double totalCartao = 0;
+		lbValorTotal.setText("R$ "+String.valueOf(total));
+		lbValorDinheiro.setText("R$ "+String.valueOf(totalDinheiro));
+		lbValorCartao.setText("R$ "+String.valueOf(totalCartao));
+		ArrayList<Transacao> tranTemp = new ArrayList<>();
 		for(Transacao tran : Caixa.caixa) {
 			if(tran.getData().equals(LocalDate.now())) {
-				total += tran.getValor();
-				lbValorTotal.setText("R$ "+String.valueOf(total));
-				if(tran.getFormaPagamento().equals("Dinheiro")) {
-					totalDinheiro += tran.getValor();
-					lbValorDinheiro.setText("R$ "+String.valueOf(totalDinheiro));
-				}
-				else {
-					totalCartao += tran.getValor();
-					lbValorCartao.setText("R$ "+String.valueOf(totalCartao));
-					
-				}
+				tranTemp.add(tran);	
 			}
 		}
-		
+		for(Transacao tran2 : tranTemp) {
+			total += tran2.getValor();
+			lbValorTotal.setText("R$ "+String.valueOf(total));
+			if(tran2.getFormaPagamento().equals("Dinheiro")) {
+				totalDinheiro += tran2.getValor();
+				lbValorDinheiro.setText("R$ "+String.valueOf(totalDinheiro));
+			}
+			else {
+				totalCartao += tran2.getValor();
+				lbValorCartao.setText("R$ "+String.valueOf(totalCartao));
+			}
+		}
 	}
 
 	public void carregaCliente() {

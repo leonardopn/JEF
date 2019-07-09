@@ -3,6 +3,7 @@ package gui.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import model.services.Cadastro;
 public class ViewAtualizaClienteController implements Initializable{
 	
 	ObservableList<Cliente> obCliente;
+	ObservableList<Cliente> obClienteExcluido;
 	
 	@FXML
 	private Button btAtualiza;
@@ -46,6 +48,7 @@ public class ViewAtualizaClienteController implements Initializable{
 	public void carregaCliente() {
 		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
         tvCliente.setItems(obCliente);
+        
 	}
 	
 	@FXML
@@ -61,15 +64,20 @@ public class ViewAtualizaClienteController implements Initializable{
 	
 	@FXML
 	public void atualizaCliente() {
-		int id = Integer.parseInt(txtIdCliente.getText());
-		String nome = txtNomeCliente.getText();
-		String email = txtEmailCliente.getText();
-		String telefone = txtTelefoneCliente.getText();
-		Cliente cliente = new Cliente(id, nome, email, telefone);
-		Cadastro.clientes.remove(colunaId);
-		Cadastro.verificaCliente(cliente);
-		Cadastro.clientes.add(cliente);
+		if(Alerts.showAlertAtualizacao()) {
+			int id = Integer.parseInt(txtIdCliente.getText());
+			String nome = txtNomeCliente.getText();
+			String email = txtEmailCliente.getText();
+			String telefone = txtTelefoneCliente.getText();
+			Cliente cliente = new Cliente(id, nome, email, telefone);
+			Cadastro.clientes.removeIf((Cliente cli) -> cli.getId() == cliente.getId());
+			Cadastro.verificaCliente(cliente);
+			Cadastro.clientes.add(cliente);
+			carregaCliente();
+		}
 	}
+	
+
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

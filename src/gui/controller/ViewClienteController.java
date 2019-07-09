@@ -122,15 +122,17 @@ public class ViewClienteController implements Initializable{
 	}
 	
 	public void excluirCliente() {
-		ObservableList<Cliente> obExcluirCliente = FXCollections.observableArrayList();
-		
-		for(Cliente cli : obCliente) {
-			if(cli.getSelect().isSelected()) {
-				obExcluirCliente.add(cli);
+		if(Alerts.showAlertExclusao()) {
+			ObservableList<Cliente> obExcluirCliente = FXCollections.observableArrayList();
+			
+			for(Cliente cli : obCliente) {
+				if(cli.getSelect().isSelected()) {
+					obExcluirCliente.add(cli);
+				}
 			}
+			obCliente.removeAll(obExcluirCliente);
+			Cadastro.clientes.removeAll(obExcluirCliente);
 		}
-		obCliente.removeAll(obExcluirCliente);
-		Cadastro.clientes.removeAll(obExcluirCliente);
 	}
 	
 	@Override
