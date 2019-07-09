@@ -76,8 +76,6 @@ public class ViewAtualizaClienteController implements Initializable{
 			carregaCliente();
 		}
 	}
-	
-
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

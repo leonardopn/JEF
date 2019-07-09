@@ -99,6 +99,11 @@ public class ViewClienteController implements Initializable{
 		carregaCliente();
 	}
 	
+	public void carregaCliente() {
+		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
+        tvCliente.setItems(obCliente);
+	}
+	
 	@FXML
 	public void onBtCriaClienteAction(){
 		try {
@@ -114,11 +119,6 @@ public class ViewClienteController implements Initializable{
 		catch (NumberFormatException e) {
 			Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
 		}
-	}
-	
-	public void carregaCliente() {
-			obCliente = FXCollections.observableArrayList(Cadastro.clientes);
-	        tvCliente.setItems(obCliente);
 	}
 	
 	public void excluirCliente() {

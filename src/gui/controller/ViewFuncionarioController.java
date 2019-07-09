@@ -1,5 +1,6 @@
 package gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,20 +9,31 @@ import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.entities.Funcionario;
 import model.services.Cadastro;
+import model.services.Carregar;
 
 public class ViewFuncionarioController implements Initializable{
 	
 	ObservableList<Funcionario> obFuncionario;
+	
+	@FXML
+	private Button btRecarregar;
+	
+	@FXML
+	private Button btAtualizar;
 	
 	@FXML
 	private Button btCriaFuncionario;
@@ -62,37 +74,61 @@ public class ViewFuncionarioController implements Initializable{
 	}
 	
 	@FXML
-	public void onBtCriaFuncionarioAction(){
+	public void atualizaFuncionario() {
+		Parent parent;
 		try {
-			int id = Integer.parseInt(txtIdFuncionario.getText());
-			String nome = txtNomeFuncionario.getText();
-			Double salario = Double.parseDouble(txtSalarioFuncionario.getText());
-			Funcionario fun01 = new Funcionario(nome, id, salario);
-			Cadastro.verificaFuncionario(fun01);
-			Cadastro.funcionarios.add(fun01);
-			carregaFuncionario();
-		}
-		catch (NumberFormatException e) {
-			Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
-		}
-		
+			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaFuncionario.fxml"));
+			Scene scene = new Scene(parent);
+			Stage stage = new Stage();
+	    	stage.setScene(scene);
+	    	stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	@FXML
+	public void onBtDesfazerAction(){
+		Carregar.carregaFuncionario();
+		carregaFuncionario();
 	}
 	
 	public void carregaFuncionario() {
-			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
-	        tvFuncionario.setItems(obFuncionario);
+		obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+        tvFuncionario.setItems(obFuncionario);
+        tvFuncionario.refresh();
+	}
+	
+	@FXML
+	public void onBtCriaFuncionarioAction(){
+		if(Alerts.showAlertAtualizacao()) {
+			try {
+				int id = Integer.parseInt(txtIdFuncionario.getText());
+				String nome = txtNomeFuncionario.getText();
+				Double salario = Double.parseDouble(txtSalarioFuncionario.getText());
+				Funcionario fun01 = new Funcionario(nome, id, salario);
+				Cadastro.verificaFuncionario(fun01);
+				Cadastro.funcionarios.add(fun01);
+				carregaFuncionario();
+			}
+			catch (NumberFormatException e) {
+				Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
+			}
+		}
 	}
 	
 	public void excluirFuncionario() {
-		ObservableList<Funcionario> obExcluirFuncionario = FXCollections.observableArrayList();
-		
-		for(Funcionario fun : obFuncionario) {
-			if(fun.getSelect().isSelected()) {
-				obExcluirFuncionario.add(fun);
+		if(Alerts.showAlertExclusao()) {
+			ObservableList<Funcionario> obExcluirFuncionario = FXCollections.observableArrayList();
+			
+			for(Funcionario fun : obFuncionario) {
+				if(fun.getSelect().isSelected()) {
+					obExcluirFuncionario.add(fun);
+				}
 			}
+			obFuncionario.removeAll(obExcluirFuncionario);
+			Cadastro.funcionarios.removeAll(obExcluirFuncionario);
 		}
-		obFuncionario.removeAll(obExcluirFuncionario);
-		Cadastro.funcionarios.removeAll(obExcluirFuncionario);
 	}
 	
 	@Override

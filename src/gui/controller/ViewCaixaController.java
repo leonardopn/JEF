@@ -34,8 +34,6 @@ public class ViewCaixaController implements Initializable {
 
 	ObservableList<Cliente> obCliente;
 
-	ObservableList<Funcionario> obFuncionario;
-
 	ObservableList<Transacao> obTable;
 
 	ObservableList<Transacao> obTableTemp;
@@ -158,8 +156,8 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	public void onBtAtualizarAction() {
-		carregaCliente();
 		carregaFuncionario();
+		carregaCliente();
 		carregaFormaPagamento();
 
 	}
@@ -236,7 +234,7 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	public void carregaFuncionario() {
-		obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 		cbFuncionario.setItems(obFuncionario);
 	}
 

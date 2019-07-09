@@ -34,5 +34,7 @@
       <Label layoutX="23.0" layoutY="529.0" prefHeight="25.0" prefWidth="454.0" text="Selecione os funcionários na coluna &quot;Excluir&quot; e aperte o botão abaixo para deleta-los!" />
       <Button fx:id="btVoltar" layoutX="11.0" layoutY="11.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
       <Line endX="650.0" endY="6.0" layoutX="-150.0" layoutY="41.0" startX="150.2928466796875" startY="6.0" stroke="#827f7f" />
+      <Button fx:id="btRecarregar" layoutX="94.0" layoutY="11.0" mnemonicParsing="false" onAction="#onBtDesfazerAction" prefHeight="26.0" prefWidth="93.0" text="Recarregar" />
+      <Button fx:id="btAtualizar" layoutX="406.0" layoutY="12.0" mnemonicParsing="false" onAction="#atualizaFuncionario" prefHeight="26.0" prefWidth="80.0" text="Atualizar" />
    </children>
 </AnchorPane>
