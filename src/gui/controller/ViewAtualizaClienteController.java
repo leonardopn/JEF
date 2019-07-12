@@ -1,13 +1,18 @@
 package gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,6 +56,17 @@ public class ViewAtualizaClienteController implements Initializable{
         
 	}
 	
+	public void voltaScene() {
+		try {
+			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
+			Scene Cliente = new Scene(fxmlCliente);
+			Main.getStage().setScene(Cliente);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@FXML
 	public void selecionaCliente() {
 		Cliente cli = tvCliente.getSelectionModel().getSelectedItem();
@@ -73,7 +89,7 @@ public class ViewAtualizaClienteController implements Initializable{
 			Cadastro.clientes.removeIf((Cliente cli) -> cli.getId() == cliente.getId());
 			Cadastro.verificaCliente(cliente);
 			Cadastro.clientes.add(cliente);
-			carregaCliente();
+			voltaScene();
 		}
 	}
 

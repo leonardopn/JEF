@@ -11,16 +11,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 import model.services.Carregar;
@@ -70,7 +69,7 @@ public class ViewFuncionarioController implements Initializable{
 	
 	@FXML
 	public void onBtVoltarAction() {
-		Main.trocaTela("main");
+		Main.getStage().setScene(Main.getScene());
 	}
 	
 	@FXML
@@ -79,9 +78,7 @@ public class ViewFuncionarioController implements Initializable{
 		try {
 			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaFuncionario.fxml"));
 			Scene scene = new Scene(parent);
-			Stage stage = new Stage();
-	    	stage.setScene(scene);
-	    	stage.show();
+			Main.getStage().setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
@@ -98,7 +95,7 @@ public class ViewFuncionarioController implements Initializable{
         tvFuncionario.setItems(obFuncionario);
         tvFuncionario.refresh();
 	}
-	
+
 	@FXML
 	public void onBtCriaFuncionarioAction(){
 		if(Alerts.showAlertAtualizacao()) {

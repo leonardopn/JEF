@@ -1,13 +1,18 @@
 package gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,6 +56,17 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 		txtSalarioFuncionario.setText(String.valueOf(fun.getSalario()));
 	}
 	
+	public void voltaScene() {
+		try {
+			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
+			Scene funcionario = new Scene(fxmlfuncionario);
+			Main.getStage().setScene(funcionario);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void carregaFuncionario() {
 		obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
         tvFuncionario.setItems(obFuncionario);
@@ -66,7 +82,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 			Funcionario funcionario = new Funcionario(nome, id, salario);
 			Cadastro.funcionarios.removeIf((Funcionario fun) -> fun.getId() == funcionario.getId());
 			Cadastro.funcionarios.add(funcionario);
-			carregaFuncionario();
+			voltaScene();
 		}
 	}
 

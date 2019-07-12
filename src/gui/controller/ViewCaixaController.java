@@ -126,7 +126,7 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	public void onBtVoltarAction() {
-		Main.trocaTela("main");
+		Main.getStage().setScene(Main.getScene());
 	}
 
 	@FXML

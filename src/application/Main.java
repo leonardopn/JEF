@@ -11,29 +11,16 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	private static Stage stage;
-	private static Scene main;
-	private static Scene caixa;
-	private static Scene funcionario;
-	private static Scene cliente;
-
+	private static Scene login;
+	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			stage = primaryStage;
-
-			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/View.fxml"));
-			main = new Scene(fxmlMain);
-			
-			Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
-			caixa = new Scene(fxmlCaixa);
-
-			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
-			funcionario = new Scene(fxmlfuncionario);
-
-			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
-			cliente = new Scene(fxmlCliente);
-
-			stage.setScene(main);
+			Parent fxmlLogin = FXMLLoader.load(getClass().getResource("/gui/view/ViewLogin.fxml"));
+			login = new Scene(fxmlLogin);
+			stage.setScene(login);
 			stage.show();
 			
 		} catch (IOException e) {
@@ -41,23 +28,14 @@ public class Main extends Application {
 		}
 	}
 
-	public static void trocaTela(String src) {
-		switch (src) {
-		case "main":
-			stage.setScene(main);
-			break;
-		case "caixa":
-			stage.setScene(caixa);
-			break;
-		case "funcionario":
-			stage.setScene(funcionario);
-			break;
-		case "cliente":
-			stage.setScene(cliente);
-			break;
-		}
+	public static Stage getStage() {
+		return stage;
 	}
-
+	
+	public static Scene getScene() {
+		return login;
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
