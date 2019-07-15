@@ -4,14 +4,40 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 
+import db.DB;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Transacao;
+import model.exceptions.DbException;
 
 public class Carregar {
+	static Statement st = null;
+	static ResultSet rs = null;
+	
+	public static void carregaCliente() {
+		try {	
+			 st = DB.getConnection().createStatement();
+			 rs = st.executeQuery("select * from cliente");
+			 while(rs.next()) {
+				 Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"));
+				 Cadastro.clientes.add(cliente);
+			 }
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeConnection();
+			DB.fechaResultSet(rs);
+			DB.fechaStatement(st);
+		}
+	}
 	
 	public static void carregaCaixa() {
 		String linha = "";
@@ -32,49 +58,45 @@ public class Carregar {
 	}
 	
 	public static void carregaFuncionario() {
-		String linha = "";
-		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "funcionario.csv";
-		if(IdentificadorSO.sistema() == "linux"){
-			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
+		try {
+			 st = DB.getConnection().createStatement();
+			 rs = st.executeQuery("select * from funcionario");
+			 while(rs.next()) {
+				 Funcionario fun = new Funcionario(rs.getString("nome"), rs.getInt("id"),  rs.getDouble("salario"));
+				 Cadastro.funcionarios.add(fun);
+			 }
 		}
-		try(BufferedReader brFuncionario = new BufferedReader(new FileReader(caminho));) {
-			while((linha = brFuncionario.readLine()) != null) {	
-				String[] linhaFuncionario = linha.split(";");				
-				Funcionario funcionario = new Funcionario(
-						linhaFuncionario[0],
-						Integer.parseInt(linhaFuncionario[1]),
-						Double.valueOf(linhaFuncionario[2]));
-				Cadastro.funcionarios.add(funcionario);
-			}
-			brFuncionario.close();
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
 		}
-		catch(IOException e) {
-			e.printStackTrace();
+		finally {
+			DB.closeConnection();
+			DB.fechaResultSet(rs);
+			DB.fechaStatement(st);
 		}
 	}
 	
-	public static void carregaCliente() {
-		String linha = "";
-		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "clientes.csv";
-		if(IdentificadorSO.sistema() == "linux"){
-			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"clientes.csv";
-		}
-		try(BufferedReader brCliente = new BufferedReader(new FileReader(caminho));) {
-			while((linha = brCliente.readLine()) != null) {	
-				String[] linhaCliente = linha.split(";");				
-				Cliente cliente = new Cliente(
-						Integer.parseInt(linhaCliente[0]),
-						linhaCliente[1],
-						linhaCliente[2],
-						linhaCliente[3]);
-				Cadastro.clientes.add(cliente);
-			}
-			brCliente.close();
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void carregaFuncionario() {
+//		String linha = "";
+//		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "funcionario.csv";
+//		if(IdentificadorSO.sistema() == "linux"){
+//			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
+//		}
+//		try(BufferedReader brFuncionario = new BufferedReader(new FileReader(caminho));) {
+//			while((linha = brFuncionario.readLine()) != null) {	
+//				String[] linhaFuncionario = linha.split(";");				
+//				Funcionario funcionario = new Funcionario(
+//						linhaFuncionario[0],
+//						Integer.parseInt(linhaFuncionario[1]),
+//						Double.valueOf(linhaFuncionario[2]));
+//				Cadastro.funcionarios.add(funcionario);
+//			}
+//			brFuncionario.close();
+//		}
+//		catch(IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public static void carregaTransacaoExpecifica(LocalDate data) {
 		Caixa.caixaTemp.clear();

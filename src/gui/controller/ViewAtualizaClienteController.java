@@ -30,6 +30,9 @@ public class ViewAtualizaClienteController implements Initializable{
 	private Button btAtualiza;
 	
 	@FXML
+	private Button btVoltar;
+	
+	@FXML
 	private TextField txtIdCliente;
 	
 	@FXML

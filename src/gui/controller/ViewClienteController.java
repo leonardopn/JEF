@@ -75,7 +75,7 @@ public class ViewClienteController implements Initializable{
 	
 	@FXML
 	public void onBtVoltarAction() {
-		Main.getStage().setScene(Main.getScene());
+		Main.getStage().setScene(Main.getMain());
 	}
 	
 	@FXML

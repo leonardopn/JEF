@@ -9,9 +9,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="290.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ViewAtualizaClienteController">
+<AnchorPane prefHeight="325.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ViewAtualizaClienteController">
    <children>
-      <Line endX="-105.0" endY="212.0" layoutX="325.0" layoutY="79.0" startX="-104.5" startY="-79.0" stroke="#827f7f" />
+      <Line endX="-105.0" endY="245.0" layoutX="325.0" layoutY="79.0" startX="-104.5" startY="-79.0" stroke="#827f7f" />
       <TextField fx:id="txtIdCliente" layoutX="309.0" layoutY="95.0" promptText="ID do cliente" />
       <Label layoutX="284.0" layoutY="99.0" text="ID:" />
       <TextField fx:id="txtNomeCliente" layoutX="309.0" layoutY="131.0" promptText="Nome do cliente" />
@@ -26,11 +26,13 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <TableView fx:id="tvCliente" layoutX="-1.0" onMouseClicked="#selecionaCliente" prefHeight="291.0" prefWidth="221.0">
+      <TableView fx:id="tvCliente" layoutX="-1.0" layoutY="32.0" onMouseClicked="#selecionaCliente" prefHeight="292.0" prefWidth="221.0">
          <columns>
             <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="40.0" text="ID" />
             <TableColumn fx:id="colunaNome" prefWidth="180.0" text="Nome" />
          </columns>
       </TableView>
+      <Button fx:id="btVoltar" layoutX="5.0" layoutY="2.0" mnemonicParsing="false" onAction="#voltaScene" prefHeight="16.0" prefWidth="62.0" text="Voltar" />
+      <Line endX="-199.0" endY="145.2928924560547" layoutX="192.0" layoutY="-114.0" startX="28.0" startY="145.99998474121094" stroke="#827f7f" />
    </children>
 </AnchorPane>

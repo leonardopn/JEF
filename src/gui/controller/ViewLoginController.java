@@ -32,14 +32,7 @@ public class ViewLoginController {
 		String useTemp = tfUsuario.getText();
 		String passTemp = pfSenha.getText();
 		if(useTemp.equals(usuario) && passTemp.equals(senha)) {
-			try {
-				Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/View.fxml"));
-				Scene Principal = new Scene(fxmlMain);
-				Main.getStage().setScene(Principal);
-			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
+			Main.getStage().setScene(Main.getMain());
 		}
 		else {
 			Alerts.showAlert("Erro no login", "Usuário ou senha incorreto", null, AlertType.INFORMATION);

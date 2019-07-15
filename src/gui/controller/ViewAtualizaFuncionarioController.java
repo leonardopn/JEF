@@ -30,6 +30,9 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	private Button btAtualiza;
 	
 	@FXML
+	private Button btVoltar;
+	
+	@FXML
 	private TextField txtIdFuncionario;
 	
 	@FXML

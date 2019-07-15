@@ -12,11 +12,14 @@ public class Main extends Application {
 
 	private static Stage stage;
 	private static Scene login;
+	private static Scene main;
 	
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/View.fxml"));
+			main = new Scene(fxmlMain);
 			stage = primaryStage;
 			Parent fxmlLogin = FXMLLoader.load(getClass().getResource("/gui/view/ViewLogin.fxml"));
 			login = new Scene(fxmlLogin);
@@ -28,6 +31,9 @@ public class Main extends Application {
 		}
 	}
 
+	public static Scene getMain() {
+		return main;
+	}
 	public static Stage getStage() {
 		return stage;
 	}
