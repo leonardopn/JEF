@@ -23,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 import model.services.Carregar;
+import model.services.Salvar;
 
 public class ViewFuncionarioController implements Initializable{
 	
@@ -106,6 +107,7 @@ public class ViewFuncionarioController implements Initializable{
 				Funcionario fun01 = new Funcionario(nome, id, salario);
 				Cadastro.verificaFuncionario(fun01);
 				Cadastro.funcionarios.add(fun01);
+				Salvar.salvarFuncionario(txtIdFuncionario, txtNomeFuncionario, txtSalarioFuncionario);
 				carregaFuncionario();
 			}
 			catch (NumberFormatException e) {
@@ -121,6 +123,7 @@ public class ViewFuncionarioController implements Initializable{
 			for(Funcionario fun : obFuncionario) {
 				if(fun.getSelect().isSelected()) {
 					obExcluirFuncionario.add(fun);
+					Salvar.excluirFuncionario(fun);
 				}
 			}
 			obFuncionario.removeAll(obExcluirFuncionario);

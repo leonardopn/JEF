@@ -4,17 +4,21 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
+import db.DB;
+import javafx.scene.control.TextField;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Transacao;
 
-
-
 public class Salvar {
 	static File arquivoTransacao;
+	static PreparedStatement st = null;
+	
 	
 	public static void salvarStatus() {
 		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
@@ -31,42 +35,83 @@ public class Salvar {
 			System.out.println("Ocorreu um erro ao salvar o arquivo funcionario.csv: " + e.getMessage());
 		}
 	}
-
 	
-	public static void salvarFuncionario() {
-		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
-		if (IdentificadorSO.sistema() == "linux"){
-				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"funcionario.csv";
+	public static void salvarFuncionario(TextField txtIdFuncionario, TextField txtNomeFuncionario, TextField txtSalarioFuncionario) {
+		try {
+			st = DB.getConnection().prepareStatement(
+					"INSERT INTO funcionario "
+					+ "(nome, id, salario) "
+					+ "VALUES "
+					+ "(?, ?, ?)");
+			st.setInt(2, Integer.parseInt(txtIdFuncionario.getText()));
+			st.setString(1, txtNomeFuncionario.getText());
+			st.setString(3, txtSalarioFuncionario.getText());
+			st.execute();
 		}
-		
-		File arquivoFuncionario = new File(caminho);
-		try(BufferedWriter bwFuncionario = new BufferedWriter(new FileWriter(arquivoFuncionario))) {
-			
-			for(Funcionario fun : Cadastro.funcionarios) {
-				bwFuncionario.write(fun.getNome()+ ";"  + fun.getId() + ";" + fun.getSalario() + "\n");
-			}
-			bwFuncionario.close();
-			
-		} catch (IOException e) {
-			System.out.println("Ocorreu um erro ao salvar o arquivo funcionario.csv: " + e.getMessage());
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
 		}
 	}
 	
-	public static void salvarCliente() {
-		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"clientes.csv";
-		if (IdentificadorSO.sistema() == "linux"){
-			caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"clientes.csv";
+	public static void excluirFuncionario(Funcionario fun) {
+		try {
+			st = DB.getConnection().prepareStatement(
+					"DELETE FROM funcionario "
+					+ "WHERE id= "
+					+ "(?)");
+			st.setInt(1, fun.getId()); 
+			st.execute();
 		}
-		File arquivoCliente = new File(caminho);
-		try(BufferedWriter bwCliente = new BufferedWriter(new FileWriter(arquivoCliente))) {
-			
-			for(Cliente cli : Cadastro.clientes) {
-				bwCliente.write(cli.getId() + ";" + cli.getNome()+ ";" + cli.getEmail() + ";" + cli.getTelefone() + "\n");
-			}
-			bwCliente.close();
-			
-		} catch (IOException e) {
-			System.out.println("Ocorreu um erro ao salvar o arquivo cliente.csv: " + e.getMessage());
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
+	}
+	
+	public static void salvarCliente(TextField txtIdCliente, TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente) {
+		try {
+			st = DB.getConnection().prepareStatement(
+					"INSERT INTO cliente "
+					+ "(id, nome, email, telefone) "
+					+ "VALUES "
+					+ "(?, ?, ?, ? )");
+			st.setInt(1, Integer.parseInt(txtIdCliente.getText()));
+			st.setString(2, txtNomeCliente.getText());
+			st.setString(3, txtEmailCliente.getText());
+			st.setString(4, txtTelefoneCliente.getText());
+			st.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
+	}
+	
+	public static void excluirCliente(Cliente cli) {
+		try {
+			st = DB.getConnection().prepareStatement(
+					"DELETE FROM cliente "
+					+ "WHERE id= "
+					+ "(?)");
+			st.setInt(1, cli.getId()); 
+			st.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
 		}
 	}
 	
@@ -160,8 +205,6 @@ public class Salvar {
 	}
 	
 	public static void salvar() {
-		salvarCliente();
-		salvarFuncionario();
 		salvarTransacao();
 		salvarStatus();
 	}

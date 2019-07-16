@@ -23,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Cliente;
 import model.services.Cadastro;
 import model.services.Carregar;
+import model.services.Salvar;
 
 public class ViewClienteController implements Initializable{
 	
@@ -111,6 +112,7 @@ public class ViewClienteController implements Initializable{
 			Cliente cliente = new Cliente(id, nome, email, telefone);
 			Cadastro.verificaCliente(cliente);
 			Cadastro.clientes.add(cliente);
+			Salvar.salvarCliente(txtIdCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente);
 			carregaCliente();
 		}
 		catch (NumberFormatException e) {
@@ -125,6 +127,7 @@ public class ViewClienteController implements Initializable{
 			for(Cliente cli : obCliente) {
 				if(cli.getSelect().isSelected()) {
 					obExcluirCliente.add(cli);
+					Salvar.excluirCliente(cli);
 				}
 			}
 			obCliente.removeAll(obExcluirCliente);
