@@ -15,9 +15,9 @@
          </font>
       </Label>
       <Label layoutX="59.0" layoutY="100.0" text="Usuario:" />
-      <PasswordField fx:id="pfSenha" layoutX="130.0" layoutY="149.0" />
-      <TextField fx:id="tfUsuario" layoutX="130.0" layoutY="95.0" />
       <Label layoutX="59.0" layoutY="154.0" text="Senha:" />
+      <TextField fx:id="tfUsuario" layoutX="130.0" layoutY="95.0" />
+      <PasswordField fx:id="pfSenha" layoutX="130.0" layoutY="149.0" />
       <Button fx:id="btLogin" layoutX="239.0" layoutY="197.0" mnemonicParsing="false" onAction="#onBtLoginAction" text="Login" />
    </children>
 </AnchorPane>

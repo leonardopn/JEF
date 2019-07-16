@@ -42,6 +42,10 @@ public class Main extends Application {
 		return login;
 	}
 	
+	public static void fechaProgram() {
+		stage.close();
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
