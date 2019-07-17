@@ -1,7 +1,9 @@
 package gui.controller;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -251,17 +253,19 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	public void onBtEnviarTransacaoAction() {
+		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		int id = Integer.parseInt(tfId.getText());
 		String cliente = cbCliente.getValue().getNome();
 		String fun = cbFuncionario.getValue().getNome();
-		LocalDate data = dpData.getValue();
+		String data = localDateFormatada.format((dpData.getValue()));
 		double valor = Double.parseDouble(tfValor.getText());
 		String formaPaga = cbFormaPagamento.getValue();
 		Transacao tran = new Transacao(id, valor, data, cliente, fun, formaPaga);
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
-		Salvar.salvarTransacao();
-		carregaTransacao();
+		Salvar.salvarTransacao(tfId, cbCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
+		Carregar.carregaTransacao();
+		//carregaTransacao();
 		carregaTable();
 	}
 
@@ -289,12 +293,10 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	public void salvarTransacaoExcluidos() {
-		Salvar.salvarTransacaoExcluidos(dpSelecao.getValue());
+		//Salvar.salvarTransacaoExcluidos(dpSelecao.getValue());
 	}
 
 	public void carregaTransacao() {
-		carregaTable();
-		Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
 		carregaTable();
 	}
 
@@ -314,6 +316,6 @@ public class ViewCaixaController implements Initializable {
 		colunaMeioPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
-		carregaTransacao();
+		//carregaTransacao();
 	}
 }

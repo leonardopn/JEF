@@ -9,13 +9,13 @@ public class Transacao implements Comparable<Transacao>{
 	
 	private int id;
 	private double valor;
-	private LocalDate data;
+	private String data;
 	private String cliente;
 	private String atendente;
 	private CheckBox select;
 	private String formaPagamento;
 	
-	public Transacao(int id, double valor, LocalDate data, String cliente, String atendente, String formaPagamento) {
+	public Transacao(int id, double valor, String data, String cliente, String atendente, String formaPagamento) {
 		this.id = id;
 		this.valor = valor;
 		this.data = data;
@@ -47,12 +47,15 @@ public class Transacao implements Comparable<Transacao>{
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
-	public LocalDate getData() {
+	
+	public String getData() {
 		return data;
 	}
-	public void setData(LocalDate data) {
+
+	public void setData(String data) {
 		this.data = data;
 	}
+
 	public String getCliente() {
 		return cliente;
 	}
