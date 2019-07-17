@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Funcionario;
+import model.services.Atualizar;
 import model.services.Cadastro;
 
 public class ViewAtualizaFuncionarioController implements Initializable{
@@ -85,6 +86,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 			Funcionario funcionario = new Funcionario(nome, id, salario);
 			Cadastro.funcionarios.removeIf((Funcionario fun) -> fun.getId() == funcionario.getId());
 			Cadastro.funcionarios.add(funcionario);
+			Atualizar.atualizarFuncionario(funcionario);
 			voltaScene();
 		}
 	}

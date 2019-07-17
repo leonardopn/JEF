@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Cliente;
+import model.services.Atualizar;
 import model.services.Cadastro;
 
 public class ViewAtualizaClienteController implements Initializable{
@@ -92,6 +93,7 @@ public class ViewAtualizaClienteController implements Initializable{
 			Cadastro.clientes.removeIf((Cliente cli) -> cli.getId() == cliente.getId());
 			Cadastro.verificaCliente(cliente);
 			Cadastro.clientes.add(cliente);
+			Atualizar.atualizarCliente(cliente);
 			voltaScene();
 		}
 	}
