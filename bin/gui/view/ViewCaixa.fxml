@@ -65,7 +65,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="840.0" layoutY="37.0" text="Valor total em caixa:">
+      <Label layoutX="798.0" layoutY="37.0" text="Valor total em caixa:">
          <font>
             <Font size="18.0" />
          </font>
@@ -75,27 +75,27 @@
       <Label layoutX="183.0" layoutY="52.0" text="Valor do serviço:" />
       <TextField fx:id="tfDinheiroDado" layoutX="305.0" layoutY="77.0" prefHeight="25.0" prefWidth="79.0" />
       <Label fx:id="lbTroco" layoutX="434.0" layoutY="69.0" text="Troco de: " />
-      <Label fx:id="lbValorTotal" layoutX="1038.0" layoutY="38.0" text="R$ 00,00" textFill="#10bf24">
+      <Label fx:id="lbValorTotal" layoutX="1027.0" layoutY="38.0" text="00,00" textFill="#10bf24">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="841.0" layoutY="84.0" text="Valor em cartão:">
+      <Label layoutX="836.0" layoutY="83.0" text="Valor em cartão:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lbValorCartao" layoutX="1038.0" layoutY="85.0" text="R$ 00,00" textFill="#10bf24">
+      <Label fx:id="lbValorCartao" layoutX="1029.0" layoutY="84.0" text="00,00" textFill="#10bf24">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="841.0" layoutY="60.0" text="Valor em dinheiro:">
+      <Label layoutX="818.0" layoutY="60.0" text="Valor em dinheiro:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lbValorDinheiro" layoutX="1038.0" layoutY="60.0" text="R$ 00,00" textFill="#10bf24">
+      <Label fx:id="lbValorDinheiro" layoutX="1028.0" layoutY="61.0" text="00,00" textFill="#10bf24">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -105,5 +105,20 @@
       <Line endX="1018.0" endY="1.0" layoutX="116.0" layoutY="528.0" startX="56.0" stroke="#827f7f" />
       <Button fx:id="btExcluir" layoutX="184.0" layoutY="538.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="25.0" prefWidth="70.0" text="Excluir" />
       <Label layoutX="271.0" layoutY="542.0" text="Excluir transações selecionadas" />
+      <Label fx:id="lbValorTotal1" layoutX="995.0" layoutY="38.0" text="R$" textFill="#10bf24">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbValorTotal11" layoutX="995.0" layoutY="60.0" text="R$" textFill="#10bf24">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbValorTotal12" layoutX="995.0" layoutY="84.0" text="R$" textFill="#10bf24">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

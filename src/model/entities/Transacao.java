@@ -1,6 +1,5 @@
 package model.entities;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 import javafx.scene.control.CheckBox;
@@ -15,7 +14,7 @@ public class Transacao implements Comparable<Transacao>{
 	private CheckBox select;
 	private String formaPagamento;
 	
-	public Transacao(int id, double valor, String data, String cliente, String atendente, String formaPagamento) {
+	public Transacao(int id, double valor, String cliente, String atendente, String formaPagamento, String data) {
 		this.id = id;
 		this.valor = valor;
 		this.data = data;

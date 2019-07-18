@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -60,24 +60,6 @@ public class Salvar {
 		}
 	}
 	
-	public static void excluirFuncionario(Funcionario fun) {
-		try {
-			st = DB.getConnection().prepareStatement(
-					"DELETE FROM funcionario "
-					+ "WHERE id= "
-					+ "(?)");
-			st.setInt(1, fun.getId()); 
-			st.execute();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.fechaStatement(st);
-			DB.closeConnection();
-		}
-	}
-	
 	public static void salvarCliente(TextField txtIdCliente, TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente) {
 		try {
 			st = DB.getConnection().prepareStatement(
@@ -89,24 +71,6 @@ public class Salvar {
 			st.setString(2, txtNomeCliente.getText());
 			st.setString(3, txtEmailCliente.getText());
 			st.setString(4, txtTelefoneCliente.getText());
-			st.execute();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.fechaStatement(st);
-			DB.closeConnection();
-		}
-	}
-	
-	public static void excluirCliente(Cliente cli) {
-		try {
-			st = DB.getConnection().prepareStatement(
-					"DELETE FROM cliente "
-					+ "WHERE id= "
-					+ "(?)");
-			st.setInt(1, cli.getId()); 
 			st.execute();
 		}
 		catch(SQLException e) {
@@ -145,94 +109,27 @@ public class Salvar {
 		}
 	}
 	
-//	public static void salvarTransacao() {
-//		for(Transacao tran : Caixa.caixa) {
-//			String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar + "transacoes.csv";
-//			if (IdentificadorSO.sistema() == "linux"){
-//				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar + "transacoes.csv";
-//			}
-//			arquivoTransacao = new File(caminho);
-//			
-//			try(BufferedWriter bwTransacao = new BufferedWriter(new FileWriter(arquivoTransacao))) {
-//				for(Transacao tran2 : Caixa.caixa) {
-//					bwTransacao.write(tran2.getId() + ";" + 
-//						      tran2.getValor()+ ";" + 
-//						      String.valueOf(tran2.getData()) + ";" + 
-//						      tran2.getCliente() + ";" +
-//						      tran2.getAtendente() + ";" +
-//						      tran2.getFormaPagamento()+ "\n");
-//				}			 
-//			}	
-//			catch(IOException e) {
-//				System.out.println("Ocorreu um erro ao salvar um arquivo de transação: " + e.getMessage());
-//			}                  
-//		}
-//		for(Transacao tran : Caixa.caixa) {
-//			String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar+ tran.getData()+".csv";
-//			if (IdentificadorSO.sistema() == "linux"){
-//				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"transacoes"+ File.separatorChar+ tran.getData()+".csv";
-//			}
-//			arquivoTransacao = new File(caminho);
-//			
-//			try(BufferedWriter bwTransacao = new BufferedWriter(new FileWriter(arquivoTransacao))) {
-//				for(Transacao tran2 : Caixa.caixa) {
-//					if(tran2.getData().equals(tran.getData())) {
-//						bwTransacao.write(tran2.getId() + ";" + 
-//									      tran2.getValor()+ ";" + 
-//									      String.valueOf(tran2.getData()) + ";" + 
-//									      tran2.getCliente() + ";" +
-//									      tran2.getAtendente() + ";" +
-//									      tran2.getFormaPagamento()+ "\n");
-//						 
-//					}
-//				}
-//			}	
-//			catch(IOException e) {
-//				System.out.println("Ocorreu um erro ao salvar um arquivo de transação: " + e.getMessage());
-//			}                  
-//		}
-//	}
-//	
-//	public static void salvarTransacaoExcluidos(LocalDate data) {
-//		File arquivoTransacao;
-//
-//		String caminho = System.getProperty("user.home") + File.separatorChar + "Documents" + File.separatorChar
-//				+ "teste" + File.separatorChar + "transacoes" + File.separatorChar + "transacoes.csv";
-//		if (IdentificadorSO.sistema() == "linux") {
-//			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos" + File.separatorChar + "teste"
-//					+ File.separatorChar + "transacoes" + File.separatorChar + "transacoes.csv";
-//		}
-//		arquivoTransacao = new File(caminho);
-//
-//		try (BufferedWriter bwTransacao = new BufferedWriter(new FileWriter(arquivoTransacao))) {
-//			for (Transacao tran2 : Caixa.caixa) {
-//				bwTransacao.write(tran2.getId() + ";" + tran2.getValor() + ";" + String.valueOf(tran2.getData()) + ";"
-//						+ tran2.getCliente() + ";" + tran2.getAtendente() + ";" + tran2.getFormaPagamento() + "\n");
-//			}
-//		} catch (IOException e) {
-//			System.out.println("Ocorreu um erro ao salvar um arquivo de transação: " + e.getMessage());
-//		}
-//
-//		caminho = System.getProperty("user.home") + File.separatorChar + "Documents" + File.separatorChar + "teste"
-//				+ File.separatorChar + "transacoes" + File.separatorChar + data + ".csv";
-//		if (IdentificadorSO.sistema() == "linux") {
-//			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos" + File.separatorChar + "teste"
-//					+ File.separatorChar + "transacoes" + File.separatorChar + data + ".csv";
-//		}
-//		arquivoTransacao = new File(caminho);
-//		if (arquivoTransacao.exists()) {
-//			arquivoTransacao.delete();
-//		}
-//		try (BufferedWriter bwTransacao = new BufferedWriter(new FileWriter(arquivoTransacao))) {
-//			for (Transacao tran : Caixa.caixaTemp) {
-//				bwTransacao.write(tran.getId() + ";" + tran.getValor() + ";" + String.valueOf(tran.getData()) + ";"
-//						+ tran.getCliente() + ";" + tran.getAtendente() + ";" + tran.getFormaPagamento() + "\n");
-//
-//			}
-//		} catch (IOException e) {
-//			System.out.println("Ocorreu um erro ao salvar um arquivo de transação: " + e.getMessage());
-//		}
-//	}
+	public static void salvarCaixa(String data, double total, double cartao, double dinheiro) {
+		try {
+					st = DB.getConnection().prepareStatement(
+							"REPLACE INTO fechamento_caixa "
+							+ "(total, data, total_cartao, total_dinheiro) "
+							+ "VALUES "
+							+ "(?, ?, ?, ? )");
+					st.setDouble(1, total);
+					st.setString(2, data);
+					st.setDouble(3, cartao);
+					st.setDouble(4, dinheiro);
+					st.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
+	}
 	
 	public static void salvar() {
 		salvarStatus();

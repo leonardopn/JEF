@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import db.DB;
 import model.entities.Caixa;
@@ -77,42 +77,19 @@ public class Carregar {
 		}
 	}
 	
-//	public static void carregaTransacaoExpecifica(LocalDate data) {
-//		Caixa.caixaTemp.clear();
-//		String linha = "";
-//		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste"
-//				+ File.separator + "transacoes" + File.separator + data + ".csv";
-//		if (IdentificadorSO.sistema() == "linux") {
-//			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos" + File.separatorChar + "teste"
-//					+ File.separator + "transacoes" + File.separator + data + ".csv";
-//		}
-//		File file = new File(caminho);
-//		if (file.exists()) {
-//			try (BufferedReader brTransacao = new BufferedReader(new FileReader(caminho));) {
-//				while ((linha = brTransacao.readLine()) != null) {
-//					String[] linhaTransacao = linha.split(";");
-//					Transacao tran = new Transacao(Integer.parseInt(linhaTransacao[0]),
-//							Double.parseDouble(linhaTransacao[1]), LocalDate.parse(linhaTransacao[2]),
-//							linhaTransacao[3], linhaTransacao[4], linhaTransacao[5]);
-//					Caixa.caixaTemp.add(tran);
-//				}
-//				brTransacao.close();
-//			} catch (IOException e) {
-//				System.out.println("N�o existe arquivo com esse nome: " + e.getMessage());
-//			}
-//		}
-//	}
-	
-	public static void carregaTransacao() {
+	public static void carregaTransacaoExpecifica(LocalDate data) {
+		Caixa.caixaTemp.clear();
+		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		try {
 			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("select * from caixa");
+			 rs = st.executeQuery("SELECT * FROM caixa "
+					 +"WHERE data = "
+					 +"'"+localDateFormatada.format(data)+"'"
+					 );
+			 
 			 while(rs.next()) {
 				 Transacao tran = new Transacao(rs.getInt("id"), rs.getDouble("valor"), rs.getString("cliente"), rs.getString("atendente"),  rs.getString("forma_pagamento"), rs.getString("data"));
-				 Caixa.caixa.add(tran);
-			 }
-			 for(Transacao tran : Caixa.caixa) {
-				 System.out.println(tran);
+				 Caixa.caixaTemp.add(tran);
 			 }
 		}
 		catch(SQLException e) {
@@ -125,31 +102,24 @@ public class Carregar {
 		}
 	}
 	
-//	public static void carregaTransacao() {
-//		String linha = "";
-//		String caminho = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "teste" + File.separator + "transacoes" + File.separator + "transacoes.csv";
-//		if(IdentificadorSO.sistema() == "linux"){
-//			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos"+ File.separatorChar + "teste" + File.separator + "transacoes" + File.separator + "transacoes.csv";
-//		}
-//		try(BufferedReader brTransacao = new BufferedReader(new FileReader(caminho));) {
-//			while((linha = brTransacao.readLine()) != null) {	
-//				String[] linhaTransacao = linha.split(";");	
-//				Transacao tran = new Transacao(
-//						Integer.parseInt(linhaTransacao[0]),
-//						Double.parseDouble(linhaTransacao[1]),
-//						LocalDate.parse(linhaTransacao[2]),
-//						linhaTransacao[3],
-//						linhaTransacao[4],
-//						linhaTransacao[5]);
-//						
-//				Caixa.caixa.add(tran);
-//			}
-//			brTransacao.close();
-//		}
-//		catch(IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public static void carregaTransacao() {
+		try {
+			 st = DB.getConnection().createStatement();
+			 rs = st.executeQuery("select * from caixa");
+			 while(rs.next()) {
+				 Transacao tran = new Transacao(rs.getInt("id"), rs.getDouble("valor"), rs.getString("cliente"), rs.getString("atendente"),  rs.getString("forma_pagamento"), rs.getString("data"));
+				 Caixa.caixa.add(tran);
+			 }
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeConnection();
+			DB.fechaResultSet(rs);
+			DB.fechaStatement(st);
+		}
+	}
 	
 	public static void carregar() {
 		carregaCliente();

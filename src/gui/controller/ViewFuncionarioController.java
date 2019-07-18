@@ -23,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 import model.services.Carregar;
+import model.services.Excluir;
 import model.services.Salvar;
 
 public class ViewFuncionarioController implements Initializable{
@@ -123,7 +124,7 @@ public class ViewFuncionarioController implements Initializable{
 			for(Funcionario fun : obFuncionario) {
 				if(fun.getSelect().isSelected()) {
 					obExcluirFuncionario.add(fun);
-					Salvar.excluirFuncionario(fun);
+					Excluir.excluirFuncionario(fun);
 				}
 			}
 			obFuncionario.removeAll(obExcluirFuncionario);

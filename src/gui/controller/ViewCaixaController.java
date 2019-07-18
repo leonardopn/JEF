@@ -1,7 +1,6 @@
 package gui.controller;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ import model.entities.Funcionario;
 import model.entities.Transacao;
 import model.services.Cadastro;
 import model.services.Carregar;
+import model.services.Excluir;
 import model.services.Salvar;
 
 public class ViewCaixaController implements Initializable {
@@ -109,7 +109,7 @@ public class ViewCaixaController implements Initializable {
 	private TableColumn<Transacao, Integer> colunaId;
 
 	@FXML
-	private TableColumn<Transacao, LocalDate> colunaData;
+	private TableColumn<Transacao, String> colunaData;
 
 	@FXML
 	private TableColumn<Transacao, String> colunaCliente;
@@ -145,14 +145,26 @@ public class ViewCaixaController implements Initializable {
 		}
 	}
 	
-	public void bloqueiaAdicaoExclusao() {
+	public void bloqueio() {
 		if(Caixa.isStatus() != true) {
 			btEnviarTransacao.setDisable(true);
 			btExcluir.setDisable(true);
+			tfId.setDisable(true);
+			cbCliente.setDisable(true);
+			cbFuncionario.setDisable(true);
+			dpData.setDisable(true);
+			tfValor.setDisable(true);
+			cbFormaPagamento.setDisable(true);
 		}
 		else {
 			btEnviarTransacao.setDisable(false);
 			btExcluir.setDisable(false);
+			tfId.setDisable(false);
+			cbCliente.setDisable(false);
+			cbFuncionario.setDisable(false);
+			dpData.setDisable(false);
+			tfValor.setDisable(false);
+			cbFormaPagamento.setDisable(false);
 		}
 	}
 
@@ -188,7 +200,7 @@ public class ViewCaixaController implements Initializable {
 			lbStatus.setText("Aberto");
 			Caixa.setStatus(true);
 			Salvar.salvarStatus();
-			bloqueiaAdicaoExclusao();
+			bloqueio();
 		}
 		else {
 			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
@@ -197,13 +209,14 @@ public class ViewCaixaController implements Initializable {
 			lbStatus.setText("Fechado");
 			Caixa.setStatus(false);
 			Salvar.salvarStatus();
-			bloqueiaAdicaoExclusao();
+			bloqueio();
 			calculaCaixa();
 		}
 
 	}
 	
 	public void calculaCaixa() {
+		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		double total = 0;
 		double totalDinheiro = 0;
 		double totalCartao = 0;
@@ -212,22 +225,24 @@ public class ViewCaixaController implements Initializable {
 		lbValorCartao.setText("R$ "+String.valueOf(totalCartao));
 		ArrayList<Transacao> tranTemp = new ArrayList<>();
 		for(Transacao tran : Caixa.caixa) {
-			if(tran.getData().equals(LocalDate.now())) {
+			if(tran.getData().equals(localDateFormatada.format(LocalDate.now()))) {
 				tranTemp.add(tran);	
 			}
 		}
 		for(Transacao tran2 : tranTemp) {
 			total += tran2.getValor();
-			lbValorTotal.setText("R$ "+String.valueOf(total));
+			lbValorTotal.setText(String.valueOf(total));
 			if(tran2.getFormaPagamento().equals("Dinheiro")) {
 				totalDinheiro += tran2.getValor();
-				lbValorDinheiro.setText("R$ "+String.valueOf(totalDinheiro));
+				lbValorDinheiro.setText(String.valueOf(totalDinheiro));
 			}
 			else {
 				totalCartao += tran2.getValor();
-				lbValorCartao.setText("R$ "+String.valueOf(totalCartao));
+				lbValorCartao.setText(String.valueOf(totalCartao));
 			}
-		}
+		}	
+		String data = localDateFormatada.format(LocalDate.now());
+		Salvar.salvarCaixa(data, Double.parseDouble(lbValorTotal.getText()), Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
 	}
 
 	public void carregaCliente() {
@@ -260,12 +275,12 @@ public class ViewCaixaController implements Initializable {
 		String data = localDateFormatada.format((dpData.getValue()));
 		double valor = Double.parseDouble(tfValor.getText());
 		String formaPaga = cbFormaPagamento.getValue();
-		Transacao tran = new Transacao(id, valor, data, cliente, fun, formaPaga);
+		Transacao tran = new Transacao(id, valor, cliente, fun, formaPaga, data);
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
 		Salvar.salvarTransacao(tfId, cbCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
 		Carregar.carregaTransacao();
-		//carregaTransacao();
+		carregaTransacao();
 		carregaTable();
 	}
 
@@ -274,29 +289,17 @@ public class ViewCaixaController implements Initializable {
 		for (Transacao tran : obTable) {
 			if (tran.getSelect().isSelected()) {
 				obExcluirTransacao.add(tran);
+				Excluir.excluirTransacao(tran);
 			}
 		}
 		Caixa.caixa.removeAll(obExcluirTransacao);
 		Caixa.caixaTemp.removeAll(obExcluirTransacao);
-		System.out.println("\nteste\n");
-		for (Transacao tran : Caixa.caixaTemp) {
-			System.out.println("\n---------\n");
-			System.out.println(tran);
-		}
-		System.out.println("\nteste2\n");
-		for (Transacao tran : Caixa.caixa) {
-			System.out.println("\n---------\n");
-			System.out.println(tran);
-		}
-		salvarTransacaoExcluidos();
 		carregaTable();
 	}
 
-	public void salvarTransacaoExcluidos() {
-		//Salvar.salvarTransacaoExcluidos(dpSelecao.getValue());
-	}
 
 	public void carregaTransacao() {
+		Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
 		carregaTable();
 	}
 
@@ -306,7 +309,7 @@ public class ViewCaixaController implements Initializable {
 		carregaFuncionario();
 		carregaFormaPagamento();
 		mudaCaixa();
-		bloqueiaAdicaoExclusao();
+		bloqueio();
 		dpData.setValue(LocalDate.now());
 		dpSelecao.setValue(LocalDate.now());
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -316,6 +319,6 @@ public class ViewCaixaController implements Initializable {
 		colunaMeioPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
-		//carregaTransacao();
+		carregaTransacao();
 	}
 }
