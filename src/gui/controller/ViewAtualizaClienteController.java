@@ -34,7 +34,7 @@ public class ViewAtualizaClienteController implements Initializable{
 	private Button btVoltar;
 	
 	@FXML
-	private TextField txtIdCliente;
+	private TextField txtCpfCliente;
 	
 	@FXML
 	private TextField txtNomeCliente;
@@ -52,7 +52,7 @@ public class ViewAtualizaClienteController implements Initializable{
 	private TableColumn<Cliente, String> colunaNome;
 	
 	@FXML
-    private TableColumn<Cliente, Integer> colunaId;
+    private TableColumn<Cliente, String> colunaCpf;
 	
 	public void carregaCliente() {
 		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
@@ -74,23 +74,23 @@ public class ViewAtualizaClienteController implements Initializable{
 	@FXML
 	public void selecionaCliente() {
 		Cliente cli = tvCliente.getSelectionModel().getSelectedItem();
-		txtIdCliente.setText(String.valueOf(cli.getId()));
-		txtIdCliente.setDisable(true);
-		txtNomeCliente.setText(String.valueOf(cli.getNome()));
-		txtEmailCliente.setText(String.valueOf(cli.getEmail()));
-		txtTelefoneCliente.setText(String.valueOf(cli.getTelefone()));
+		txtCpfCliente.setText(cli.getCpf());
+		txtCpfCliente.setDisable(true);
+		txtNomeCliente.setText(cli.getNome());
+		txtEmailCliente.setText(cli.getEmail());
+		txtTelefoneCliente.setText(cli.getTelefone());
 		
 	}
 	
 	@FXML
 	public void atualizaCliente() {
 		if(Alerts.showAlertAtualizacao()) {
-			int id = Integer.parseInt(txtIdCliente.getText());
+			String cpf = txtCpfCliente.getText();
 			String nome = txtNomeCliente.getText();
 			String email = txtEmailCliente.getText();
 			String telefone = txtTelefoneCliente.getText();
-			Cliente cliente = new Cliente(id, nome, email, telefone);
-			Cadastro.clientes.removeIf((Cliente cli) -> cli.getId() == cliente.getId());
+			Cliente cliente = new Cliente(cpf, nome, email, telefone);
+			Cadastro.clientes.removeIf((Cliente cli) -> cli.getCpf().equals(cliente.getCpf()));
 			Cadastro.verificaCliente(cliente);
 			Cadastro.clientes.add(cliente);
 			Atualizar.atualizarCliente(cliente);
@@ -100,7 +100,7 @@ public class ViewAtualizaClienteController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		carregaCliente();
 	}

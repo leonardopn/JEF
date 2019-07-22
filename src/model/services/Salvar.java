@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -60,14 +58,14 @@ public class Salvar {
 		}
 	}
 	
-	public static void salvarCliente(TextField txtIdCliente, TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente) {
+	public static void salvarCliente(TextField txtCpfCliente, TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente) {
 		try {
 			st = DB.getConnection().prepareStatement(
 					"INSERT INTO cliente "
-					+ "(id, nome, email, telefone) "
+					+ "(cpf, nome, email, telefone) "
 					+ "VALUES "
 					+ "(?, ?, ?, ? )");
-			st.setInt(1, Integer.parseInt(txtIdCliente.getText()));
+			st.setString(1, txtCpfCliente.getText());
 			st.setString(2, txtNomeCliente.getText());
 			st.setString(3, txtEmailCliente.getText());
 			st.setString(4, txtTelefoneCliente.getText());

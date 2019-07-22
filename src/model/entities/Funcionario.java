@@ -1,5 +1,11 @@
 package model.entities;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import javafx.scene.control.CheckBox;
@@ -8,13 +14,31 @@ public class Funcionario implements Comparable<Funcionario> {
 	private String nome;
 	private int id;
 	private double salario;
+	private ArrayList<Date> horarios; 
 	private CheckBox select;
+	private static SimpleDateFormat sdf;
 	
 	public Funcionario(String nome, int id, double salario) {
+//		Calendar hora = Calendar.getInstance();
+//		hora.get(Calendar.DATE);
+//		hora.set(Calendar.HOUR, 00);
+//		hora.set(Calendar.MINUTE, 00);
+//		hora.set(Calendar.SECOND, 00);
+//		Date horario = hora.getTime();
+//		horarios.add(horario);
+//		for(int i = 0; i < 12; i++) {
+//			hora.add(Calendar.MINUTE, 30);
+//			horario = hora.getTime();
+//			horarios.add(horario);
+//		}
 		this.nome = nome;
 		this.id = id;
 		this.salario = salario;
 		this.select = new CheckBox();
+	}
+	
+	public static void criaHorarios() {
+        
 	}
 
 	public CheckBox getSelect() {

@@ -220,9 +220,9 @@ public class ViewCaixaController implements Initializable {
 		double total = 0;
 		double totalDinheiro = 0;
 		double totalCartao = 0;
-		lbValorTotal.setText("R$ "+String.valueOf(total));
-		lbValorDinheiro.setText("R$ "+String.valueOf(totalDinheiro));
-		lbValorCartao.setText("R$ "+String.valueOf(totalCartao));
+		lbValorTotal.setText(String.valueOf(total));
+		lbValorDinheiro.setText(String.valueOf(totalDinheiro));
+		lbValorCartao.setText(String.valueOf(totalCartao));
 		ArrayList<Transacao> tranTemp = new ArrayList<>();
 		for(Transacao tran : Caixa.caixa) {
 			if(tran.getData().equals(localDateFormatada.format(LocalDate.now()))) {
@@ -282,6 +282,7 @@ public class ViewCaixaController implements Initializable {
 		Carregar.carregaTransacao();
 		carregaTransacao();
 		carregaTable();
+		calculaCaixa();	
 	}
 
 	public void excluirTransacao() {
@@ -295,6 +296,7 @@ public class ViewCaixaController implements Initializable {
 		Caixa.caixa.removeAll(obExcluirTransacao);
 		Caixa.caixaTemp.removeAll(obExcluirTransacao);
 		carregaTable();
+		calculaCaixa();
 	}
 
 

@@ -80,12 +80,12 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="836.0" layoutY="83.0" text="Valor em cartão:">
+      <Label layoutX="836.0" layoutY="82.0" text="Valor em cartão:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lbValorCartao" layoutX="1029.0" layoutY="84.0" text="00,00" textFill="#10bf24">
+      <Label fx:id="lbValorCartao" layoutX="1029.0" layoutY="83.0" text="00,00" textFill="#10bf24">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -115,7 +115,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lbValorTotal12" layoutX="995.0" layoutY="84.0" text="R$" textFill="#10bf24">
+      <Label fx:id="lbValorTotal12" layoutX="995.0" layoutY="83.0" text="R$" textFill="#10bf24">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

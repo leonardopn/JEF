@@ -16,11 +16,11 @@ public class Atualizar {
 			st = DB.getConnection().prepareStatement(
 					"UPDATE cliente "
 					+"SET nome = ?, email = ?, telefone = ?"
-					+"WHERE id=(?)");
+					+"WHERE cpf=(?)");
 			st.setString(1, cli.getNome());
 			st.setString(2, cli.getEmail());
 			st.setString(3, cli.getTelefone());
-			st.setInt(4, cli.getId()); 
+			st.setString(4, cli.getCpf()); 
 			st.execute();
 		}
 		catch(SQLException e) {

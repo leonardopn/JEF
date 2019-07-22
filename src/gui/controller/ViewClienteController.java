@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,6 +30,8 @@ import model.services.Salvar;
 public class ViewClienteController implements Initializable{
 	
 	ObservableList<Cliente> obCliente;
+	
+
 	
 	@FXML
 	private Button btCriaCliente;
@@ -46,7 +49,7 @@ public class ViewClienteController implements Initializable{
 	private Button btExcluiCliente;
 	
 	@FXML
-	private TextField txtIdCliente;
+	private TextField txtCpfCliente;
 	
 	@FXML
 	private TextField txtNomeCliente;
@@ -64,7 +67,7 @@ public class ViewClienteController implements Initializable{
 	private TableColumn<Cliente, String> colunaNome;
 	
 	@FXML
-    private TableColumn<Cliente, Integer> colunaId;
+    private TableColumn<Cliente, Long> colunaCpf;
 	
 	@FXML
     private TableColumn<Cliente, String> colunaEmail;
@@ -106,14 +109,14 @@ public class ViewClienteController implements Initializable{
 	@FXML
 	public void onBtCriaClienteAction(){
 		try {
-			int id = Integer.parseInt(txtIdCliente.getText());
+			String cpf = txtCpfCliente.getText();
 			String nome = txtNomeCliente.getText();
 			String email = txtEmailCliente.getText();
 			String telefone = txtTelefoneCliente.getText();
-			Cliente cliente = new Cliente(id, nome, email, telefone);
+			Cliente cliente = new Cliente(cpf, nome, email, telefone);
 			Cadastro.verificaCliente(cliente);
 			Cadastro.clientes.add(cliente);
-			Salvar.salvarCliente(txtIdCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente);
+			Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente);
 			carregaCliente();
 		}
 		catch (NumberFormatException e) {
@@ -138,11 +141,11 @@ public class ViewClienteController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-        colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));   
+        colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaCliente();
 	}
 }

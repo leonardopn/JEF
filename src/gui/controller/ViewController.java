@@ -2,26 +2,44 @@ package gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import application.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import model.entities.Agenda;
+import model.entities.Funcionario;
+import model.services.Cadastro;
 import model.services.Carregar;
-import model.services.Salvar;
 
 public class ViewController implements Initializable{
 
 	private static Scene caixa;
 	private static Scene funcionario;
 	private static Scene cliente;
+	private static Agenda agenda;
 	
 	@FXML
-	private Button btCriaFuncionario;	
+	private Button btCriaFuncionario;
+	
+	@FXML
+	private DatePicker dpData;
+	
+	@FXML
+	private ChoiceBox<Funcionario> cbManicure;
+	
+	@FXML
+	private ChoiceBox<Date> cbHorarios;
 	
 	@FXML
 	private Button btCriaCliente;
@@ -45,6 +63,11 @@ public class ViewController implements Initializable{
 			e.printStackTrace();
 		}
 		Main.getStage().setScene(funcionario);
+	}
+	
+	public void carregaFuncionario() {
+		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		cbManicure.setItems(obFuncionario);
 	}
 	
 	public static Scene getCaixa() {
@@ -84,7 +107,7 @@ public class ViewController implements Initializable{
 	}
 	
 	public void onBtSalvarAction(){
-		Salvar.salvar();
+		Funcionario.criaHorarios();
 	}
 	
 	public void onBtCarregarAction(){
@@ -93,7 +116,8 @@ public class ViewController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Carregar.carregar();
+		Carregar.carregar();	
+		carregaFuncionario();
 	}
 
 }

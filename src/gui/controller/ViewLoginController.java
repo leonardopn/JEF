@@ -13,13 +13,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import model.entities.Login;
 import model.exceptions.DbException;
 
 public class ViewLoginController {
 	static Statement st = null;
 	static ResultSet rs = null;
-	private static int tentativas = 0;
+	private static int tentativas = 1;
 	
 	@FXML
 	private Button btLogin; 
@@ -32,18 +35,15 @@ public class ViewLoginController {
 	
 	@FXML
 	public void onBtLoginAction() {
-		if(tentativas != 2) {
-				String useTemp = tfUsuario.getText();
-				String passTemp = pfSenha.getText();
-				Login login = new Login(useTemp, passTemp);
-				carregaLogin(login);
-		}
-		else {
+		String useTemp = tfUsuario.getText();
+		String passTemp = pfSenha.getText();
+		Login login = new Login(useTemp, passTemp);
+		if(carregaLogin(login) == false && tentativas >3) {
 			Main.fechaProgram();
 		}
 	}
 	
-	public static void carregaLogin(Login login) {
+	public boolean carregaLogin(Login login) {
 		try {	
 			 st = DB.getConnection().createStatement();
 			 rs = st.executeQuery("select * from usuario");
@@ -56,9 +56,14 @@ public class ViewLoginController {
 			 }
 			 if(arrayLogin.contains(login)) {
 				Main.getStage().setScene(Main.getMain());
+				return true;
 			}
 			else {
-				Alerts.showAlert("Erro no login", "Usuário ou senha incorreto", null, AlertType.INFORMATION);
+				Alerts.showAlert("Erro no login", "Usuário ou senha incorreto", "Essa é a tentativa: "+(tentativas)+" de 3", AlertType.INFORMATION);
+				tfUsuario.clear();
+				pfSenha.clear();
+				tentativas += 1;
+				return false;
 			}
 		}
 		catch(SQLException e) {
@@ -68,7 +73,6 @@ public class ViewLoginController {
 			DB.closeConnection();
 			DB.fechaResultSet(rs);
 			DB.fechaStatement(st);
-			tentativas += 1;
 		}
 	}
 }

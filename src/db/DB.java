@@ -31,8 +31,12 @@ public class DB {
 	
 	public static void closeConnection() {
 		if(conn != null) {
-			//Antes era conn.close() 
-			conn = null;	
+			try {
+				conn.close();
+				conn = null;	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -51,6 +55,7 @@ public class DB {
 		if(st != null) {
 			try {
 				st.close();
+				st = null;
 			}
 			catch(SQLException e) {
 				throw new DbException(e.getMessage());
@@ -62,6 +67,7 @@ public class DB {
 		if(rs != null) {
 			try {
 				rs.close();
+				rs = null;
 			}
 			catch(SQLException e) {
 				throw new DbException(e.getMessage());
