@@ -25,22 +25,22 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="403.0" prefWidth="1343.0">
                      <children>
-                        <TableView layoutX="1.0" layoutY="4.0" prefHeight="396.0" prefWidth="1790.0">
+                        <TableView fx:id="tvAgenda" layoutX="1.0" layoutY="4.0" prefHeight="396.0" prefWidth="1790.0">
                           <columns>
-                            <TableColumn prefWidth="91.0" text="Manicures" />
-                            <TableColumn prefWidth="74.0" text="12:00" />
-                              <TableColumn prefWidth="97.0" text="12:30" />
-                              <TableColumn prefWidth="97.0" text="13:00" />
-                              <TableColumn prefWidth="97.0" text="13:30" />
-                              <TableColumn prefWidth="97.0" text="14:00" />
-                              <TableColumn prefWidth="97.0" text="14:30" />
-                              <TableColumn prefWidth="97.0" text="15:00" />
-                              <TableColumn prefWidth="97.0" text="15:30" />
-                              <TableColumn prefWidth="97.0" text="16:00" />
-                              <TableColumn prefWidth="97.0" text="16:30" />
-                              <TableColumn prefWidth="97.0" text="17:00" />
-                              <TableColumn prefWidth="97.0" text="17:30" />
-                              <TableColumn prefWidth="97.0" text="18:00" />
+                            <TableColumn fx:id="colunaFuncionario" prefWidth="91.0" text="Manicures" />
+                            <TableColumn fx:id="coluna12" prefWidth="74.0" text="12:00" />
+                              <TableColumn fx:id="coluna12_3" prefWidth="97.0" text="12:30" />
+                              <TableColumn fx:id="coluna13" prefWidth="97.0" text="13:00" />
+                              <TableColumn fx:id="coluna13_3" prefWidth="97.0" text="13:30" />
+                              <TableColumn fx:id="coluna14" prefWidth="97.0" text="14:00" />
+                              <TableColumn fx:id="coluna14_3" prefWidth="97.0" text="14:30" />
+                              <TableColumn fx:id="coluna15" prefWidth="97.0" text="15:00" />
+                              <TableColumn fx:id="coluna15_3" prefWidth="97.0" text="15:30" />
+                              <TableColumn fx:id="coluna16" prefWidth="97.0" text="16:00" />
+                              <TableColumn fx:id="coluna16_3" prefWidth="97.0" text="16:30" />
+                              <TableColumn fx:id="coluna17" prefWidth="97.0" text="17:00" />
+                              <TableColumn fx:id="coluna17_3" prefWidth="97.0" text="17:30" />
+                              <TableColumn fx:id="coluna18" prefWidth="97.0" text="18:00" />
                           </columns>
                         </TableView>
                      </children>

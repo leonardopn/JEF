@@ -15,9 +15,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Agenda;
+import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 import model.services.Carregar;
@@ -54,6 +60,51 @@ public class ViewController implements Initializable{
 	private Button btCarregar;
 	
 	@FXML
+	private TableView<Funcionario> tvAgenda = new TableView<>();
+	
+	@FXML
+	private TableColumn<Funcionario, String> colunaFuncionario;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna12;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna12_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna13;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna13_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna14;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna14_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna15;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna15_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna16;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna16_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna17;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna17_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna18;
+	
+	@FXML
 	public void onBtCriaFuncionarioAction(){
 		try {
 			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
@@ -68,6 +119,25 @@ public class ViewController implements Initializable{
 	public void carregaFuncionario() {
 		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 		cbManicure.setItems(obFuncionario);
+	}
+	
+	public void carregaAgenda() {
+		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		coluna12.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna13.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna13_3.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna14.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna14_3.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna15.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna15_3.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna16.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna16_3.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna17.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		coluna18.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		ObservableList<Funcionario> obCaixa = FXCollections.observableArrayList(Cadastro.funcionarios);
+		tvAgenda.setItems(obCaixa);
 	}
 	
 	public static Scene getCaixa() {
@@ -118,6 +188,8 @@ public class ViewController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		Carregar.carregar();	
 		carregaFuncionario();
+		
+		carregaAgenda();
 	}
 
 }

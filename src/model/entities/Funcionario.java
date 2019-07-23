@@ -1,19 +1,18 @@
 package model.entities;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
 public class Funcionario implements Comparable<Funcionario> {
 	private String nome;
 	private int id;
 	private double salario;
+	private String horario;
 	private ArrayList<Date> horarios; 
 	private CheckBox select;
 	private static SimpleDateFormat sdf;
@@ -35,6 +34,8 @@ public class Funcionario implements Comparable<Funcionario> {
 		this.id = id;
 		this.salario = salario;
 		this.select = new CheckBox();
+		this.horario = "livre";
+		
 	}
 	
 	public static void criaHorarios() {
@@ -71,6 +72,14 @@ public class Funcionario implements Comparable<Funcionario> {
 
 	public void setSalario(double salario) {
 		this.salario = salario;
+	}
+	
+	public String getHorario() {
+		return horario;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
 	}
 
 	@Override

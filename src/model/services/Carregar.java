@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import db.DB;
+import model.entities.Agenda;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
@@ -20,6 +21,7 @@ import model.exceptions.DbException;
 public class Carregar {
 	static Statement st = null;
 	static ResultSet rs = null;
+	static ResultSet rs2 = null;
 	
 	public static void carregaCliente() {
 		try {	
@@ -66,6 +68,12 @@ public class Carregar {
 				 Funcionario fun = new Funcionario(rs.getString("nome"), rs.getInt("id"),  rs.getDouble("salario"));
 				 Cadastro.funcionarios.add(fun);
 			 }
+			 rs2 = st.executeQuery("select * from agenda");
+			 for(Fun)
+			 Agenda agen = new Agenda(fun, rs2.getInt("12"), rs2.getInt("12_3"), rs2.getInt("13"), rs2.getInt("13_3"), rs2.getInt("14"),
+					 rs2.getInt("14_3"), rs2.getInt("15"), rs2.getInt("15_3"), rs2.getInt("16"), rs2.getInt("16_3"), rs2.getInt("17"),
+					 rs2.getInt("17_3"), rs2.getInt("18"));
+			 Cadastro.agendas.add(agen);
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());
