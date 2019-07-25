@@ -19,23 +19,39 @@
       <Line endX="-100.0" endY="469.0" layoutX="223.0" layoutY="31.0" startX="-100.0" startY="5.7071075439453125" stroke="#827f7f" />
       <Button fx:id="btCriaCliente" layoutX="10.0" layoutY="98.0" mnemonicParsing="false" onAction="#onBtCriaClienteAction" prefHeight="45.0" prefWidth="103.0" text="Clientes" />
       <Button fx:id="btCaixa" layoutX="10.0" layoutY="153.0" mnemonicParsing="false" onAction="#onBtAbreCaixaAction" prefHeight="45.0" prefWidth="103.0" text="Caixa" />
-      <Pane layoutX="137.0" layoutY="53.0" prefHeight="402.0" prefWidth="797.0" style="-fx-border-color: #827f7f;">
+      <Pane layoutX="144.0" layoutY="52.0" prefHeight="403.0" prefWidth="790.0">
          <children>
-            <ScrollPane prefHeight="402.0" prefWidth="797.0">
+            <ScrollPane prefHeight="402.0" prefWidth="797.0" style="-fx-border-color: #827f7f;">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="403.0" prefWidth="1343.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="1343.0" style="-fx-border-bottom-color: #827f7f;">
                      <children>
-                        <TableView fx:id="tvAgenda" layoutX="1.0" layoutY="4.0" prefHeight="396.0" prefWidth="1790.0">
+                        <TableView fx:id="tvAgenda" layoutX="5.0" layoutY="7.0" prefHeight="375.0" prefWidth="1374.0" style="-fx-border-color: #827f7f;">
                           <columns>
                             <TableColumn fx:id="colunaFuncionario" prefWidth="91.0" text="Manicures" />
-                            <TableColumn fx:id="coluna12" prefWidth="74.0" text="12:00" />
-                              <TableColumn fx:id="coluna12_3" prefWidth="97.0" text="12:30" />
-                              <TableColumn fx:id="coluna13" prefWidth="97.0" text="13:00" />
-                              <TableColumn fx:id="coluna13_3" prefWidth="97.0" text="13:30" />
-                              <TableColumn fx:id="coluna14" prefWidth="97.0" text="14:00" />
-                              <TableColumn fx:id="coluna14_3" prefWidth="97.0" text="14:30" />
-                              <TableColumn fx:id="coluna15" prefWidth="97.0" text="15:00" />
-                              <TableColumn fx:id="coluna15_3" prefWidth="97.0" text="15:30" />
+                              <TableColumn prefWidth="75.0" text="1 horário">
+                                 <columns>
+                                  <TableColumn fx:id="coluna12" prefWidth="74.0" text="12:00-12:30" />
+                                    <TableColumn fx:id="coluna12_3" prefWidth="97.0" text="12:30-13:00" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="75.0" text="1 horário">
+                                 <columns>
+                                    <TableColumn fx:id="coluna13" prefWidth="97.0" text="13:00-13:30" />
+                                    <TableColumn fx:id="coluna13_3" prefWidth="97.0" text="13:30-14:00" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="75.0" text="1 horário">
+                                 <columns>
+                                    <TableColumn fx:id="coluna14" prefWidth="97.0" text="14:00-14:30" />
+                                    <TableColumn fx:id="coluna14_3" prefWidth="97.0" text="14:30-15:00" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="75.0" text="Column X">
+                                 <columns>
+                                    <TableColumn fx:id="coluna15_3" prefWidth="97.0" text="15:00-15:30" />
+                                    <TableColumn fx:id="coluna15" prefWidth="97.0" text="15:00" />
+                                 </columns>
+                              </TableColumn>
                               <TableColumn fx:id="coluna16" prefWidth="97.0" text="16:00" />
                               <TableColumn fx:id="coluna16_3" prefWidth="97.0" text="16:30" />
                               <TableColumn fx:id="coluna17" prefWidth="97.0" text="17:00" />

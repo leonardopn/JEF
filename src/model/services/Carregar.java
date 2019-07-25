@@ -68,12 +68,6 @@ public class Carregar {
 				 Funcionario fun = new Funcionario(rs.getString("nome"), rs.getInt("id"),  rs.getDouble("salario"));
 				 Cadastro.funcionarios.add(fun);
 			 }
-			 rs2 = st.executeQuery("select * from agenda");
-			 for(Fun)
-			 Agenda agen = new Agenda(fun, rs2.getInt("12"), rs2.getInt("12_3"), rs2.getInt("13"), rs2.getInt("13_3"), rs2.getInt("14"),
-					 rs2.getInt("14_3"), rs2.getInt("15"), rs2.getInt("15_3"), rs2.getInt("16"), rs2.getInt("16_3"), rs2.getInt("17"),
-					 rs2.getInt("17_3"), rs2.getInt("18"));
-			 Cadastro.agendas.add(agen);
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());
@@ -84,6 +78,35 @@ public class Carregar {
 			DB.fechaStatement(st);
 		}
 	}
+	
+	public static void carregaAgenda() {
+		try {
+			for(Funcionario fun : Cadastro.funcionarios) {
+				Agenda agenda = new Agenda(fun.getNome());
+				st = DB.getConnection().createStatement();
+				rs = st.executeQuery("SELECT * FROM agenda "
+						 +"WHERE funcionario = "
+						 +"'"+fun.getNome()+"'"
+						 );
+				 while(rs.next()) {
+					 agenda.retornaHorario(rs.getString("horario"), agenda);
+					 System.out.println(rs.getString("horario"));
+				 }
+				 Cadastro.agendas.add(agenda);
+				 //System.out.println(agenda);
+				 agenda = null;
+			}
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeConnection();
+			DB.fechaResultSet(rs);
+			DB.fechaStatement(st);
+		}
+	}
+	
 	
 	public static void carregaTransacaoExpecifica(LocalDate data) {
 		Caixa.caixaTemp.clear();
@@ -132,6 +155,7 @@ public class Carregar {
 	public static void carregar() {
 		carregaCliente();
 		carregaFuncionario();
+		carregaAgenda();
 		carregaTransacao();
 		carregaCaixa();
 	}
