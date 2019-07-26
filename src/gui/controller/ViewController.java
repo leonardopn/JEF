@@ -30,6 +30,7 @@ public class ViewController implements Initializable{
 	private static Scene caixa;
 	private static Scene funcionario;
 	private static Scene cliente;
+	private static Scene agendamento;
 	
 	@FXML
 	private Button btCriaFuncionario;
@@ -54,6 +55,9 @@ public class ViewController implements Initializable{
 	
 	@FXML
 	private Button btCarregar;
+	
+	@FXML
+	private Button btAtualizaAgendamento;
 	
 	@FXML
 	private TableView<Agenda> tvAgenda = new TableView<>();
@@ -113,6 +117,18 @@ public class ViewController implements Initializable{
 			e.printStackTrace();
 		}
 		Main.getStage().setScene(funcionario);
+	}
+	
+	@FXML
+	public void onBAtualizaAgendamento(){
+		try {
+			Parent fxmlAgendamento = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaAgenda.fxml"));
+			agendamento = new Scene(fxmlAgendamento);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		Main.getStage().setScene(agendamento);
 	}
 	
 	public void carregaFuncionario() {

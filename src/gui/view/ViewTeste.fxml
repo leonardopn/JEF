@@ -35,7 +35,7 @@
                </opaqueInsets>
             </TableView>
             <DatePicker fx:id="dpData" layoutX="829.0" layoutY="-23.0" onAction="#carregaAgenda" prefHeight="34.0" prefWidth="219.0" />
-            <Button layoutX="14.0" layoutY="-10.0" mnemonicParsing="false" text="Agendar">
+            <Button fx:id="btAtualizaAgendamento" layoutX="14.0" layoutY="-10.0" mnemonicParsing="false" onAction="#onBAtualizaAgendamento" text="Agendar">
                <font>
                   <Font size="21.0" />
                </font>

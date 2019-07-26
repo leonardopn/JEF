@@ -6,6 +6,7 @@ import java.util.TreeSet;
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
 import model.entities.Agenda;
+import model.entities.Agendamento;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 
@@ -13,6 +14,7 @@ public class Cadastro {
 	static public TreeSet<Cliente> clientes = new TreeSet<>();
 	static public TreeSet<Funcionario> funcionarios = new TreeSet<>();
 	static public ArrayList<Agenda> agendas = new ArrayList<>();
+	static public ArrayList<Agendamento> agendamentos = new ArrayList<>();
 	
 	
 	public static void verificaFuncionario(Funcionario fun) {

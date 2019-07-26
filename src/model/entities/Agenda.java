@@ -1,25 +1,29 @@
 package model.entities;
 
+import java.util.ArrayList;
+
 public class Agenda {
 	
 	
-	public String funcionario;
-	public String h12;
-	public String h12_3;
-	public String h13;
-	public String h13_3;
-	public String h14;
-	public String h14_3;
-	public String h15;
-	public String h15_3;
-	public String h16;
-	public String h16_3;
-	public String h17;
-	public String h17_3;
-	public String h18;
+	private String funcionario;
+	private ArrayList<String> clientes;
+	private String Data;
+	private String h12;
+	private String h12_3;
+	private String h13;
+	private String h13_3;
+	private String h14;
+	private String h14_3;
+	private String h15;
+	private String h15_3;
+	private String h16;
+	private String h16_3;
+	private String h17;
+	private String h17_3;
+	private String h18;
 	
 	public Agenda(String funcionario) {
-		
+		this.clientes = new ArrayList<>();
 		this.funcionario = funcionario;
 		this.h12 = "Livre";
 		this.h12_3 = "Livre";
@@ -36,45 +40,45 @@ public class Agenda {
 		this.h18 = "Livre";
 	}
 	
-	public void retornaHorario(String horario, Agenda agenda) {
+	public void retornaHorario(String horario, Agenda agenda, String cliente) {
 		if(horario.equals("12:00")) {
-			agenda.setH12("Ocupado");
+			agenda.setH12(cliente);
 		}
 		if(horario.equals("12:30")) {
-			agenda.setH12_3("Ocupado");
+			agenda.setH12_3(cliente);
 		}
 		if(horario.equals("13:00")) {
-			agenda.setH13("Ocupado");
+			agenda.setH13(cliente);
 		}
 		if(horario.equals("13:30")) {
-			agenda.setH13_3("Ocupado");
+			agenda.setH13_3(cliente);
 		}
 		if(horario.equals("14:00")) {
-			agenda.setH14("Ocupado");
+			agenda.setH14(cliente);
 		}
 		if(horario.equals("14:30")) {
-			agenda.setH14_3("Ocupado");
+			agenda.setH14_3(cliente);
 		}
 		if(horario.equals("15:00")) {
-			agenda.setH15("Ocupado");
+			agenda.setH15(cliente);
 		}
 		if(horario.equals("15:30")) {
-			agenda.setH15_3("Ocupado");
+			agenda.setH15_3(cliente);
 		}
 		if(horario.equals("16:00")) {
-			agenda.setH16("Ocupado");
+			agenda.setH16(cliente);
 		}
 		if(horario.equals("16:30")) {
-			agenda.setH16_3("Ocupado");
+			agenda.setH16_3(cliente);
 		}
 		if(horario.equals("17:00")) {
-			agenda.setH17("Ocupado");
+			agenda.setH17(cliente);
 		}
 		if(horario.equals("17:30")) {
-			agenda.setH17_3("Ocupado");
+			agenda.setH17_3(cliente);
 		}
 		if(horario.equals("18:00")) {
-			agenda.setH18("Ocupado");
+			agenda.setH18(cliente);
 		}
 	}
 	
@@ -163,6 +167,22 @@ public class Agenda {
 	}
 	public void setH18(String h18) {
 		this.h18 = h18;
+	}
+
+	public ArrayList<String> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(ArrayList<String> clientes) {
+		this.clientes = clientes;
+	}
+
+	public String getData() {
+		return Data;
+	}
+
+	public void setData(String data) {
+		Data = data;
 	}
 
 	@Override

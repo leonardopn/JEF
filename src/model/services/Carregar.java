@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 import db.DB;
 import model.entities.Agenda;
+import model.entities.Agendamento;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
@@ -80,6 +81,7 @@ public class Carregar {
 	}
 	
 	public static void carregaAgenda(LocalDate data) {
+		Cadastro.agendamentos.clear();
 		Cadastro.agendas.clear();
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		try {
@@ -92,7 +94,9 @@ public class Carregar {
 						 +"AND data ="+"'"+localDateFormatada.format(data)+"';"
 						 );
 				 while(rs.next()) {
-					 agenda.retornaHorario(rs.getString("horario"), agenda);
+					 agenda.retornaHorario(rs.getString("horario"), agenda, rs.getString("cliente"));
+					 Agendamento agendamento = new Agendamento(fun.getNome(), rs.getString("cliente"), rs.getString("data"), rs.getString("horario"));
+					 Cadastro.agendamentos.add(agendamento);
 				 }
 				 Cadastro.agendas.add(agenda);
 				 agenda = null;
