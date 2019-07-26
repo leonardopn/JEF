@@ -79,7 +79,9 @@ public class Carregar {
 		}
 	}
 	
-	public static void carregaAgenda() {
+	public static void carregaAgenda(LocalDate data) {
+		Cadastro.agendas.clear();
+		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		try {
 			for(Funcionario fun : Cadastro.funcionarios) {
 				Agenda agenda = new Agenda(fun.getNome());
@@ -87,6 +89,7 @@ public class Carregar {
 				rs = st.executeQuery("SELECT * FROM agenda "
 						 +"WHERE funcionario = "
 						 +"'"+fun.getNome()+"'"
+						 +"AND data ="+"'"+localDateFormatada.format(data)+"';"
 						 );
 				 while(rs.next()) {
 					 agenda.retornaHorario(rs.getString("horario"), agenda);
@@ -153,7 +156,7 @@ public class Carregar {
 	public static void carregar() {
 		carregaCliente();
 		carregaFuncionario();
-		carregaAgenda();
+		carregaAgenda(LocalDate.now());
 		carregaTransacao();
 		carregaCaixa();
 	}

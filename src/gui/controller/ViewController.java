@@ -2,6 +2,7 @@ package gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -29,7 +30,6 @@ public class ViewController implements Initializable{
 	private static Scene caixa;
 	private static Scene funcionario;
 	private static Scene cliente;
-	private static Agenda agenda;
 	
 	@FXML
 	private Button btCriaFuncionario;
@@ -123,7 +123,7 @@ public class ViewController implements Initializable{
 	}
 	
 	public void carregaAgenda() {
-		
+		Carregar.carregaAgenda(dpData.getValue());
 		coluna12.setCellValueFactory(new PropertyValueFactory<>("h12"));
 		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("h12_3"));
 		coluna13.setCellValueFactory(new PropertyValueFactory<>("h13"));
@@ -138,9 +138,7 @@ public class ViewController implements Initializable{
 		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
 		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
 		ObservableList<Agenda> obAgenda = FXCollections.observableArrayList(Cadastro.agendas);
-		tvAgenda.getStyleClass().add("table-cell");
 		tvAgenda.setItems(obAgenda);
-		
 	}
 	
 	public static Scene getCaixa() {
@@ -184,14 +182,14 @@ public class ViewController implements Initializable{
 	}
 	
 	public void onBtCarregarAction(){
-		Carregar.carregar();
+		carregaFuncionario();
 	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		dpData.setValue(LocalDate.now());
 		Carregar.carregar();	
 		carregaFuncionario();
 		carregaAgenda();
 	}
-
 }

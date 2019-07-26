@@ -1,7 +1,7 @@
 package gui.controller;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URL;import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import application.Main;
@@ -29,6 +29,7 @@ import model.services.Salvar;
 public class ViewFuncionarioController implements Initializable{
 	
 	ObservableList<Funcionario> obFuncionario;
+	Scene main;
 	
 	@FXML
 	private Button btRecarregar;
@@ -71,7 +72,15 @@ public class ViewFuncionarioController implements Initializable{
 	
 	@FXML
 	public void onBtVoltarAction() {
-		Main.getStage().setScene(Main.getMain());
+		try {
+			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/ViewTeste.fxml"));
+			main = new Scene(fxmlMain);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		
+	}
+	Main.getStage().setScene(main);
 	}
 	
 	@FXML
@@ -129,6 +138,7 @@ public class ViewFuncionarioController implements Initializable{
 			}
 			obFuncionario.removeAll(obExcluirFuncionario);
 			Cadastro.funcionarios.removeAll(obExcluirFuncionario);
+			Carregar.carregaAgenda(LocalDate.now());
 		}
 	}
 	
