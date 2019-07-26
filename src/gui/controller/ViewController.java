@@ -2,7 +2,6 @@ package gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -15,15 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Agenda;
-import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 import model.services.Carregar;
@@ -61,6 +57,9 @@ public class ViewController implements Initializable{
 	
 	@FXML
 	private TableView<Agenda> tvAgenda = new TableView<>();
+	
+	@FXML
+	private TableView<Funcionario> tvFuncionario = new TableView<>();
 	
 	@FXML
 	private TableColumn<Agenda, String> colunaFuncionario;
@@ -119,10 +118,12 @@ public class ViewController implements Initializable{
 	public void carregaFuncionario() {
 		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 		cbManicure.setItems(obFuncionario);
+		tvFuncionario.setItems(obFuncionario);
+		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
 	}
 	
 	public void carregaAgenda() {
-		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
+		
 		coluna12.setCellValueFactory(new PropertyValueFactory<>("h12"));
 		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("h12_3"));
 		coluna13.setCellValueFactory(new PropertyValueFactory<>("h13"));
@@ -137,7 +138,9 @@ public class ViewController implements Initializable{
 		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
 		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
 		ObservableList<Agenda> obAgenda = FXCollections.observableArrayList(Cadastro.agendas);
+		tvAgenda.getStyleClass().add("table-cell");
 		tvAgenda.setItems(obAgenda);
+		
 	}
 	
 	public static Scene getCaixa() {

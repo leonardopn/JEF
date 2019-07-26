@@ -90,10 +90,8 @@ public class Carregar {
 						 );
 				 while(rs.next()) {
 					 agenda.retornaHorario(rs.getString("horario"), agenda);
-					 System.out.println(rs.getString("horario"));
 				 }
 				 Cadastro.agendas.add(agenda);
-				 //System.out.println(agenda);
 				 agenda = null;
 			}
 		}
