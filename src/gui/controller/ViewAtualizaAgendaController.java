@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,6 +33,9 @@ public class ViewAtualizaAgendaController implements Initializable{
 	private Button btAtualiza;
 	
 	@FXML
+	private ContextMenu cmCliente;
+	
+	@FXML
 	private DatePicker dpData;
 	
 	@FXML
@@ -39,6 +43,9 @@ public class ViewAtualizaAgendaController implements Initializable{
 	
 	@FXML
 	private TextField txtCpfCliente;
+	
+	@FXML
+	private TextField txtCliente;
 	
 	@FXML
 	private TextField txtNomeCliente;
