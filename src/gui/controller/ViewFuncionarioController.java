@@ -73,7 +73,7 @@ public class ViewFuncionarioController implements Initializable{
 	@FXML
 	public void onBtVoltarAction() {
 		try {
-			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/ViewTeste.fxml"));
+			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/View.fxml"));
 			main = new Scene(fxmlMain);
 		}
 		catch(IOException e) {

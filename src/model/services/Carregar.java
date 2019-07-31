@@ -81,7 +81,6 @@ public class Carregar {
 	}
 	
 	public static void carregaAgenda(LocalDate data) {
-		Cadastro.agendamentos.clear();
 		Cadastro.agendas.clear();
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		try {
@@ -95,8 +94,6 @@ public class Carregar {
 						 );
 				 while(rs.next()) {
 					 agenda.retornaHorario(rs.getString("horario"), agenda, rs.getString("cliente"));
-					 Agendamento agendamento = new Agendamento(fun.getNome(), rs.getString("cliente"), rs.getString("data"), rs.getString("horario"));
-					 Cadastro.agendamentos.add(agendamento);
 				 }
 				 Cadastro.agendas.add(agenda);
 				 agenda = null;
@@ -112,6 +109,30 @@ public class Carregar {
 		}
 	}
 	
+	public static void carregaAgendaCliente(LocalDate data, String cliente) {
+		Cadastro.agendamentos.clear();
+		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		try {
+				st = DB.getConnection().createStatement();
+				rs = st.executeQuery("SELECT * FROM agenda "
+						 +"WHERE cliente = "
+						 +"'"+cliente+"'"
+						 +"AND data ="+"'"+localDateFormatada.format(data)+"';"
+						 );
+				 while(rs.next()) {
+					 Agendamento agendamento = new Agendamento(rs.getString("funcionario"), rs.getString("cliente"), rs.getString("data"), rs.getString("horario"));
+					 Cadastro.agendamentos.add(agendamento);
+				 }
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeConnection();
+			DB.fechaResultSet(rs);
+			DB.fechaStatement(st);
+		}
+	}
 	
 	public static void carregaTransacaoExpecifica(LocalDate data) {
 		Caixa.caixaTemp.clear();

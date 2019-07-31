@@ -6,7 +6,7 @@ public class Agenda {
 	
 	
 	private String funcionario;
-	private ArrayList<String> clientes;
+	private ArrayList<Agendamento> agendamentos;
 	private String Data;
 	private String h12;
 	private String h12_3;
@@ -23,7 +23,7 @@ public class Agenda {
 	private String h18;
 	
 	public Agenda(String funcionario) {
-		this.clientes = new ArrayList<>();
+		this.agendamentos = new ArrayList<>();
 		this.funcionario = funcionario;
 		this.h12 = "Livre";
 		this.h12_3 = "Livre";
@@ -169,12 +169,12 @@ public class Agenda {
 		this.h18 = h18;
 	}
 
-	public ArrayList<String> getClientes() {
-		return clientes;
+	public ArrayList<Agendamento> getAgendamentos() {
+		return agendamentos;
 	}
 
-	public void setClientes(ArrayList<String> clientes) {
-		this.clientes = clientes;
+	public void setAgendamentos(ArrayList<Agendamento> agendamentos) {
+		this.agendamentos = agendamentos;
 	}
 
 	public String getData() {
@@ -191,7 +191,4 @@ public class Agenda {
 				+ h13_3 + ", h14=" + h14 + ", h14_3=" + h14_3 + ", h15=" + h15 + ", h15_3=" + h15_3 + ", h16=" + h16
 				+ ", h16_3=" + h16_3 + ", h17=" + h17 + ", h17_3=" + h17_3 + ", h18=" + h18+"\n\n";
 	}
-	
-	
-
 }

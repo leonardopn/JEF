@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-
 import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
@@ -27,7 +25,6 @@ import model.services.Cadastro;
 import model.services.Carregar;
 import model.services.Excluir;
 import model.services.Salvar;
-import org.controlsfx.control.textfield.TextFields;
 
 public class ViewClienteController implements Initializable{
 	
@@ -149,7 +146,5 @@ public class ViewClienteController implements Initializable{
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaCliente();
-		String[] clientes = {"teste", "clientes"};
-		TextFields.bindAutoCompletion(txtNomeCliente, clientes);
 	}
 }
