@@ -3,6 +3,7 @@ package gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -21,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Agenda;
+import model.entities.Agendamento;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 import model.services.Carregar;
@@ -31,6 +33,8 @@ public class ViewController implements Initializable{
 	private static Scene funcionario;
 	private static Scene cliente;
 	private static Scene agendamento;
+	ArrayList<Agenda> agenda = new ArrayList<>();
+	
 	
 	@FXML
 	private Button btCriaFuncionario;
@@ -139,7 +143,6 @@ public class ViewController implements Initializable{
 	}
 	
 	public void carregaAgenda() {
-		Carregar.carregaAgenda(dpData.getValue());
 		coluna12.setCellValueFactory(new PropertyValueFactory<>("h12"));
 		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("h12_3"));
 		coluna13.setCellValueFactory(new PropertyValueFactory<>("h13"));
@@ -153,8 +156,13 @@ public class ViewController implements Initializable{
 		coluna17.setCellValueFactory(new PropertyValueFactory<>("h17"));
 		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
 		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
-		ObservableList<Agenda> obAgenda = FXCollections.observableArrayList(Cadastro.agendas);
+		Carregar.carregaAgendaFuncionario(dpData.getValue());
+		for(Funcionario fun : Cadastro.funcionarios) {
+			agenda.add(fun.getAgenda());
+		}
+		ObservableList<Agenda> obAgenda = FXCollections.observableArrayList(agenda);
 		tvAgenda.setItems(obAgenda);
+		agenda.clear();
 	}
 	
 	public static Scene getCaixa() {
@@ -191,10 +199,6 @@ public class ViewController implements Initializable{
 		}
 		Main.getStage().setScene(caixa);
 		
-	}
-	
-	public void onBtSalvarAction(){
-		Funcionario.criaHorarios();
 	}
 	
 	public void onBtCarregarAction(){

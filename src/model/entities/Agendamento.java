@@ -14,12 +14,12 @@ public class Agendamento {
 		this.horario = horario;
 	}
 
-	public String getFuncionario() {
-		return funcionario;
-	}
-
 	public void setFuncionario(String funcionario) {
 		this.funcionario = funcionario;
+	}
+	
+	public String getFuncionario() {
+		return funcionario;
 	}
 
 	public String getCliente() {

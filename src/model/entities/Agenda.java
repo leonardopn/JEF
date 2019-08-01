@@ -1,13 +1,7 @@
 package model.entities;
 
-import java.util.ArrayList;
-
 public class Agenda {
 	
-	
-	private String funcionario;
-	private ArrayList<Agendamento> agendamentos;
-	private String Data;
 	private String h12;
 	private String h12_3;
 	private String h13;
@@ -22,9 +16,7 @@ public class Agenda {
 	private String h17_3;
 	private String h18;
 	
-	public Agenda(String funcionario) {
-		this.agendamentos = new ArrayList<>();
-		this.funcionario = funcionario;
+	public Agenda() {
 		this.h12 = "Livre";
 		this.h12_3 = "Livre";
 		this.h13 = "Livre";
@@ -41,6 +33,8 @@ public class Agenda {
 	}
 	
 	public void retornaHorario(String horario, Agenda agenda, String cliente) {
+		setH12("Livre"); setH12_3("Livre"); setH13("Livre"); setH13_3("Livre"); setH14("Livre"); setH14_3("Livre"); setH15("Livre"); setH15_3("Livre");
+		setH16("Livre"); setH16_3("Livre"); setH17("Livre"); setH17_3("Livre"); setH12("Livre");
 		if(horario.equals("12:00")) {
 			agenda.setH12(cliente);
 		}
@@ -80,14 +74,6 @@ public class Agenda {
 		if(horario.equals("18:00")) {
 			agenda.setH18(cliente);
 		}
-	}
-	
-	public String getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(String funcionario) {
-		this.funcionario = funcionario;
 	}
 
 	public String getH12() {
@@ -167,28 +153,5 @@ public class Agenda {
 	}
 	public void setH18(String h18) {
 		this.h18 = h18;
-	}
-
-	public ArrayList<Agendamento> getAgendamentos() {
-		return agendamentos;
-	}
-
-	public void setAgendamentos(ArrayList<Agendamento> agendamentos) {
-		this.agendamentos = agendamentos;
-	}
-
-	public String getData() {
-		return Data;
-	}
-
-	public void setData(String data) {
-		Data = data;
-	}
-
-	@Override
-	public String toString() {
-		return "\n\nfuncionario=" + funcionario + ", h12=" + h12 + ", h12_3=" + h12_3 + ", h13=" + h13 + ", h13_3="
-				+ h13_3 + ", h14=" + h14 + ", h14_3=" + h14_3 + ", h15=" + h15 + ", h15_3=" + h15_3 + ", h16=" + h16
-				+ ", h16_3=" + h16_3 + ", h17=" + h17 + ", h17_3=" + h17_3 + ", h18=" + h18+"\n\n";
 	}
 }

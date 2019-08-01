@@ -1,7 +1,7 @@
 package gui.controller;
 
 import java.io.IOException;
-import java.net.URL;import java.time.LocalDate;
+import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.Main;
@@ -138,7 +138,6 @@ public class ViewFuncionarioController implements Initializable{
 			}
 			obFuncionario.removeAll(obExcluirFuncionario);
 			Cadastro.funcionarios.removeAll(obExcluirFuncionario);
-			Carregar.carregaAgenda(LocalDate.now());
 		}
 	}
 	

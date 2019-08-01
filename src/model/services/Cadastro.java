@@ -13,7 +13,6 @@ import model.entities.Funcionario;
 public class Cadastro {
 	static public TreeSet<Cliente> clientes = new TreeSet<>();
 	static public TreeSet<Funcionario> funcionarios = new TreeSet<>();
-	static public ArrayList<Agenda> agendas = new ArrayList<>();
 	static public ArrayList<Agendamento> agendamentos = new ArrayList<>();
 	
 	

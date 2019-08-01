@@ -12,10 +12,10 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minWidth="-Infinity" prefHeight="501.0" prefWidth="1216.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ViewController">
+<AnchorPane minWidth="-Infinity" prefHeight="501.0" prefWidth="1216.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controller.ViewController">
    <children>
       <Button fx:id="btCarregar" layoutX="88.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtCarregarAction" prefHeight="26.0" prefWidth="103.0" text="Carregar" />
-      <Button fx:id="btSalvar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtSalvarAction" prefHeight="25.0" prefWidth="70.0" text="Salvar" />
+      <Button fx:id="btSalvar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Salvar" />
       <Button fx:id="btCriaFuncionario" layoutX="10.0" layoutY="43.0" mnemonicParsing="false" onAction="#onBtCriaFuncionarioAction" prefHeight="45.0" prefWidth="103.0" text="Funcionários" />
       <Line endX="1065.0" endY="1.0" layoutX="151.0" layoutY="35.0" startX="-150.0" startY="1.0" stroke="#827f7f" />
       <Line endX="-100.0" endY="469.0" layoutX="223.0" layoutY="31.0" startX="-100.0" startY="5.7071075439453125" stroke="#827f7f" />

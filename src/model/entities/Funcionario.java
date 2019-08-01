@@ -1,35 +1,19 @@
 package model.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
 public class Funcionario implements Comparable<Funcionario> {
 	private String nome;
 	private int id;
 	private double salario;
-	private String horario;
-	private ArrayList<Date> horarios; 
+	private String horario; 
 	private CheckBox select;
-	private static SimpleDateFormat sdf;
+	private Agenda agenda;
 	
 	public Funcionario(String nome, int id, double salario) {
-//		Calendar hora = Calendar.getInstance();
-//		hora.get(Calendar.DATE);
-//		hora.set(Calendar.HOUR, 00);
-//		hora.set(Calendar.MINUTE, 00);
-//		hora.set(Calendar.SECOND, 00);
-//		Date horario = hora.getTime();
-//		horarios.add(horario);
-//		for(int i = 0; i < 12; i++) {
-//			hora.add(Calendar.MINUTE, 30);
-//			horario = hora.getTime();
-//			horarios.add(horario);
-//		}
+		this.agenda = new Agenda();
 		this.nome = nome;
 		this.id = id;
 		this.salario = salario;
@@ -37,9 +21,13 @@ public class Funcionario implements Comparable<Funcionario> {
 		this.horario = "livre";
 		
 	}
-	
-	public static void criaHorarios() {
-        
+
+	public Agenda getAgenda() {
+		return agenda;
+	}
+
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
 	}
 
 	public CheckBox getSelect() {
