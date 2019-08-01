@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="570.0" prefWidth="1138.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ViewCaixaController">
+<AnchorPane prefHeight="570.0" prefWidth="1138.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
    <children>
       <Button fx:id="btVoltar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
       <Line endX="975.2928466796875" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />

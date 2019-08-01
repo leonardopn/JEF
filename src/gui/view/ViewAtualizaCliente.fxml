@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="325.0" prefWidth="709.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ViewAtualizaClienteController">
+<AnchorPane prefHeight="325.0" prefWidth="709.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewAtualizaClienteController">
    <children>
       <Line endX="-105.0" endY="245.0" layoutX="479.0" layoutY="85.0" startX="-105.0" startY="-85.0" stroke="#827f7f" />
       <TextField fx:id="txtCpfCliente" layoutX="478.0" layoutY="98.0" promptText="CPF do cliente" />

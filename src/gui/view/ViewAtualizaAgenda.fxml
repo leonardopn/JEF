@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="325.0" prefWidth="709.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controller.ViewAtualizaAgendaController">
+<AnchorPane prefHeight="325.0" prefWidth="709.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controllers.ViewAtualizaAgendaController">
    <children>
       <Line endX="-105.0" endY="245.0" layoutX="479.0" layoutY="85.0" startX="-105.0" startY="-53.0" stroke="#827f7f" />
       <TableView fx:id="tvAgendamento" layoutX="-1.0" layoutY="32.0" onMouseClicked="#selecionaHorario" prefHeight="299.0" prefWidth="375.0">

@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="325.0" prefWidth="536.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ViewAtualizaFuncionarioController">
+<AnchorPane prefHeight="325.0" prefWidth="536.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewAtualizaFuncionarioController">
    <children>
       <Line endX="-104.5" endY="248.0" layoutX="333.0" layoutY="77.0" startX="-104.5" startY="-79.0" stroke="#827f7f" />
       <TextField fx:id="txtIdFuncionario" layoutX="309.0" layoutY="95.0" promptText="ID do funcionário" />
