@@ -55,22 +55,22 @@
                <content>
                   <TableView fx:id="tvAgenda" prefHeight="383.0" prefWidth="1464.0" style="-fx-alignment: CENTER;">
                     <columns>
-                        <TableColumn editable="false" minWidth="0.0" prefWidth="110.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horário">
+                        <TableColumn minWidth="0.0" prefWidth="110.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horário">
                            <columns>
-                            <TableColumn fx:id="coluna12" editable="false" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="12:00-12:30" />
-                              <TableColumn fx:id="coluna12_3" editable="false" minWidth="0.0" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="12:30-13:00" />
+                            <TableColumn fx:id="coluna12" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="12:00-12:30" />
+                              <TableColumn fx:id="coluna12_3" minWidth="0.0" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="12:30-13:00" />
                            </columns>
                         </TableColumn>
-                        <TableColumn editable="false" minWidth="0.0" prefWidth="164.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horário">
+                        <TableColumn minWidth="0.0" prefWidth="164.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horário">
                            <columns>
-                              <TableColumn fx:id="coluna13" editable="false" minWidth="0.0" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="13:00-13:30" />
-                              <TableColumn fx:id="coluna13_3" editable="false" minWidth="0.0" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="13:30-14:00" />
+                              <TableColumn fx:id="coluna13" minWidth="0.0" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="13:00-13:30" />
+                              <TableColumn fx:id="coluna13_3" minWidth="0.0" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="13:30-14:00" />
                            </columns>
                         </TableColumn>
-                        <TableColumn editable="false" prefWidth="146.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horário">
+                        <TableColumn prefWidth="146.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horário">
                            <columns>
-                              <TableColumn fx:id="coluna14" editable="false" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="14:00-14:30" />
-                              <TableColumn fx:id="coluna14_3" editable="false" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="14:30-15:00" />
+                              <TableColumn fx:id="coluna14" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="14:00-14:30" />
+                              <TableColumn fx:id="coluna14_3" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="14:30-15:00" />
                            </columns>
                         </TableColumn>
                         <TableColumn prefWidth="146.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horario">
