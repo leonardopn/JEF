@@ -1,6 +1,8 @@
 package model.entities;
 
-public class Agendamento {
+import java.util.Objects;
+
+public class Agendamento implements Comparable<Agendamento>{
 	
 	private String funcionario;
 	private String cliente;
@@ -44,5 +46,27 @@ public class Agendamento {
 
 	public void setHorario(String horario) {
 		this.horario = horario;
+	}
+	
+	@Override
+	public boolean equals(Object outroObjeto) {
+		if(this==outroObjeto)
+			return true;
+		if(outroObjeto == null || !(outroObjeto instanceof Agendamento))
+			return false;
+		Agendamento outroAgendamento = (Agendamento) outroObjeto;
+		
+		return(Objects.equals(this.data, outroAgendamento.data)
+				&& Objects.equals(this.horario, outroAgendamento.horario));
+	}
+
+	@Override
+	public int compareTo(Agendamento o) {
+		if(!(this.data.equals(o.data)))
+			return data.compareTo(o.data);
+		if(!(this.horario.equals(o.horario)))
+			return horario.compareTo(o.horario);
+		return 0;
+		
 	}
 }

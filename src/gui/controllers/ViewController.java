@@ -3,7 +3,6 @@ package gui.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -21,8 +20,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.entities.Agenda;
-import model.entities.Agendamento;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 import model.services.Carregar;
@@ -33,8 +30,6 @@ public class ViewController implements Initializable{
 	private static Scene funcionario;
 	private static Scene cliente;
 	private static Scene agendamento;
-	ArrayList<Agenda> agenda = new ArrayList<>();
-	
 	
 	@FXML
 	private Button btCriaFuncionario;
@@ -64,52 +59,52 @@ public class ViewController implements Initializable{
 	private Button btAtualizaAgendamento;
 	
 	@FXML
-	private TableView<Agenda> tvAgenda = new TableView<>();
+	private TableView<Funcionario> tvAgenda = new TableView<>();
 	
 	@FXML
 	private TableView<Funcionario> tvFuncionario = new TableView<>();
 	
 	@FXML
-	private TableColumn<Agenda, String> colunaFuncionario;
+	private TableColumn<Funcionario, String> colunaFuncionario;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna12;
+	private TableColumn<Funcionario, String> coluna12;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna12_3;
+	private TableColumn<Funcionario, String> coluna12_3;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna13;
+	private TableColumn<Funcionario, String> coluna13;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna13_3;
+	private TableColumn<Funcionario, String> coluna13_3;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna14;
+	private TableColumn<Funcionario, String> coluna14;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna14_3;
+	private TableColumn<Funcionario, String> coluna14_3;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna15;
+	private TableColumn<Funcionario, String> coluna15;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna15_3;
+	private TableColumn<Funcionario, String> coluna15_3;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna16;
+	private TableColumn<Funcionario, String> coluna16;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna16_3;
+	private TableColumn<Funcionario, String> coluna16_3;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna17;
+	private TableColumn<Funcionario, String> coluna17;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna17_3;
+	private TableColumn<Funcionario, String> coluna17_3;
 	
 	@FXML
-	private TableColumn<Agenda, String> coluna18;
+	private TableColumn<Funcionario, String> coluna18;
 	
 	@FXML
 	public void onBtCriaFuncionarioAction(){
@@ -143,6 +138,7 @@ public class ViewController implements Initializable{
 	}
 	
 	public void carregaAgenda() {
+		
 		coluna12.setCellValueFactory(new PropertyValueFactory<>("h12"));
 		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("h12_3"));
 		coluna13.setCellValueFactory(new PropertyValueFactory<>("h13"));
@@ -157,12 +153,9 @@ public class ViewController implements Initializable{
 		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
 		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
 		Carregar.carregaAgendaFuncionario(dpData.getValue());
-		for(Funcionario fun : Cadastro.funcionarios) {
-			agenda.add(fun.getAgenda());
-		}
-		ObservableList<Agenda> obAgenda = FXCollections.observableArrayList(agenda);
+		tvAgenda.refresh();
+		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Cadastro.funcionarios);
 		tvAgenda.setItems(obAgenda);
-		agenda.clear();
 	}
 	
 	public static Scene getCaixa() {
@@ -195,10 +188,8 @@ public class ViewController implements Initializable{
 			}
 			catch(IOException e) {
 				e.printStackTrace();
-			
 		}
 		Main.getStage().setScene(caixa);
-		
 	}
 	
 	public void onBtCarregarAction(){

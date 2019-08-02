@@ -1,21 +1,16 @@
 package model.services;
 
-import java.util.ArrayList;
 import java.util.TreeSet;
 
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
-import model.entities.Agenda;
-import model.entities.Agendamento;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 
 public class Cadastro {
 	static public TreeSet<Cliente> clientes = new TreeSet<>();
 	static public TreeSet<Funcionario> funcionarios = new TreeSet<>();
-	static public ArrayList<Agendamento> agendamentos = new ArrayList<>();
-	
-	
+
 	public static void verificaFuncionario(Funcionario fun) {
 		if(Cadastro.funcionarios.contains(fun)) {
 			Alerts.showAlert("Alerta", "FuncionÃ¡rio jÃ¡ inscrito", "FuncionÃ¡rio nÃ£o foi adicionado, pois ID jÃ¡ estÃ¡ em uso", AlertType.INFORMATION);
@@ -24,7 +19,7 @@ public class Cadastro {
 	
 	public static void verificaCliente(Cliente cli) {
 		if(Cadastro.clientes.contains(cli)) {
-			Alerts.showAlert("Alerta", "CLiente já inscrito", "Cliente não foi adicionado, pois ID já está em uso", AlertType.INFORMATION);
+			Alerts.showAlert("Alerta", "CLiente jï¿½ inscrito", "Cliente nï¿½o foi adicionado, pois ID jï¿½ estï¿½ em uso", AlertType.INFORMATION);
 		}
 	}
 }

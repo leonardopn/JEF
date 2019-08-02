@@ -30,8 +30,6 @@ public class ViewClienteController implements Initializable{
 	
 	ObservableList<Cliente> obCliente;
 	
-
-	
 	@FXML
 	private Button btCriaCliente;
 	

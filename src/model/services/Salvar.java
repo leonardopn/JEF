@@ -20,13 +20,11 @@ public class Salvar {
 	static File arquivoTransacao;
 	static PreparedStatement st = null;
 	
-	
 	public static void salvarStatus() {
 		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
 		if (IdentificadorSO.sistema() == "linux"){
 				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
 		}
-		
 		File arquivoCaixa = new File(caminho);
 		try(BufferedWriter bwCaixa = new BufferedWriter(new FileWriter(arquivoCaixa))) {
 			bwCaixa.write(Caixa.isStatus() + ";");
@@ -95,7 +93,6 @@ public class Salvar {
 			st.setString(4, cbFuncionario.getValue().getNome());
 			st.setString(5, cbFormaPagamento.getValue());
 			st.setString(6, localDateFormatada.format(dpData));
-			
 			st.execute();
 		}
 		catch(SQLException e) {
@@ -109,16 +106,16 @@ public class Salvar {
 	
 	public static void salvarCaixa(String data, double total, double cartao, double dinheiro) {
 		try {
-					st = DB.getConnection().prepareStatement(
-							"REPLACE INTO fechamento_caixa "
-							+ "(total, data, total_cartao, total_dinheiro) "
-							+ "VALUES "
-							+ "(?, ?, ?, ? )");
-					st.setDouble(1, total);
-					st.setString(2, data);
-					st.setDouble(3, cartao);
-					st.setDouble(4, dinheiro);
-					st.execute();
+				st = DB.getConnection().prepareStatement(
+						"REPLACE INTO fechamento_caixa "
+						+ "(total, data, total_cartao, total_dinheiro) "
+						+ "VALUES "
+						+ "(?, ?, ?, ? )");
+				st.setDouble(1, total);
+				st.setString(2, data);
+				st.setDouble(3, cartao);
+				st.setDouble(4, dinheiro);
+				st.execute();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -132,6 +129,4 @@ public class Salvar {
 	public static void salvar() {
 		salvarStatus();
 	}
-	
-	
 }

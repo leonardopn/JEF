@@ -78,7 +78,6 @@ public class ViewFuncionarioController implements Initializable{
 		}
 		catch(IOException e) {
 			e.printStackTrace();
-		
 	}
 	Main.getStage().setScene(main);
 	}

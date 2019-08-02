@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import db.DB;
-import model.entities.Agendamento;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
@@ -123,26 +122,6 @@ public class Carregar {
 		}
 	}
 	
-	public static void carregaAgendamentos() {
-		Cadastro.agendamentos.clear();
-		try {
-			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("select * from agenda");
-			 while(rs.next()) {
-				 Agendamento agendamento = new Agendamento(rs.getString("funcionario") , rs.getString("cliente"), rs.getString("data"), rs.getString("horario"));
-				 Cadastro.agendamentos.add(agendamento);
-			 }
-		}
-		catch(SQLException e) {
-			throw new DbException(e.getMessage());
-		}
-		finally {
-			DB.closeConnection();
-			DB.fechaResultSet(rs);
-			DB.fechaStatement(st);
-		}
-	}
-	
 	public static void carregaAgendaFuncionario(LocalDate data) {
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");	
 		try {
@@ -151,11 +130,13 @@ public class Carregar {
 					 +"WHERE data = "
 					 +"'"+localDateFormatada.format(data)+"'"
 					 );
-			 
+			 for(Funcionario fun: Cadastro.funcionarios) {
+				 fun.zeraHorarios();
+			 }
 			 while(rs.next()) {
 				 for(Funcionario fun : Cadastro.funcionarios) {
 					if(rs.getString("funcionario").equals(fun.getNome())) {
-						fun.getAgenda().retornaHorario(rs.getString("horario"), fun.getAgenda(), rs.getString("cliente"));
+						fun.retornaHorario(rs.getString("horario"), rs.getString("cliente"));
 					}
 				}
 			 }
@@ -175,6 +156,5 @@ public class Carregar {
 		carregaFuncionario();
 		carregaTransacao();
 		carregaCaixa();
-		carregaAgendamentos();
 	}
 }

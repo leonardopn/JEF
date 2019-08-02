@@ -4,7 +4,6 @@ import java.util.TreeSet;
 
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
-import model.services.Cadastro;
 
 public class Caixa {
 	

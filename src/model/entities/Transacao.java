@@ -103,6 +103,4 @@ public class Transacao implements Comparable<Transacao>{
 		this.atendente+
 		this.formaPagamento;
 	}
-
-	
 }

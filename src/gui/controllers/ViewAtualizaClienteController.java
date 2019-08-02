@@ -79,7 +79,6 @@ public class ViewAtualizaClienteController implements Initializable{
 		txtNomeCliente.setText(cli.getNome());
 		txtEmailCliente.setText(cli.getEmail());
 		txtTelefoneCliente.setText(cli.getTelefone());
-		
 	}
 	
 	@FXML
