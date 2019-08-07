@@ -23,40 +23,20 @@ public class Cliente implements Comparable<Cliente>{
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public CheckBox getSelect() {
 		return select;
 	}
 
-	public void setSelect(CheckBox select) {
-		this.select = select;
-	}
-	
 	public String getNome() {
 		return nome;
-	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 	
 	public String getEmail() {
 		return email;
 	}
 	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
 	public String getTelefone() {
 		return telefone;
-	}
-	
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
 	}
 	
 	@Override

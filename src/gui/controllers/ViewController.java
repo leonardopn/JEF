@@ -20,16 +20,19 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.entities.Funcionario;
 import model.services.Cadastro;
 import model.services.Carregar;
 
 public class ViewController implements Initializable{
-
+	
 	private static Scene caixa;
 	private static Scene funcionario;
 	private static Scene cliente;
 	private static Scene agendamento;
+	private static Funcionario funTemp;
+	private static LocalDate dpDataTemp;
 	
 	@FXML
 	private Button btCriaFuncionario;
@@ -158,8 +161,36 @@ public class ViewController implements Initializable{
 		tvAgenda.setItems(obAgenda);
 	}
 	
+	@FXML
+	public void carregaAgendamento() {
+		retornaInformacaoAgenda();
+			try {
+				Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
+				Scene agenda = new Scene(fxmlAgenda);
+				Stage stageAgenda = new Stage();
+				stageAgenda.setScene(agenda);
+				stageAgenda.show();
+			}
+			catch(IOException e) {
+				e.printStackTrace();
+		}
+	}
+	
+	public void retornaInformacaoAgenda() {
+		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
+		dpDataTemp = this.dpData.getValue();
+	}
+	
 	public static Scene getCaixa() {
 		return caixa;
+	}
+	
+	public static Funcionario getFunTemp() {
+		return funTemp;
+	}
+	
+	public static LocalDate getDpDataTemp() {
+		return dpDataTemp;
 	}
 
 	public static Scene getFuncionario() {

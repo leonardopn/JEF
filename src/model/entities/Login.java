@@ -21,9 +21,4 @@ public class Login {
 		return(Objects.equals(this.usuario, outroLogin.usuario)
 				&& Objects.equals(this.senha, outroLogin.senha));
 	}
-	
-	@Override
-	public String toString() {
-		return "\n"+usuario+senha+"\n";
-	}
 }

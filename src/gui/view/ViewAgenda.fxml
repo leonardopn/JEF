@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane prefHeight="325.0" prefWidth="709.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewAgendaController">
+   <children>
+      <Line endX="-105.0" endY="245.0" layoutX="479.0" layoutY="85.0" startX="-105.0" startY="-53.0" stroke="#827f7f" />
+      <Button fx:id="btVoltar" layoutX="-1.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="62.0" text="Voltar" />
+      <Line endX="-199.0" endY="145.2928924560547" layoutX="192.0" layoutY="-114.0" startX="517.0000610351562" startY="145.29290771484375" stroke="#827f7f" />
+      <DatePicker fx:id="dpData" layoutX="463.0" layoutY="40.0" />
+      <TextField fx:id="txtCliente" layoutX="471.0" layoutY="3.0" />
+      <Label layoutX="423.0" layoutY="8.0" text="Cliente:" />
+      <Label layoutX="426.0" layoutY="45.0" text="Data:" />
+      <Button fx:id="btBuscar" layoutX="646.0" layoutY="3.0" mnemonicParsing="false" text="Buscar" />
+      <CheckBox fx:id="cb12" layoutX="440.0" layoutY="82.0" mnemonicParsing="false" text="12:00" />
+      <CheckBox fx:id="cb12_3" layoutX="440.0" layoutY="107.0" mnemonicParsing="false" text="12:30" />
+      <CheckBox fx:id="cb13" layoutX="440.0" layoutY="132.0" mnemonicParsing="false" text="13:00" />
+      <CheckBox fx:id="cb13_3" layoutX="440.0" layoutY="156.0" mnemonicParsing="false" text="13:30" />
+      <CheckBox fx:id="cb14" layoutX="440.0" layoutY="181.0" mnemonicParsing="false" text="14:00" />
+      <CheckBox fx:id="cb15" layoutX="531.0" layoutY="82.0" mnemonicParsing="false" text="15:00" />
+      <CheckBox fx:id="cb18" layoutX="616.0" layoutY="82.0" mnemonicParsing="false" text="18:00" />
+      <CheckBox fx:id="cb17_3" layoutX="531.0" layoutY="206.0" mnemonicParsing="false" text="17:30" />
+      <CheckBox fx:id="cb14_3" layoutX="439.0" layoutY="206.0" mnemonicParsing="false" text="14:30" />
+      <CheckBox fx:id="cb17" layoutX="531.0" layoutY="181.0" mnemonicParsing="false" text="17:00" />
+      <CheckBox fx:id="cb16_3" layoutX="531.0" layoutY="156.0" mnemonicParsing="false" text="16:30" />
+      <CheckBox fx:id="cb16" layoutX="531.0" layoutY="132.0" mnemonicParsing="false" text="16:00" />
+      <CheckBox fx:id="cb15_3" layoutX="531.0" layoutY="107.0" mnemonicParsing="false" text="15:30" />
+      <TextField fx:id="txtFuncionario" layoutX="246.0" layoutY="3.0" />
+      <Label layoutX="175.0" layoutY="8.0" text="Funcionário" />
+   </children>
+</AnchorPane>
