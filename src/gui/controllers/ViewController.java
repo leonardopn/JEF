@@ -33,6 +33,7 @@ public class ViewController implements Initializable{
 	private static Scene agendamento;
 	private static Funcionario funTemp;
 	private static LocalDate dpDataTemp;
+	private static Stage stageAgenda;
 	
 	@FXML
 	private Button btCriaFuncionario;
@@ -167,7 +168,7 @@ public class ViewController implements Initializable{
 			try {
 				Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
 				Scene agenda = new Scene(fxmlAgenda);
-				Stage stageAgenda = new Stage();
+				stageAgenda = new Stage();
 				stageAgenda.setScene(agenda);
 				stageAgenda.show();
 			}
@@ -199,6 +200,10 @@ public class ViewController implements Initializable{
 
 	public static Scene getCliente() {
 		return cliente;
+	}
+	
+	public static Stage getStageAgenda() {
+		return stageAgenda;
 	}
 
 	public void onBtCriaClienteAction(){

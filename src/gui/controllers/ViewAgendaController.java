@@ -3,12 +3,20 @@ package gui.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.decoration.Decorator;
+import org.controlsfx.control.decoration.StyleClassDecoration;
+import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import model.services.Cadastro;
+import model.services.Salvar;
 
 public class ViewAgendaController implements Initializable{
 	
@@ -22,7 +30,7 @@ public class ViewAgendaController implements Initializable{
     private TextField txtCliente;
 
     @FXML
-    private Button btBuscar;
+    private Button btAgendar;
 
     @FXML
     private CheckBox cb12;
@@ -68,7 +76,26 @@ public class ViewAgendaController implements Initializable{
 	    
     
     @FXML
-    public void setHorarios() {
+    public void onBtAgendarAction(){
+    	if(txtCliente.getText().isEmpty()) {
+    		ValidationSupport validacao = new ValidationSupport();
+    		validacao.registerValidator(txtCliente, Validator.createEmptyValidator("Text is Required"));
+    		Decorator.addDecoration(txtCliente, new StyleClassDecoration("warning"));
+    	}
+    	else {
+    		salvaHorario();
+    	}
+    }
+
+    public void salvaHorario() {
+    	if(cb12.isSelected() && !(cb12.isDisable())) {
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "12:00");
+    	}
+    	ViewController.getStageAgenda().close();
+    }
+    
+    @FXML
+    public void carregaHorarios() {
     	if(ViewController.getFunTemp().getH12() != "Livre") {
 			cb12.setSelected(true);
 			cb12.setDisable(true);
@@ -129,6 +156,7 @@ public class ViewAgendaController implements Initializable{
 		txtFuncionario.setEditable(false);
 		dpData.setValue(ViewController.getDpDataTemp());
 //		dpData.setDisable(true);
-		setHorarios();
+		carregaHorarios();
+		TextFields.bindAutoCompletion(txtCliente, Cadastro.clientes);
 	}
 }

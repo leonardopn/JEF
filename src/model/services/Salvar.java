@@ -126,6 +126,29 @@ public class Salvar {
 		}
 	}
 	
+	public static void salvarAgendamento(String funcionario, String cliente, LocalDate data, String horario) {
+		try {
+			DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				st = DB.getConnection().prepareStatement(
+						"INSERT INTO agenda"
+						+ "(funcionario, cliente, data, horario) "
+						+ "VALUES "
+						+ "(?, ?, ?, ? )");
+				st.setString(1, funcionario);
+				st.setString(2, cliente);
+				st.setString(3,localDateFormatada.format(data));
+				st.setString(4, horario);
+				st.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
+	}
+	
 	public static void salvar() {
 		salvarStatus();
 	}
