@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import db.DB;
+import model.entities.Agendamento;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
@@ -139,6 +140,35 @@ public class Carregar {
 						fun.retornaHorario(rs.getString("horario"), rs.getString("cliente"));
 					}
 				}
+			 }
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeConnection();
+			DB.fechaResultSet(rs);
+			DB.fechaStatement(st);
+		}
+	}
+	
+	public static void carregaAgendamento(LocalDate data, String cliente) {
+		Cadastro.agendamentos.clear();
+		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		try {
+			 st = DB.getConnection().createStatement();
+			 rs = st.executeQuery("SELECT * FROM agenda "
+			 					+ "WHERE data = "
+			 					+"'"+localDateFormatada.format(data)+"'"
+			 					+ " AND cliente = '"
+			 					+ cliente
+			 					+ "'");
+			 while(rs.next()) {
+				 Agendamento agen = new Agendamento(rs.getString("funcionario"), rs.getString("cliente"), rs.getString("data"), rs.getString("horario"));
+				 Cadastro.agendamentos.add(agen);
+			 }
+			 for(Agendamento age : Cadastro.agendamentos) {
+				 System.out.println(age);
 			 }
 		}
 		catch(SQLException e) {

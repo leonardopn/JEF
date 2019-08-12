@@ -24,6 +24,7 @@ public class Main extends Application {
 			Parent fxmlLogin = FXMLLoader.load(getClass().getResource("/gui/view/ViewLogin.fxml"));
 			login = new Scene(fxmlLogin);
 			stage.setScene(login);
+			stage.centerOnScreen();
 			stage.show();
 			
 		} catch (IOException e) {

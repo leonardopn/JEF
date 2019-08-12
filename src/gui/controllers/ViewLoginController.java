@@ -53,6 +53,9 @@ public class ViewLoginController {
 			 }
 			 if(arrayLogin.contains(login)) {
 				Main.getStage().setScene(Main.getMain());
+				Main.getStage().centerOnScreen();
+//				Main.getStage().setMaxHeight(540); Main.getStage().setMinHeight(540);
+//				Main.getStage().setMaxWidth(1216); Main.getStage().setMinWidth(1216);
 				return true;
 			}
 			else {

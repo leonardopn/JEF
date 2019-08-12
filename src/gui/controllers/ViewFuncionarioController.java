@@ -80,6 +80,7 @@ public class ViewFuncionarioController implements Initializable{
 			e.printStackTrace();
 	}
 	Main.getStage().setScene(main);
+	Main.getStage().centerOnScreen();
 	}
 	
 	@FXML

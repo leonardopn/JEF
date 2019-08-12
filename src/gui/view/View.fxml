@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minWidth="-Infinity" prefHeight="501.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewController">
+<AnchorPane maxHeight="540.0" maxWidth="1216.0" minWidth="-Infinity" prefHeight="501.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewController">
    <children>
       <Button fx:id="btCarregar" layoutX="88.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtCarregarAction" prefHeight="26.0" prefWidth="103.0" text="Carregar" />
       <Button fx:id="btSalvar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Salvar" />
@@ -25,7 +25,7 @@
          <children>
             <TableView fx:id="tvFuncionario" layoutX="13.0" layoutY="41.0" prefHeight="375.0" prefWidth="274.0" style="-fx-border-color: #827f7f;">
               <columns>
-                <TableColumn fx:id="colunaFuncionario" prefWidth="200.0" text="Manicures" />
+                <TableColumn fx:id="colunaFuncionario" editable="false" prefWidth="200.0" sortable="false" text="Manicures" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

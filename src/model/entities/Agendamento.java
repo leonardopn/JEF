@@ -2,26 +2,30 @@ package model.entities;
 
 import java.util.Objects;
 
+import javafx.scene.control.CheckBox;
+
 public class Agendamento implements Comparable<Agendamento>{
 	
 	private String funcionario;
 	private String cliente;
 	private String data;
 	private String horario;
+	private CheckBox select;
 	
 	public Agendamento(String funcionario, String cliente, String data, String horario) {
-		this.funcionario = funcionario;
 		this.cliente = cliente;
 		this.data = data;
-		this.horario = horario;
-	}
-
-	public void setFuncionario(String funcionario) {
 		this.funcionario = funcionario;
+		this.horario = horario;
+		this.select = new CheckBox();
 	}
 	
 	public String getFuncionario() {
 		return funcionario;
+	}
+
+	public void setFuncionario(String funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	public String getCliente() {
@@ -47,7 +51,15 @@ public class Agendamento implements Comparable<Agendamento>{
 	public void setHorario(String horario) {
 		this.horario = horario;
 	}
-	
+
+	public CheckBox getSelect() {
+		return select;
+	}
+
+	public void setSelect(CheckBox select) {
+		this.select = select;
+	}
+
 	@Override
 	public boolean equals(Object outroObjeto) {
 		if(this==outroObjeto)
@@ -68,5 +80,10 @@ public class Agendamento implements Comparable<Agendamento>{
 			return horario.compareTo(o.horario);
 		return 0;
 		
+	}
+	
+	@Override
+	public String toString() {
+		return horario+"\n";
 	}
 }

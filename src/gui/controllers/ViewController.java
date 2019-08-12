@@ -120,18 +120,22 @@ public class ViewController implements Initializable{
 			e.printStackTrace();
 		}
 		Main.getStage().setScene(funcionario);
+		Main.getStage().centerOnScreen();
 	}
 	
 	@FXML
 	public void onBAtualizaAgendamento(){
 		try {
-			Parent fxmlAgendamento = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaAgenda.fxml"));
-			agendamento = new Scene(fxmlAgendamento);
+			Parent fxmlAtualizaAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaAgenda.fxml"));
+			Scene agenda = new Scene(fxmlAtualizaAgenda);
+			stageAgenda = new Stage();
+			stageAgenda.setScene(agenda);
+			stageAgenda.show();
+			stageAgenda.centerOnScreen();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
 		}
-		Main.getStage().setScene(agendamento);
 	}
 	
 	public void carregaFuncionario() {
@@ -142,7 +146,6 @@ public class ViewController implements Initializable{
 	}
 	
 	public void carregaAgenda() {
-		
 		coluna12.setCellValueFactory(new PropertyValueFactory<>("h12"));
 		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("h12_3"));
 		coluna13.setCellValueFactory(new PropertyValueFactory<>("h13"));
@@ -171,6 +174,7 @@ public class ViewController implements Initializable{
 				stageAgenda = new Stage();
 				stageAgenda.setScene(agenda);
 				stageAgenda.show();
+				stageAgenda.centerOnScreen();
 			}
 			catch(IOException e) {
 				e.printStackTrace();
@@ -215,6 +219,7 @@ public class ViewController implements Initializable{
 			e.printStackTrace();
 		}
 		Main.getStage().setScene(cliente);
+		Main.getStage().centerOnScreen();
 	}
 	
 	public void onBtAbreCaixaAction(){
@@ -226,6 +231,7 @@ public class ViewController implements Initializable{
 				e.printStackTrace();
 		}
 		Main.getStage().setScene(caixa);
+		Main.getStage().centerOnScreen();
 	}
 	
 	public void onBtCarregarAction(){
