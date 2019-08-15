@@ -167,9 +167,6 @@ public class Carregar {
 				 Agendamento agen = new Agendamento(rs.getString("funcionario"), rs.getString("cliente"), rs.getString("data"), rs.getString("horario"));
 				 Cadastro.agendamentos.add(agen);
 			 }
-			 for(Agendamento age : Cadastro.agendamentos) {
-				 System.out.println(age);
-			 }
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());

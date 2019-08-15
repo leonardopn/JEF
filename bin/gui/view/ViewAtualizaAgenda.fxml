@@ -23,21 +23,19 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="649.0">
                      <children>
-                        <TextField fx:id="tfFuncionario" layoutX="90.0" layoutY="15.0" />
                         <TextField fx:id="tfCliente" layoutX="90.0" layoutY="50.0" />
-                        <Label layoutX="14.0" layoutY="19.0" text="Funcionário:" />
                         <Label layoutX="40.0" layoutY="54.0" text="Cliente:" />
                         <DatePicker fx:id="dpData" layoutX="89.0" layoutY="85.0" prefHeight="25.0" prefWidth="150.0" />
                         <Label layoutX="51.0" layoutY="89.0" text="Data:" />
                         <Button fx:id="btPesquisar" layoutX="172.0" layoutY="132.0" mnemonicParsing="false" onAction="#pesquisaAgendamento" text="Pesquisar" />
-                        <TableView fx:id="tvAgendamento" layoutX="288.0" layoutY="12.0" prefHeight="147.0" prefWidth="227.0">
+                        <TableView fx:id="tvAgendamento" layoutX="288.0" layoutY="12.0" prefHeight="147.0" prefWidth="261.0">
                           <columns>
-                            <TableColumn fx:id="colunaCliente" prefWidth="75.0" text="Cliente" />
-                            <TableColumn fx:id="clunaHorario" prefWidth="75.0" text="Horário" />
-                              <TableColumn fx:id="colunaExcluir" prefWidth="75.0" text="Excluir?" />
+                            <TableColumn fx:id="colunaCliente" prefWidth="121.0" text="Cliente" />
+                            <TableColumn fx:id="colunaHorario" text="Horário" />
+                              <TableColumn fx:id="colunaExcluir" prefWidth="59.0" text="Excluir?" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btExcluir" layoutX="526.0" layoutY="132.0" mnemonicParsing="false" text="Excluir selecionados" />
+                        <Button fx:id="btExcluir" layoutX="568.0" layoutY="132.0" mnemonicParsing="false" onAction="#excluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
                      </children>
                   </AnchorPane>
             </content>
