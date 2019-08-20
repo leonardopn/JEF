@@ -125,6 +125,7 @@ public class ViewController implements Initializable{
 	
 	@FXML
 	public void onBAtualizaAgendamento(){
+		retornaInformacaoAgenda();
 		try {
 			Parent fxmlAtualizaAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaAgenda.fxml"));
 			Scene agenda = new Scene(fxmlAtualizaAgenda);

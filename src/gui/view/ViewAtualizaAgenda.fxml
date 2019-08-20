@@ -16,7 +16,14 @@
         <tabs>
           <Tab text="Atualização">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="tfCliente1" layoutX="83.0" layoutY="40.0" />
+                        <Label layoutX="25.0" layoutY="44.0" text="Cliente:" />
+                        <DatePicker fx:id="dpData1" layoutX="83.0" layoutY="72.0" prefHeight="25.0" prefWidth="150.0" />
+                        <Label layoutX="37.0" layoutY="76.0" text="Data:" />
+                        <Button fx:id="btPesquisar1" layoutX="166.0" layoutY="112.0" mnemonicParsing="false" onAction="#pesquisaAgendamento" text="Pesquisar" />
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="Exclusão">
