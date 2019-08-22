@@ -2,26 +2,31 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="540.0" maxWidth="1216.0" minWidth="-Infinity" prefHeight="501.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewController">
    <children>
       <Button fx:id="btCarregar" layoutX="88.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtCarregarAction" prefHeight="26.0" prefWidth="103.0" text="Carregar" />
       <Button fx:id="btSalvar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Salvar" />
       <Button fx:id="btCriaFuncionario" layoutX="10.0" layoutY="43.0" mnemonicParsing="false" onAction="#onBtCriaFuncionarioAction" prefHeight="45.0" prefWidth="103.0" text="Funcionários" />
-      <Line endX="1065.0" endY="1.0" layoutX="151.0" layoutY="35.0" startX="-150.0" startY="1.0" stroke="#827f7f" />
-      <Line endX="-100.0" endY="469.0" layoutX="223.0" layoutY="31.0" startX="-100.0" startY="5.7071075439453125" stroke="#827f7f" />
+      <Line endX="1215.0" endY="1.0" layoutX="151.0" layoutY="35.0" startX="-150.0" startY="1.0" stroke="#827f7f" />
+      <Line endX="-100.0" endY="673.0" layoutX="223.0" layoutY="31.0" startX="-100.0" startY="5.7071075439453125" stroke="#827f7f" />
       <Button fx:id="btCriaCliente" layoutX="10.0" layoutY="98.0" mnemonicParsing="false" onAction="#onBtCriaClienteAction" prefHeight="45.0" prefWidth="103.0" text="Clientes" />
       <Button fx:id="btCaixa" layoutX="10.0" layoutY="153.0" mnemonicParsing="false" onAction="#onBtAbreCaixaAction" prefHeight="45.0" prefWidth="103.0" text="Caixa" />
-      <Pane layoutX="144.0" layoutY="64.0" prefHeight="434.0" prefWidth="1327.0">
+      <Pane layoutX="144.0" layoutY="64.0">
          <children>
             <TableView fx:id="tvFuncionario" layoutX="13.0" layoutY="41.0" prefHeight="375.0" prefWidth="274.0" style="-fx-border-color: #827f7f;">
               <columns>
@@ -34,28 +39,16 @@
                   <Insets />
                </opaqueInsets>
             </TableView>
-            <DatePicker fx:id="dpData" layoutX="829.0" layoutY="-23.0" onAction="#carregaAgenda" prefHeight="34.0" prefWidth="219.0" />
-            <Button layoutX="14.0" layoutY="-10.0" mnemonicParsing="false" text="Agendar">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Button>
-            <Button fx:id="btAtualizaAgendamento" layoutX="166.0" layoutY="-10.0" mnemonicParsing="false" onAction="#onBAtualizaAgendamento" text="Atualizar">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Button>
+            <DatePicker fx:id="dpData" layoutX="14.0" layoutY="5.0" onAction="#carregaAgenda" prefHeight="34.0" prefWidth="275.0" />
          </children>
       </Pane>
-      <ChoiceBox fx:id="cbManicure" layoutX="231.0" layoutY="6.0" prefHeight="26.0" prefWidth="197.0" />
-      <ChoiceBox fx:id="cbHorarios" layoutX="736.0" layoutY="6.0" prefHeight="26.0" prefWidth="197.0" />
-    <AnchorPane layoutX="459.0" layoutY="89.0" minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="1021.0">
+    <AnchorPane layoutX="459.0" layoutY="89.0" minHeight="0.0" minWidth="0.0" prefHeight="392.0" prefWidth="865.0">
          <children>
-            <ScrollPane layoutX="-18.0" layoutY="-11.0" prefHeight="403.0" prefWidth="751.0" style="-fx-border-color: #827f7f;">
+            <ScrollPane layoutX="-18.0" layoutY="-11.0" prefHeight="403.0" prefWidth="907.0" style="-fx-border-color: #827f7f;">
                <content>
-                  <TableView fx:id="tvAgenda" onMouseClicked="#carregaAgendamento" prefHeight="383.0" prefWidth="1464.0" style="-fx-alignment: CENTER;">
+                  <TableView fx:id="tvAgenda" onMouseClicked="#carregaAgendamento" style="-fx-alignment: CENTER;">
                     <columns>
-                        <TableColumn minWidth="0.0" prefWidth="110.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horário">
+                        <TableColumn maxWidth="-1.0" minWidth="0.0" prefWidth="-1.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="1 horário">
                            <columns>
                             <TableColumn fx:id="coluna12" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="12:00-12:30" />
                               <TableColumn fx:id="coluna12_3" minWidth="0.0" prefWidth="105.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="12:30-13:00" />
@@ -101,5 +94,50 @@
                </content>
             </ScrollPane>
          </children></AnchorPane>
+      <Line endX="-101.5" endY="469.0" layoutX="224.0" layoutY="32.0" startX="1144.0" startY="470.0" stroke="#827f7f" />
+      <TabPane layoutX="126.0" layoutY="502.0" prefHeight="202.0" prefWidth="1240.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Excluir">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="104.0" prefWidth="1094.0">
+                     <children>
+                        <GridPane layoutX="48.0" layoutY="52.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="150.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Cliente:" />
+                              <Label text="Data:" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="dpDataExcluir" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfCliente" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Button fx:id="btPesquisar" layoutX="182.0" layoutY="124.0" mnemonicParsing="false" onAction="#pesquisaAgendamento" text="Pesquisar" />
+                        <TableView fx:id="tvAgendamento" layoutX="284.0" layoutY="13.0" prefHeight="147.0" prefWidth="261.0">
+                           <columns>
+                              <TableColumn fx:id="colunaCliente" prefWidth="121.0" text="Cliente" />
+                              <TableColumn fx:id="colunaHorario" text="Horário" />
+                              <TableColumn fx:id="colunaExcluir" prefWidth="59.0" text="Excluir?" />
+                           </columns>
+                        </TableView>
+                        <Line endX="-100.00003051757812" endY="289.0" layoutX="373.0" layoutY="-35.0" startX="-100.0" startY="30.0" stroke="#827f7f" />
+                        <Button fx:id="btExcluir" layoutX="553.0" layoutY="135.0" mnemonicParsing="false" onAction="#excluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Atualizar">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
