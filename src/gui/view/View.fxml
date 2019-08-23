@@ -94,8 +94,13 @@
                </content>
             </ScrollPane>
          </children></AnchorPane>
+<<<<<<< HEAD
+      <Line endX="-101.5" endY="469.0" layoutX="224.0" layoutY="32.0" startX="1149.0" startY="470.0" stroke="#827f7f" />
+      <TabPane layoutX="126.0" layoutY="502.0" prefHeight="202.0" prefWidth="1247.0" tabClosingPolicy="UNAVAILABLE">
+=======
       <Line endX="-101.5" endY="469.0" layoutX="224.0" layoutY="32.0" startX="1144.0" startY="470.0" stroke="#827f7f" />
       <TabPane layoutX="126.0" layoutY="502.0" prefHeight="202.0" prefWidth="1240.0" tabClosingPolicy="UNAVAILABLE">
+>>>>>>> master
         <tabs>
           <Tab text="Excluir">
             <content>
@@ -119,6 +124,17 @@
                            </children>
                         </GridPane>
                         <Button fx:id="btPesquisar" layoutX="182.0" layoutY="124.0" mnemonicParsing="false" onAction="#pesquisaAgendamento" text="Pesquisar" />
+<<<<<<< HEAD
+                        <TableView fx:id="tvAgendamento" layoutX="284.0" layoutY="13.0" prefHeight="147.0" prefWidth="289.0">
+                           <columns>
+                              <TableColumn fx:id="colunaCliente" prefWidth="121.0" text="Cliente" />
+                              <TableColumn fx:id="colunaHorario" text="Horário" />
+                              <TableColumn fx:id="colunaExcluir" prefWidth="87.0" text="Excluir?" />
+                           </columns>
+                        </TableView>
+                        <Line endX="-100.0" endY="204.0" layoutX="373.0" layoutY="-35.0" startX="-100.0" startY="30.0" stroke="#827f7f" />
+                        <Button fx:id="btExcluir" layoutX="585.0" layoutY="137.0" mnemonicParsing="false" onAction="#excluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
+=======
                         <TableView fx:id="tvAgendamento" layoutX="284.0" layoutY="13.0" prefHeight="147.0" prefWidth="261.0">
                            <columns>
                               <TableColumn fx:id="colunaCliente" prefWidth="121.0" text="Cliente" />
@@ -128,6 +144,7 @@
                         </TableView>
                         <Line endX="-100.00003051757812" endY="289.0" layoutX="373.0" layoutY="-35.0" startX="-100.0" startY="30.0" stroke="#827f7f" />
                         <Button fx:id="btExcluir" layoutX="553.0" layoutY="135.0" mnemonicParsing="false" onAction="#excluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
+>>>>>>> master
                      </children>
                   </AnchorPane>
             </content>
