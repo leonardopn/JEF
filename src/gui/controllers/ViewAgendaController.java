@@ -14,6 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import model.services.Cadastro;
+import model.services.Carregar;
 import model.services.Salvar;
 
 public class ViewAgendaController implements Initializable{
@@ -81,6 +82,8 @@ public class ViewAgendaController implements Initializable{
     	}
     	else {
     		salvaHorario();
+    		Carregar.carregaAgendaFuncionario(dpData.getValue());
+    		ViewController.getTvAgendaTemp().refresh();
     	}
     }
 
@@ -188,7 +191,8 @@ public class ViewAgendaController implements Initializable{
 		txtFuncionario.setText(ViewController.getFunTemp().getNome());
 		txtFuncionario.setEditable(false);
 		dpData.setValue(ViewController.getDpDataTemp());
-//		dpData.setDisable(true);
+		dpData.setEditable(false);
+		dpData.getEditor().setEditable(false);
 		carregaHorarios();
 		TextFields.bindAutoCompletion(txtCliente, Cadastro.clientes);
 	}

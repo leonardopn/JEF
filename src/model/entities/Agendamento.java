@@ -69,7 +69,8 @@ public class Agendamento implements Comparable<Agendamento>{
 		Agendamento outroAgendamento = (Agendamento) outroObjeto;
 		
 		return(Objects.equals(this.data, outroAgendamento.data)
-				&& Objects.equals(this.horario, outroAgendamento.horario));
+				&& Objects.equals(this.horario, outroAgendamento.horario))
+				&& Objects.equals(this.funcionario, outroAgendamento.horario);
 	}
 
 	@Override

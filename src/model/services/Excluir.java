@@ -74,8 +74,9 @@ public class Excluir {
 					"DELETE FROM agenda "
 					+ "WHERE cliente= (?)"
 					+ "AND data = (?)"
-					+ "AND horario = (?)");
-			st.setString(1, age.getCliente()); st.setString(2, age.getData()); st.setString(3, age.getHorario());
+					+ "AND horario = (?)"
+					+"AND funcionario = (?)");
+			st.setString(1, age.getCliente()); st.setString(2, age.getData()); st.setString(3, age.getHorario()); st.setString(4, age.getFuncionario());
 			st.execute();
 		}
 		catch(SQLException e) {

@@ -40,6 +40,7 @@ public class ViewController implements Initializable{
 	private static Scene agendamento;
 	private static Funcionario funTemp;
 	private static LocalDate dpDataTemp;
+	private static TableView<Funcionario> tvAgendaTemp;
 	private static Stage stageAgenda;
 	ObservableList<Agendamento> obAgendamento;
 	
@@ -132,6 +133,9 @@ public class ViewController implements Initializable{
 
     @FXML
     private TableColumn<Agendamento, CheckBox> colunaExcluir;
+    
+    @FXML
+    private TableColumn<Agendamento, CheckBox> colunaFuncionarioAgendamento;
 
     @FXML
     private Button btExcluir;
@@ -155,30 +159,10 @@ public class ViewController implements Initializable{
 		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
 	}
 	
-	public void carregaAgenda() {
-		coluna12.setCellValueFactory(new PropertyValueFactory<>("h12"));
-		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("h12_3"));
-		coluna13.setCellValueFactory(new PropertyValueFactory<>("h13"));
-		coluna13_3.setCellValueFactory(new PropertyValueFactory<>("h13_3"));
-		coluna14.setCellValueFactory(new PropertyValueFactory<>("h14"));
-		coluna14_3.setCellValueFactory(new PropertyValueFactory<>("h14_3"));
-		coluna15.setCellValueFactory(new PropertyValueFactory<>("h15"));
-		coluna15_3.setCellValueFactory(new PropertyValueFactory<>("h15_3"));
-		coluna16.setCellValueFactory(new PropertyValueFactory<>("h16"));
-		coluna16_3.setCellValueFactory(new PropertyValueFactory<>("h16_3"));
-		coluna17.setCellValueFactory(new PropertyValueFactory<>("h17"));
-		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
-		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
-		Carregar.carregaAgendaFuncionario(dpData.getValue());
-		dpDataExcluir.setValue(dpData.getValue());
-		tvAgenda.refresh();
-		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Cadastro.funcionarios);
-		tvAgenda.setItems(obAgenda);
-	}
-	
 	@FXML
 	public void carregaAgendamento() {
-		retornaInformacaoAgenda();
+		if(!(tvAgenda.getSelectionModel().isEmpty())) {
+			retornaInformacaoAgenda();
 			try {
 				Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
 				Scene agenda = new Scene(fxmlAgenda);
@@ -189,38 +173,10 @@ public class ViewController implements Initializable{
 			}
 			catch(IOException e) {
 				e.printStackTrace();
+			}
 		}
 	}
 	
-	public void retornaInformacaoAgenda() {
-		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
-		dpDataTemp = this.dpData.getValue();
-	}
-	
-	public static Scene getCaixa() {
-		return caixa;
-	}
-	
-	public static Funcionario getFunTemp() {
-		return funTemp;
-	}
-	
-	public static LocalDate getDpDataTemp() {
-		return dpDataTemp;
-	}
-
-	public static Scene getFuncionario() {
-		return funcionario;
-	}
-
-	public static Scene getCliente() {
-		return cliente;
-	}
-	
-	public static Stage getStageAgenda() {
-		return stageAgenda;
-	}
-
 	public void onBtCriaClienteAction(){
 		try {
 			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
@@ -245,6 +201,62 @@ public class ViewController implements Initializable{
 		Main.getStage().centerOnScreen();
 	}
 	
+	@FXML
+	public void carregaAgenda() {
+		coluna12.setCellValueFactory(new PropertyValueFactory<>("h12"));
+		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("h12_3"));
+		coluna13.setCellValueFactory(new PropertyValueFactory<>("h13"));
+		coluna13_3.setCellValueFactory(new PropertyValueFactory<>("h13_3"));
+		coluna14.setCellValueFactory(new PropertyValueFactory<>("h14"));
+		coluna14_3.setCellValueFactory(new PropertyValueFactory<>("h14_3"));
+		coluna15.setCellValueFactory(new PropertyValueFactory<>("h15"));
+		coluna15_3.setCellValueFactory(new PropertyValueFactory<>("h15_3"));
+		coluna16.setCellValueFactory(new PropertyValueFactory<>("h16"));
+		coluna16_3.setCellValueFactory(new PropertyValueFactory<>("h16_3"));
+		coluna17.setCellValueFactory(new PropertyValueFactory<>("h17"));
+		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
+		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
+		Carregar.carregaAgendaFuncionario(dpData.getValue());
+		dpDataExcluir.setValue(dpData.getValue());
+		tvAgenda.refresh();
+		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Cadastro.funcionarios);
+		tvAgenda.setItems(obAgenda);
+	}
+	
+	public void retornaInformacaoAgenda() {
+		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
+		dpDataTemp = this.dpData.getValue();
+		tvAgendaTemp = this.tvAgenda;
+	}
+	
+	public static Scene getCaixa() {
+		return caixa;
+	}
+	
+	public static Funcionario getFunTemp() {
+		return funTemp;
+	}
+	
+	public static LocalDate getDpDataTemp() {
+		return dpDataTemp;
+	}
+	
+	public static TableView<Funcionario> getTvAgendaTemp(){
+		return tvAgendaTemp;
+	}
+
+	public static Scene getFuncionario() {
+		return funcionario;
+	}
+
+	public static Scene getCliente() {
+		return cliente;
+	}
+	
+	public static Stage getStageAgenda() {
+		return stageAgenda;
+	}
+	
 	public void onBtCarregarAction(){
 		carregaFuncionario();
 	}
@@ -260,6 +272,7 @@ public class ViewController implements Initializable{
 	   colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 	   colunaHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
 	   colunaExcluir.setCellValueFactory(new PropertyValueFactory<>("select"));
+	   colunaFuncionarioAgendamento.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
        tvAgendamento.setItems(obAgendamento);
    }
    
@@ -267,12 +280,10 @@ public class ViewController implements Initializable{
    public void excluirAgendamento() {
 		if(Alerts.showAlertExclusao()) {
 			ObservableList<Agendamento> obExcluirAgendamento = FXCollections.observableArrayList();
-			
 			for(Agendamento age : obAgendamento) {
 				if(age.getSelect().isSelected()) {
 					obExcluirAgendamento.add(age);
 					Excluir.excluirAgendamento(age);
-
 				}
 			}
 			obAgendamento.removeAll(obExcluirAgendamento);

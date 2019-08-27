@@ -4,6 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -19,11 +22,8 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewController">
    <children>
-      <Button fx:id="btCarregar" layoutX="88.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtCarregarAction" prefHeight="26.0" prefWidth="103.0" text="Carregar" />
-      <Button fx:id="btSalvar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Salvar" />
       <Button fx:id="btCriaFuncionario" layoutX="10.0" layoutY="43.0" mnemonicParsing="false" onAction="#onBtCriaFuncionarioAction" prefHeight="45.0" prefWidth="103.0" text="Funcionários" />
-      <Line endX="1215.0" endY="1.0" layoutX="151.0" layoutY="35.0" startX="-150.0" startY="1.0" stroke="#827f7f" />
-      <Line endX="-100.0" endY="673.0" layoutX="223.0" layoutY="31.0" startX="-100.0" startY="5.7071075439453125" stroke="#827f7f" />
+      <Line endX="-100.0" endY="673.0" layoutX="223.0" layoutY="31.0" startX="-100.0" startY="-5.000007629394531" stroke="#827f7f" />
       <Button fx:id="btCriaCliente" layoutX="10.0" layoutY="98.0" mnemonicParsing="false" onAction="#onBtCriaClienteAction" prefHeight="45.0" prefWidth="103.0" text="Clientes" />
       <Button fx:id="btCaixa" layoutX="10.0" layoutY="153.0" mnemonicParsing="false" onAction="#onBtAbreCaixaAction" prefHeight="45.0" prefWidth="103.0" text="Caixa" />
       <Pane layoutX="144.0" layoutY="64.0">
@@ -94,13 +94,8 @@
                </content>
             </ScrollPane>
          </children></AnchorPane>
-<<<<<<< HEAD
-      <Line endX="-101.5" endY="469.0" layoutX="224.0" layoutY="32.0" startX="1149.0" startY="470.0" stroke="#827f7f" />
-      <TabPane layoutX="126.0" layoutY="502.0" prefHeight="202.0" prefWidth="1247.0" tabClosingPolicy="UNAVAILABLE">
-=======
-      <Line endX="-101.5" endY="469.0" layoutX="224.0" layoutY="32.0" startX="1144.0" startY="470.0" stroke="#827f7f" />
-      <TabPane layoutX="126.0" layoutY="502.0" prefHeight="202.0" prefWidth="1240.0" tabClosingPolicy="UNAVAILABLE">
->>>>>>> master
+      <Line endX="-101.5" endY="469.0" layoutX="224.0" layoutY="32.0" startX="1152.0" startY="470.0" stroke="#827f7f" />
+      <TabPane layoutX="124.0" layoutY="502.0" prefHeight="202.0" prefWidth="1252.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Excluir">
             <content>
@@ -124,37 +119,40 @@
                            </children>
                         </GridPane>
                         <Button fx:id="btPesquisar" layoutX="182.0" layoutY="124.0" mnemonicParsing="false" onAction="#pesquisaAgendamento" text="Pesquisar" />
-<<<<<<< HEAD
-                        <TableView fx:id="tvAgendamento" layoutX="284.0" layoutY="13.0" prefHeight="147.0" prefWidth="289.0">
+                        <TableView fx:id="tvAgendamento" layoutX="284.0" layoutY="13.0" prefHeight="147.0" prefWidth="498.0">
                            <columns>
-                              <TableColumn fx:id="colunaCliente" prefWidth="121.0" text="Cliente" />
-                              <TableColumn fx:id="colunaHorario" text="Horário" />
-                              <TableColumn fx:id="colunaExcluir" prefWidth="87.0" text="Excluir?" />
+                              <TableColumn fx:id="colunaCliente" prefWidth="153.0" text="Cliente" />
+                              <TableColumn fx:id="colunaFuncionarioAgendamento" prefWidth="155.0" text="Funciońario" />
+                              <TableColumn fx:id="colunaHorario" prefWidth="117.0" text="Horário" />
+                              <TableColumn fx:id="colunaExcluir" prefWidth="72.0" text="Excluir?" />
                            </columns>
                         </TableView>
                         <Line endX="-100.0" endY="204.0" layoutX="373.0" layoutY="-35.0" startX="-100.0" startY="30.0" stroke="#827f7f" />
-                        <Button fx:id="btExcluir" layoutX="585.0" layoutY="137.0" mnemonicParsing="false" onAction="#excluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
-=======
-                        <TableView fx:id="tvAgendamento" layoutX="284.0" layoutY="13.0" prefHeight="147.0" prefWidth="261.0">
-                           <columns>
-                              <TableColumn fx:id="colunaCliente" prefWidth="121.0" text="Cliente" />
-                              <TableColumn fx:id="colunaHorario" text="Horário" />
-                              <TableColumn fx:id="colunaExcluir" prefWidth="59.0" text="Excluir?" />
-                           </columns>
-                        </TableView>
-                        <Line endX="-100.00003051757812" endY="289.0" layoutX="373.0" layoutY="-35.0" startX="-100.0" startY="30.0" stroke="#827f7f" />
-                        <Button fx:id="btExcluir" layoutX="553.0" layoutY="135.0" mnemonicParsing="false" onAction="#excluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
->>>>>>> master
+                        <Button fx:id="btExcluir" layoutX="792.0" layoutY="137.0" mnemonicParsing="false" onAction="#excluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Atualizar">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
         </tabs>
       </TabPane>
+      <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="25.0" prefWidth="1377.0" style="-fx-border-bottom-color: #827f7f;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Configuração">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Editar">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Ajuda">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>

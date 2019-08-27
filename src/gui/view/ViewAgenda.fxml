@@ -11,32 +11,32 @@
 
 <AnchorPane prefHeight="346.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewAgendaController">
    <children>
-      <DatePicker fx:id="dpData" layoutX="122.0" layoutY="81.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="txtFuncionario" layoutX="122.0" layoutY="14.0" prefHeight="25.0" prefWidth="174.0" />
       <TextField fx:id="txtCliente" layoutX="122.0" layoutY="49.0" />
+      <DatePicker fx:id="dpData" disable="true" layoutX="122.0" layoutY="81.0" prefHeight="25.0" prefWidth="149.0" style="-fx-opacity: 1;" />
+      <Button fx:id="btAgendar" layoutX="269.0" layoutY="311.0" mnemonicParsing="false" onAction="#onBtAgendarAction" text="Agendar" />
       <Label layoutX="72.0" layoutY="52.0" text="Cliente:" />
       <Label layoutX="84.0" layoutY="86.0" text="Data:" />
-      <Button fx:id="btAgendar" layoutX="269.0" layoutY="311.0" mnemonicParsing="false" onAction="#onBtAgendarAction" text="Agendar" />
-      <CheckBox fx:id="cb12" layoutX="60.0" layoutY="150.0" mnemonicParsing="false" text="12:00" />
-      <CheckBox fx:id="cb12_3" layoutX="60.0" layoutY="175.0" mnemonicParsing="false" text="12:30" />
-      <CheckBox fx:id="cb13" layoutX="60.0" layoutY="200.0" mnemonicParsing="false" text="13:00" />
-      <CheckBox fx:id="cb13_3" layoutX="60.0" layoutY="224.0" mnemonicParsing="false" text="13:30" />
-      <CheckBox fx:id="cb14" layoutX="60.0" layoutY="249.0" mnemonicParsing="false" text="14:00" />
-      <CheckBox fx:id="cb15" layoutX="151.0" layoutY="150.0" mnemonicParsing="false" text="15:00" />
-      <CheckBox fx:id="cb18" layoutX="236.0" layoutY="150.0" mnemonicParsing="false" text="18:00" />
-      <CheckBox fx:id="cb17_3" layoutX="151.0" layoutY="274.0" mnemonicParsing="false" text="17:30" />
-      <CheckBox fx:id="cb14_3" layoutX="59.0" layoutY="274.0" mnemonicParsing="false" text="14:30" />
-      <CheckBox fx:id="cb17" layoutX="151.0" layoutY="249.0" mnemonicParsing="false" text="17:00" />
-      <CheckBox fx:id="cb16_3" layoutX="151.0" layoutY="224.0" mnemonicParsing="false" text="16:30" />
-      <CheckBox fx:id="cb16" layoutX="151.0" layoutY="200.0" mnemonicParsing="false" text="16:00" />
-      <CheckBox fx:id="cb15_3" layoutX="151.0" layoutY="175.0" mnemonicParsing="false" text="15:30" />
-      <TextField fx:id="txtFuncionario" layoutX="122.0" layoutY="14.0" prefHeight="25.0" prefWidth="174.0" />
-      <Label layoutX="48.0" layoutY="19.0" text="Funcionário:" />
-      <Line endX="-181.0" endY="-47.5" layoutX="183.0" layoutY="161.0" startX="159.5" startY="-47.5" stroke="#827f7f" />
-      <Line endX="-181.0" endY="-47.5" layoutX="183.0" layoutY="349.0" startX="159.5" startY="-47.5" stroke="#827f7f" />
       <Label layoutX="134.0" layoutY="114.0" text="Horários">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
+      <CheckBox fx:id="cb12" layoutX="60.0" layoutY="150.0" mnemonicParsing="false" text="12:00" />
+      <CheckBox fx:id="cb12_3" layoutX="60.0" layoutY="175.0" mnemonicParsing="false" text="12:30" />
+      <CheckBox fx:id="cb13" layoutX="60.0" layoutY="200.0" mnemonicParsing="false" text="13:00" />
+      <CheckBox fx:id="cb13_3" layoutX="60.0" layoutY="224.0" mnemonicParsing="false" text="13:30" />
+      <CheckBox fx:id="cb14" layoutX="60.0" layoutY="249.0" mnemonicParsing="false" text="14:00" />
+      <CheckBox fx:id="cb14_3" layoutX="59.0" layoutY="274.0" mnemonicParsing="false" text="14:30" />
+      <CheckBox fx:id="cb15" layoutX="151.0" layoutY="150.0" mnemonicParsing="false" text="15:00" />
+      <CheckBox fx:id="cb15_3" layoutX="151.0" layoutY="175.0" mnemonicParsing="false" text="15:30" />
+      <CheckBox fx:id="cb16" layoutX="151.0" layoutY="200.0" mnemonicParsing="false" text="16:00" />
+      <CheckBox fx:id="cb16_3" layoutX="151.0" layoutY="224.0" mnemonicParsing="false" text="16:30" />
+      <CheckBox fx:id="cb17" layoutX="151.0" layoutY="249.0" mnemonicParsing="false" text="17:00" />
+      <CheckBox fx:id="cb17_3" layoutX="151.0" layoutY="274.0" mnemonicParsing="false" text="17:30" />
+      <CheckBox fx:id="cb18" layoutX="236.0" layoutY="150.0" mnemonicParsing="false" text="18:00" />
+      <Label layoutX="48.0" layoutY="19.0" text="Funcionário:" />
+      <Line endX="-181.0" endY="-47.5" layoutX="183.0" layoutY="161.0" startX="159.5" startY="-47.5" stroke="#827f7f" />
+      <Line endX="-181.0" endY="-47.5" layoutX="183.0" layoutY="349.0" startX="159.5" startY="-47.5" stroke="#827f7f" />
    </children>
 </AnchorPane>
