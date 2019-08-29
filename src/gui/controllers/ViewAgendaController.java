@@ -82,6 +82,8 @@ public class ViewAgendaController implements Initializable{
     	}
     	else {
     		salvaHorario();
+    		
+    		//vai atulizar no stage main se eu criar um agendamento
     		Carregar.carregaAgendaFuncionario(dpData.getValue());
     		ViewController.getTvAgendaTemp().refresh();
     	}

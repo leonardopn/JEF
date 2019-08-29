@@ -36,7 +36,7 @@ public class ViewLoginController {
 		String passTemp = pfSenha.getText();
 		Login login = new Login(useTemp, passTemp);
 		if(carregaLogin(login) == false && tentativas >3) {
-			Main.fechaProgram();
+			Main.getStage().close();
 		}
 	}
 	
@@ -54,8 +54,6 @@ public class ViewLoginController {
 			 if(arrayLogin.contains(login)) {
 				Main.getStage().setScene(Main.getMain());
 				Main.getStage().centerOnScreen();
-//				Main.getStage().setMaxHeight(540); Main.getStage().setMinHeight(540);
-//				Main.getStage().setMaxWidth(1216); Main.getStage().setMinWidth(1216);
 				return true;
 			}
 			else {

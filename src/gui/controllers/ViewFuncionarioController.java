@@ -115,10 +115,16 @@ public class ViewFuncionarioController implements Initializable{
 				String nome = txtNomeFuncionario.getText();
 				Double salario = Double.parseDouble(txtSalarioFuncionario.getText());
 				Funcionario fun01 = new Funcionario(nome, id, salario);
+				
 				Cadastro.verificaFuncionario(fun01);
 				Cadastro.funcionarios.add(fun01);
 				Salvar.salvarFuncionario(txtIdFuncionario, txtNomeFuncionario, txtSalarioFuncionario);
-				carregaFuncionario();
+				
+				//vai atualizar no stage main se adicionar funcionários
+				obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+	    		ViewController.getTvAgendaTemp().setItems(obFuncionario);
+				ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
+				ViewController.getStageFuncionario().close();
 			}
 			catch (NumberFormatException e) {
 				Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
@@ -138,6 +144,11 @@ public class ViewFuncionarioController implements Initializable{
 			}
 			obFuncionario.removeAll(obExcluirFuncionario);
 			Cadastro.funcionarios.removeAll(obExcluirFuncionario);
+			
+			//vai atulizar no stage main se excluir funcionários
+			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+    		ViewController.getTvAgendaTemp().setItems(obFuncionario);
+			ViewController.getTvFuncionarioTemp().setItems(obFuncionario);;
 		}
 	}
 	

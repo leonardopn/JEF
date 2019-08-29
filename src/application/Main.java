@@ -2,11 +2,14 @@ package application;
 
 import java.io.IOException;
 
+import gui.controllers.ViewController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application {
 
@@ -26,6 +29,7 @@ public class Main extends Application {
 			stage.setScene(login);
 			stage.centerOnScreen();
 			stage.show();
+			closeRequestProgram();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -43,8 +47,16 @@ public class Main extends Application {
 		return login;
 	}
 	
-	public static void fechaProgram() {
-		stage.close();
+	public static void closeRequestProgram() {
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	          public void handle(WindowEvent we) {
+	        	  ViewController.getStageCliente().close();
+	      		ViewController.getStageFuncionario().close();
+	      		ViewController.getStageAgenda().close();
+	          }
+	      });
+		
+		
 	}
 	
 	public static void main(String[] args) {

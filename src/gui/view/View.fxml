@@ -118,7 +118,7 @@
                               <TextField fx:id="tfCliente" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
-                        <Button fx:id="btPesquisar" layoutX="182.0" layoutY="124.0" mnemonicParsing="false" onAction="#pesquisaAgendamento" text="Pesquisar" />
+                        <Button fx:id="btPesquisar" layoutX="182.0" layoutY="124.0" mnemonicParsing="false" onAction="#onBtPesquisaAgendamento" text="Pesquisar" />
                         <TableView fx:id="tvAgendamento" layoutX="284.0" layoutY="13.0" prefHeight="147.0" prefWidth="498.0">
                            <columns>
                               <TableColumn fx:id="colunaCliente" prefWidth="153.0" text="Cliente" />
@@ -128,7 +128,7 @@
                            </columns>
                         </TableView>
                         <Line endX="-100.0" endY="204.0" layoutX="373.0" layoutY="-35.0" startX="-100.0" startY="30.0" stroke="#827f7f" />
-                        <Button fx:id="btExcluir" layoutX="792.0" layoutY="137.0" mnemonicParsing="false" onAction="#excluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
+                        <Button fx:id="btExcluir" layoutX="792.0" layoutY="137.0" mnemonicParsing="false" onAction="#onBtExcluirAgendamento" prefHeight="25.0" prefWidth="71.0" text="Excluir" />
                      </children>
                   </AnchorPane>
             </content>

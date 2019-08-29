@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import application.Main;
@@ -32,173 +33,238 @@ import model.services.Cadastro;
 import model.services.Carregar;
 import model.services.Excluir;
 
-public class ViewController implements Initializable{
-	
+public class ViewController implements Initializable {
+
 	private static Scene caixa;
 	private static Scene funcionario;
 	private static Scene cliente;
-	private static Scene agendamento;
+	private static Stage stageAgenda = new Stage();
+	private static Stage stageFuncionario = new Stage();
+	private static Stage stageCliente = new Stage();
 	private static Funcionario funTemp;
 	private static LocalDate dpDataTemp;
 	private static TableView<Funcionario> tvAgendaTemp;
-	private static Stage stageAgenda;
-	ObservableList<Agendamento> obAgendamento;
+	private static TableView<Funcionario> tvFuncionarioTemp;
+	public static TextField tfClienteTemp;
+	public static AutoCompletionBinding teste;
 	
+	ObservableList<Agendamento> obAgendamento;
+
 	@FXML
 	private Button btCriaFuncionario;
-	
+
 	@FXML
 	private DatePicker dpData;
-	
+
 	@FXML
 	private DatePicker dpDataExcluir;
-	
+
 	@FXML
-    private TextField tfCliente;
-	
+	private TextField tfCliente;
+
 	@FXML
 	private ChoiceBox<Date> cbHorarios;
-	
+
 	@FXML
 	private Button btCriaCliente;
-	
+
 	@FXML
 	private Button btCaixa;
-	
+
 	@FXML
 	private Button btSalvar;
-	
+
 	@FXML
 	private Button btCarregar;
-	
+
+	@FXML
+	private TableView<Funcionario> tvFuncionario = new TableView<>();
+
+	@FXML
+	private TableColumn<Funcionario, String> colunaFuncionario;
+
 	@FXML
 	private TableView<Funcionario> tvAgenda = new TableView<>();
 	
 	@FXML
-	private TableView<Funcionario> tvFuncionario = new TableView<>();
-	
-	@FXML
-	private TableColumn<Funcionario, String> colunaFuncionario;
-	
-	@FXML
 	private TableColumn<Funcionario, String> coluna12;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna12_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna13;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna13_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna14;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna14_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna15;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna15_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna16;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna16_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna17;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna17_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna18;
-	
+
 	@FXML
-    private Button btPesquisar;
+	private Button btPesquisar;
 
-    @FXML
-    private TableView<Agendamento> tvAgendamento;
-
-    @FXML
-    private TableColumn<Agendamento, String> colunaCliente;
-
-    @FXML
-    private TableColumn<Agendamento, String> colunaHorario;
-
-    @FXML
-    private TableColumn<Agendamento, CheckBox> colunaExcluir;
-    
-    @FXML
-    private TableColumn<Agendamento, CheckBox> colunaFuncionarioAgendamento;
-
-    @FXML
-    private Button btExcluir;
-	
 	@FXML
-	public void onBtCriaFuncionarioAction(){
+	private TableView<Agendamento> tvAgendamento;
+
+	@FXML
+	private TableColumn<Agendamento, String> colunaCliente;
+
+	@FXML
+	private TableColumn<Agendamento, String> colunaHorario;
+
+	@FXML
+	private TableColumn<Agendamento, CheckBox> colunaExcluir;
+
+	@FXML
+	private TableColumn<Agendamento, CheckBox> colunaFuncionarioAgendamento;
+
+	@FXML
+	private Button btExcluir;
+
+	// get's e set's
+
+	public static Stage getStageFuncionario() {
+		return stageFuncionario;
+	}
+
+	public static Stage getStageCliente() {
+		return stageCliente;
+	}
+
+	public static Scene getCaixa() {
+		return caixa;
+	}
+
+	public static Funcionario getFunTemp() {
+		return funTemp;
+	}
+
+	public static LocalDate getDpDataTemp() {
+		return dpDataTemp;
+	}
+
+	public static TableView<Funcionario> getTvAgendaTemp() {
+		return tvAgendaTemp;
+	}
+
+	public static Scene getFuncionario() {
+		return funcionario;
+	}
+
+	public static Scene getCliente() {
+		return cliente;
+	}
+
+	public static Stage getStageAgenda() {
+		return stageAgenda;
+	}
+	
+	public static TableView<Funcionario> getTvFuncionarioTemp() {
+		return tvFuncionarioTemp;
+	}
+	
+	public static TextField getTfClienteTemp() {
+		return tfClienteTemp;
+	}
+	
+	// abre páginas
+
+	@FXML
+	public void onBtCriaFuncionarioAction() {
 		try {
-			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
-			funcionario = new Scene(fxmlfuncionario);
-		}
-		catch(IOException e) {
+			if (!(stageFuncionario.isShowing())) {
+				retornaInformacaoAgenda();
+				Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
+				funcionario = new Scene(fxmlfuncionario);
+				stageFuncionario.setScene(funcionario);
+				stageFuncionario.show();
+				stageFuncionario.centerOnScreen();
+			}
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Main.getStage().setScene(funcionario);
-		Main.getStage().centerOnScreen();
 	}
-	
-	public void carregaFuncionario() {
-		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
-		tvFuncionario.setItems(obFuncionario);
-		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
-	}
-	
+
 	@FXML
 	public void carregaAgendamento() {
-		if(!(tvAgenda.getSelectionModel().isEmpty())) {
-			retornaInformacaoAgenda();
-			try {
-				Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
-				Scene agenda = new Scene(fxmlAgenda);
-				stageAgenda = new Stage();
-				stageAgenda.setScene(agenda);
-				stageAgenda.show();
-				stageAgenda.centerOnScreen();
-			}
-			catch(IOException e) {
-				e.printStackTrace();
+		if (!(tvAgenda.getSelectionModel().isEmpty())) {
+			if (!(stageAgenda.isShowing())) {
+				retornaInformacaoAgenda();
+				try {
+					Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
+					Scene agenda = new Scene(fxmlAgenda);
+					stageAgenda.setScene(agenda);
+					stageAgenda.show();
+					stageAgenda.centerOnScreen();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
-	
-	public void onBtCriaClienteAction(){
+
+	@FXML
+	public void onBtCriaClienteAction() {
 		try {
-			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
-			cliente = new Scene(fxmlCliente);
-		}
-		catch(IOException e) {
+			if (!(stageCliente.isShowing())) {
+				retornaInformacaoAgenda();
+				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
+				cliente = new Scene(fxmlCliente);
+				stageCliente.setScene(cliente);
+				stageCliente.show();
+				stageCliente.centerOnScreen();
+
+			}
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Main.getStage().setScene(cliente);
-		Main.getStage().centerOnScreen();
 	}
-	
-	public void onBtAbreCaixaAction(){
-			try {
-				Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
-				caixa = new Scene(fxmlCaixa);
-			}
-			catch(IOException e) {
-				e.printStackTrace();
+
+	@FXML
+	public void onBtAbreCaixaAction() {
+		try {
+			Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
+			caixa = new Scene(fxmlCaixa);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		Main.getStage().setScene(caixa);
 		Main.getStage().centerOnScreen();
+	}
+
+	// funções para popular tabelas
+
+	public void carregaFuncionario() {
+		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		tvFuncionario.refresh();
+		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		tvFuncionario.setItems(obFuncionario);
+		
 	}
 	
 	@FXML
@@ -223,65 +289,29 @@ public class ViewController implements Initializable{
 		tvAgenda.setItems(obAgenda);
 	}
 	
-	public void retornaInformacaoAgenda() {
-		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
-		dpDataTemp = this.dpData.getValue();
-		tvAgendaTemp = this.tvAgenda;
-	}
-	
-	public static Scene getCaixa() {
-		return caixa;
-	}
-	
-	public static Funcionario getFunTemp() {
-		return funTemp;
-	}
-	
-	public static LocalDate getDpDataTemp() {
-		return dpDataTemp;
-	}
-	
-	public static TableView<Funcionario> getTvAgendaTemp(){
-		return tvAgendaTemp;
+	private void populaTabela() {
+		obAgendamento = FXCollections.observableArrayList(Cadastro.agendamentos);
+		colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
+		colunaHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
+		colunaExcluir.setCellValueFactory(new PropertyValueFactory<>("select"));
+		colunaFuncionarioAgendamento.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
+		tvAgendamento.setItems(obAgendamento);
 	}
 
-	public static Scene getFuncionario() {
-		return funcionario;
-	}
+	// ações de botões
 
-	public static Scene getCliente() {
-		return cliente;
-	}
-	
-	public static Stage getStageAgenda() {
-		return stageAgenda;
-	}
-	
-	public void onBtCarregarAction(){
-		carregaFuncionario();
-	}
-	
 	@FXML
-    public void pesquisaAgendamento() {
-    	Carregar.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
-    	populaTabela();
-    }
-   
-   private void populaTabela() {
-	   obAgendamento = FXCollections.observableArrayList(Cadastro.agendamentos);
-	   colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
-	   colunaHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
-	   colunaExcluir.setCellValueFactory(new PropertyValueFactory<>("select"));
-	   colunaFuncionarioAgendamento.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
-       tvAgendamento.setItems(obAgendamento);
-   }
-   
-   @FXML
-   public void excluirAgendamento() {
-		if(Alerts.showAlertExclusao()) {
+	public void onBtPesquisaAgendamento() {
+		Carregar.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
+		populaTabela();
+	}
+
+	@FXML
+	public void onBtExcluirAgendamento() {
+		if (Alerts.showAlertExclusao()) {
 			ObservableList<Agendamento> obExcluirAgendamento = FXCollections.observableArrayList();
-			for(Agendamento age : obAgendamento) {
-				if(age.getSelect().isSelected()) {
+			for (Agendamento age : obAgendamento) {
+				if (age.getSelect().isSelected()) {
 					obExcluirAgendamento.add(age);
 					Excluir.excluirAgendamento(age);
 				}
@@ -291,14 +321,24 @@ public class ViewController implements Initializable{
 			carregaAgenda();
 		}
 	}
+
+	//métodos avulsos
 	
+	public void retornaInformacaoAgenda() {
+		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
+		dpDataTemp = this.dpData.getValue();
+		tvAgendaTemp = this.tvAgenda;
+		tvFuncionarioTemp = this.tvFuncionario;
+		tfClienteTemp = this.tfCliente;
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		dpData.setValue(LocalDate.now());
-		Carregar.carregar();	
+		Carregar.carregar();
 		carregaFuncionario();
 		carregaAgenda();
-		TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
+		teste = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
 		dpDataExcluir.setValue(LocalDate.now());
 	}
 }
