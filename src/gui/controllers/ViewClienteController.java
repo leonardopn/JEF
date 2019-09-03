@@ -39,12 +39,6 @@ public class ViewClienteController implements Initializable{
 	private Button btAtualizaCliente;
 	
 	@FXML
-	private Button btVoltar;
-	
-	@FXML
-	private Button btDesfazer;
-	
-	@FXML
 	private Button btExcluiCliente;
 	
 	@FXML
@@ -78,27 +72,15 @@ public class ViewClienteController implements Initializable{
     private TableColumn<Cliente, CheckBox> colunaSelect;
 	
 	@FXML
-	public void onBtVoltarAction() {
-		Main.getStage().setScene(Main.getMain());
-		Main.getStage().centerOnScreen();
-	}
-	
-	@FXML
 	public void atualizaCadastro() {
 		Parent parent;
 		try {
 			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaCliente.fxml"));
 			Scene scene = new Scene(parent);
-			Main.getStage().setScene(scene);
+			ViewController.getStageCliente().setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
-	}
-	
-	@FXML
-	public void onBtDesfazerAction(){
-		Carregar.carregaCliente();
-		carregaCliente();
 	}
 	
 	public void carregaCliente() {
@@ -118,9 +100,10 @@ public class ViewClienteController implements Initializable{
 			Cadastro.clientes.add(cliente);
 			Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente);
 			carregaCliente();
-			ViewController.teste.dispose();
-			ViewController.teste = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
-			
+			ViewController.bindAutoCompleteCliente.dispose();
+			ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+			ViewCaixaController.bindAutoCompleteCliente.dispose();
+			ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
 		}
 		catch (NumberFormatException e) {
 			Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
@@ -140,8 +123,10 @@ public class ViewClienteController implements Initializable{
 			obCliente.removeAll(obExcluirCliente);
 			Cadastro.clientes.removeAll(obExcluirCliente);
 			
-			ViewController.teste.dispose();
-			ViewController.teste = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+			ViewController.bindAutoCompleteCliente.dispose();
+			ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+			ViewCaixaController.bindAutoCompleteCliente.dispose();
+			ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
 		}
 	}
 	

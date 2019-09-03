@@ -38,15 +38,18 @@ public class ViewController implements Initializable {
 	private static Scene caixa;
 	private static Scene funcionario;
 	private static Scene cliente;
+	private static Scene sobre;
 	private static Stage stageAgenda = new Stage();
 	private static Stage stageFuncionario = new Stage();
 	private static Stage stageCliente = new Stage();
+	private static Stage stageCaixa = new Stage();
+	private static Stage stageSobre = new Stage();
 	private static Funcionario funTemp;
 	private static LocalDate dpDataTemp;
 	private static TableView<Funcionario> tvAgendaTemp;
 	private static TableView<Funcionario> tvFuncionarioTemp;
 	public static TextField tfClienteTemp;
-	public static AutoCompletionBinding teste;
+	public static AutoCompletionBinding bindAutoCompleteCliente;
 	
 	ObservableList<Agendamento> obAgendamento;
 
@@ -192,7 +195,15 @@ public class ViewController implements Initializable {
 		return tfClienteTemp;
 	}
 	
-	// abre páginas
+	public static Stage getStageSobre() {
+		return stageSobre;
+	}
+	
+	public static Stage getStageCaixa() {
+		return stageCaixa;
+	}
+	
+	// abre pï¿½ginas
 
 	@FXML
 	public void onBtCriaFuncionarioAction() {
@@ -250,14 +261,28 @@ public class ViewController implements Initializable {
 		try {
 			Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
 			caixa = new Scene(fxmlCaixa);
+			stageCaixa.setScene(caixa);
+			stageCaixa.show();
+			stageCaixa.centerOnScreen();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Main.getStage().setScene(caixa);
-		Main.getStage().centerOnScreen();
+	}
+	
+	@FXML
+	public void onBtAbreSobreAction() {
+		try {
+			Parent fxmlSobre = FXMLLoader.load(getClass().getResource("/gui/view/ViewSobre.fxml"));
+			sobre = new Scene(fxmlSobre);
+			stageSobre.setScene(sobre);
+			stageSobre.show();
+			stageSobre.centerOnScreen();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	// funções para popular tabelas
+	// funï¿½ï¿½es para popular tabelas
 
 	public void carregaFuncionario() {
 		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -298,7 +323,7 @@ public class ViewController implements Initializable {
 		tvAgendamento.setItems(obAgendamento);
 	}
 
-	// ações de botões
+	// aï¿½ï¿½es de botï¿½es
 
 	@FXML
 	public void onBtPesquisaAgendamento() {
@@ -322,7 +347,7 @@ public class ViewController implements Initializable {
 		}
 	}
 
-	//métodos avulsos
+	//mï¿½todos avulsos
 	
 	public void retornaInformacaoAgenda() {
 		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
@@ -338,7 +363,7 @@ public class ViewController implements Initializable {
 		Carregar.carregar();
 		carregaFuncionario();
 		carregaAgenda();
-		teste = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
+		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
 		dpDataExcluir.setValue(LocalDate.now());
 	}
 }

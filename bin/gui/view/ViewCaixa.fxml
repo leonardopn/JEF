@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="570.0" prefWidth="1138.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
+<AnchorPane prefHeight="570.0" prefWidth="1138.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controllers.ViewCaixaController">
    <children>
       <Button fx:id="btVoltar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
       <Line endX="975.2928466796875" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
@@ -26,7 +26,6 @@
       <Label layoutX="12.0" layoutY="222.0" text="Cliente:" />
       <Label layoutX="12.0" layoutY="275.0" text="Atendente:" />
       <Label layoutX="12.0" layoutY="325.0" text="Data" />
-      <ChoiceBox fx:id="cbCliente" layoutX="11.0" layoutY="239.0" prefWidth="150.0" />
       <ChoiceBox fx:id="cbFuncionario" layoutX="12.0" layoutY="292.0" prefWidth="150.0" />
       <DatePicker fx:id="dpData" layoutX="11.0" layoutY="342.0" prefHeight="25.0" prefWidth="150.0" />
       <TextField fx:id="tfValor" layoutX="12.0" layoutY="393.0" prefHeight="26.0" prefWidth="151.0" />
@@ -120,5 +119,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <TextField fx:id="tfCliente" layoutX="11.0" layoutY="238.0" prefHeight="26.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

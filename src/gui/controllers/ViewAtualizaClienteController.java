@@ -64,8 +64,8 @@ public class ViewAtualizaClienteController implements Initializable{
 		try {
 			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
 			Scene Cliente = new Scene(fxmlCliente);
-			Main.getStage().setScene(Cliente);
-			Main.getStage().centerOnScreen();
+			ViewController.getStageCliente().setScene(Cliente);
+			ViewController.getStageCliente().centerOnScreen();
 		}
 		catch(IOException e) {
 			e.printStackTrace();

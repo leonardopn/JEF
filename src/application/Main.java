@@ -50,9 +50,11 @@ public class Main extends Application {
 	public static void closeRequestProgram() {
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 	          public void handle(WindowEvent we) {
-	        	  ViewController.getStageCliente().close();
+	        	ViewController.getStageCliente().close();
 	      		ViewController.getStageFuncionario().close();
 	      		ViewController.getStageAgenda().close();
+	      		ViewController.getStageSobre().close();
+	      		ViewController.getStageCaixa().close();
 	          }
 	      });
 		

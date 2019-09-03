@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="600.0" maxWidth="500.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controllers.ViewFuncionarioController">
+<AnchorPane maxHeight="600.0" maxWidth="500.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewFuncionarioController">
    <children>
       <TextField fx:id="txtIdFuncionario" layoutX="174.0" layoutY="105.0" promptText="ID fo funcionário" />
       <Label layoutX="149.0" layoutY="109.0" text="ID:" />
@@ -32,9 +32,7 @@
       </TableView>
       <Button fx:id="btExcluiFuncionario" layoutX="217.0" layoutY="559.0" mnemonicParsing="false" onAction="#excluirFuncionario" text="Excluir" />
       <Label layoutX="23.0" layoutY="529.0" prefHeight="25.0" prefWidth="454.0" text="Selecione os funcionários na coluna &quot;Excluir&quot; e aperte o botão abaixo para deleta-los!" />
-      <Button fx:id="btVoltar" layoutX="11.0" layoutY="11.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
       <Line endX="650.0" endY="6.0" layoutX="-150.0" layoutY="41.0" startX="150.2928466796875" startY="6.0" stroke="#827f7f" />
-      <Button fx:id="btRecarregar" layoutX="94.0" layoutY="11.0" mnemonicParsing="false" onAction="#onBtDesfazerAction" prefHeight="26.0" prefWidth="93.0" text="Recarregar" />
       <Button fx:id="btAtualizar" layoutX="406.0" layoutY="12.0" mnemonicParsing="false" onAction="#atualizaFuncionario" prefHeight="26.0" prefWidth="80.0" text="Atualizar" />
    </children>
 </AnchorPane>

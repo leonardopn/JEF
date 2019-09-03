@@ -64,8 +64,8 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 		try {
 			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
 			Scene funcionario = new Scene(fxmlfuncionario);
-			Main.getStage().setScene(funcionario);
-			Main.getStage().centerOnScreen();
+			ViewController.getStageFuncionario().setScene(funcionario);
+			ViewController.getStageFuncionario().centerOnScreen();
 		}
 		catch(IOException e) {
 			e.printStackTrace();

@@ -78,7 +78,7 @@ public class Salvar {
 		}
 	}
 	
-	public static void salvarTransacao(TextField tfId, ChoiceBox<Cliente> cbCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
+	public static void salvarTransacao(TextField tfId, TextField cbCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
 		try {
 			DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			st = DB.getConnection().prepareStatement(
@@ -89,7 +89,7 @@ public class Salvar {
 			
 			st.setInt(1, Integer.parseInt(tfId.getText()));
 			st.setDouble(2, Double.parseDouble(tfValor.getText()));
-			st.setString(3, cbCliente.getValue().getNome());
+			st.setString(3, cbCliente.getText());
 			st.setString(4, cbFuncionario.getValue().getNome());
 			st.setString(5, cbFormaPagamento.getValue());
 			st.setString(6, localDateFormatada.format(dpData));

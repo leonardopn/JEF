@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
+
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,6 +44,10 @@ public class ViewCaixaController implements Initializable {
 	ObservableList<Transacao> obTableTemp;
 
 	ObservableList<String> obFormaPagamento;
+	
+	public static TextField tfClienteTemp;
+	
+	public static AutoCompletionBinding bindAutoCompleteCliente;
 
 	@FXML
 	private Button btVoltar;
@@ -73,7 +80,7 @@ public class ViewCaixaController implements Initializable {
 	private TextField tfDinheiroDado;
 
 	@FXML
-	private ChoiceBox<Cliente> cbCliente;
+	private TextField tfCliente;
 
 	@FXML
 	private ChoiceBox<Funcionario> cbFuncionario;
@@ -151,7 +158,7 @@ public class ViewCaixaController implements Initializable {
 			btEnviarTransacao.setDisable(true);
 			btExcluir.setDisable(true);
 			tfId.setDisable(true);
-			cbCliente.setDisable(true);
+			tfCliente.setDisable(true);
 			cbFuncionario.setDisable(true);
 			dpData.setDisable(true);
 			tfValor.setDisable(true);
@@ -161,7 +168,7 @@ public class ViewCaixaController implements Initializable {
 			btEnviarTransacao.setDisable(false);
 			btExcluir.setDisable(false);
 			tfId.setDisable(false);
-			cbCliente.setDisable(false);
+			tfCliente.setDisable(false);
 			cbFuncionario.setDisable(false);
 			dpData.setDisable(false);
 			tfValor.setDisable(false);
@@ -172,7 +179,7 @@ public class ViewCaixaController implements Initializable {
 	@FXML
 	public void onBtAtualizarAction() {
 		carregaFuncionario();
-		carregaCliente();
+		//carregaCliente();
 		carregaFormaPagamento();
 
 	}
@@ -246,10 +253,10 @@ public class ViewCaixaController implements Initializable {
 		Salvar.salvarCaixa(data, Double.parseDouble(lbValorTotal.getText()), Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
 	}
 
-	public void carregaCliente() {
-		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
-		cbCliente.setItems(obCliente);
-	}
+//	public void carregaCliente() {
+//		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
+//		cbCliente.setItems(obCliente);
+//	}
 
 	public void carregaFuncionario() {
 		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
@@ -271,7 +278,7 @@ public class ViewCaixaController implements Initializable {
 	public void onBtEnviarTransacaoAction() {
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		int id = Integer.parseInt(tfId.getText());
-		String cliente = cbCliente.getValue().getNome();
+		String cliente = tfCliente.getText();
 		String fun = cbFuncionario.getValue().getNome();
 		String data = localDateFormatada.format((dpData.getValue()));
 		double valor = Double.parseDouble(tfValor.getText());
@@ -279,7 +286,7 @@ public class ViewCaixaController implements Initializable {
 		Transacao tran = new Transacao(id, valor, cliente, fun, formaPaga, data);
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
-		Salvar.salvarTransacao(tfId, cbCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
+		Salvar.salvarTransacao(tfId, tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
 		Carregar.carregaTransacao();
 		carregaTransacao();
 		carregaTable();
@@ -308,7 +315,7 @@ public class ViewCaixaController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		carregaCliente();
+		//carregaCliente();
 		carregaFuncionario();
 		carregaFormaPagamento();
 		mudaCaixa();
@@ -323,5 +330,7 @@ public class ViewCaixaController implements Initializable {
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaTransacao();
+		tfClienteTemp = this.tfCliente;
+		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
 	}
 }

@@ -32,16 +32,10 @@ public class ViewFuncionarioController implements Initializable{
 	Scene main;
 	
 	@FXML
-	private Button btRecarregar;
-	
-	@FXML
 	private Button btAtualizar;
 	
 	@FXML
 	private Button btCriaFuncionario;
-	
-	@FXML
-	private Button btVoltar;
 	
 	@FXML
 	private Button btExcluiFuncionario;
@@ -71,34 +65,15 @@ public class ViewFuncionarioController implements Initializable{
     private TableColumn<Funcionario, CheckBox> colunaSelect;
 	
 	@FXML
-	public void onBtVoltarAction() {
-		try {
-			Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/View.fxml"));
-			main = new Scene(fxmlMain);
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-	}
-	Main.getStage().setScene(main);
-	Main.getStage().centerOnScreen();
-	}
-	
-	@FXML
 	public void atualizaFuncionario() {
 		Parent parent;
 		try {
 			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaFuncionario.fxml"));
 			Scene scene = new Scene(parent);
-			Main.getStage().setScene(scene);
+			ViewController.getStageFuncionario().setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
-	}
-	
-	@FXML
-	public void onBtDesfazerAction(){
-		Carregar.carregaFuncionario();
-		carregaFuncionario();
 	}
 	
 	public void carregaFuncionario() {
@@ -120,7 +95,7 @@ public class ViewFuncionarioController implements Initializable{
 				Cadastro.funcionarios.add(fun01);
 				Salvar.salvarFuncionario(txtIdFuncionario, txtNomeFuncionario, txtSalarioFuncionario);
 				
-				//vai atualizar no stage main se adicionar funcionários
+				//vai atualizar no stage main se adicionar funcionï¿½rios
 				obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 	    		ViewController.getTvAgendaTemp().setItems(obFuncionario);
 				ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
@@ -145,7 +120,7 @@ public class ViewFuncionarioController implements Initializable{
 			obFuncionario.removeAll(obExcluirFuncionario);
 			Cadastro.funcionarios.removeAll(obExcluirFuncionario);
 			
-			//vai atulizar no stage main se excluir funcionários
+			//vai atulizar no stage main se excluir funcionï¿½rios
 			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
     		ViewController.getTvAgendaTemp().setItems(obFuncionario);
 			ViewController.getTvFuncionarioTemp().setItems(obFuncionario);;
