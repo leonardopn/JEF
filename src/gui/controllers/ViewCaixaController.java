@@ -30,6 +30,7 @@ import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Transacao;
+import model.services.Atualizar;
 import model.services.Cadastro;
 import model.services.Carregar;
 import model.services.Excluir;
@@ -287,6 +288,8 @@ public class ViewCaixaController implements Initializable {
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
 		Salvar.salvarTransacao(tfId, tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
+		Atualizar.atualizarSalario(fun, valor/2);
+		Carregar.carregaFuncionario();
 		Carregar.carregaTransacao();
 		carregaTransacao();
 		carregaTable();
@@ -298,6 +301,8 @@ public class ViewCaixaController implements Initializable {
 		for (Transacao tran : obTable) {
 			if (tran.getSelect().isSelected()) {
 				obExcluirTransacao.add(tran);
+				Atualizar.atualizarSalario(tran.getAtendente(), -(tran.getValor()/2));
+				Carregar.carregaFuncionario();
 				Excluir.excluirTransacao(tran);
 			}
 		}

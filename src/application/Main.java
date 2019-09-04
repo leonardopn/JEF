@@ -55,6 +55,7 @@ public class Main extends Application {
 	      		ViewController.getStageAgenda().close();
 	      		ViewController.getStageSobre().close();
 	      		ViewController.getStageCaixa().close();
+	      		ViewController.getStagePagamento().close();
 	          }
 	      });
 		

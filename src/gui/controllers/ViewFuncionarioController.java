@@ -86,20 +86,19 @@ public class ViewFuncionarioController implements Initializable{
 	public void onBtCriaFuncionarioAction(){
 		if(Alerts.showAlertAtualizacao()) {
 			try {
-				int id = Integer.parseInt(txtIdFuncionario.getText());
+				int cpf = Integer.parseInt(txtIdFuncionario.getText());
 				String nome = txtNomeFuncionario.getText();
-				Double salario = Double.parseDouble(txtSalarioFuncionario.getText());
-				Funcionario fun01 = new Funcionario(nome, id, salario);
+				Double salario = 0.00;
+				Funcionario fun01 = new Funcionario(nome, cpf, salario);
 				
-				Cadastro.verificaFuncionario(fun01);
-				Cadastro.funcionarios.add(fun01);
-				Salvar.salvarFuncionario(txtIdFuncionario, txtNomeFuncionario, txtSalarioFuncionario);
-				
-				//vai atualizar no stage main se adicionar funcion�rios
-				obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
-	    		ViewController.getTvAgendaTemp().setItems(obFuncionario);
-				ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
-				ViewController.getStageFuncionario().close();
+				if(Cadastro.verificaFuncionario(fun01)) {
+					Cadastro.funcionarios.add(fun01);
+					Salvar.salvarFuncionario(txtIdFuncionario, txtNomeFuncionario, salario);
+					obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		    		ViewController.getTvAgendaTemp().setItems(obFuncionario);
+					ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
+					ViewController.getStageFuncionario().close();
+				}
 			}
 			catch (NumberFormatException e) {
 				Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
