@@ -14,10 +14,12 @@ public class Cadastro {
 	static public TreeSet<Funcionario> funcionarios = new TreeSet<>();
 	static public ArrayList<Agendamento> agendamentos = new ArrayList<>();
 
-	public static void verificaFuncionario(Funcionario fun) {
+	public static boolean verificaFuncionario(Funcionario fun) {
 		if(Cadastro.funcionarios.contains(fun)) {
 			Alerts.showAlert("Alerta", "Funcionário já inscrito", "Funcionário não foi adicionado, pois ID já está em uso", AlertType.INFORMATION);
+			return false;
 		}
+		return true;
 	}
 	
 	public static void verificaCliente(Cliente cli) {

@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
-import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +35,7 @@ import model.services.Excluir;
 public class ViewController implements Initializable {
 
 	private static Scene caixa;
+	private static Scene pagamento;
 	private static Scene funcionario;
 	private static Scene cliente;
 	private static Scene sobre;
@@ -43,6 +43,7 @@ public class ViewController implements Initializable {
 	private static Stage stageFuncionario = new Stage();
 	private static Stage stageCliente = new Stage();
 	private static Stage stageCaixa = new Stage();
+	private static Stage stagePagamento = new Stage();
 	private static Stage stageSobre = new Stage();
 	private static Funcionario funTemp;
 	private static LocalDate dpDataTemp;
@@ -73,6 +74,9 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private Button btCaixa;
+	
+	@FXML
+	private Button btPagamento;
 
 	@FXML
 	private Button btSalvar;
@@ -203,19 +207,21 @@ public class ViewController implements Initializable {
 		return stageCaixa;
 	}
 	
+	public static Stage getStagePagamento() {
+		return stagePagamento;
+	}
+	
 	// abre p�ginas
 
 	@FXML
 	public void onBtCriaFuncionarioAction() {
 		try {
-			if (!(stageFuncionario.isShowing())) {
 				retornaInformacaoAgenda();
 				Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
 				funcionario = new Scene(fxmlfuncionario);
 				stageFuncionario.setScene(funcionario);
 				stageFuncionario.show();
 				stageFuncionario.centerOnScreen();
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -242,7 +248,6 @@ public class ViewController implements Initializable {
 	@FXML
 	public void onBtCriaClienteAction() {
 		try {
-			if (!(stageCliente.isShowing())) {
 				retornaInformacaoAgenda();
 				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
 				cliente = new Scene(fxmlCliente);
@@ -250,7 +255,6 @@ public class ViewController implements Initializable {
 				stageCliente.show();
 				stageCliente.centerOnScreen();
 
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -264,6 +268,19 @@ public class ViewController implements Initializable {
 			stageCaixa.setScene(caixa);
 			stageCaixa.show();
 			stageCaixa.centerOnScreen();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void onBtAbrePagamentoAction() {
+		try {
+			Parent fxmlPagamento = FXMLLoader.load(getClass().getResource("/gui/view/ViewSalario.fxml"));
+			pagamento = new Scene(fxmlPagamento);
+			stagePagamento.setScene(pagamento);
+			stagePagamento.show();
+			stagePagamento.centerOnScreen();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

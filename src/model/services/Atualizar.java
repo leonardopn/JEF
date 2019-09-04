@@ -52,6 +52,25 @@ public class Atualizar {
 		}
 	}
 	
+	public static void atualizarSalario(String nome, double salario) {
+		try {
+			st = DB.getConnection().prepareStatement(
+					"UPDATE funcionario "
+					+"set salario = salario+? "
+					+"WHERE nome=?");
+			st.setDouble(1, salario);
+			st.setString(2, nome); 
+			st.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
+	}
+	
 	public static void atualizarTotalCaixa(String data, double total, double cartao, double dinheiro) {
 		try {
 			st = DB.getConnection().prepareStatement(

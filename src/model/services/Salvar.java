@@ -13,7 +13,6 @@ import db.DB;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import model.entities.Caixa;
-import model.entities.Cliente;
 import model.entities.Funcionario;
 
 public class Salvar {
@@ -35,7 +34,7 @@ public class Salvar {
 		}
 	}
 	
-	public static void salvarFuncionario(TextField txtIdFuncionario, TextField txtNomeFuncionario, TextField txtSalarioFuncionario) {
+	public static void salvarFuncionario(TextField txtIdFuncionario, TextField txtNomeFuncionario, double salarioFuncionario) {
 		try {
 			st = DB.getConnection().prepareStatement(
 					"INSERT INTO funcionario "
@@ -44,7 +43,7 @@ public class Salvar {
 					+ "(?, ?, ?)");
 			st.setInt(2, Integer.parseInt(txtIdFuncionario.getText()));
 			st.setString(1, txtNomeFuncionario.getText());
-			st.setString(3, txtSalarioFuncionario.getText());
+			st.setDouble(3, salarioFuncionario);
 			st.execute();
 		}
 		catch(SQLException e) {

@@ -61,6 +61,7 @@ public class Carregar {
 	}
 	
 	public static void carregaFuncionario() {
+		Cadastro.funcionarios.clear();
 		try {
 			 st = DB.getConnection().createStatement();
 			 rs = st.executeQuery("select * from funcionario");

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +24,6 @@ import model.services.Cadastro;
 public class ViewAtualizaFuncionarioController implements Initializable{
 	
 	ObservableList<Funcionario> obFuncionario;
-	ObservableList<Funcionario> obFuncionarioExcluido;
 	
 	@FXML
 	private Button btAtualiza;
