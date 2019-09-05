@@ -3,6 +3,7 @@ package gui.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gui.util.Notificacoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +15,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Funcionario;
+import model.services.Atualizar;
 import model.services.Cadastro;
+import model.services.Carregar;
 
 public class ViewSalarioController implements Initializable{
 
@@ -43,7 +46,18 @@ public class ViewSalarioController implements Initializable{
 
 	    @FXML
 	    void onBtPagarAction(ActionEvent event) {
-
+	    	if(tfSalario.getText().equals("0.0")) {
+	    		Notificacoes.mostraNotificacao("Valor vazio", "Esse funcionário não tem o quê receber");
+	    	}
+	    	else {
+	    		Atualizar.atualizarSalario(tfFuncionario.getText(), - Double.parseDouble(tfSalario.getText()));
+		    	Carregar.carregaFuncionario();
+		    	tfFuncionario.clear();
+				tfId.clear();
+				tfSalario.clear();
+		    	populaTabela();
+		    	Notificacoes.mostraNotificacao("Notificação", "Pagamento efetuado!!");
+	    	}
 	    }
 	    
 	    public void populaTabela() {

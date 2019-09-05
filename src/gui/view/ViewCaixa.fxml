@@ -8,10 +8,13 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="570.0" prefWidth="1138.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controllers.ViewCaixaController">
+<AnchorPane prefHeight="570.0" prefWidth="1138.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
    <children>
       <Button fx:id="btVoltar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
       <Line endX="975.2928466796875" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
@@ -64,61 +67,75 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="798.0" layoutY="37.0" text="Valor total em caixa:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
       <Label layoutX="192.0" layoutY="81.0" text="Dinheiro dado:" />
       <TextField fx:id="tfValorServico" layoutX="305.0" layoutY="49.0" prefHeight="25.0" prefWidth="79.0" />
       <Label layoutX="183.0" layoutY="52.0" text="Valor do serviço:" />
       <TextField fx:id="tfDinheiroDado" layoutX="305.0" layoutY="77.0" prefHeight="25.0" prefWidth="79.0" />
       <Label fx:id="lbTroco" layoutX="434.0" layoutY="69.0" text="Troco de: " />
-      <Label fx:id="lbValorTotal" layoutX="1027.0" layoutY="38.0" text="00,00" textFill="#10bf24">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="836.0" layoutY="82.0" text="Valor em cartão:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbValorCartao" layoutX="1029.0" layoutY="83.0" text="00,00" textFill="#10bf24">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="818.0" layoutY="60.0" text="Valor em dinheiro:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbValorDinheiro" layoutX="1028.0" layoutY="61.0" text="00,00" textFill="#10bf24">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
       <Button fx:id="btCalTroco" layoutX="394.0" layoutY="64.0" mnemonicParsing="false" onAction="#calculaTroco" prefHeight="16.0" prefWidth="13.0" text="=" />
       <Button fx:id="btAtualizar" layoutX="91.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtAtualizarAction" prefHeight="26.0" prefWidth="80.0" text="Atualizar" />
       <Line endX="1018.0" endY="1.0" layoutX="116.0" layoutY="528.0" startX="56.0" stroke="#827f7f" />
       <Button fx:id="btExcluir" layoutX="184.0" layoutY="538.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="25.0" prefWidth="70.0" text="Excluir" />
       <Label layoutX="271.0" layoutY="542.0" text="Excluir transações selecionadas" />
-      <Label fx:id="lbValorTotal1" layoutX="995.0" layoutY="38.0" text="R$" textFill="#10bf24">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbValorTotal11" layoutX="995.0" layoutY="60.0" text="R$" textFill="#10bf24">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbValorTotal12" layoutX="995.0" layoutY="83.0" text="R$" textFill="#10bf24">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
       <TextField fx:id="tfCliente" layoutX="11.0" layoutY="238.0" prefHeight="26.0" prefWidth="150.0" />
+      <GridPane layoutX="821.0" layoutY="43.0" prefHeight="63.0" prefWidth="303.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0" prefWidth="173.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="0.0" prefWidth="27.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Valor total em caixa:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="Valor em dinheiro:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="Valor em cartão:" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbValorTotal1" text="R$" textFill="#10bf24" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbValorTotal11" text="R$" textFill="#10bf24" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbValorTotal12" text="R$" textFill="#10bf24" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbValorTotal" text="00,00" textFill="#10bf24" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbValorDinheiro" text="00,00" textFill="#10bf24" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbValorCartao" text="00,00" textFill="#10bf24" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>
