@@ -180,7 +180,6 @@ public class ViewCaixaController implements Initializable {
 	@FXML
 	public void onBtAtualizarAction() {
 		carregaFuncionario();
-		//carregaCliente();
 		carregaFormaPagamento();
 
 	}
@@ -253,11 +252,6 @@ public class ViewCaixaController implements Initializable {
 		String data = localDateFormatada.format(LocalDate.now());
 		Salvar.salvarCaixa(data, Double.parseDouble(lbValorTotal.getText()), Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
 	}
-
-//	public void carregaCliente() {
-//		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
-//		cbCliente.setItems(obCliente);
-//	}
 
 	public void carregaFuncionario() {
 		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
