@@ -6,8 +6,9 @@ import javafx.scene.control.CheckBox;
 
 public class Funcionario implements Comparable<Funcionario> {
 	private String nome;
-	private int id;
+	private String cpf;
 	private double salario; 
+	private int status;
 	private CheckBox select;
 	private String h12;
 	private String h12_3;
@@ -23,11 +24,12 @@ public class Funcionario implements Comparable<Funcionario> {
 	private String h17_3;
 	private String h18;
 	
-	public Funcionario(String nome, int id, double salario) {
+	public Funcionario(String cpf, String nome, double salario, int status) {
 		this.nome = nome;
-		this.id = id;
+		this.cpf = cpf;
 		this.salario = salario;
 		this.select = new CheckBox();
+		this.status = status;
 		this.h12 = "Livre"; this.h12_3 = "Livre"; this.h13 = "Livre"; this.h13_3 = "Livre"; this.h14 = "Livre";
 		this.h14_3 = "Livre"; this.h15 = "Livre"; this.h15_3 = "Livre"; this.h16 = "Livre"; this.h16_3 = "Livre";
 		this.h17 = "Livre"; this.h17_3 = "Livre"; this.h18 = "Livre";
@@ -153,12 +155,12 @@ public class Funcionario implements Comparable<Funcionario> {
 		this.nome = nome;
 	}
 
-	public int getId() {
-		return id;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public double getSalario() {
@@ -227,19 +229,19 @@ public class Funcionario implements Comparable<Funcionario> {
 			return false;
 		Funcionario outroFuncionario = (Funcionario) outroObjeto;
 		
-		return(Objects.equals(this.id, outroFuncionario.id));
+		return(Objects.equals(this.cpf, outroFuncionario.cpf));
 	}
 	
 	@Override
 	public int compareTo(Funcionario outroFuncionario) {
-		if(this.id != outroFuncionario.id)
-			return Integer.compare(this.id, outroFuncionario.id);
+		if(this.cpf != outroFuncionario.cpf)
+			return this.cpf.compareTo(outroFuncionario.cpf);
 		return 0;	
 	}
 	
 	@Override
 	public String toString() {
-		return this.nome;
+		return this.nome + "\n"+this.cpf;
 	}
 	
 }

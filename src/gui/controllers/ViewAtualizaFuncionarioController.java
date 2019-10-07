@@ -32,13 +32,10 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	private Button btVoltar;
 	
 	@FXML
-	private TextField txtIdFuncionario;
+	private TextField txtCpfFuncionario;
 	
 	@FXML
 	private TextField txtNomeFuncionario;
-	
-	@FXML
-	private TextField txtSalarioFuncionario;
 	
 	@FXML
 	private TableView<Funcionario> tvFuncionario = new TableView<>();
@@ -47,15 +44,14 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	private TableColumn<Funcionario, String> colunaNome;
 	
 	@FXML
-    private TableColumn<Funcionario, Integer> colunaId;
+    private TableColumn<Funcionario, String> colunaCpf;
 	
 	@FXML
 	public void selecionaFuncionario() {
 		Funcionario fun = tvFuncionario.getSelectionModel().getSelectedItem();
-		txtIdFuncionario.setText(String.valueOf(fun.getId()));
-		txtIdFuncionario.setDisable(true);
+		txtCpfFuncionario.setText(fun.getCpf());
+		txtCpfFuncionario.setDisable(true);
 		txtNomeFuncionario.setText(fun.getNome());
-		txtSalarioFuncionario.setText(String.valueOf(fun.getSalario()));
 	}
 	
 	public void voltaScene() {
@@ -79,11 +75,12 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	@FXML
 	public void onAtualizaFuncionarioAction() {
 		if(Alerts.showAlertAtualizacao()) {
-			int id = Integer.parseInt(txtIdFuncionario.getText());
+			Funcionario funTemp = tvFuncionario.getSelectionModel().getSelectedItem();
+			String cpf = txtCpfFuncionario.getText();
 			String nome = txtNomeFuncionario.getText();
-			Double salario = Double.valueOf(txtSalarioFuncionario.getText());
-			Funcionario funcionario = new Funcionario(nome, id, salario);
-			Cadastro.funcionarios.removeIf((Funcionario fun) -> fun.getId() == funcionario.getId());
+			Double salario = funTemp.getSalario();
+			Funcionario funcionario = new Funcionario(cpf, nome, salario, 1);
+			Cadastro.funcionarios.removeIf((Funcionario fun) -> fun.getCpf() == funcionario.getCpf());
 			Cadastro.funcionarios.add(funcionario);
 			Atualizar.atualizarFuncionario(funcionario);
 			voltaScene();
@@ -93,7 +90,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		carregaFuncionario();
 	}
 }

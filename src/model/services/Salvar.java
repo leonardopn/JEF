@@ -34,16 +34,15 @@ public class Salvar {
 		}
 	}
 	
-	public static void salvarFuncionario(TextField txtIdFuncionario, TextField txtNomeFuncionario, double salarioFuncionario) {
+	public static void salvarFuncionario(TextField txtCpfFuncionario, TextField txtNomeFuncionario) {
 		try {
 			st = DB.getConnection().prepareStatement(
 					"INSERT INTO funcionario "
-					+ "(nome, id, salario) "
+					+ "(cpffuncionario, nome) "
 					+ "VALUES "
-					+ "(?, ?, ?)");
-			st.setInt(2, Integer.parseInt(txtIdFuncionario.getText()));
-			st.setString(1, txtNomeFuncionario.getText());
-			st.setDouble(3, salarioFuncionario);
+					+ "(?, ?)");
+			st.setString(1, txtCpfFuncionario.getText());
+			st.setString(2, txtNomeFuncionario.getText());
 			st.execute();
 		}
 		catch(SQLException e) {

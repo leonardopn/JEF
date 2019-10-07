@@ -66,8 +66,10 @@ public class Carregar {
 			 st = DB.getConnection().createStatement();
 			 rs = st.executeQuery("select * from funcionario");
 			 while(rs.next()) {
-				 Funcionario fun = new Funcionario(rs.getString("nome"), rs.getInt("id"),  rs.getDouble("salario"));
-				 Cadastro.funcionarios.add(fun);
+				 if(rs.getInt("status") !=0) {
+					 Funcionario fun = new Funcionario(rs.getString("cpffuncionario"), rs.getString("nome"),  rs.getDouble("salario"), rs.getInt("status"));
+					 Cadastro.funcionarios.add(fun);
+				 }
 			 }
 		}
 		catch(SQLException e) {

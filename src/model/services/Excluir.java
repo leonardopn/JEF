@@ -35,10 +35,10 @@ public class Excluir {
 	public static void excluirFuncionario(Funcionario fun) {
 		try {
 			st = DB.getConnection().prepareStatement(
-					"DELETE FROM funcionario "
-					+ "WHERE id= "
+					"UPDATE funcionario "
+					+ "SET status = 0 WHERE cpffuncionario= "
 					+ "(?)");
-			st.setInt(1, fun.getId()); 
+			st.setString(1, fun.getCpf()); 
 			st.execute();
 		}
 		catch(SQLException e) {

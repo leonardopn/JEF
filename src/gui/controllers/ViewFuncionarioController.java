@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +21,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Funcionario;
 import model.services.Cadastro;
-import model.services.Carregar;
 import model.services.Excluir;
 import model.services.Salvar;
 
@@ -41,13 +39,10 @@ public class ViewFuncionarioController implements Initializable{
 	private Button btExcluiFuncionario;
 	
 	@FXML
-	private TextField txtIdFuncionario;
+	private TextField txtCpfFuncionario;
 	
 	@FXML
 	private TextField txtNomeFuncionario;
-	
-	@FXML
-	private TextField txtSalarioFuncionario;
 	
 	@FXML
 	private TableView<Funcionario> tvFuncionario = new TableView<>();
@@ -56,10 +51,7 @@ public class ViewFuncionarioController implements Initializable{
 	private TableColumn<Funcionario, String> colunaNome;
 	
 	@FXML
-    private TableColumn<Funcionario, Integer> colunaId;
-	
-	@FXML
-    private TableColumn<Funcionario, Double> colunaSalario;
+    private TableColumn<Funcionario, String> colunaCpf;
 	
 	@FXML
     private TableColumn<Funcionario, CheckBox> colunaSelect;
@@ -78,6 +70,9 @@ public class ViewFuncionarioController implements Initializable{
 	
 	public void carregaFuncionario() {
 		obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		for(Funcionario fun : obFuncionario) {
+			System.out.println(fun);
+		}
         tvFuncionario.setItems(obFuncionario);
         tvFuncionario.refresh();
 	}
@@ -86,18 +81,20 @@ public class ViewFuncionarioController implements Initializable{
 	public void onBtCriaFuncionarioAction(){
 		if(Alerts.showAlertAtualizacao()) {
 			try {
-				int cpf = Integer.parseInt(txtIdFuncionario.getText());
+				String cpf = txtCpfFuncionario.getText();
 				String nome = txtNomeFuncionario.getText();
 				Double salario = 0.00;
-				Funcionario fun01 = new Funcionario(nome, cpf, salario);
+				int status = 1;
+				Funcionario fun01 = new Funcionario(cpf, nome, salario, status);
 				
 				if(Cadastro.verificaFuncionario(fun01)) {
 					Cadastro.funcionarios.add(fun01);
-					Salvar.salvarFuncionario(txtIdFuncionario, txtNomeFuncionario, salario);
+					Salvar.salvarFuncionario(txtCpfFuncionario, txtNomeFuncionario);
 					obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 		    		ViewController.getTvAgendaTemp().setItems(obFuncionario);
 					ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
 					ViewController.getStageFuncionario().close();
+					System.out.println(fun01);
 				}
 			}
 			catch (NumberFormatException e) {
@@ -129,8 +126,7 @@ public class ViewFuncionarioController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colunaSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+        colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaFuncionario();
 	}

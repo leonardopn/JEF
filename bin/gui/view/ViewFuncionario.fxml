@@ -21,10 +21,9 @@
       </Label>
       <TableView fx:id="tvFuncionario" layoutX="9.0" layoutY="232.0" prefHeight="297.0" prefWidth="481.0">
         <columns>
-          <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="84.0" text="ID" />
-          <TableColumn fx:id="colunaNome" prefWidth="197.0" text="Nome" />
-            <TableColumn fx:id="colunaSalario" prefWidth="107.0" text="Salario" />
-            <TableColumn fx:id="colunaSelect" prefWidth="92.0" text="Excluir?" />
+          <TableColumn fx:id="colunaCpf" minWidth="0.0" prefWidth="109.0" text="CPF" />
+          <TableColumn fx:id="colunaNome" prefWidth="296.0" text="Nome" />
+            <TableColumn fx:id="colunaSelect" minWidth="9.0" prefWidth="75.0" text="Excluir?" />
         </columns>
       </TableView>
       <Button fx:id="btExcluiFuncionario" layoutX="217.0" layoutY="559.0" mnemonicParsing="false" onAction="#excluirFuncionario" text="Excluir" />
@@ -45,7 +44,7 @@
             <Label prefHeight="17.0" prefWidth="36.0" text="CPF:" />
             <Label text="Nome:" GridPane.rowIndex="1" />
             <TextField fx:id="txtNomeFuncionario" promptText="Nome do Funcionário" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtIdFuncionario" prefHeight="23.0" prefWidth="117.0" promptText="CPF fo funcionário" GridPane.columnIndex="1" />
+            <TextField fx:id="txtCpfFuncionario" prefHeight="23.0" prefWidth="117.0" promptText="CPF fo funcionário" GridPane.columnIndex="1" />
             <Button fx:id="btCriaFuncionario" mnemonicParsing="false" onAction="#onBtCriaFuncionarioAction" text="Criar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
          </children>
       </GridPane>

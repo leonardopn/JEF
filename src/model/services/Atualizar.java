@@ -36,11 +36,10 @@ public class Atualizar {
 		try {
 			st = DB.getConnection().prepareStatement(
 					"UPDATE funcionario "
-					+"SET nome = ?, salario = ?"
-					+"WHERE id=?");
+					+"SET nome = ?"
+					+"WHERE cpffuncionario=?");
 			st.setString(1, fun.getNome());
-			st.setDouble(2, fun.getSalario());
-			st.setInt(3, fun.getId()); 
+			st.setString(2, fun.getCpf()); 
 			st.execute();
 		}
 		catch(SQLException e) {

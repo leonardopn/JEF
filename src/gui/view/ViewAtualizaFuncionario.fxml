@@ -6,31 +6,45 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="325.0" prefWidth="536.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewAtualizaFuncionarioController">
+<AnchorPane prefHeight="326.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controllers.ViewAtualizaFuncionarioController">
    <children>
-      <Line endX="-104.5" endY="248.0" layoutX="333.0" layoutY="77.0" startX="-104.5" startY="-79.0" stroke="#827f7f" />
-      <TextField fx:id="txtIdFuncionario" layoutX="309.0" layoutY="95.0" promptText="ID do funcionário" />
-      <Label layoutX="284.0" layoutY="99.0" text="ID:" />
-      <TextField fx:id="txtNomeFuncionario" layoutX="309.0" layoutY="131.0" promptText="Nome do funcionário" />
-      <Label layoutX="263.0" layoutY="135.0" text="Nome:" />
-      <TextField fx:id="txtSalarioFuncionario" layoutX="310.0" layoutY="165.0" promptText="Salario do funcionário" />
-      <Label layoutX="265.0" layoutY="169.0" prefHeight="17.0" prefWidth="36.0" text="Salario" />
-      <Button fx:id="btAtualiza" layoutX="395.0" layoutY="241.0" mnemonicParsing="false" onAction="#onAtualizaFuncionarioAction" prefHeight="26.0" prefWidth="87.0" text="Atualizar" />
-      <Label layoutX="246.0" layoutY="32.0" prefHeight="26.0" prefWidth="280.0" text="Digite os novos dados:">
+      <Line endX="-104.5" endY="248.0" layoutX="391.0" layoutY="78.0" startX="-104.5" startY="-79.0" stroke="#827f7f" />
+      <Label layoutX="332.0" layoutY="30.0" prefHeight="31.0" prefWidth="226.0" text="Digite os novos dados:">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <TableView fx:id="tvFuncionario" layoutY="37.0" onMouseClicked="#selecionaFuncionario" prefHeight="288.0" prefWidth="228.0">
+      <TableView fx:id="tvFuncionario" layoutY="37.0" onMouseClicked="#selecionaFuncionario" prefHeight="288.0" prefWidth="286.0">
          <columns>
-            <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="40.0" text="ID" />
-            <TableColumn fx:id="colunaNome" prefWidth="180.0" text="Nome" />
+            <TableColumn fx:id="colunaCpf" minWidth="0.0" prefWidth="111.0" text="CPF" />
+            <TableColumn fx:id="colunaNome" prefWidth="173.00001525878906" text="Nome" />
          </columns>
       </TableView>
-      <Line endX="-199.0" endY="145.2928924560547" layoutX="199.0" layoutY="-109.0" startX="28.0" startY="145.99998474121094" stroke="#827f7f" />
+      <Line endX="-199.0" endY="145.2928924560547" layoutX="199.0" layoutY="-109.0" startX="87.0" startY="146.0" stroke="#827f7f" />
       <Button fx:id="btVoltar" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#voltaScene" prefHeight="16.0" prefWidth="62.0" text="Voltar" />
+      <GridPane layoutX="323.0" layoutY="102.0" prefHeight="121.0" prefWidth="244.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="55.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="173.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtCpfFuncionario" prefHeight="25.0" prefWidth="158.0" promptText="CPF do funcionário" GridPane.columnIndex="1" />
+            <TextField fx:id="txtNomeFuncionario" promptText="Nome do funcionário" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="CPF:" />
+            <Label text="Nome:" GridPane.rowIndex="1" />
+            <Button fx:id="btAtualiza" mnemonicParsing="false" onAction="#onAtualizaFuncionarioAction" prefHeight="26.0" prefWidth="87.0" text="Atualizar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>
