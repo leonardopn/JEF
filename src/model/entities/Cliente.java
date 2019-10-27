@@ -9,13 +9,15 @@ public class Cliente implements Comparable<Cliente>{
 	private String nome;
 	private String email;
 	private String telefone;
+	private String redeSocial;
 	private CheckBox select;
 	
-	public Cliente(String cpf, String nome, String email, String telefone) {
+	public Cliente(String cpf, String nome, String email, String telefone, String redeSocial) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
+		this.redeSocial = redeSocial;
 		this.select = new CheckBox();
 	}
 	
@@ -37,6 +39,10 @@ public class Cliente implements Comparable<Cliente>{
 	
 	public String getTelefone() {
 		return telefone;
+	}
+	
+	public String getRedeSocial() {
+		return redeSocial;
 	}
 	
 	@Override

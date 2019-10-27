@@ -54,17 +54,18 @@ public class Salvar {
 		}
 	}
 	
-	public static void salvarCliente(TextField txtCpfCliente, TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente) {
+	public static void salvarCliente(TextField txtCpfCliente, TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente, TextField txtRedeSocialCliente) {
 		try {
 			st = DB.getConnection().prepareStatement(
 					"INSERT INTO cliente "
-					+ "(cpf, nome, email, telefone) "
+					+ "(cpfCliente, email, nome, rede_social, telefone) "
 					+ "VALUES "
-					+ "(?, ?, ?, ? )");
+					+ "(?, ?, ?, ?, ?)");
 			st.setString(1, txtCpfCliente.getText());
-			st.setString(2, txtNomeCliente.getText());
-			st.setString(3, txtEmailCliente.getText());
-			st.setString(4, txtTelefoneCliente.getText());
+			st.setString(2, txtEmailCliente.getText());
+			st.setString(3, txtNomeCliente.getText());
+			st.setString(4, txtRedeSocialCliente.getText());
+			st.setString(5, txtTelefoneCliente.getText());
 			st.execute();
 		}
 		catch(SQLException e) {

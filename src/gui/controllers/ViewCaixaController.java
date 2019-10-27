@@ -48,6 +48,8 @@ public class ViewCaixaController implements Initializable {
 	
 	public static TextField tfClienteTemp;
 	
+	public static ChoiceBox<Funcionario> cbFuncionarioTemp;
+	
 	public static AutoCompletionBinding bindAutoCompleteCliente;
 
 	@FXML
@@ -314,7 +316,6 @@ public class ViewCaixaController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		//carregaCliente();
 		carregaFuncionario();
 		carregaFormaPagamento();
 		mudaCaixa();
@@ -330,6 +331,7 @@ public class ViewCaixaController implements Initializable {
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaTransacao();
 		tfClienteTemp = this.tfCliente;
+		cbFuncionarioTemp = this.cbFuncionario;
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
 	}
 }

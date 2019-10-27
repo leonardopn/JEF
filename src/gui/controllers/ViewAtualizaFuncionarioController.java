@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.textfield.TextFields;
+
+import application.Main;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -80,10 +83,20 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 			String nome = txtNomeFuncionario.getText();
 			Double salario = funTemp.getSalario();
 			Funcionario funcionario = new Funcionario(cpf, nome, salario, 1);
-			Cadastro.funcionarios.removeIf((Funcionario fun) -> fun.getCpf() == funcionario.getCpf());
-			Cadastro.funcionarios.add(funcionario);
+			for(Funcionario fun : Cadastro.funcionarios) {
+				if(fun.getCpf().equals(funcionario.getCpf())) {
+					fun.setNome(nome);
+					tvFuncionario.refresh();
+				}
+			}
 			Atualizar.atualizarFuncionario(funcionario);
-			voltaScene();
+			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+			ViewController.getTvAgendaTemp().refresh();
+			ViewController.getTvFuncionarioTemp().refresh();
+			ViewController.getStageCaixa().hide();
+			ViewController.getStageCliente().hide();
+			ViewController.getStagePagamento().hide();
+			
 		}
 	}
 

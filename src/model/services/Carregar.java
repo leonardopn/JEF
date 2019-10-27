@@ -28,8 +28,10 @@ public class Carregar {
 			 st = DB.getConnection().createStatement();
 			 rs = st.executeQuery("select * from cliente");
 			 while(rs.next()) {
-				 Cliente cliente = new Cliente(rs.getString("cpf"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"));
-				 Cadastro.clientes.add(cliente);
+				 if(rs.getInt("status") !=0) {
+					 Cliente cliente = new Cliente(rs.getString("cpfcliente"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rede_social"));
+					 Cadastro.clientes.add(cliente);
+				 }
 			 }
 		}
 		catch(SQLException e) {

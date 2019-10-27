@@ -47,7 +47,7 @@ public class ViewSalarioController implements Initializable{
 	    @FXML
 	    void onBtPagarAction(ActionEvent event) {
 	    	if(tfSalario.getText().equals("0.0")) {
-	    		Notificacoes.mostraNotificacao("Valor vazio", "Esse funcionário não tem o quê receber");
+	    		Notificacoes.mostraNotificacao("Valor vazio", "Esse funcionï¿½rio nï¿½o tem o quï¿½ receber");
 	    	}
 	    	else {
 	    		Atualizar.atualizarSalario(tfFuncionario.getText(), - Double.parseDouble(tfSalario.getText()));
@@ -56,7 +56,7 @@ public class ViewSalarioController implements Initializable{
 				tfId.clear();
 				tfSalario.clear();
 		    	populaTabela();
-		    	Notificacoes.mostraNotificacao("Notificação", "Pagamento efetuado!!");
+		    	Notificacoes.mostraNotificacao("Notificaï¿½ï¿½o", "Pagamento efetuado!!");
 	    	}
 	    }
 	    
@@ -70,7 +70,7 @@ public class ViewSalarioController implements Initializable{
 		public void selecionaFuncionario() {
 			Funcionario fun = tvFuncionario.getSelectionModel().getSelectedItem();
 			tfFuncionario.setText(fun.getNome());
-			tfId.setText(String.valueOf(fun.getId()));
+			tfId.setText(String.valueOf(fun.getCpf()));
 			tfSalario.setText(String.valueOf(fun.getSalario()));
 		}
 

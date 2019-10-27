@@ -48,6 +48,9 @@ public class ViewClienteController implements Initializable{
 	private TextField txtNomeCliente;
 	
 	@FXML
+	private TextField txtRedeSocialCliente;
+	
+	@FXML
 	private TextField txtEmailCliente;
 	
 	@FXML
@@ -61,6 +64,9 @@ public class ViewClienteController implements Initializable{
 	
 	@FXML
     private TableColumn<Cliente, Long> colunaCpf;
+	
+	@FXML
+    private TableColumn<Cliente, String> colunaRedeSocial;
 	
 	@FXML
     private TableColumn<Cliente, String> colunaEmail;
@@ -95,15 +101,18 @@ public class ViewClienteController implements Initializable{
 			String nome = txtNomeCliente.getText();
 			String email = txtEmailCliente.getText();
 			String telefone = txtTelefoneCliente.getText();
-			Cliente cliente = new Cliente(cpf, nome, email, telefone);
+			String redeSocial = txtRedeSocialCliente.getText();
+			Cliente cliente = new Cliente(cpf, nome, email, telefone, redeSocial);
 			Cadastro.verificaCliente(cliente);
 			Cadastro.clientes.add(cliente);
-			Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente);
+			Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
 			carregaCliente();
 			ViewController.bindAutoCompleteCliente.dispose();
 			ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
-			ViewCaixaController.bindAutoCompleteCliente.dispose();
-			ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
+			if(ViewController.getStageCaixa().isShowing()) {
+				ViewCaixaController.bindAutoCompleteCliente.dispose();
+				ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
+			}	
 		}
 		catch (NumberFormatException e) {
 			Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
@@ -125,8 +134,10 @@ public class ViewClienteController implements Initializable{
 			
 			ViewController.bindAutoCompleteCliente.dispose();
 			ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
-			ViewCaixaController.bindAutoCompleteCliente.dispose();
-			ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
+			if(ViewController.getStageCaixa().isShowing()) {
+				ViewCaixaController.bindAutoCompleteCliente.dispose();
+				ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
+			}
 		}
 	}
 	
@@ -136,6 +147,7 @@ public class ViewClienteController implements Initializable{
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+        colunaRedeSocial.setCellValueFactory(new PropertyValueFactory<>("redeSocial"));
         colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaCliente();
 	}

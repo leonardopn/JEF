@@ -53,9 +53,9 @@ public class Excluir {
 	public static void excluirCliente(Cliente cli) {
 		try {
 			st = DB.getConnection().prepareStatement(
-					"DELETE FROM cliente "
-					+ "WHERE cpf= "
-					+ "(?)");
+					"UPDATE cliente "
+							+ "SET status = 0 WHERE cpfcliente= "
+							+ "(?)");
 			st.setString(1, cli.getCpf()); 
 			st.execute();
 		}

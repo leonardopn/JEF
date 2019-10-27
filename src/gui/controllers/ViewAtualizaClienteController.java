@@ -85,16 +85,16 @@ public class ViewAtualizaClienteController implements Initializable{
 	@FXML
 	public void atualizaCliente() {
 		if(Alerts.showAlertAtualizacao()) {
-			String cpf = txtCpfCliente.getText();
-			String nome = txtNomeCliente.getText();
-			String email = txtEmailCliente.getText();
-			String telefone = txtTelefoneCliente.getText();
-			Cliente cliente = new Cliente(cpf, nome, email, telefone);
-			Cadastro.clientes.removeIf((Cliente cli) -> cli.getCpf().equals(cliente.getCpf()));
-			Cadastro.verificaCliente(cliente);
-			Cadastro.clientes.add(cliente);
-			Atualizar.atualizarCliente(cliente);
-			voltaScene();
+//			String cpf = txtCpfCliente.getText();
+//			String nome = txtNomeCliente.getText();
+//			String email = txtEmailCliente.getText();
+//			String telefone = txtTelefoneCliente.getText();
+//			Cliente cliente = new Cliente(cpf, nome, email, telefone);
+//			Cadastro.clientes.removeIf((Cliente cli) -> cli.getCpf().equals(cliente.getCpf()));
+//			Cadastro.verificaCliente(cliente);
+//			Cadastro.clientes.add(cliente);
+//			Atualizar.atualizarCliente(cliente);
+//			voltaScene();
 		}
 	}
 

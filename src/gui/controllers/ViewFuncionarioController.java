@@ -115,11 +115,16 @@ public class ViewFuncionarioController implements Initializable{
 			}
 			obFuncionario.removeAll(obExcluirFuncionario);
 			Cadastro.funcionarios.removeAll(obExcluirFuncionario);
+			carregaFuncionario();
 			
 			//vai atulizar no stage main se excluir funcion�rios
 			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
     		ViewController.getTvAgendaTemp().setItems(obFuncionario);
-			ViewController.getTvFuncionarioTemp().setItems(obFuncionario);;
+			ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
+			ViewController.getStageCaixa().hide();
+			ViewController.getStageCliente().hide();
+			ViewController.getStageFuncionario().hide();
+			ViewController.getStagePagamento().hide();
 		}
 	}
 	
