@@ -267,7 +267,7 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	public void carregaTable() {
-		obTable = FXCollections.observableArrayList(Caixa.caixaTemp);
+		obTable = FXCollections.observableArrayList(Caixa.caixa);
 		tvTransacao.setItems(obTable);
 	}
 
@@ -276,7 +276,7 @@ public class ViewCaixaController implements Initializable {
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		int id = Integer.parseInt(tfId.getText());
 		String cliente = tfCliente.getText();
-		String fun = cbFuncionario.getValue().getNome();
+		String fun = cbFuncionario.getValue().getCpf();
 		String data = localDateFormatada.format((dpData.getValue()));
 		double valor = Double.parseDouble(tfValor.getText());
 		String formaPaga = cbFormaPagamento.getValue();
@@ -284,12 +284,10 @@ public class ViewCaixaController implements Initializable {
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
 		Salvar.salvarTransacao(tfId, tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
-		Atualizar.atualizarSalario(fun, valor/2);
+		Atualizar.atualizarSalario(fun, (valor/2));
 		Carregar.carregaFuncionario();
-		Carregar.carregaTransacao();
 		carregaTransacao();
-		carregaTable();
-		calculaCaixa();	
+		//calculaCaixa();	
 	}
 
 	public void excluirTransacao() {
@@ -303,7 +301,7 @@ public class ViewCaixaController implements Initializable {
 			}
 		}
 		Caixa.caixa.removeAll(obExcluirTransacao);
-		Caixa.caixaTemp.removeAll(obExcluirTransacao);
+		Caixa.caixa.removeAll(obExcluirTransacao);
 		carregaTable();
 		calculaCaixa();
 	}

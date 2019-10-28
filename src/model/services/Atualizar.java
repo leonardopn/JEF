@@ -51,14 +51,14 @@ public class Atualizar {
 		}
 	}
 	
-	public static void atualizarSalario(String nome, double salario) {
+	public static void atualizarSalario(String cpf, double salario) {
 		try {
 			st = DB.getConnection().prepareStatement(
 					"UPDATE funcionario "
-					+"set salario = salario+? "
-					+"WHERE nome=?");
+					+"set salario = salario + ? "
+					+"WHERE cpffuncionario = ?");
 			st.setDouble(1, salario);
-			st.setString(2, nome); 
+			st.setString(2, cpf); 
 			st.execute();
 		}
 		catch(SQLException e) {

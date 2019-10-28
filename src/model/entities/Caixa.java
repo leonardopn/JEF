@@ -10,7 +10,7 @@ public class Caixa {
 	private static double total;
 	private static boolean status;
 	static public TreeSet<Transacao> caixa = new TreeSet<>();
-	static public TreeSet<Transacao> caixaTemp = new TreeSet<>();
+	//static public TreeSet<Transacao> caixaTemp = new TreeSet<>();
 	
 	public static double getTotal() {
 		return total;

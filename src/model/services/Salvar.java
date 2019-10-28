@@ -6,13 +6,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import db.DB;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import model.entities.Caixa;
+import model.entities.Cliente;
 import model.entities.Funcionario;
 
 public class Salvar {
@@ -77,24 +81,32 @@ public class Salvar {
 		}
 	}
 	
-	public static void salvarTransacao(TextField tfId, TextField cbCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
+	public static void salvarTransacao(TextField tfId, TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
 		try {
-			DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+			Date data = formataData.parse(dpData.toString());
+			for(Cliente cliente : Cadastro.clientes) {
+				if(tfCliente.getText().equals(cliente.getNome())) {
+					tfCliente.setText(cliente.getCpf());
+				}
+			}
 			st = DB.getConnection().prepareStatement(
-					"INSERT INTO caixa "
-					+ "(id, valor, cliente, atendente, forma_pagamento, data) "
+					"INSERT INTO transacao "
+					+ "(cpfcliente, cpffuncionario, formapagamento, data, valor, id) "
 					+ "VALUES "
-					+ "(?, ?, ?, ?, ?, ? )");
+					+ "(?, ?, ?, ?, ?, ?)");
 			
-			st.setInt(1, Integer.parseInt(tfId.getText()));
-			st.setDouble(2, Double.parseDouble(tfValor.getText()));
-			st.setString(3, cbCliente.getText());
-			st.setString(4, cbFuncionario.getValue().getNome());
-			st.setString(5, cbFormaPagamento.getValue());
-			st.setString(6, localDateFormatada.format(dpData));
+		
+			st.setString(1, tfCliente.getText());
+			st.setString(2, cbFuncionario.getValue().getCpf());
+			st.setString(3, cbFormaPagamento.getValue());
+			st.setDate(4, new java.sql.Date(data.getTime()));
+			st.setDouble(5, Double.parseDouble(tfValor.getText()));
+			st.setInt(6, Integer.parseInt(tfId.getText()));
+			
 			st.execute();
 		}
-		catch(SQLException e) {
+		catch(SQLException | ParseException e) {
 			e.printStackTrace();
 		}
 		finally {

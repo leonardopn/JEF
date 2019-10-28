@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import db.DB;
 import model.entities.Agendamento;
@@ -85,18 +87,21 @@ public class Carregar {
 	}
 	
 	public static void carregaTransacaoExpecifica(LocalDate data) {
-		Caixa.caixaTemp.clear();
-		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		Caixa.caixa.clear();
+		DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		try {
 			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("SELECT * FROM caixa "
-					 +"WHERE data = "
-					 +"'"+localDateFormatada.format(data)+"'"
-					 );
+			 rs = st.executeQuery("select * from transacao t "
+			 						+ "inner join funcionario f on(t.cpffuncionario = f.cpffuncionario)"
+			 						+ "inner join cliente c on(c.cpfcliente = t.cpfcliente)"
+			 						+ "where t.data = "
+			 						+ "'" + localDateFormatadaProcura.format(data) + "'");
 			 
 			 while(rs.next()) {
-				 Transacao tran = new Transacao(rs.getInt("id"), rs.getDouble("valor"), rs.getString("cliente"), rs.getString("atendente"),  rs.getString("forma_pagamento"), rs.getString("data"));
-				 Caixa.caixaTemp.add(tran);
+				 SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
+				 Transacao tran = new Transacao(rs.getInt("t.id"), rs.getDouble("t.valor"), rs.getString("c.nome"), 
+						 rs.getString("f.nome"),  rs.getString("t.formapagamento"), formataData.format(rs.getDate("t.data")));
+				 Caixa.caixa.add(tran);
 			 }
 		}
 		catch(SQLException e) {
