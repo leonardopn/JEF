@@ -17,7 +17,7 @@ public class Excluir {
 	public static void excluirTransacao(Transacao tran) {
 		try {
 			st = DB.getConnection().prepareStatement(
-					"DELETE FROM caixa "
+					"DELETE FROM transacao "
 					+ "WHERE id= "
 					+ "(?)");
 			st.setInt(1, tran.getId()); 

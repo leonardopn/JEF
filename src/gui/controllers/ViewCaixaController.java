@@ -13,6 +13,7 @@ import org.controlsfx.control.textfield.TextFields;
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -44,6 +46,8 @@ public class ViewCaixaController implements Initializable {
 	ObservableList<Transacao> obTableTemp;
 
 	ObservableList<String> obFormaPagamento;
+	
+	ProgressBar barraProgresso;
 	
 	public static TextField tfClienteTemp;
 	
@@ -258,6 +262,7 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	public void onBtEnviarTransacaoAction() {
+		
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		int id;
 		String cliente = tfCliente.getText();
@@ -274,6 +279,8 @@ public class ViewCaixaController implements Initializable {
 		Carregar.carregaFuncionario();
 		carregaTransacao();
 		calculaCaixa();	
+		
+		
 	}
 
 	public void excluirTransacao() {
@@ -281,12 +288,13 @@ public class ViewCaixaController implements Initializable {
 		for (Transacao tran : obTable) {
 			if (tran.getSelect().isSelected()) {
 				obExcluirTransacao.add(tran);
-				Atualizar.atualizarSalario(tran.getAtendente(), -(tran.getValor()/2));
+				double valor = tran.getValor()/2;
+				valor = valor - (valor*2);
+				Atualizar.atualizarSalario(tran.getAtendente(), valor);
 				Carregar.carregaFuncionario();
 				Excluir.excluirTransacao(tran);
 			}
 		}
-		Caixa.caixa.removeAll(obExcluirTransacao);
 		Caixa.caixa.removeAll(obExcluirTransacao);
 		carregaTable();
 		calculaCaixa();
@@ -294,13 +302,21 @@ public class ViewCaixaController implements Initializable {
 
 
 	public void carregaTransacao() {
-		Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
-		carregaTable();
-		calculaCaixa();	
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
+				carregaTable();
+				calculaCaixa();
+				return null;
+			}
+		};
+		barraProgresso.progressProperty().bind(tarefa.progressProperty());
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		barraProgresso = new ProgressBar();
 		carregaFuncionario();
 		carregaFormaPagamento();
 		mudaCaixa();
@@ -314,7 +330,7 @@ public class ViewCaixaController implements Initializable {
 		colunaMeioPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
-		carregaTransacao();
+		//carregaTransacao();
 		tfClienteTemp = this.tfCliente;
 		cbFuncionarioTemp = this.cbFuncionario;
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);

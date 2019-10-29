@@ -51,14 +51,19 @@ public class Atualizar {
 		}
 	}
 	
-	public static void atualizarSalario(String cpf, double salario) {
+	public static void atualizarSalario(String nome, double salario) {
 		try {
+			for(Funcionario fun : Cadastro.funcionarios) {
+				if(fun.getNome().equals(nome)) {
+					nome = fun.getCpf();
+				}
+			}
 			st = DB.getConnection().prepareStatement(
 					"UPDATE funcionario "
 					+"set salario = salario + ? "
 					+"WHERE cpffuncionario = ?");
 			st.setDouble(1, salario);
-			st.setString(2, cpf); 
+			st.setString(2, nome); 
 			st.execute();
 		}
 		catch(SQLException e) {
