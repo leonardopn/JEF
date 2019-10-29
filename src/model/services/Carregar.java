@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import db.DB;
 import model.entities.Agendamento;
@@ -114,25 +113,6 @@ public class Carregar {
 		}
 	}
 	
-	public static void carregaTransacao() {
-		try {
-			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("select * from caixa");
-			 while(rs.next()) {
-				 Transacao tran = new Transacao(rs.getInt("id"), rs.getDouble("valor"), rs.getString("cliente"), rs.getString("atendente"),  rs.getString("forma_pagamento"), rs.getString("data"));
-				 Caixa.caixa.add(tran);
-			 }
-		}
-		catch(SQLException e) {
-			throw new DbException(e.getMessage());
-		}
-		finally {
-			DB.closeConnection();
-			DB.fechaResultSet(rs);
-			DB.fechaStatement(st);
-		}
-	}
-	
 	public static void carregaAgendaFuncionario(LocalDate data) {
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");	
 		try {
@@ -191,7 +171,6 @@ public class Carregar {
 	public static void carregar() {
 		carregaCliente();
 		carregaFuncionario();
-		carregaTransacao();
 		carregaCaixa();
 	}
 }

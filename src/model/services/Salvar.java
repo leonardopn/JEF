@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import model.entities.Funcionario;
 public class Salvar {
 	static File arquivoTransacao;
 	static PreparedStatement st = null;
+	static ResultSet rs = null;
 	
 	public static void salvarStatus() {
 		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
@@ -81,7 +83,8 @@ public class Salvar {
 		}
 	}
 	
-	public static void salvarTransacao(TextField tfId, TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
+	public static int salvarTransacao(TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
+		int maiorId = 0;
 		try {
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			Date data = formataData.parse(dpData.toString());
@@ -90,6 +93,13 @@ public class Salvar {
 					tfCliente.setText(cliente.getCpf());
 				}
 			}
+			st = DB.getConnection().prepareStatement("select max(id) from transacao");
+			rs = st.executeQuery();
+			while(rs.next()) {
+				maiorId = rs.getInt(1);
+			}
+			maiorId += 1;
+			DB.fechaStatement(st);
 			st = DB.getConnection().prepareStatement(
 					"INSERT INTO transacao "
 					+ "(cpfcliente, cpffuncionario, formapagamento, data, valor, id) "
@@ -102,9 +112,9 @@ public class Salvar {
 			st.setString(3, cbFormaPagamento.getValue());
 			st.setDate(4, new java.sql.Date(data.getTime()));
 			st.setDouble(5, Double.parseDouble(tfValor.getText()));
-			st.setInt(6, Integer.parseInt(tfId.getText()));
-			
+			st.setInt(6, maiorId);
 			st.execute();
+			return maiorId;
 		}
 		catch(SQLException | ParseException e) {
 			e.printStackTrace();
@@ -113,22 +123,25 @@ public class Salvar {
 			DB.fechaStatement(st);
 			DB.closeConnection();
 		}
+		return maiorId;
 	}
 	
-	public static void salvarCaixa(String data, double total, double cartao, double dinheiro) {
+	public static void salvarCaixa(LocalDate dpData, double total, double cartao, double dinheiro) {
 		try {
+				SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+				Date data = formataData.parse(dpData.toString());
 				st = DB.getConnection().prepareStatement(
-						"REPLACE INTO fechamento_caixa "
+						"REPLACE INTO caixa "
 						+ "(total, data, total_cartao, total_dinheiro) "
 						+ "VALUES "
 						+ "(?, ?, ?, ? )");
 				st.setDouble(1, total);
-				st.setString(2, data);
+				st.setDate(2, new java.sql.Date(data.getTime()));
 				st.setDouble(3, cartao);
 				st.setDouble(4, dinheiro);
 				st.execute();
 		}
-		catch(SQLException e) {
+		catch(SQLException | ParseException e) {
 			e.printStackTrace();
 		}
 		finally {

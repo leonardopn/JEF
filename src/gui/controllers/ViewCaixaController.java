@@ -3,7 +3,6 @@ package gui.controllers;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -69,9 +68,6 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Button btCalTroco;
-
-	@FXML
-	private TextField tfId;
 
 	@FXML
 	private TextField tfValor;
@@ -160,7 +156,6 @@ public class ViewCaixaController implements Initializable {
 		if(Caixa.isStatus() != true) {
 			btEnviarTransacao.setDisable(true);
 			btExcluir.setDisable(true);
-			tfId.setDisable(true);
 			tfCliente.setDisable(true);
 			cbFuncionario.setDisable(true);
 			dpData.setDisable(true);
@@ -170,7 +165,6 @@ public class ViewCaixaController implements Initializable {
 		else {
 			btEnviarTransacao.setDisable(false);
 			btExcluir.setDisable(false);
-			tfId.setDisable(false);
 			tfCliente.setDisable(false);
 			cbFuncionario.setDisable(false);
 			dpData.setDisable(false);
@@ -220,39 +214,30 @@ public class ViewCaixaController implements Initializable {
 			Caixa.setStatus(false);
 			Salvar.salvarStatus();
 			bloqueio();
-			calculaCaixa();
 		}
 
 	}
 	
 	public void calculaCaixa() {
-		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		double total = 0;
-		double totalDinheiro = 0;
-		double totalCartao = 0;
+		double total = 0.00;
+		double totalDinheiro = 0.00;
+		double totalCartao = 0.00;
 		lbValorTotal.setText(String.valueOf(total));
 		lbValorDinheiro.setText(String.valueOf(totalDinheiro));
 		lbValorCartao.setText(String.valueOf(totalCartao));
-		ArrayList<Transacao> tranTemp = new ArrayList<>();
 		for(Transacao tran : Caixa.caixa) {
-			if(tran.getData().equals(localDateFormatada.format(LocalDate.now()))) {
-				tranTemp.add(tran);	
-			}
-		}
-		for(Transacao tran2 : tranTemp) {
-			total += tran2.getValor();
-			lbValorTotal.setText(String.valueOf(total));
-			if(tran2.getFormaPagamento().equals("Dinheiro")) {
-				totalDinheiro += tran2.getValor();
-				lbValorDinheiro.setText(String.valueOf(totalDinheiro));
+			total += tran.getValor();
+			if(tran.getFormaPagamento().equals("Dinheiro")) {
+				totalDinheiro += tran.getValor();
 			}
 			else {
-				totalCartao += tran2.getValor();
-				lbValorCartao.setText(String.valueOf(totalCartao));
+				totalCartao += tran.getValor();
 			}
-		}	
-		String data = localDateFormatada.format(LocalDate.now());
-		Salvar.salvarCaixa(data, Double.parseDouble(lbValorTotal.getText()), Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
+		}
+		lbValorTotal.setText(String.valueOf(total));
+		lbValorDinheiro.setText(String.valueOf(totalDinheiro));
+		lbValorCartao.setText(String.valueOf(totalCartao));
+		Salvar.salvarCaixa(dpSelecao.getValue(), Double.parseDouble(lbValorTotal.getText()), Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
 	}
 
 	public void carregaFuncionario() {
@@ -274,20 +259,21 @@ public class ViewCaixaController implements Initializable {
 	@FXML
 	public void onBtEnviarTransacaoAction() {
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		int id = Integer.parseInt(tfId.getText());
+		int id;
 		String cliente = tfCliente.getText();
 		String fun = cbFuncionario.getValue().getCpf();
 		String data = localDateFormatada.format((dpData.getValue()));
 		double valor = Double.parseDouble(tfValor.getText());
 		String formaPaga = cbFormaPagamento.getValue();
+		id = Salvar.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
 		Transacao tran = new Transacao(id, valor, cliente, fun, formaPaga, data);
+		System.out.println(tran);
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
-		Salvar.salvarTransacao(tfId, tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
 		Atualizar.atualizarSalario(fun, (valor/2));
 		Carregar.carregaFuncionario();
 		carregaTransacao();
-		//calculaCaixa();	
+		calculaCaixa();	
 	}
 
 	public void excluirTransacao() {
@@ -310,6 +296,7 @@ public class ViewCaixaController implements Initializable {
 	public void carregaTransacao() {
 		Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
 		carregaTable();
+		calculaCaixa();	
 	}
 
 	@Override
