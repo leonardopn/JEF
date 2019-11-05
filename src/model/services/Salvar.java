@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import db.DB;
@@ -150,21 +149,34 @@ public class Salvar {
 		}
 	}
 	
-	public static void salvarAgendamento(String funcionario, String cliente, LocalDate data, String horario) {
+	public static void salvarAgendamento(String funcionario, String cliente, LocalDate dpData, String horario) {
 		try {
-			DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-				st = DB.getConnection().prepareStatement(
+			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm:ss");
+			Date data = formataData.parse(dpData.toString());
+			for(Funcionario fun : Cadastro.funcionarios) {
+				if(funcionario.equals(fun.getNome())) {
+					funcionario = fun.getCpf();
+				}
+			}
+			for(Cliente cli : Cadastro.clientes) {
+				if(cliente.equals(cli.getNome())) {
+					cliente = cli.getCpf();
+				}
+			}
+				
+			st = DB.getConnection().prepareStatement(
 						"INSERT INTO agenda"
-						+ "(funcionario, cliente, data, horario) "
+						+ "(cpfcliente, cpffuncionario, data, time) "
 						+ "VALUES "
 						+ "(?, ?, ?, ? )");
-				st.setString(1, funcionario);
-				st.setString(2, cliente);
-				st.setString(3,localDateFormatada.format(data));
-				st.setString(4, horario);
-				st.execute();
+			st.setString(1, cliente);
+			st.setString(2, funcionario);
+			st.setDate(3, new java.sql.Date(data.getTime()));
+			st.setTime(4, new java.sql.Time(formataHora.parse(horario).getTime()));
+			st.execute();
 		}
-		catch(SQLException e) {
+		catch(SQLException | ParseException e) {
 			e.printStackTrace();
 		}
 		finally {

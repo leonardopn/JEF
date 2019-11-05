@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -136,6 +135,5 @@
             </Label>
          </children>
       </GridPane>
-      <ProgressIndicator fx:id="barraProgresso" layoutX="1066.0" layoutY="531.0" onDragDetected="#carregaTransacao" prefHeight="39.0" prefWidth="58.0" progress="0.0" />
    </children>
 </AnchorPane>

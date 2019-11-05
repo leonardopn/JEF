@@ -83,7 +83,7 @@ public class ViewAgendaController implements Initializable{
     	else {
     		salvaHorario();
     		
-    		//vai atulizar no stage main se eu criar um agendamento
+    		//vai atualizar no stage main se eu criar um agendamento
     		Carregar.carregaAgendaFuncionario(dpData.getValue());
     		ViewController.getTvAgendaTemp().refresh();
     	}
@@ -91,43 +91,43 @@ public class ViewAgendaController implements Initializable{
 
     public void salvaHorario() {
     	if(cb12.isSelected() && !(cb12.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "12:00");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "12:00:00");
     	}
     	if(cb12_3.isSelected() && !(cb12_3.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "12:30");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "12:30:00");
     	}
     	if(cb13.isSelected() && !(cb13.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "13:00");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "13:00:00");
     	}
     	if(cb13_3.isSelected() && !(cb13_3.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "13:30");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "13:30:00");
     	}
     	if(cb14.isSelected() && !(cb14.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "14:00");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "14:00:00");
     	}
     	if(cb14_3.isSelected() && !(cb14_3.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "14:30");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "14:30:00");
     	}
     	if(cb15.isSelected() && !(cb15.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "15:00");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "15:00:00");
     	}
     	if(cb15_3.isSelected() && !(cb15_3.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "15:30");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "15:30:00");
     	}
     	if(cb16.isSelected() && !(cb16.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "16:00");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "16:00:00");
     	}
     	if(cb16_3.isSelected() && !(cb16_3.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "16:30");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "16:30:00");
     	}
     	if(cb17.isSelected() && !(cb17.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "17:00");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "17:00:00");
     	}
     	if(cb17_3.isSelected() && !(cb17_3.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "17:30");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "17:30:00");
     	}
     	if(cb18.isSelected() && !(cb18.isDisable())) {
-    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "18:00");
+    		Salvar.salvarAgendamento(txtFuncionario.getText(), txtCliente.getText(), dpData.getValue(), "18:00:00");
     	}
     	ViewController.getStageAgenda().close();
     }

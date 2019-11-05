@@ -355,9 +355,10 @@ public class ViewController implements Initializable {
 			for (Agendamento age : obAgendamento) {
 				if (age.getSelect().isSelected()) {
 					obExcluirAgendamento.add(age);
-					Excluir.excluirAgendamento(age);
+					Excluir.excluirAgendamento(age, dpDataExcluir.getValue());
 				}
 			}
+			tfCliente.setText("");
 			obAgendamento.removeAll(obExcluirAgendamento);
 			Cadastro.agendamentos.removeAll(obExcluirAgendamento);
 			carregaAgenda();

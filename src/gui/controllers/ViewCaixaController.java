@@ -47,8 +47,6 @@ public class ViewCaixaController implements Initializable {
 
 	ObservableList<String> obFormaPagamento;
 	
-	ProgressBar barraProgresso;
-	
 	public static TextField tfClienteTemp;
 	
 	public static ChoiceBox<Funcionario> cbFuncionarioTemp;
@@ -279,8 +277,6 @@ public class ViewCaixaController implements Initializable {
 		Carregar.carregaFuncionario();
 		carregaTransacao();
 		calculaCaixa();	
-		
-		
 	}
 
 	public void excluirTransacao() {
@@ -302,21 +298,13 @@ public class ViewCaixaController implements Initializable {
 
 
 	public void carregaTransacao() {
-		Task<Void> tarefa = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
-				carregaTable();
-				calculaCaixa();
-				return null;
-			}
-		};
-		barraProgresso.progressProperty().bind(tarefa.progressProperty());
+			Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
+			carregaTable();
+			calculaCaixa();
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		barraProgresso = new ProgressBar();
 		carregaFuncionario();
 		carregaFormaPagamento();
 		mudaCaixa();
@@ -330,7 +318,6 @@ public class ViewCaixaController implements Initializable {
 		colunaMeioPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
-		//carregaTransacao();
 		tfClienteTemp = this.tfCliente;
 		cbFuncionarioTemp = this.cbFuncionario;
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);

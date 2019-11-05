@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane prefHeight="342.0" prefWidth="304.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controllers.ViewSalarioController">
+<AnchorPane prefHeight="342.0" prefWidth="304.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewSalarioController">
    <children>
       <GridPane hgap="5.0" layoutX="14.0" layoutY="200.0" prefHeight="129.0" prefWidth="273.0" vgap="10.0">
         <columnConstraints>
@@ -35,8 +34,8 @@
             </TextField>
             <TextField fx:id="tfFuncionario" editable="false" promptText="Nome do funcionário" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Button fx:id="btPagar" mnemonicParsing="false" onAction="#onBtPagarAction" text="Pagar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-            <Label text="ID:" GridPane.halignment="RIGHT" />
-            <TextField fx:id="tfId" disable="true" editable="false" promptText="ID fo funcionário" GridPane.columnIndex="1">
+            <Label text="CPF" GridPane.halignment="RIGHT" />
+            <TextField fx:id="tfCpf" disable="true" editable="false" promptText="CPF fo funcionário" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin>

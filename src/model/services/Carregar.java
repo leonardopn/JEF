@@ -114,20 +114,21 @@ public class Carregar {
 	}
 	
 	public static void carregaAgendaFuncionario(LocalDate data) {
-		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");	
+		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		try {
 			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("SELECT * FROM agenda "
+			 rs = st.executeQuery("SELECT * FROM agenda a inner join cliente c on(a.cpfcliente = c.cpfcliente) "
 					 +"WHERE data = "
 					 +"'"+localDateFormatada.format(data)+"'"
 					 );
-			 for(Funcionario fun: Cadastro.funcionarios) {
+			 SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm");
+			 for (Funcionario fun : Cadastro.funcionarios) {
 				 fun.zeraHorarios();
 			 }
 			 while(rs.next()) {
 				 for(Funcionario fun : Cadastro.funcionarios) {
-					if(rs.getString("funcionario").equals(fun.getNome())) {
-						fun.retornaHorario(rs.getString("horario"), rs.getString("cliente"));
+					if(rs.getString("cpffuncionario").equals(fun.getCpf())) {
+						fun.retornaHorario(formataHora.format(rs.getTime("a.time")), rs.getString("c.nome"));
 					}
 				}
 			 }
@@ -144,17 +145,25 @@ public class Carregar {
 	
 	public static void carregaAgendamento(LocalDate data, String cliente) {
 		Cadastro.agendamentos.clear();
-		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		for(Cliente cli : Cadastro.clientes) {
+			if(cliente.equals(cli.getNome())) {
+				cliente = cli.getCpf();
+			}
+		}
 		try {
 			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("SELECT * FROM agenda "
+			 rs = st.executeQuery("SELECT * FROM agenda a inner join funcionario f on(a.cpffuncionario = f.cpffuncionario) "
+			 					+ "inner join cliente c on(c.cpfcliente = a.cpfcliente)"
 			 					+ "WHERE data = "
 			 					+"'"+localDateFormatada.format(data)+"'"
-			 					+ " AND cliente = '"
+			 					+ " AND c.cpfcliente = '"
 			 					+ cliente
 			 					+ "'");
+			 SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
+			 SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm");
 			 while(rs.next()) {
-				 Agendamento agen = new Agendamento(rs.getString("funcionario"), rs.getString("cliente"), rs.getString("data"), rs.getString("horario"));
+				 Agendamento agen = new Agendamento(rs.getString("f.nome"), rs.getString("f.cpffuncionario"), rs.getString("c.nome"), rs.getString("c.cpfcliente"), formataData.format(rs.getDate("data")), formataHora.format(rs.getTime("a.time")));
 				 Cadastro.agendamentos.add(agen);
 			 }
 		}

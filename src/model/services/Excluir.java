@@ -3,6 +3,10 @@ package model.services;
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 import db.DB;
 import model.entities.Agendamento;
@@ -68,18 +72,24 @@ public class Excluir {
 		}
 	}
 	
-	public static void excluirAgendamento(Agendamento age) {
+	public static void excluirAgendamento(Agendamento age, LocalDate data) {
 		try {
+			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm");
 			st = DB.getConnection().prepareStatement(
 					"DELETE FROM agenda "
-					+ "WHERE cliente= (?)"
+					+ "WHERE cpfcliente= (?)"
 					+ "AND data = (?)"
-					+ "AND horario = (?)"
-					+"AND funcionario = (?)");
-			st.setString(1, age.getCliente()); st.setString(2, age.getData()); st.setString(3, age.getHorario()); st.setString(4, age.getFuncionario());
+					+ "AND time = (?)"
+					+"AND cpffuncionario = (?)");
+			Date dataFormatada = formataData.parse(data.toString());
+			st.setString(1, age.getCpfCliente()); 
+			st.setDate(2, new java.sql.Date(dataFormatada.getTime())); 
+			st.setTime(3, new java.sql.Time(formataHora.parse(age.getHorario()).getTime())); 
+			st.setString(4, age.getCpfFuncionario());
 			st.execute();
 		}
-		catch(SQLException e) {
+		catch(SQLException | ParseException e) {
 			e.printStackTrace();
 		}
 		finally {

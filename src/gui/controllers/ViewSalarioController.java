@@ -30,7 +30,7 @@ public class ViewSalarioController implements Initializable{
 	    private TextField tfFuncionario;
 	    
 	    @FXML
-	    private TextField tfId;
+	    private TextField tfCpf;
 
 	    @FXML
 	    private Button btPagar;
@@ -50,10 +50,10 @@ public class ViewSalarioController implements Initializable{
 	    		Notificacoes.mostraNotificacao("Valor vazio", "Esse funcion�rio n�o tem o qu� receber");
 	    	}
 	    	else {
-	    		Atualizar.atualizarSalario(tfFuncionario.getText(), - Double.parseDouble(tfSalario.getText()));
+	    		Atualizar.atualizarSalario(tfCpf.getText(), - Double.parseDouble(tfSalario.getText()));
 		    	Carregar.carregaFuncionario();
 		    	tfFuncionario.clear();
-				tfId.clear();
+				tfCpf.clear();
 				tfSalario.clear();
 		    	populaTabela();
 		    	Notificacoes.mostraNotificacao("Notifica��o", "Pagamento efetuado!!");
@@ -70,7 +70,7 @@ public class ViewSalarioController implements Initializable{
 		public void selecionaFuncionario() {
 			Funcionario fun = tvFuncionario.getSelectionModel().getSelectedItem();
 			tfFuncionario.setText(fun.getNome());
-			tfId.setText(String.valueOf(fun.getCpf()));
+			tfCpf.setText(String.valueOf(fun.getCpf()));
 			tfSalario.setText(String.valueOf(fun.getSalario()));
 		}
 
