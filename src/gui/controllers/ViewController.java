@@ -345,6 +345,7 @@ public class ViewController implements Initializable {
 	@FXML
 	public void onBtPesquisaAgendamento() {
 		Carregar.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
+		tfCliente.clear();
 		populaTabela();
 	}
 
@@ -358,7 +359,6 @@ public class ViewController implements Initializable {
 					Excluir.excluirAgendamento(age, dpDataExcluir.getValue());
 				}
 			}
-			tfCliente.setText("");
 			obAgendamento.removeAll(obExcluirAgendamento);
 			Cadastro.agendamentos.removeAll(obExcluirAgendamento);
 			carregaAgenda();
@@ -380,8 +380,8 @@ public class ViewController implements Initializable {
 		dpData.setValue(LocalDate.now());
 		Carregar.carregar();
 		carregaFuncionario();
-		carregaAgenda();
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
 		dpDataExcluir.setValue(LocalDate.now());
+		carregaAgenda();
 	}
 }

@@ -79,24 +79,22 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	public void onAtualizaFuncionarioAction() {
 		if(Alerts.showAlertAtualizacao()) {
 			Funcionario funTemp = tvFuncionario.getSelectionModel().getSelectedItem();
-			String cpf = txtCpfFuncionario.getText();
+//			String cpf = txtCpfFuncionario.getText();
 			String nome = txtNomeFuncionario.getText();
-			Double salario = funTemp.getSalario();
-			Funcionario funcionario = new Funcionario(cpf, nome, salario, 1);
+//			Funcionario funcionario = new Funcionario(cpf, nome, salario, 1);
 			for(Funcionario fun : Cadastro.funcionarios) {
-				if(fun.getCpf().equals(funcionario.getCpf())) {
+				if(fun.getCpf().equals(funTemp.getCpf())) {
 					fun.setNome(nome);
 					tvFuncionario.refresh();
 				}
 			}
-			Atualizar.atualizarFuncionario(funcionario);
+			Atualizar.atualizarFuncionario(funTemp);
 			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 			ViewController.getTvAgendaTemp().refresh();
 			ViewController.getTvFuncionarioTemp().refresh();
 			ViewController.getStageCaixa().hide();
 			ViewController.getStageCliente().hide();
 			ViewController.getStagePagamento().hide();
-			
 		}
 	}
 

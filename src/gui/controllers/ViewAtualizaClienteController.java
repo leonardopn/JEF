@@ -18,7 +18,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Cliente;
+import model.entities.Funcionario;
+import model.services.Atualizar;
 import model.services.Cadastro;
+import model.services.Carregar;
 
 public class ViewAtualizaClienteController implements Initializable{
 	
@@ -42,6 +45,9 @@ public class ViewAtualizaClienteController implements Initializable{
 	
 	@FXML
 	private TextField txtTelefoneCliente;
+	
+	@FXML
+	private TextField txtRedeSocialCliente;
 	
 	@FXML
 	private TableView<Cliente> tvCliente = new TableView<>();
@@ -78,21 +84,33 @@ public class ViewAtualizaClienteController implements Initializable{
 		txtNomeCliente.setText(cli.getNome());
 		txtEmailCliente.setText(cli.getEmail());
 		txtTelefoneCliente.setText(cli.getTelefone());
+		txtRedeSocialCliente.setText(cli.getRedeSocial());
 	}
 	
 	@FXML
 	public void atualizaCliente() {
 		if(Alerts.showAlertAtualizacao()) {
-//			String cpf = txtCpfCliente.getText();
-//			String nome = txtNomeCliente.getText();
-//			String email = txtEmailCliente.getText();
-//			String telefone = txtTelefoneCliente.getText();
-//			Cliente cliente = new Cliente(cpf, nome, email, telefone);
-//			Cadastro.clientes.removeIf((Cliente cli) -> cli.getCpf().equals(cliente.getCpf()));
-//			Cadastro.verificaCliente(cliente);
-//			Cadastro.clientes.add(cliente);
-//			Atualizar.atualizarCliente(cliente);
-//			voltaScene();
+			Cliente clienteTemp = tvCliente.getSelectionModel().getSelectedItem();
+			String nome = txtNomeCliente.getText();
+			String email = txtEmailCliente.getText();
+			String telefone = txtTelefoneCliente.getText();
+			String redeSocial = txtRedeSocialCliente.getText();
+			for(Cliente cli : Cadastro.clientes) {
+				if(cli.getCpf().equals(clienteTemp.getCpf())) {
+					cli.setNome(nome);
+					cli.setEmail(email);
+					cli.setRedeSocial(redeSocial);
+					cli.setTelefone(telefone);
+					tvCliente.refresh();
+				}
+			}
+			Atualizar.atualizarCliente(clienteTemp);
+			obCliente = FXCollections.observableArrayList(Cadastro.clientes);
+			Carregar.carregaAgendaFuncionario(ViewController.getDpDataTemp());
+			ViewController.getTvAgendaTemp().refresh();
+			ViewController.getStageCaixa().hide();
+			ViewController.getStageCliente().hide();
+			ViewController.getStagePagamento().hide();
 		}
 	}
 
