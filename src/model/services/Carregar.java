@@ -2,6 +2,7 @@ package model.services;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -10,6 +11,8 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import javax.swing.JOptionPane;
 
 import db.DB;
 import model.entities.Agendamento;
@@ -36,7 +39,7 @@ public class Carregar {
 			 }
 		}
 		catch(SQLException e) {
-			throw new DbException(e.getMessage());
+			e.printStackTrace();
 		}
 		finally {
 			DB.closeConnection();
@@ -57,8 +60,9 @@ public class Carregar {
 				Caixa.setStatus(Boolean.parseBoolean(linhaCaixa[0]));
 			}
 			brCaixa.close();
-		}
-		catch(IOException e) {
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -76,7 +80,7 @@ public class Carregar {
 			 }
 		}
 		catch(SQLException e) {
-			throw new DbException(e.getMessage());
+			e.printStackTrace();
 		}
 		finally {
 			DB.closeConnection();
@@ -104,7 +108,7 @@ public class Carregar {
 			 }
 		}
 		catch(SQLException e) {
-			throw new DbException(e.getMessage());
+			e.printStackTrace();
 		}
 		finally {
 			DB.closeConnection();
@@ -134,7 +138,7 @@ public class Carregar {
 			 }
 		}
 		catch(SQLException e) {
-			throw new DbException(e.getMessage());
+			e.printStackTrace();
 		}
 		finally {
 			DB.closeConnection();
@@ -168,7 +172,7 @@ public class Carregar {
 			 }
 		}
 		catch(SQLException e) {
-			throw new DbException(e.getMessage());
+			e.printStackTrace();
 		}
 		finally {
 			DB.closeConnection();

@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import application.Main;
 import db.DB;
 import gui.util.Alerts;
@@ -67,12 +69,14 @@ public class ViewLoginController {
 			}
 		}
 		catch(SQLException e) {
-			throw new DbException(e.getMessage());
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			System.exit(0);
 		}
 		finally {
 			DB.closeConnection();
 			DB.fechaResultSet(rs);
 			DB.fechaStatement(st);
 		}
+		return false;
 	}
 }

@@ -9,22 +9,26 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
 import model.exceptions.DbException;
 
 public class DB {
 	
 	public static Connection conn = null;
 	
-	public static Connection getConnection() {
+	public static Connection getConnection(){
 		if(conn == null) {
-			try {
 				Properties props = loadProperties();
 				String url = props.getProperty("dburl");
-				conn = DriverManager.getConnection(url, props);
-			}
-			catch(SQLException e) {
-				throw new DbException(e.getMessage());
-			}	
+				try {
+					conn = DriverManager.getConnection(url, props);
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage()+
+							"\n\nAperte enter para fechar a mensagem e encerrar seu programa!",
+							"Problemas com a conexão", JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
+				}	
 		}
 		return conn;
 	}
@@ -41,7 +45,7 @@ public class DB {
 	}
 	
 	private static Properties loadProperties() {
-		try(FileInputStream fs = new FileInputStream("C:\\Users\\leonardo.petta\\Desktop\\db.properties")){
+		try(FileInputStream fs = new FileInputStream("db.properties")){
 			Properties props = new Properties();
 			props.load(fs);
 			return props;
