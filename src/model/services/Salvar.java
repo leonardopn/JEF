@@ -12,14 +12,19 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import db.DB;
+import gui.controllers.ViewController;
+import gui.util.Alerts;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 
-public class Salvar {
+public class Salvar{
 	static File arquivoTransacao;
 	static PreparedStatement st = null;
 	static ResultSet rs = null;
@@ -159,12 +164,7 @@ public class Salvar {
 					funcionario = fun.getCpf();
 				}
 			}
-			for(Cliente cli : Cadastro.clientes) {
-				if(cliente.equals(cli.getNome())) {
-					cliente = cli.getCpf();
-				}
-			}
-				
+			
 			st = DB.getConnection().prepareStatement(
 						"INSERT INTO agenda"
 						+ "(cpfcliente, cpffuncionario, data, time) "
@@ -183,6 +183,7 @@ public class Salvar {
 			DB.fechaStatement(st);
 			DB.closeConnection();
 		}
+		
 	}
 	
 	public static void salvar() {

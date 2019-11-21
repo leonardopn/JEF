@@ -58,4 +58,24 @@ public class Alerts {
 		});
 		return teste;
 	}
+	
+	public static boolean showAlertGenerico(String titulo, String avisoCentral, String subAviso) {
+		ButtonType btnSim = new ButtonType("Sim");
+        ButtonType btnNao = new ButtonType("Não");
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setResizable(true);
+		alert.setTitle(titulo);
+		alert.setHeaderText(avisoCentral);
+		alert.setContentText(subAviso);
+		alert.getButtonTypes().setAll(btnSim, btnNao);
+		alert.showAndWait().ifPresent(b -> {
+			if(b == btnSim) {
+				teste = true;
+			}
+			else if(b == btnNao) {
+				teste = false;
+			}
+		});
+		return teste;
+	}
 }

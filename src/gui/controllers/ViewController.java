@@ -94,6 +94,30 @@ public class ViewController implements Initializable {
 	private TableView<Funcionario> tvAgenda = new TableView<>();
 	
 	@FXML
+	private TableColumn<Funcionario, String> coluna8;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna8_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna9;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna9_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna10;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna10_3;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna11;
+	
+	@FXML
+	private TableColumn<Funcionario, String> coluna11_3;
+	
+	@FXML
 	private TableColumn<Funcionario, String> coluna12;
 
 	@FXML
@@ -311,6 +335,14 @@ public class ViewController implements Initializable {
 	
 	@FXML
 	public void carregaAgenda() {
+		coluna8.setCellValueFactory(new PropertyValueFactory<>("h8"));
+		coluna8_3.setCellValueFactory(new PropertyValueFactory<>("h8_3"));
+		coluna9.setCellValueFactory(new PropertyValueFactory<>("h9"));
+		coluna9_3.setCellValueFactory(new PropertyValueFactory<>("h9_3"));
+		coluna10.setCellValueFactory(new PropertyValueFactory<>("h10"));
+		coluna10_3.setCellValueFactory(new PropertyValueFactory<>("h10_3"));
+		coluna11.setCellValueFactory(new PropertyValueFactory<>("h11"));
+		coluna11_3.setCellValueFactory(new PropertyValueFactory<>("h11_3"));
 		coluna12.setCellValueFactory(new PropertyValueFactory<>("h12"));
 		coluna12_3.setCellValueFactory(new PropertyValueFactory<>("h12_3"));
 		coluna13.setCellValueFactory(new PropertyValueFactory<>("h13"));

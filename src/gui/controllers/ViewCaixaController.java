@@ -286,7 +286,11 @@ public class ViewCaixaController implements Initializable {
 				obExcluirTransacao.add(tran);
 				double valor = tran.getValor()/2;
 				valor = valor - (valor*2);
-				Atualizar.atualizarSalario(tran.getAtendente(), valor);
+				for (Funcionario fun: Cadastro.funcionarios) {
+					if(fun.getNome().equals(tran.getAtendente())) {
+						Atualizar.atualizarSalario(fun.getCpf(), valor);
+					}
+				}		
 				Carregar.carregaFuncionario();
 				Excluir.excluirTransacao(tran);
 			}

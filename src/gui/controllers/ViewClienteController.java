@@ -57,6 +57,9 @@ public class ViewClienteController implements Initializable{
 	private TextField txtTelefoneCliente;
 	
 	@FXML
+	private CheckBox cbGenerico;
+	
+	@FXML
 	private TableView<Cliente> tvCliente = new TableView<>();
 	
 	@FXML
@@ -97,22 +100,42 @@ public class ViewClienteController implements Initializable{
 	@FXML
 	public void onBtCriaClienteAction(){
 		try {
-			String cpf = txtCpfCliente.getText();
-			String nome = txtNomeCliente.getText();
-			String email = txtEmailCliente.getText();
-			String telefone = txtTelefoneCliente.getText();
-			String redeSocial = txtRedeSocialCliente.getText();
-			Cliente cliente = new Cliente(cpf, nome, email, telefone, redeSocial);
-			Cadastro.verificaCliente(cliente);
-			Cadastro.clientes.add(cliente);
-			Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
-			carregaCliente();
-			ViewController.bindAutoCompleteCliente.dispose();
-			ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
-			if(ViewController.getStageCaixa().isShowing()) {
-				ViewCaixaController.bindAutoCompleteCliente.dispose();
-				ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
-			}	
+			if(!(isGeneric())) {
+				String cpf = txtCpfCliente.getText();
+				String nome = txtNomeCliente.getText();
+				String email = txtEmailCliente.getText();
+				String telefone = txtTelefoneCliente.getText();
+				String redeSocial = txtRedeSocialCliente.getText();
+				Cliente cliente = new Cliente(cpf, nome, email, telefone, redeSocial);
+				Cadastro.verificaCliente(cliente);
+				Cadastro.clientes.add(cliente);
+				Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
+				carregaCliente();
+				ViewController.bindAutoCompleteCliente.dispose();
+				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+				if(ViewController.getStageCaixa().isShowing()) {
+					ViewCaixaController.bindAutoCompleteCliente.dispose();
+					ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
+				}
+			}
+			else {
+				String cpf = txtCpfCliente.getText();
+				String nome = txtNomeCliente.getText();
+				Cliente cliente = new Cliente(cpf, nome, " ", " ", " ");
+				Cadastro.verificaCliente(cliente);
+				Cadastro.clientes.add(cliente);
+				txtEmailCliente.setText(" ");
+				txtTelefoneCliente.setText(" ");
+				txtRedeSocialCliente.setText(" ");
+				Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
+				carregaCliente();
+				ViewController.bindAutoCompleteCliente.dispose();
+				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+				if(ViewController.getStageCaixa().isShowing()) {
+					ViewCaixaController.bindAutoCompleteCliente.dispose();
+					ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
+				}
+			}
 		}
 		catch (NumberFormatException e) {
 			Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
@@ -138,6 +161,21 @@ public class ViewClienteController implements Initializable{
 				ViewCaixaController.bindAutoCompleteCliente.dispose();
 				ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
 			}
+		}
+	}
+	
+	public boolean isGeneric() {
+		if(cbGenerico.isSelected()) {
+			txtEmailCliente.setDisable(true);
+			txtTelefoneCliente.setDisable(true);
+			txtRedeSocialCliente.setDisable(true);
+			return true;
+		}
+		else {
+			txtEmailCliente.setDisable(false);
+			txtTelefoneCliente.setDisable(false);
+			txtRedeSocialCliente.setDisable(false);
+			return false;
 		}
 	}
 	

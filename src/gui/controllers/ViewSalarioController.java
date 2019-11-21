@@ -50,7 +50,8 @@ public class ViewSalarioController implements Initializable{
 	    		Notificacoes.mostraNotificacao("Valor vazio", "Esse funcion�rio n�o tem o qu� receber");
 	    	}
 	    	else {
-	    		Atualizar.atualizarSalario(tfCpf.getText(), - Double.parseDouble(tfSalario.getText()));
+	    		Double salarioAtualizado = Double.parseDouble(tfSalario.getText());
+	    		Atualizar.atualizarSalario(tfCpf.getText(), (-salarioAtualizado));
 		    	Carregar.carregaFuncionario();
 		    	tfFuncionario.clear();
 				tfCpf.clear();

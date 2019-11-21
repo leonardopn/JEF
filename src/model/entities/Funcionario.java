@@ -10,6 +10,14 @@ public class Funcionario implements Comparable<Funcionario> {
 	private double salario; 
 	private int status;
 	private CheckBox select;
+	private String h8;
+	private String h8_3;
+	private String h9;
+	private String h9_3;
+	private String h10;
+	private String h10_3;
+	private String h11;
+	private String h11_3;
 	private String h12;
 	private String h12_3;
 	private String h13;
@@ -30,9 +38,75 @@ public class Funcionario implements Comparable<Funcionario> {
 		this.salario = salario;
 		this.select = new CheckBox();
 		this.status = status;
+		this.h8 = "Livre"; this.h8_3 = "Livre"; this.h9 = "Livre"; this.h9_3 = "Livre"; this.h10 = "Livre";
+		this.h11 = "Livre"; this.h11_3 = "Livre";
 		this.h12 = "Livre"; this.h12_3 = "Livre"; this.h13 = "Livre"; this.h13_3 = "Livre"; this.h14 = "Livre";
 		this.h14_3 = "Livre"; this.h15 = "Livre"; this.h15_3 = "Livre"; this.h16 = "Livre"; this.h16_3 = "Livre";
 		this.h17 = "Livre"; this.h17_3 = "Livre"; this.h18 = "Livre";
+	}
+
+	public String getH8() {
+		return h8;
+	}
+
+	public void setH8(String h8) {
+		this.h8 = h8;
+	}
+
+	public String getH8_3() {
+		return h8_3;
+	}
+
+	public void setH8_3(String h8_3) {
+		this.h8_3 = h8_3;
+	}
+
+	public String getH9() {
+		return h9;
+	}
+
+	public void setH9(String h9) {
+		this.h9 = h9;
+	}
+
+	public String getH9_3() {
+		return h9_3;
+	}
+
+	public void setH9_3(String h9_3) {
+		this.h9_3 = h9_3;
+	}
+
+	public String getH10() {
+		return h10;
+	}
+
+	public void setH10(String h10) {
+		this.h10 = h10;
+	}
+
+	public String getH10_3() {
+		return h10_3;
+	}
+
+	public void setH10_3(String h10_3) {
+		this.h10_3 = h10_3;
+	}
+
+	public String getH11() {
+		return h11;
+	}
+
+	public void setH11(String h11) {
+		this.h11 = h11;
+	}
+
+	public String getH11_3() {
+		return h11_3;
+	}
+
+	public void setH11_3(String h11_3) {
+		this.h11_3 = h11_3;
 	}
 
 	public String getH12() {
@@ -172,6 +246,9 @@ public class Funcionario implements Comparable<Funcionario> {
 	}
 	
 	public void zeraHorarios() {
+		this.h8 = "Livre"; this.h8_3 = "Livre"; this.h9 = "Livre"; 
+		this.h9_3 = "Livre"; this.h10 = "Livre"; this.h10_3 = "Livre"; this.h11 = "Livre"; 
+		this.h11_3 = "Livre";
 		this.h12 = "Livre"; this.h12_3 = "Livre"; this.h13 = "Livre";
 		this.h13_3 = "Livre"; this.h14 = "Livre"; this.h14_3 = "Livre";
 		this.h15 = "Livre"; this.h15_3 = "Livre"; this.h16 = "Livre";
@@ -180,6 +257,30 @@ public class Funcionario implements Comparable<Funcionario> {
 	}
 	
 	public void retornaHorario(String horario, String cliente) {
+		if(horario.equals("08:00")) {
+			setH8(cliente);
+		}
+		if(horario.equals("08:30")) {
+			setH8_3(cliente);
+		}
+		if(horario.equals("09:00")) {
+			setH9(cliente);
+		}
+		if(horario.equals("09:30")) {
+			setH9_3(cliente);
+		}
+		if(horario.equals("10:00")) {
+			setH10(cliente);
+		}
+		if(horario.equals("10:30")) {
+			setH10_3(cliente);
+		}
+		if(horario.equals("11:00")) {
+			setH11(cliente);
+		}
+		if(horario.equals("11:30")) {
+			setH11_3(cliente);
+		}
 		if(horario.equals("12:00")) {
 			setH12(cliente);
 		}
