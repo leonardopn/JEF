@@ -1,5 +1,6 @@
 package db;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -45,7 +46,8 @@ public class DB {
 	}
 	
 	private static Properties loadProperties() {
-		try(FileInputStream fs = new FileInputStream("db.properties")){
+		String caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"db.properties";
+		try(FileInputStream fs = new FileInputStream(caminho)){
 			Properties props = new Properties();
 			props.load(fs);
 			return props;

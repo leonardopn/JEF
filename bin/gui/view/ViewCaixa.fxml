@@ -14,15 +14,14 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="570.0" prefWidth="1138.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1059.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
    <children>
-      <Button fx:id="btVoltar" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtVoltarAction" prefHeight="25.0" prefWidth="70.0" text="Voltar" />
-      <Line endX="975.2928466796875" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
+      <Line endX="887.5" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
       <Button fx:id="btAbrirFecharCaixa" layoutX="12.0" layoutY="55.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="46.0" prefWidth="150.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Button>
-      <Line endX="1024.0" endY="1.0" layoutX="111.0" layoutY="117.0" startX="-110.0" stroke="#827f7f" />
+      <Line endX="948.0" layoutX="111.0" layoutY="117.0" startX="-110.0" stroke="#827f7f" />
       <Line endX="100.0" endY="436.0" layoutX="71.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
       <Label layoutX="14.0" layoutY="187.0" text="Cliente:" />
       <Label layoutX="12.0" layoutY="251.0" text="Atendente:" />
@@ -31,10 +30,10 @@
       <DatePicker fx:id="dpData" layoutX="11.0" layoutY="342.0" prefHeight="25.0" prefWidth="150.0" />
       <TextField fx:id="tfValor" layoutX="12.0" layoutY="403.0" prefHeight="26.0" prefWidth="151.0" />
       <Label layoutX="14.0" layoutY="376.0" text="Valor:" />
-      <Button fx:id="btEnviarTransacao" layoutX="92.0" layoutY="515.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar" />
+      <Button fx:id="btEnviarTransacao" layoutX="78.0" layoutY="515.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar" />
       <Label layoutX="28.0" layoutY="137.0" text="Adicione os valores" />
       <Label layoutX="39.0" layoutY="154.0" text="Das transações" />
-      <TableView fx:id="tvTransacao" layoutX="172.0" layoutY="118.0" prefHeight="410.0" prefWidth="963.0">
+      <TableView fx:id="tvTransacao" layoutX="172.0" layoutY="118.0" prefHeight="410.0" prefWidth="888.0">
         <columns>
           <TableColumn fx:id="colunaId" prefWidth="49.0" text="ID" />
             <TableColumn fx:id="colunaCliente" prefWidth="188.0" text="Cliente" />
@@ -42,12 +41,12 @@
             <TableColumn fx:id="colunaMeioPagamento" prefWidth="162.0" text="Meio de pagamento" />
             <TableColumn fx:id="colunaValor" prefWidth="91.0" text="Valor" />
             <TableColumn fx:id="colunaSelect" text="Excluir?" />
-            <TableColumn prefWidth="221.0" text="Column X">
+            <TableColumn prefWidth="167.0" text="Column X">
                <graphic>
-                  <DatePicker fx:id="dpSelecao" editable="false" onAction="#carregaTransacao" prefHeight="25.0" prefWidth="150.0" />
+                  <DatePicker fx:id="dpSelecao" editable="false" onAction="#carregaTransacao" prefHeight="26.0" prefWidth="162.0" />
                </graphic>
                <columns>
-                <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" prefWidth="154.0" sortable="false" text="Data" />
+                <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" prefWidth="165.0" sortable="false" text="Data" />
                   <TableColumn editable="false" minWidth="0.0" prefWidth="0.0" sortable="false" text="Column X" />
                </columns>
             </TableColumn>
@@ -55,12 +54,12 @@
       </TableView>
       <ChoiceBox fx:id="cbFormaPagamento" layoutX="11.0" layoutY="466.0" prefWidth="150.0" />
       <Label layoutX="11.0" layoutY="439.0" text="Forma de pagamento" />
-      <Label layoutX="186.0" layoutY="3.0" text="Status do caixa:">
+      <Label layoutX="9.0" layoutY="4.0" text="Status do caixa:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lbStatus" layoutX="358.0" prefHeight="30.0" prefWidth="151.0" textFill="#10bf24">
+      <Label fx:id="lbStatus" layoutX="179.0" layoutY="2.0" prefHeight="30.0" prefWidth="151.0" textFill="#10bf24">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -71,16 +70,15 @@
       <TextField fx:id="tfDinheiroDado" layoutX="305.0" layoutY="77.0" prefHeight="25.0" prefWidth="79.0" />
       <Label fx:id="lbTroco" layoutX="434.0" layoutY="69.0" text="Troco de: " />
       <Button fx:id="btCalTroco" layoutX="394.0" layoutY="64.0" mnemonicParsing="false" onAction="#calculaTroco" prefHeight="16.0" prefWidth="13.0" text="=" />
-      <Button fx:id="btAtualizar" layoutX="91.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtAtualizarAction" prefHeight="26.0" prefWidth="80.0" text="Atualizar" />
-      <Line endX="1018.0" endY="1.0" layoutX="116.0" layoutY="528.0" startX="56.0" stroke="#827f7f" />
+      <Line endX="943.0" layoutX="116.0" layoutY="528.0" startX="56.0" stroke="#827f7f" />
       <Button fx:id="btExcluir" layoutX="184.0" layoutY="538.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="25.0" prefWidth="70.0" text="Excluir" />
       <Label layoutX="271.0" layoutY="542.0" text="Excluir transações selecionadas" />
       <TextField fx:id="tfCliente" layoutX="12.0" layoutY="214.0" prefHeight="26.0" prefWidth="150.0" />
-      <GridPane layoutX="821.0" layoutY="43.0" prefHeight="63.0" prefWidth="303.0">
+      <GridPane layoutX="721.0" layoutY="43.0" prefHeight="65.0" prefWidth="403.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0" prefWidth="173.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="0.0" prefWidth="27.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="202.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="0.0" prefWidth="34.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="164.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -88,7 +86,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Valor total em caixa:">
+            <Label prefHeight="29.0" prefWidth="192.0" text="Valor total em caixa:">
                <font>
                   <Font size="18.0" />
                </font>

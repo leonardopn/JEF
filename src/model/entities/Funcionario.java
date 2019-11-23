@@ -342,7 +342,7 @@ public class Funcionario implements Comparable<Funcionario> {
 	
 	@Override
 	public String toString() {
-		return this.nome + "\n"+this.cpf;
+		return this.nome;
 	}
 	
 }

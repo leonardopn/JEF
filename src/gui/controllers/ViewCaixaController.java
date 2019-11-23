@@ -273,7 +273,8 @@ public class ViewCaixaController implements Initializable {
 		System.out.println(tran);
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
-		Atualizar.atualizarSalario(fun, (valor/2));
+		valor = (valor*0.40);
+		Atualizar.atualizarSalario(fun, (valor));
 		Carregar.carregaFuncionario();
 		carregaTransacao();
 		calculaCaixa();	
@@ -284,7 +285,7 @@ public class ViewCaixaController implements Initializable {
 		for (Transacao tran : obTable) {
 			if (tran.getSelect().isSelected()) {
 				obExcluirTransacao.add(tran);
-				double valor = tran.getValor()/2;
+				double valor = (tran.getValor()*0.40);			
 				valor = valor - (valor*2);
 				for (Funcionario fun: Cadastro.funcionarios) {
 					if(fun.getNome().equals(tran.getAtendente())) {

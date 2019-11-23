@@ -12,10 +12,10 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="326.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.controllers.ViewAtualizaFuncionarioController">
+<AnchorPane prefHeight="326.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewAtualizaFuncionarioController">
    <children>
       <Line endX="-104.5" endY="248.0" layoutX="391.0" layoutY="78.0" startX="-104.5" startY="-79.0" stroke="#827f7f" />
-      <Label layoutX="332.0" layoutY="30.0" prefHeight="31.0" prefWidth="226.0" text="Digite os novos dados:">
+      <Label layoutX="310.0" layoutY="31.0" prefHeight="31.0" prefWidth="270.0" text="Digite os novos dados:">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
