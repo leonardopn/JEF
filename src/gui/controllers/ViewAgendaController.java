@@ -121,6 +121,7 @@ public class ViewAgendaController implements Initializable{
     	for(Cliente cli : Cadastro.clientes) {
 			if(txtCliente.getText().equals(cli.getNome())) {
 				cliente = cli.getCpf();
+				txtCliente.setText("");
 			}
 		}
     	if(cliente.equals(txtCliente.getText())) {

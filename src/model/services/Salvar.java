@@ -90,35 +90,45 @@ public class Salvar{
 	public static int salvarTransacao(TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
 		int maiorId = 0;
 		try {
+			String clienteTemp = tfCliente.getText();
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			Date data = formataData.parse(dpData.toString());
 			for(Cliente cliente : Cadastro.clientes) {
 				if(tfCliente.getText().equals(cliente.getNome())) {
-					tfCliente.setText(cliente.getCpf());
+					clienteTemp = cliente.getCpf();
+					tfCliente.setText("");
 				}
 			}
-			st = DB.getConnection().prepareStatement("select max(id) from transacao");
-			rs = st.executeQuery();
-			while(rs.next()) {
-				maiorId = rs.getInt(1);
-			}
-			maiorId += 1;
-			DB.fechaStatement(st);
-			st = DB.getConnection().prepareStatement(
-					"INSERT INTO transacao "
-					+ "(cpfcliente, cpffuncionario, formapagamento, data, valor, id) "
-					+ "VALUES "
-					+ "(?, ?, ?, ?, ?, ?)");
 			
-		
-			st.setString(1, tfCliente.getText());
-			st.setString(2, cbFuncionario.getValue().getCpf());
-			st.setString(3, cbFormaPagamento.getValue());
-			st.setDate(4, new java.sql.Date(data.getTime()));
-			st.setDouble(5, Double.parseDouble(tfValor.getText()));
-			st.setInt(6, maiorId);
-			st.execute();
-			return maiorId;
+			if(clienteTemp.equals(tfCliente.getText())) {
+				JOptionPane.showMessageDialog(null,"Primeiro crie um novo cliente com todos os dados"
+						+ " ou então crie um cliente genérico com o nome nos campos CPF e NOME", "Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
+						tfCliente.setText("");
+			}
+			else {
+				st = DB.getConnection().prepareStatement("select max(id) from transacao");
+				rs = st.executeQuery();
+				while(rs.next()) {
+					maiorId = rs.getInt(1);
+				}
+				maiorId += 1;
+				DB.fechaStatement(st);
+				st = DB.getConnection().prepareStatement(
+						"INSERT INTO transacao "
+						+ "(cpfcliente, cpffuncionario, formapagamento, data, valor, id) "
+						+ "VALUES "
+						+ "(?, ?, ?, ?, ?, ?)");
+				
+			
+				st.setString(1, clienteTemp);
+				st.setString(2, cbFuncionario.getValue().getCpf());
+				st.setString(3, cbFormaPagamento.getValue());
+				st.setDate(4, new java.sql.Date(data.getTime()));
+				st.setDouble(5, Double.parseDouble(tfValor.getText()));
+				st.setInt(6, maiorId);
+				st.execute();
+				return maiorId;
+			}	
 		}
 		catch(SQLException | ParseException e) {
 			e.printStackTrace();
