@@ -266,7 +266,7 @@ public class ViewCaixaController implements Initializable {
 		String cliente = tfCliente.getText();
 		String fun = cbFuncionario.getValue().getCpf();
 		String data = localDateFormatada.format((dpData.getValue()));
-		double valor = Double.parseDouble(tfValor.getText());
+		double valor = Double.parseDouble(tfValor.getText().replaceAll(",", "."));
 		String formaPaga = cbFormaPagamento.getValue();
 		id = Salvar.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
 		Transacao tran = new Transacao(id, valor, cliente, fun, formaPaga, data);

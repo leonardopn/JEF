@@ -50,9 +50,9 @@ public class Carregar {
 	
 	public static void carregaCaixa() {
 		String linha = "";
-		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
+		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"caixa.csv";
 		if (IdentificadorSO.sistema() == "linux"){
-				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
+				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"caixa.csv";
 		}
 		try(BufferedReader brCaixa = new BufferedReader(new FileReader(caminho));) {
 			while((linha = brCaixa.readLine()) != null) {	

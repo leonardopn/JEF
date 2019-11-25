@@ -30,9 +30,9 @@ public class Salvar{
 	static ResultSet rs = null;
 	
 	public static void salvarStatus() {
-		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
+		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"caixa.csv";
 		if (IdentificadorSO.sistema() == "linux"){
-				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
+				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"caixa.csv";
 		}
 		File arquivoCaixa = new File(caminho);
 		try(BufferedWriter bwCaixa = new BufferedWriter(new FileWriter(arquivoCaixa))) {
@@ -124,7 +124,7 @@ public class Salvar{
 				st.setString(2, cbFuncionario.getValue().getCpf());
 				st.setString(3, cbFormaPagamento.getValue());
 				st.setDate(4, new java.sql.Date(data.getTime()));
-				st.setDouble(5, Double.parseDouble(tfValor.getText()));
+				st.setDouble(5, Double.parseDouble(tfValor.getText().replaceAll(",", ".")));
 				st.setInt(6, maiorId);
 				st.execute();
 				return maiorId;
