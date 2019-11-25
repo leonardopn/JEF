@@ -270,7 +270,6 @@ public class ViewCaixaController implements Initializable {
 		String formaPaga = cbFormaPagamento.getValue();
 		id = Salvar.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
 		Transacao tran = new Transacao(id, valor, cliente, fun, formaPaga, data);
-		System.out.println(tran);
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
 		valor = (valor*0.40);

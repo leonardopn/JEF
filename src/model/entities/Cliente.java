@@ -5,15 +5,15 @@ import java.util.Objects;
 import javafx.scene.control.CheckBox;
 
 public class Cliente implements Comparable<Cliente>{
-	private String cpf;
+	private int id;
 	private String nome;
 	private String email;
 	private String telefone;
 	private String redeSocial;
 	private CheckBox select;
 	
-	public Cliente(String cpf, String nome, String email, String telefone, String redeSocial) {
-		this.cpf = cpf;
+	public Cliente(int id, String nome, String email, String telefone, String redeSocial) {
+		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
@@ -21,8 +21,8 @@ public class Cliente implements Comparable<Cliente>{
 		this.select = new CheckBox();
 	}
 	
-	public String getCpf() {
-		return cpf;
+	public int getId() {
+		return id;
 	}
 
 	public CheckBox getSelect() {
@@ -69,13 +69,13 @@ public class Cliente implements Comparable<Cliente>{
 			return false;
 		Cliente outroCliente = (Cliente) outroObjeto;
 		
-		return(Objects.equals(this.cpf, outroCliente.cpf));
+		return(Objects.equals(this.id, outroCliente.id));
 	}
 	
 	@Override
 	public int compareTo(Cliente outroCliente) {
-		if(this.cpf != outroCliente.cpf)
-			return this.cpf.compareTo(outroCliente.cpf);
+		if(this.id != outroCliente.id)
+			return Integer.compare(this.id, outroCliente.id);
 		return 0;	
 	}
 	

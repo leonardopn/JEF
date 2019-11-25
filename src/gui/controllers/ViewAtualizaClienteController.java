@@ -18,7 +18,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Cliente;
-import model.entities.Funcionario;
 import model.services.Atualizar;
 import model.services.Cadastro;
 import model.services.Carregar;
@@ -35,7 +34,7 @@ public class ViewAtualizaClienteController implements Initializable{
 	private Button btVoltar;
 	
 	@FXML
-	private TextField txtCpfCliente;
+	private TextField txtIdCliente;
 	
 	@FXML
 	private TextField txtNomeCliente;
@@ -56,7 +55,7 @@ public class ViewAtualizaClienteController implements Initializable{
 	private TableColumn<Cliente, String> colunaNome;
 	
 	@FXML
-    private TableColumn<Cliente, String> colunaCpf;
+    private TableColumn<Cliente, Integer> colunaId;
 	
 	public void carregaCliente() {
 		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
@@ -79,8 +78,8 @@ public class ViewAtualizaClienteController implements Initializable{
 	@FXML
 	public void selecionaCliente() {
 		Cliente cli = tvCliente.getSelectionModel().getSelectedItem();
-		txtCpfCliente.setText(cli.getCpf());
-		txtCpfCliente.setDisable(true);
+		txtIdCliente.setText(String.valueOf(cli.getId()));
+		txtIdCliente.setDisable(true);
 		txtNomeCliente.setText(cli.getNome());
 		txtEmailCliente.setText(cli.getEmail());
 		txtTelefoneCliente.setText(cli.getTelefone());
@@ -96,7 +95,7 @@ public class ViewAtualizaClienteController implements Initializable{
 			String telefone = txtTelefoneCliente.getText();
 			String redeSocial = txtRedeSocialCliente.getText();
 			for(Cliente cli : Cadastro.clientes) {
-				if(cli.getCpf().equals(clienteTemp.getCpf())) {
+				if(cli.getId() == clienteTemp.getId()) {
 					cli.setNome(nome);
 					cli.setEmail(email);
 					cli.setRedeSocial(redeSocial);
@@ -116,7 +115,7 @@ public class ViewAtualizaClienteController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		carregaCliente();
 	}

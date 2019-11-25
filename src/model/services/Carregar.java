@@ -12,15 +12,12 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.swing.JOptionPane;
-
 import db.DB;
 import model.entities.Agendamento;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Transacao;
-import model.exceptions.DbException;
 
 public class Carregar {
 	static Statement st = null;
@@ -33,7 +30,7 @@ public class Carregar {
 			 rs = st.executeQuery("select * from cliente");
 			 while(rs.next()) {
 				 if(rs.getInt("status") !=0) {
-					 Cliente cliente = new Cliente(rs.getString("cpfcliente"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rede_social"));
+					 Cliente cliente = new Cliente(rs.getInt("idcliente"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rede_social"));
 					 Cadastro.clientes.add(cliente);
 				 }
 			 }
@@ -96,7 +93,7 @@ public class Carregar {
 			 st = DB.getConnection().createStatement();
 			 rs = st.executeQuery("select * from transacao t "
 			 						+ "inner join funcionario f on(t.cpffuncionario = f.cpffuncionario)"
-			 						+ "inner join cliente c on(c.cpfcliente = t.cpfcliente)"
+			 						+ "inner join cliente c on(c.idcliente = t.idcliente)"
 			 						+ "where t.data = "
 			 						+ "'" + localDateFormatadaProcura.format(data) + "'");
 			 
@@ -121,7 +118,7 @@ public class Carregar {
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		try {
 			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("SELECT * FROM agenda a inner join cliente c on(a.cpfcliente = c.cpfcliente) "
+			 rs = st.executeQuery("SELECT * FROM agenda a inner join cliente c on(a.idcliente = c.idcliente) "
 					 +"WHERE data = "
 					 +"'"+localDateFormatada.format(data)+"'"
 					 );
@@ -149,25 +146,26 @@ public class Carregar {
 	
 	public static void carregaAgendamento(LocalDate data, String cliente) {
 		Cadastro.agendamentos.clear();
+		int idCliente = 0;
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		for(Cliente cli : Cadastro.clientes) {
 			if(cliente.equals(cli.getNome())) {
-				cliente = cli.getCpf();
+				idCliente = cli.getId();
 			}
 		}
 		try {
 			 st = DB.getConnection().createStatement();
 			 rs = st.executeQuery("SELECT * FROM agenda a inner join funcionario f on(a.cpffuncionario = f.cpffuncionario) "
-			 					+ "inner join cliente c on(c.cpfcliente = a.cpfcliente)"
+			 					+ "inner join cliente c on(c.idcliente = a.idcliente)"
 			 					+ "WHERE data = "
 			 					+"'"+localDateFormatada.format(data)+"'"
-			 					+ " AND c.cpfcliente = '"
-			 					+ cliente
+			 					+ " AND c.idcliente = '"
+			 					+ idCliente
 			 					+ "'");
 			 SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
 			 SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm");
 			 while(rs.next()) {
-				 Agendamento agen = new Agendamento(rs.getString("f.nome"), rs.getString("f.cpffuncionario"), rs.getString("c.nome"), rs.getString("c.cpfcliente"), formataData.format(rs.getDate("data")), formataHora.format(rs.getTime("a.time")));
+				 Agendamento agen = new Agendamento(rs.getString("f.nome"), rs.getString("f.cpffuncionario"), rs.getString("c.nome"), rs.getInt("c.idcliente"), formataData.format(rs.getDate("data")), formataHora.format(rs.getTime("a.time")));
 				 Cadastro.agendamentos.add(agen);
 			 }
 		}

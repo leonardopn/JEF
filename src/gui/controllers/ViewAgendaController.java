@@ -109,7 +109,6 @@ public class ViewAgendaController implements Initializable{
     	}
     	else {
     		salvaHorario();
-    		
     		//vai atualizar no stage main se eu criar um agendamento
     		Carregar.carregaAgendaFuncionario(dpData.getValue());
     		ViewController.getTvAgendaTemp().refresh();
@@ -117,81 +116,81 @@ public class ViewAgendaController implements Initializable{
     }
 
     public void salvaHorario() {
-    	String cliente = txtCliente.getText();
+    	int idCliente = 0;
     	for(Cliente cli : Cadastro.clientes) {
 			if(txtCliente.getText().equals(cli.getNome())) {
-				cliente = cli.getCpf();
-				txtCliente.setText("");
+				idCliente = cli.getId();
+				txtCliente.setText("");;
 			}
 		}
-    	if(cliente.equals(txtCliente.getText())) {
+    	if(txtCliente.getText() == "") {
     		JOptionPane.showMessageDialog(null,"Primeiro crie um novo cliente com todos os dados"
-					+ " ou então crie um cliente genérico com o nome nos campos CPF e NOME", "Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
+					+ " ou então crie um cliente com pelo menos o dado: NOME", "Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
     		ViewController.getStageAgenda().close();
     	}
     	else {
     		if(cb8.isSelected() && !(cb8.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "08:00:00");       			
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "08:00:00");       			
         	}
         	if(cb8_3.isSelected() && !(cb8_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "08:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "08:30:00");
         	}
         	if(cb9.isSelected() && !(cb9.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "09:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "09:00:00");
         	}
         	if(cb9_3.isSelected() && !(cb9_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "09:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "09:30:00");
         	}
         	if(cb10.isSelected() && !(cb10.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "10:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "10:00:00");
         	}
         	if(cb10_3.isSelected() && !(cb10_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "10:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "10:30:00");
         	}
         	if(cb11.isSelected() && !(cb11.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "11:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "11:00:00");
         	}
         	if(cb11_3.isSelected() && !(cb11_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "11:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "11:30:00");
         	}
         	if(cb12.isSelected() && !(cb12.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "12:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "12:00:00");
         	}
         	if(cb12_3.isSelected() && !(cb12_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "12:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "12:30:00");
         	}
         	if(cb13.isSelected() && !(cb13.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "13:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "13:00:00");
         	}
         	if(cb13_3.isSelected() && !(cb13_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "13:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "13:30:00");
         	}
         	if(cb14.isSelected() && !(cb14.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "14:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "14:00:00");
         	}
         	if(cb14_3.isSelected() && !(cb14_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "14:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "14:30:00");
         	}
         	if(cb15.isSelected() && !(cb15.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "15:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "15:00:00");
         	}
         	if(cb15_3.isSelected() && !(cb15_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "15:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "15:30:00");
         	}
         	if(cb16.isSelected() && !(cb16.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "16:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "16:00:00");
         	}
         	if(cb16_3.isSelected() && !(cb16_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "16:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "16:30:00");
         	}
         	if(cb17.isSelected() && !(cb17.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "17:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "17:00:00");
         	}
         	if(cb17_3.isSelected() && !(cb17_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "17:30:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "17:30:00");
         	}
         	if(cb18.isSelected() && !(cb18.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), cliente, dpData.getValue(), "18:00:00");
+        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "18:00:00");
         	}
     	}
     	ViewController.getStageAgenda().close();

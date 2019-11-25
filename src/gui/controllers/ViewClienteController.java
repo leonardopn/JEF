@@ -43,9 +43,6 @@ public class ViewClienteController implements Initializable{
 	private Button btExcluiCliente;
 	
 	@FXML
-	private TextField txtCpfCliente;
-	
-	@FXML
 	private TextField txtNomeCliente;
 	
 	@FXML
@@ -58,16 +55,13 @@ public class ViewClienteController implements Initializable{
 	private TextField txtTelefoneCliente;
 	
 	@FXML
-	private CheckBox cbGenerico;
-	
-	@FXML
 	private TableView<Cliente> tvCliente = new TableView<>();
 	
 	@FXML
 	private TableColumn<Cliente, String> colunaNome;
 	
 	@FXML
-    private TableColumn<Cliente, Long> colunaCpf;
+    private TableColumn<Cliente, Integer> colunaId;
 	
 	@FXML
     private TableColumn<Cliente, String> colunaRedeSocial;
@@ -102,11 +96,11 @@ public class ViewClienteController implements Initializable{
 	public void onBtCriaClienteAction(){
 		try {
 			if(Alerts.showAlertGenerico("Confirmação de Inclusão", "Deseja mesmo adicionar um cliente?", null)) {
-				if(txtCpfCliente.getText().isEmpty() || txtNomeCliente.getText().isEmpty()) {
+				if(txtNomeCliente.getText().isEmpty()) {
 					Alerts.showAlert("Aviso", "Falta informações", "Coloco no mínimo: Nome e CPF", AlertType.INFORMATION);
 				}
 				else {
-					Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
+					Salvar.salvarCliente(txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
 					Carregar.carregaCliente();
 					carregaCliente();
 					ViewController.bindAutoCompleteCliente.dispose();
@@ -115,7 +109,6 @@ public class ViewClienteController implements Initializable{
 						ViewCaixaController.bindAutoCompleteCliente.dispose();
 						ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
 					}
-					txtCpfCliente.setText("");
 					txtNomeCliente.setText("");
 					txtEmailCliente.setText("");
 					txtTelefoneCliente.setText("");
@@ -124,7 +117,6 @@ public class ViewClienteController implements Initializable{
 			}
 			else {
 				Alerts.showAlert("Cancelado", "Você cancelou a operação", "Cliente não incluído", AlertType.INFORMATION);
-				txtCpfCliente.setText("");
 				txtNomeCliente.setText("");
 				txtEmailCliente.setText("");
 				txtTelefoneCliente.setText("");
@@ -158,24 +150,9 @@ public class ViewClienteController implements Initializable{
 		}
 	}
 	
-	public boolean isGeneric() {
-		if(cbGenerico.isSelected()) {
-			txtEmailCliente.setDisable(true);
-			txtTelefoneCliente.setDisable(true);
-			txtRedeSocialCliente.setDisable(true);
-			return true;
-		}
-		else {
-			txtEmailCliente.setDisable(false);
-			txtTelefoneCliente.setDisable(false);
-			txtRedeSocialCliente.setDisable(false);
-			return false;
-		}
-	}
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));

@@ -8,18 +8,18 @@ public class Agendamento implements Comparable<Agendamento>{
 	
 	private String funcionario;
 	private String cpfFuncionario;
-	private String cpfCliente;
+	private int idCliente;
 	private String cliente;
 	private String data;
 	private String horario;
 	private CheckBox select;
 	
-	public Agendamento(String funcionario, String cpfFuncionario, String cliente, String cpfCliente, String data, String horario) {
+	public Agendamento(String funcionario, String cpfFuncionario, String cliente, int idCliente, String data, String horario) {
 		this.cliente = cliente;
 		this.data = data;
 		this.funcionario = funcionario;
 		this.horario = horario;
-		this.cpfCliente = cpfCliente; 
+		this.idCliente = idCliente; 
 		this.cpfFuncionario = cpfFuncionario; 
 		this.select = new CheckBox();
 	}
@@ -68,8 +68,8 @@ public class Agendamento implements Comparable<Agendamento>{
 		return cpfFuncionario;
 	}
 
-	public String getCpfCliente() {
-		return cpfCliente;
+	public int getIdCliente() {
+		return idCliente;
 	}
 
 	@Override
