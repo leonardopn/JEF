@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import application.Main;
 import gui.util.Alerts;
+import gui.util.Notificacoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -42,9 +42,6 @@ public class ViewClienteController implements Initializable{
 	private Button btExcluiCliente;
 	
 	@FXML
-	private TextField txtCpfCliente;
-	
-	@FXML
 	private TextField txtNomeCliente;
 	
 	@FXML
@@ -57,16 +54,13 @@ public class ViewClienteController implements Initializable{
 	private TextField txtTelefoneCliente;
 	
 	@FXML
-	private CheckBox cbGenerico;
-	
-	@FXML
 	private TableView<Cliente> tvCliente = new TableView<>();
 	
 	@FXML
 	private TableColumn<Cliente, String> colunaNome;
 	
 	@FXML
-    private TableColumn<Cliente, Long> colunaCpf;
+    private TableColumn<Cliente, Integer> colunaId;
 	
 	@FXML
     private TableColumn<Cliente, String> colunaRedeSocial;
@@ -100,45 +94,41 @@ public class ViewClienteController implements Initializable{
 	@FXML
 	public void onBtCriaClienteAction(){
 		try {
-			if(!(isGeneric())) {
-				String cpf = txtCpfCliente.getText();
-				String nome = txtNomeCliente.getText();
-				String email = txtEmailCliente.getText();
-				String telefone = txtTelefoneCliente.getText();
-				String redeSocial = txtRedeSocialCliente.getText();
-				Cliente cliente = new Cliente(cpf, nome, email, telefone, redeSocial);
-				Cadastro.verificaCliente(cliente);
-				Cadastro.clientes.add(cliente);
-				Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
-				carregaCliente();
-				ViewController.bindAutoCompleteCliente.dispose();
-				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
-				if(ViewController.getStageCaixa().isShowing()) {
-					ViewCaixaController.bindAutoCompleteCliente.dispose();
-					ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
+			if(Alerts.showAlertGenerico("Confirmação de Inclusão", "Deseja mesmo adicionar um cliente?", null)) {
+				if(txtNomeCliente.getText().isEmpty()) {
+					Alerts.showAlert("Aviso", "Falta informações", "Coloco no mínimo: Nome e CPF", AlertType.INFORMATION);
 				}
+				else {
+					if(Salvar.salvarCliente(txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente) == false) {
+						Carregar.carregaCliente();
+						carregaCliente();
+						ViewController.bindAutoCompleteCliente.dispose();
+						ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+						ViewController.getStageCaixa().hide();
+						txtNomeCliente.setText("");
+						txtEmailCliente.setText("");
+						txtTelefoneCliente.setText("");
+						txtRedeSocialCliente.setText("");
+						Notificacoes.mostraNotificacao("Concluído!", "Cliente criado com sucesso!");
+					}
+					else {
+						Alerts.showAlert("Aviso", "Cliente já adicionado", "Já existe cliente com esse nome"
+								+ " no programa ou o cliente não foi excluído no banco de dados\n\n"
+								+ "Peça ao ADMINISTRADOR para excluir o "
+								+ "registro desse cliente no BANCO ou então coloque um nome mais extenso para ocorrer a diferenciação.", AlertType.INFORMATION);
+					}
+				}		
 			}
 			else {
-				String cpf = txtCpfCliente.getText();
-				String nome = txtNomeCliente.getText();
-				Cliente cliente = new Cliente(cpf, nome, " ", " ", " ");
-				Cadastro.verificaCliente(cliente);
-				Cadastro.clientes.add(cliente);
-				txtEmailCliente.setText(" ");
-				txtTelefoneCliente.setText(" ");
-				txtRedeSocialCliente.setText(" ");
-				Salvar.salvarCliente(txtCpfCliente, txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
-				carregaCliente();
-				ViewController.bindAutoCompleteCliente.dispose();
-				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
-				if(ViewController.getStageCaixa().isShowing()) {
-					ViewCaixaController.bindAutoCompleteCliente.dispose();
-					ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
-				}
+				Alerts.showAlert("Cancelado", "Voc� cancelou a opera��o", "Cliente n�o inclu�do", AlertType.INFORMATION);
+				txtNomeCliente.setText("");
+				txtEmailCliente.setText("");
+				txtTelefoneCliente.setText("");
+				txtRedeSocialCliente.setText("");
 			}
 		}
 		catch (NumberFormatException e) {
-			Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Erro", "Erro de convers�o, cliente n�o ser� criado!", e.getMessage(), AlertType.ERROR);
 		}
 	}
 	
@@ -164,24 +154,9 @@ public class ViewClienteController implements Initializable{
 		}
 	}
 	
-	public boolean isGeneric() {
-		if(cbGenerico.isSelected()) {
-			txtEmailCliente.setDisable(true);
-			txtTelefoneCliente.setDisable(true);
-			txtRedeSocialCliente.setDisable(true);
-			return true;
-		}
-		else {
-			txtEmailCliente.setDisable(false);
-			txtTelefoneCliente.setDisable(false);
-			txtRedeSocialCliente.setDisable(false);
-			return false;
-		}
-	}
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));

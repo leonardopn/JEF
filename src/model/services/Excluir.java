@@ -58,9 +58,9 @@ public class Excluir {
 		try {
 			st = DB.getConnection().prepareStatement(
 					"UPDATE cliente "
-							+ "SET status = 0 WHERE cpfcliente= "
+							+ "SET status = 0 WHERE idcliente= "
 							+ "(?)");
-			st.setString(1, cli.getCpf()); 
+			st.setInt(1, cli.getId()); 
 			st.execute();
 		}
 		catch(SQLException e) {
@@ -78,12 +78,12 @@ public class Excluir {
 			SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm");
 			st = DB.getConnection().prepareStatement(
 					"DELETE FROM agenda "
-					+ "WHERE cpfcliente= (?)"
+					+ "WHERE idcliente= (?)"
 					+ "AND data = (?)"
 					+ "AND time = (?)"
 					+"AND cpffuncionario = (?)");
 			Date dataFormatada = formataData.parse(data.toString());
-			st.setString(1, age.getCpfCliente()); 
+			st.setInt(1, age.getIdCliente()); 
 			st.setDate(2, new java.sql.Date(dataFormatada.getTime())); 
 			st.setTime(3, new java.sql.Time(formataHora.parse(age.getHorario()).getTime())); 
 			st.setString(4, age.getCpfFuncionario());

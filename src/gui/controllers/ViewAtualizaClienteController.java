@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import gui.util.Alerts;
+import gui.util.Notificacoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,9 +19,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Cliente;
-import model.entities.Funcionario;
 import model.services.Atualizar;
 import model.services.Cadastro;
 import model.services.Carregar;
@@ -35,7 +38,7 @@ public class ViewAtualizaClienteController implements Initializable{
 	private Button btVoltar;
 	
 	@FXML
-	private TextField txtCpfCliente;
+	private TextField txtIdCliente;
 	
 	@FXML
 	private TextField txtNomeCliente;
@@ -56,7 +59,7 @@ public class ViewAtualizaClienteController implements Initializable{
 	private TableColumn<Cliente, String> colunaNome;
 	
 	@FXML
-    private TableColumn<Cliente, String> colunaCpf;
+    private TableColumn<Cliente, Integer> colunaId;
 	
 	public void carregaCliente() {
 		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
@@ -79,8 +82,8 @@ public class ViewAtualizaClienteController implements Initializable{
 	@FXML
 	public void selecionaCliente() {
 		Cliente cli = tvCliente.getSelectionModel().getSelectedItem();
-		txtCpfCliente.setText(cli.getCpf());
-		txtCpfCliente.setDisable(true);
+		txtIdCliente.setText(String.valueOf(cli.getId()));
+		txtIdCliente.setDisable(true);
 		txtNomeCliente.setText(cli.getNome());
 		txtEmailCliente.setText(cli.getEmail());
 		txtTelefoneCliente.setText(cli.getTelefone());
@@ -95,28 +98,31 @@ public class ViewAtualizaClienteController implements Initializable{
 			String email = txtEmailCliente.getText();
 			String telefone = txtTelefoneCliente.getText();
 			String redeSocial = txtRedeSocialCliente.getText();
-			for(Cliente cli : Cadastro.clientes) {
-				if(cli.getCpf().equals(clienteTemp.getCpf())) {
-					cli.setNome(nome);
-					cli.setEmail(email);
-					cli.setRedeSocial(redeSocial);
-					cli.setTelefone(telefone);
-					tvCliente.refresh();
-				}
+			int id = clienteTemp.getId();
+			if(Atualizar.atualizarCliente(id, nome, email, telefone, redeSocial) == false) {
+				Carregar.carregaCliente();
+				carregaCliente();
+				Carregar.carregaAgendaFuncionario(ViewController.getDpDataTemp());
+				ViewController.bindAutoCompleteCliente.dispose();
+				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+				ViewController.getTvAgendaTemp().refresh();
+				ViewController.getStageCaixa().hide();
+				ViewController.getStageCliente().hide();
+				ViewController.getStagePagamento().hide();
+				Notificacoes.mostraNotificacao("Concluído!", "Cliente atualizado com sucesso!");
 			}
-			Atualizar.atualizarCliente(clienteTemp);
-			obCliente = FXCollections.observableArrayList(Cadastro.clientes);
-			Carregar.carregaAgendaFuncionario(ViewController.getDpDataTemp());
-			ViewController.getTvAgendaTemp().refresh();
-			ViewController.getStageCaixa().hide();
-			ViewController.getStageCliente().hide();
-			ViewController.getStagePagamento().hide();
+			else {
+				Alerts.showAlert("Aviso", "Cliente já adicionado", "Já existe cliente com esse nome"
+						+ " no programa ou o cliente não foi excluído no banco de dados\n\n"
+						+ "Peça ao ADMINISTRADOR para excluir o "
+						+ "registro desse cliente no BANCO ou então coloque um nome mais extenso para ocorrer a diferenciação.", AlertType.INFORMATION);
+			}	
 		}
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		carregaCliente();
 	}

@@ -20,6 +20,7 @@ import gui.util.Alerts;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
@@ -30,9 +31,9 @@ public class Salvar{
 	static ResultSet rs = null;
 	
 	public static void salvarStatus() {
-		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
+		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"caixa.csv";
 		if (IdentificadorSO.sistema() == "linux"){
-				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"caixa.csv";
+				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"caixa.csv";
 		}
 		File arquivoCaixa = new File(caminho);
 		try(BufferedWriter bwCaixa = new BufferedWriter(new FileWriter(arquivoCaixa))) {
@@ -64,45 +65,53 @@ public class Salvar{
 		}
 	}
 	
-	public static void salvarCliente(TextField txtCpfCliente, TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente, TextField txtRedeSocialCliente) {
+	public static boolean salvarCliente(TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente, TextField txtRedeSocialCliente) {
+		boolean count = true;
 		try {
-			st = DB.getConnection().prepareStatement(
-					"INSERT INTO cliente "
-					+ "(cpfCliente, email, nome, rede_social, telefone) "
-					+ "VALUES "
-					+ "(?, ?, ?, ?, ?)");
-			st.setString(1, txtCpfCliente.getText());
-			st.setString(2, txtEmailCliente.getText());
-			st.setString(3, txtNomeCliente.getText());
-			st.setString(4, txtRedeSocialCliente.getText());
-			st.setString(5, txtTelefoneCliente.getText());
-			st.execute();
+			st = DB.getConnection().prepareStatement("select nome from cliente where nome = ?");
+			st.setString(1, txtNomeCliente.getText());
+			rs = st.executeQuery();
+			count = rs.next();
+			if(count == false) {
+				st = DB.getConnection().prepareStatement(
+						"INSERT INTO cliente "
+						+ "(email, nome, rede_social, telefone) "
+						+ "VALUES "
+						+ "(?, ?, ?, ?)");
+				st.setString(1, txtEmailCliente.getText());
+				st.setString(2, txtNomeCliente.getText());
+				st.setString(3, txtRedeSocialCliente.getText());
+				st.setString(4, txtTelefoneCliente.getText());
+				st.execute();
+			}
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO!", e.getMessage(), null, AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
+			DB.fechaResultSet(rs);
 			DB.closeConnection();
 		}
+		return count;
 	}
 	
 	public static int salvarTransacao(TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
 		int maiorId = 0;
 		try {
-			String clienteTemp = tfCliente.getText();
+			int clienteId = 0;
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			Date data = formataData.parse(dpData.toString());
 			for(Cliente cliente : Cadastro.clientes) {
 				if(tfCliente.getText().equals(cliente.getNome())) {
-					clienteTemp = cliente.getCpf();
+					clienteId = cliente.getId();
 					tfCliente.setText("");
 				}
 			}
 			
-			if(clienteTemp.equals(tfCliente.getText())) {
+			if(!(tfCliente.getText().isEmpty())) {
 				JOptionPane.showMessageDialog(null,"Primeiro crie um novo cliente com todos os dados"
-						+ " ou então crie um cliente genérico com o nome nos campos CPF e NOME", "Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
+						+ " ou então crie um cliente com pelo menos o dado: NOME", "Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
 						tfCliente.setText("");
 			}
 			else {
@@ -115,16 +124,16 @@ public class Salvar{
 				DB.fechaStatement(st);
 				st = DB.getConnection().prepareStatement(
 						"INSERT INTO transacao "
-						+ "(cpfcliente, cpffuncionario, formapagamento, data, valor, id) "
+						+ "(idcliente, cpffuncionario, formapagamento, data, valor, id) "
 						+ "VALUES "
 						+ "(?, ?, ?, ?, ?, ?)");
 				
 			
-				st.setString(1, clienteTemp);
+				st.setInt(1, clienteId);
 				st.setString(2, cbFuncionario.getValue().getCpf());
 				st.setString(3, cbFormaPagamento.getValue());
 				st.setDate(4, new java.sql.Date(data.getTime()));
-				st.setDouble(5, Double.parseDouble(tfValor.getText()));
+				st.setDouble(5, Double.parseDouble(tfValor.getText().replaceAll(",", ".")));
 				st.setInt(6, maiorId);
 				st.execute();
 				return maiorId;
@@ -164,7 +173,7 @@ public class Salvar{
 		}
 	}
 	
-	public static void salvarAgendamento(String funcionario, String cliente, LocalDate dpData, String horario) {
+	public static void salvarAgendamento(String funcionario, int cliente, LocalDate dpData, String horario) {
 		try {
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm:ss");
@@ -177,10 +186,10 @@ public class Salvar{
 			
 			st = DB.getConnection().prepareStatement(
 						"INSERT INTO agenda"
-						+ "(cpfcliente, cpffuncionario, data, time) "
+						+ "(idcliente, cpffuncionario, data, time) "
 						+ "VALUES "
 						+ "(?, ?, ?, ? )");
-			st.setString(1, cliente);
+			st.setInt(1, cliente);
 			st.setString(2, funcionario);
 			st.setDate(3, new java.sql.Date(data.getTime()));
 			st.setTime(4, new java.sql.Time(formataHora.parse(horario).getTime()));

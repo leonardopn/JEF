@@ -13,6 +13,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import model.exceptions.DbException;
+import model.services.IdentificadorSO;
 
 public class DB {
 	
@@ -46,7 +47,10 @@ public class DB {
 	}
 	
 	private static Properties loadProperties() {
-		String caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"teste"+ File.separatorChar+"db.properties";
+		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"db.properties";
+		if (IdentificadorSO.sistema() == "linux"){
+				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"db.properties";
+		}
 		try(FileInputStream fs = new FileInputStream(caminho)){
 			Properties props = new Properties();
 			props.load(fs);
