@@ -26,7 +26,8 @@ public class Alerts {
 		alert.setResizable(true);
 		alert.setTitle("Confirmação de exclusão");
 		alert.setHeaderText("Você confirma essa exclusão?");
-		alert.setContentText("Pode não ser reversível!");
+		alert.setContentText("Exclusões feitas no programa não excluirão o cliente no banco de dados!\n\nSe deseja eliminar tudo relacionado"
+				+ " a esse cliente, entre em contato com o ADMINISTRADOR!");
 		alert.getButtonTypes().setAll(btnSim, btnNao);
 		alert.showAndWait().ifPresent(b -> {
 			if(b == btnSim) {

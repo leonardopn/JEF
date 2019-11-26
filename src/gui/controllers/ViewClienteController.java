@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import application.Main;
 import gui.util.Alerts;
+import gui.util.Notificacoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -95,28 +94,33 @@ public class ViewClienteController implements Initializable{
 	@FXML
 	public void onBtCriaClienteAction(){
 		try {
-			if(Alerts.showAlertGenerico("Confirmação de Inclusão", "Deseja mesmo adicionar um cliente?", null)) {
+			if(Alerts.showAlertGenerico("ConfirmaÃ§Ã£o de InclusÃ£o", "Deseja mesmo adicionar um cliente?", null)) {
 				if(txtNomeCliente.getText().isEmpty()) {
-					Alerts.showAlert("Aviso", "Falta informações", "Coloco no mínimo: Nome e CPF", AlertType.INFORMATION);
+					Alerts.showAlert("Aviso", "Falta informaÃ§Ãµes", "Coloco no mÃ­nimo: Nome e CPF", AlertType.INFORMATION);
 				}
 				else {
-					Salvar.salvarCliente(txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente);
-					Carregar.carregaCliente();
-					carregaCliente();
-					ViewController.bindAutoCompleteCliente.dispose();
-					ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
-					if(ViewController.getStageCaixa().isShowing()) {
-						ViewCaixaController.bindAutoCompleteCliente.dispose();
-						ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
+					if(Salvar.salvarCliente(txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente) == false) {
+						Carregar.carregaCliente();
+						carregaCliente();
+						ViewController.bindAutoCompleteCliente.dispose();
+						ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+						ViewController.getStageCaixa().hide();
+						txtNomeCliente.setText("");
+						txtEmailCliente.setText("");
+						txtTelefoneCliente.setText("");
+						txtRedeSocialCliente.setText("");
+						Notificacoes.mostraNotificacao("ConcluÃ­do!", "Cliente criado com sucesso!");
 					}
-					txtNomeCliente.setText("");
-					txtEmailCliente.setText("");
-					txtTelefoneCliente.setText("");
-					txtRedeSocialCliente.setText("");
+					else {
+						Alerts.showAlert("Aviso", "Cliente jÃ¡ adicionado", "JÃ¡ existe cliente com esse nome"
+								+ " no programa ou o cliente nÃ£o foi excluÃ­do no banco de dados\n\n"
+								+ "PeÃ§a ao ADMINISTRADOR para excluir o "
+								+ "registro desse cliente no BANCO ou entÃ£o coloque um nome mais extenso para ocorrer a diferenciaÃ§Ã£o.", AlertType.INFORMATION);
+					}
 				}		
 			}
 			else {
-				Alerts.showAlert("Cancelado", "Você cancelou a operação", "Cliente não incluído", AlertType.INFORMATION);
+				Alerts.showAlert("Cancelado", "Vocï¿½ cancelou a operaï¿½ï¿½o", "Cliente nï¿½o incluï¿½do", AlertType.INFORMATION);
 				txtNomeCliente.setText("");
 				txtEmailCliente.setText("");
 				txtTelefoneCliente.setText("");
@@ -124,7 +128,7 @@ public class ViewClienteController implements Initializable{
 			}
 		}
 		catch (NumberFormatException e) {
-			Alerts.showAlert("Erro", "Erro de conversão, cliente não será criado!", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Erro", "Erro de conversï¿½o, cliente nï¿½o serï¿½ criado!", e.getMessage(), AlertType.ERROR);
 		}
 	}
 	

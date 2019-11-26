@@ -20,6 +20,7 @@ import gui.util.Alerts;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
@@ -64,26 +65,35 @@ public class Salvar{
 		}
 	}
 	
-	public static void salvarCliente(TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente, TextField txtRedeSocialCliente) {
+	public static boolean salvarCliente(TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente, TextField txtRedeSocialCliente) {
+		boolean count = true;
 		try {
-			st = DB.getConnection().prepareStatement(
-					"INSERT INTO cliente "
-					+ "(email, nome, rede_social, telefone) "
-					+ "VALUES "
-					+ "(?, ?, ?, ?)");
-			st.setString(1, txtEmailCliente.getText());
-			st.setString(2, txtNomeCliente.getText());
-			st.setString(3, txtRedeSocialCliente.getText());
-			st.setString(4, txtTelefoneCliente.getText());
-			st.execute();
+			st = DB.getConnection().prepareStatement("select nome from cliente where nome = ?");
+			st.setString(1, txtNomeCliente.getText());
+			rs = st.executeQuery();
+			count = rs.next();
+			if(count == false) {
+				st = DB.getConnection().prepareStatement(
+						"INSERT INTO cliente "
+						+ "(email, nome, rede_social, telefone) "
+						+ "VALUES "
+						+ "(?, ?, ?, ?)");
+				st.setString(1, txtEmailCliente.getText());
+				st.setString(2, txtNomeCliente.getText());
+				st.setString(3, txtRedeSocialCliente.getText());
+				st.setString(4, txtTelefoneCliente.getText());
+				st.execute();
+			}
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO!", e.getMessage(), null, AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
+			DB.fechaResultSet(rs);
 			DB.closeConnection();
 		}
+		return count;
 	}
 	
 	public static int salvarTransacao(TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData, TextField tfValor, ChoiceBox<String> cbFormaPagamento) {

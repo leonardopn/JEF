@@ -21,10 +21,4 @@ public class Cadastro {
 		}
 		return true;
 	}
-	
-	public static void verificaCliente(Cliente cli) {
-		if(Cadastro.clientes.contains(cli)) {
-			Alerts.showAlert("Alerta", "CLiente j� inscrito", "Cliente n�o foi adicionado, pois ID j� est� em uso", AlertType.INFORMATION);
-		}
-	}
 }

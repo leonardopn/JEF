@@ -26,6 +26,7 @@ public class Carregar {
 	
 	public static void carregaCliente() {
 		try {	
+			Cadastro.clientes.clear();
 			 st = DB.getConnection().createStatement();
 			 rs = st.executeQuery("select * from cliente");
 			 while(rs.next()) {

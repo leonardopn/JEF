@@ -1,36 +1,46 @@
 package model.services;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import db.DB;
-import model.entities.Cliente;
 import model.entities.Funcionario;
 
 public class Atualizar {
 	
 	static PreparedStatement st = null;
+	static ResultSet rs = null;
 	
-	public static void atualizarCliente(Cliente cli) {
+	public static boolean atualizarCliente(int id, String nome, String email, String telefone, String redeSocial ) {
+		boolean count = true;
 		try {
-			st = DB.getConnection().prepareStatement(
-					"UPDATE cliente "
-					+"SET nome = ?, email = ?, telefone = ?, rede_social = ?"
-					+"WHERE idcliente=(?)");
-			st.setString(1, cli.getNome());
-			st.setString(2, cli.getEmail());
-			st.setString(3, cli.getTelefone());
-			st.setString(4, cli.getRedeSocial()); 
-			st.setInt(5, cli.getId()); 
-			st.execute();
+			st = DB.getConnection().prepareStatement("select nome from cliente where nome = ?");
+			st.setString(1, nome);
+			rs = st.executeQuery();
+			count = rs.next();
+			if(count == false) {
+				st = DB.getConnection().prepareStatement(
+						"UPDATE cliente "
+						+"SET nome = ?, email = ?, telefone = ?, rede_social = ?"
+						+"WHERE idcliente=(?)");
+				st.setString(1, nome);
+				st.setString(2, email);
+				st.setString(3, telefone);
+				st.setString(4, redeSocial); 
+				st.setInt(5, id); 
+				st.execute();
+			}
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		finally {
 			DB.fechaStatement(st);
+			DB.fechaResultSet(rs);
 			DB.closeConnection();
 		}
+		return count;
 	}
 	
 	public static void atualizarFuncionario(Funcionario fun) {

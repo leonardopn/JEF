@@ -14,22 +14,10 @@
 
 <AnchorPane maxHeight="50000.0" maxWidth="50000.0" minHeight="0.0" minWidth="0.0" prefHeight="613.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewClienteController">
    <children>
-      <Button fx:id="btCriaCliente" layoutX="555.0" layoutY="213.0" mnemonicParsing="false" onAction="#onBtCriaClienteAction" text="Criar" />
       <Label layoutX="278.0" layoutY="14.0" text="Digite os dados do novo cliente">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font></Label>
-      <TableView fx:id="tvCliente" layoutX="9.0" layoutY="255.0" prefHeight="297.0" prefWidth="761.0">
-        <columns>
-          <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="51.0" text="ID" />
-          <TableColumn fx:id="colunaNome" prefWidth="214.0" text="Nome" />
-            <TableColumn fx:id="colunaRedeSocial" prefWidth="133.0" text="Rede Social" />
-            <TableColumn fx:id="colunaEmail" prefWidth="167.0" text="Email" />
-            <TableColumn fx:id="colunaTelefone" prefWidth="120.0" text="Telefone" />
-            <TableColumn fx:id="colunaSelect" prefWidth="75.0" text="Excluir?" />
-        </columns>
-      </TableView>
-      <Button fx:id="btExcluiCliente" layoutX="365.0" layoutY="577.0" mnemonicParsing="false" onAction="#excluirCliente" text="Excluir" />
       <Label layoutX="107.0" layoutY="552.0" prefHeight="25.0" prefWidth="579.0" text="Selecione os funcionários na coluna &quot;Excluir&quot; e aperte o botão abaixo para deleta-los!" />
       <Line endX="1025.0" endY="6.0" layoutX="-248.0" layoutY="40.0" startX="249.0" startY="6.0" stroke="#827f7f" />
       <Button fx:id="btAtualizaCliente" layoutX="642.0" layoutY="10.0" mnemonicParsing="false" onAction="#atualizaCadastro" prefHeight="26.0" prefWidth="123.0" text="Atualizar dados" />
@@ -48,14 +36,26 @@
          <children>
             <TextField fx:id="txtNomeCliente" promptText="Nome do cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtEmailCliente" promptText="Email do cliente" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtRedeSocialCliente" promptText="Rede Social do cliente" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="txtTelefoneCliente" promptText="Telefone do cliente" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label prefHeight="17.0" prefWidth="67.0" text="Telefone:" GridPane.rowIndex="4" />
             <Label prefHeight="17.0" prefWidth="43.0" text="Email:" GridPane.rowIndex="2" />
             <Label text="Nome:" GridPane.rowIndex="1" />
             <Label text="Rede Social:" GridPane.rowIndex="3" />
-            <TextField fx:id="txtRedeSocialCliente" promptText="Rede Social do cliente" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <Label layoutX="14.0" layoutY="230.0" text="Campo mínimo: Nome" textFill="#ae0000" />
+      <Button fx:id="btCriaCliente" layoutX="555.0" layoutY="213.0" mnemonicParsing="false" onAction="#onBtCriaClienteAction" text="Criar" />
+      <Button fx:id="btExcluiCliente" layoutX="365.0" layoutY="577.0" mnemonicParsing="false" onAction="#excluirCliente" text="Excluir" />
+      <TableView fx:id="tvCliente" layoutX="9.0" layoutY="255.0" prefHeight="297.0" prefWidth="761.0">
+        <columns>
+          <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="51.0" text="ID" />
+          <TableColumn fx:id="colunaNome" prefWidth="214.0" text="Nome" />
+            <TableColumn fx:id="colunaRedeSocial" prefWidth="133.0" text="Rede Social" />
+            <TableColumn fx:id="colunaEmail" prefWidth="167.0" text="Email" />
+            <TableColumn fx:id="colunaTelefone" prefWidth="120.0" text="Telefone" />
+            <TableColumn fx:id="colunaSelect" prefWidth="75.0" text="Excluir?" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
