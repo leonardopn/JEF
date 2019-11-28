@@ -107,7 +107,6 @@ public class ViewAtualizaClienteController implements Initializable{
 				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
 				ViewController.getTvAgendaTemp().refresh();
 				ViewController.getStageCaixa().hide();
-				ViewController.getStageCliente().hide();
 				ViewController.getStagePagamento().hide();
 				Notificacoes.mostraNotificacao("Concluído!", "Cliente atualizado com sucesso!");
 			}
@@ -117,6 +116,9 @@ public class ViewAtualizaClienteController implements Initializable{
 						+ "Peça ao ADMINISTRADOR para excluir o "
 						+ "registro desse cliente no BANCO ou então coloque um nome mais extenso para ocorrer a diferenciação.", AlertType.INFORMATION);
 			}	
+		}
+		else {
+			Notificacoes.mostraNotificacao("Operação cancelado!", "Cliente não foi atualizado!");
 		}
 	}
 
