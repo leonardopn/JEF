@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import db.DB;
-import model.entities.Funcionario;
 
 public class Atualizar {
 	
@@ -43,14 +42,15 @@ public class Atualizar {
 		return count;
 	}
 	
-	public static void atualizarFuncionario(Funcionario fun) {
+	public static void atualizarFuncionario(String nome, String telefone, String cpf) {
 		try {
 			st = DB.getConnection().prepareStatement(
 					"UPDATE funcionario "
-					+"SET nome = ?"
+					+"SET nome = ?, telefone = ?"
 					+"WHERE cpffuncionario=?");
-			st.setString(1, fun.getNome());
-			st.setString(2, fun.getCpf()); 
+			st.setString(1, nome);
+			st.setString(2, telefone); 
+			st.setString(3, cpf); 
 			st.execute();
 		}
 		catch(SQLException e) {

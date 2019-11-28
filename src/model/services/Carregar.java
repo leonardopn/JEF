@@ -66,13 +66,13 @@ public class Carregar {
 	}
 	
 	public static void carregaFuncionario() {
-		Cadastro.funcionarios.clear();
 		try {
+			Cadastro.funcionarios.clear();
 			 st = DB.getConnection().createStatement();
 			 rs = st.executeQuery("select * from funcionario");
 			 while(rs.next()) {
 				 if(rs.getInt("status") !=0) {
-					 Funcionario fun = new Funcionario(rs.getString("cpffuncionario"), rs.getString("nome"),  rs.getDouble("salario"), rs.getInt("status"));
+					 Funcionario fun = new Funcionario(rs.getString("cpffuncionario"), rs.getString("telefone"), rs.getString("nome"),  rs.getDouble("salario"), rs.getInt("status"));
 					 Cadastro.funcionarios.add(fun);
 				 }
 			 }
