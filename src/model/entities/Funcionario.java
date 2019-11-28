@@ -8,6 +8,7 @@ public class Funcionario implements Comparable<Funcionario> {
 	private String nome;
 	private String cpf;
 	private double salario; 
+	private String telefone; 
 	private int status;
 	private CheckBox select;
 	private String h8;
@@ -32,14 +33,15 @@ public class Funcionario implements Comparable<Funcionario> {
 	private String h17_3;
 	private String h18;
 	
-	public Funcionario(String cpf, String nome, double salario, int status) {
+	public Funcionario(String cpf, String telefone, String nome, double salario, int status) {
 		this.nome = nome;
+		this.telefone = telefone;
 		this.cpf = cpf;
 		this.salario = salario;
 		this.select = new CheckBox();
 		this.status = status;
 		this.h8 = "Livre"; this.h8_3 = "Livre"; this.h9 = "Livre"; this.h9_3 = "Livre"; this.h10 = "Livre";
-		this.h11 = "Livre"; this.h11_3 = "Livre";
+		this.h10_3 = "Livre"; this.h11 = "Livre"; this.h11_3 = "Livre";
 		this.h12 = "Livre"; this.h12_3 = "Livre"; this.h13 = "Livre"; this.h13_3 = "Livre"; this.h14 = "Livre";
 		this.h14_3 = "Livre"; this.h15 = "Livre"; this.h15_3 = "Livre"; this.h16 = "Livre"; this.h16_3 = "Livre";
 		this.h17 = "Livre"; this.h17_3 = "Livre"; this.h18 = "Livre";
@@ -245,6 +247,10 @@ public class Funcionario implements Comparable<Funcionario> {
 		this.salario = salario;
 	}
 	
+	public String getTelefone() {
+		return telefone;
+	}
+
 	public void zeraHorarios() {
 		this.h8 = "Livre"; this.h8_3 = "Livre"; this.h9 = "Livre"; 
 		this.h9_3 = "Livre"; this.h10 = "Livre"; this.h10_3 = "Livre"; this.h11 = "Livre"; 

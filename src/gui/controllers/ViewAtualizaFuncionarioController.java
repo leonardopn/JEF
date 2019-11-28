@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.controlsfx.control.textfield.TextFields;
-
-import application.Main;
 import gui.util.Alerts;
+import gui.util.Notificacoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Funcionario;
 import model.services.Atualizar;
 import model.services.Cadastro;
+import model.services.Carregar;
 
 public class ViewAtualizaFuncionarioController implements Initializable{
 	
@@ -38,6 +37,9 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	private TextField txtCpfFuncionario;
 	
 	@FXML
+	private TextField txtTelefoneFuncionario;
+	
+	@FXML
 	private TextField txtNomeFuncionario;
 	
 	@FXML
@@ -50,11 +52,17 @@ public class ViewAtualizaFuncionarioController implements Initializable{
     private TableColumn<Funcionario, String> colunaCpf;
 	
 	@FXML
+	private TableColumn<Funcionario, String> colunaTelefone;
+	
+	@FXML
 	public void selecionaFuncionario() {
 		Funcionario fun = tvFuncionario.getSelectionModel().getSelectedItem();
-		txtCpfFuncionario.setText(fun.getCpf());
-		txtCpfFuncionario.setDisable(true);
-		txtNomeFuncionario.setText(fun.getNome());
+		if(fun != null) {
+			txtCpfFuncionario.setText(fun.getCpf());
+			txtTelefoneFuncionario.setText(fun.getTelefone());
+			txtCpfFuncionario.setDisable(true);
+			txtNomeFuncionario.setText(fun.getNome());
+		}	
 	}
 	
 	public void voltaScene() {
@@ -78,23 +86,29 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	@FXML
 	public void onAtualizaFuncionarioAction() {
 		if(Alerts.showAlertAtualizacao()) {
-			Funcionario funTemp = tvFuncionario.getSelectionModel().getSelectedItem();
-//			String cpf = txtCpfFuncionario.getText();
+			String cpf = txtCpfFuncionario.getText();
 			String nome = txtNomeFuncionario.getText();
-//			Funcionario funcionario = new Funcionario(cpf, nome, salario, 1);
-			for(Funcionario fun : Cadastro.funcionarios) {
-				if(fun.getCpf().equals(funTemp.getCpf())) {
-					fun.setNome(nome);
-					tvFuncionario.refresh();
-				}
+			String telefone = txtTelefoneFuncionario.getText();
+			if(cpf.isEmpty() || nome.isEmpty()) {
+				Notificacoes.mostraNotificacao("Atenção!", "Campos de nome ou cpf estão vazios!");
 			}
-			Atualizar.atualizarFuncionario(funTemp);
-			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
-			ViewController.getTvAgendaTemp().refresh();
-			ViewController.getTvFuncionarioTemp().refresh();
-			ViewController.getStageCaixa().hide();
-			ViewController.getStageCliente().hide();
-			ViewController.getStagePagamento().hide();
+			else {
+				Atualizar.atualizarFuncionario(nome, telefone, cpf);
+				Carregar.carregaFuncionario();
+				carregaFuncionario();
+				obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+				ViewController.getTvAgendaTemp().setItems(obFuncionario);
+				ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
+				ViewController.getTvAgendaTemp().refresh();
+				ViewController.getTvFuncionarioTemp().refresh();
+				ViewController.getStageCaixa().hide();
+				ViewController.getStageCliente().hide();
+				ViewController.getStagePagamento().hide();
+				Notificacoes.mostraNotificacao("Concluído!", "Funcionário atualizado com sucesso!");
+			}
+		}
+		else {
+			Notificacoes.mostraNotificacao("Operação cancelado!", "Funcionário não foi atualizado!");
 		}
 	}
 
@@ -102,6 +116,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
 		carregaFuncionario();
 	}
 }

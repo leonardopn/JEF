@@ -45,24 +45,35 @@ public class Salvar{
 		}
 	}
 	
-	public static void salvarFuncionario(TextField txtCpfFuncionario, TextField txtNomeFuncionario) {
+	public static boolean salvarFuncionario(TextField txtCpfFuncionario, TextField txtTelefoneFuncionario, TextField txtNomeFuncionario) {
+		boolean count = true;
 		try {
-			st = DB.getConnection().prepareStatement(
-					"INSERT INTO funcionario "
-					+ "(cpffuncionario, nome) "
-					+ "VALUES "
-					+ "(?, ?)");
+			st = DB.getConnection().prepareStatement("select * from funcionario where cpffuncionario = ?");
 			st.setString(1, txtCpfFuncionario.getText());
-			st.setString(2, txtNomeFuncionario.getText());
-			st.execute();
+			rs = st.executeQuery();
+			count = rs.next();
+			
+			if(count == false) {
+				st = DB.getConnection().prepareStatement(
+						"INSERT INTO funcionario "
+						+ "(cpffuncionario, nome, telefone) "
+						+ "VALUES "
+						+ "(?, ?, ?)");
+				st.setString(1, txtCpfFuncionario.getText());
+				st.setString(2, txtNomeFuncionario.getText());
+				st.setString(3, txtTelefoneFuncionario.getText());
+				st.execute();
+			}
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		finally {
 			DB.fechaStatement(st);
+			DB.fechaResultSet(rs);
 			DB.closeConnection();
 		}
+		return count;
 	}
 	
 	public static boolean salvarCliente(TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente, TextField txtRedeSocialCliente) {
