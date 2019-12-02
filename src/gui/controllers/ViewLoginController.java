@@ -79,4 +79,12 @@ public class ViewLoginController {
 		}
 		return false;
 	}
+
+	public static int getTentativas() {
+		return tentativas;
+	}
+
+	public static void setTentativas(int tentativas) {
+		ViewLoginController.tentativas = tentativas;
+	}
 }

@@ -22,7 +22,6 @@ import model.entities.Transacao;
 public class Carregar {
 	static Statement st = null;
 	static ResultSet rs = null;
-	static ResultSet rs2 = null;
 	
 	public static void carregaCliente() {
 		try {	

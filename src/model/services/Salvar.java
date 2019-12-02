@@ -215,7 +215,6 @@ public class Salvar{
 		}
 		
 	}
-	
 	public static void salvar() {
 		salvarStatus();
 	}
