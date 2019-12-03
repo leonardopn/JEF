@@ -19,7 +19,7 @@ public class DaoLogin {
 	static private PreparedStatement st = null;
 	static private ResultSet rs = null;
 	
-	public boolean carregaLogin(Login login, TextField tfUsuario, PasswordField pfSenha) {
+	public static boolean carregaLogin(Login login, TextField tfUsuario, PasswordField pfSenha) {
 		try {	
 			 st = DB.getConnection().prepareStatement("select * from usuario");
 			 rs = st.executeQuery();
