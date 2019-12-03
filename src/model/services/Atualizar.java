@@ -43,26 +43,6 @@ public class Atualizar {
 		return count;
 	}
 	
-	public static void atualizarFuncionario(String nome, String telefone, String cpf) {
-		try {
-			st = DB.getConnection().prepareStatement(
-					"UPDATE funcionario "
-					+"SET nome = ?, telefone = ?"
-					+"WHERE cpffuncionario=?");
-			st.setString(1, nome);
-			st.setString(2, telefone); 
-			st.setString(3, cpf); 
-			st.execute();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.fechaStatement(st);
-			DB.closeConnection();
-		}
-	}
-	
 	public static void atualizarSalario(String cpf, double salario) {
 		try {
 			st = DB.getConnection().prepareStatement(

@@ -26,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.dao.DaoFuncionario;
 import model.entities.Agendamento;
 import model.entities.Funcionario;
 import model.services.Cadastro;
@@ -356,7 +357,7 @@ public class ViewController implements Initializable {
 		coluna17.setCellValueFactory(new PropertyValueFactory<>("h17"));
 		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
 		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
-		Carregar.carregaAgendaFuncionario(dpData.getValue());
+		DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
 		dpDataExcluir.setValue(dpData.getValue());
 		tvAgenda.refresh();
 		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Cadastro.funcionarios);
@@ -410,7 +411,7 @@ public class ViewController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		dpData.setValue(LocalDate.now());
-		Carregar.carregar();
+		Carregar.carregarBase();
 		carregaFuncionario();
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
 		dpDataExcluir.setValue(LocalDate.now());

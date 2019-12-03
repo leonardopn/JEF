@@ -15,12 +15,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.dao.DaoFuncionario;
 import model.entities.Cliente;
 import model.services.Atualizar;
 import model.services.Cadastro;
@@ -102,7 +103,7 @@ public class ViewAtualizaClienteController implements Initializable{
 			if(Atualizar.atualizarCliente(id, nome, email, telefone, redeSocial) == false) {
 				Carregar.carregaCliente();
 				carregaCliente();
-				Carregar.carregaAgendaFuncionario(ViewController.getDpDataTemp());
+				DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 				ViewController.bindAutoCompleteCliente.dispose();
 				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
 				ViewController.getTvAgendaTemp().refresh();

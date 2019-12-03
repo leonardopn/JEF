@@ -25,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Paint;
+import model.dao.DaoFuncionario;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
@@ -272,7 +273,7 @@ public class ViewCaixaController implements Initializable {
 		Caixa.caixa.add(tran);
 		valor = (valor*0.40);
 		Atualizar.atualizarSalario(fun, (valor));
-		Carregar.carregaFuncionario();
+		DaoFuncionario.carregaFuncionario();
 		carregaTransacao();
 		calculaCaixa();	
 	}
@@ -289,7 +290,7 @@ public class ViewCaixaController implements Initializable {
 						Atualizar.atualizarSalario(fun.getCpf(), valor);
 					}
 				}		
-				Carregar.carregaFuncionario();
+				DaoFuncionario.carregaFuncionario();
 				Excluir.excluirTransacao(tran);
 			}
 		}

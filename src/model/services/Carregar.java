@@ -13,10 +13,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import db.DB;
+import model.dao.DaoFuncionario;
 import model.entities.Agendamento;
 import model.entities.Caixa;
 import model.entities.Cliente;
-import model.entities.Funcionario;
 import model.entities.Transacao;
 
 public class Carregar {
@@ -64,28 +64,6 @@ public class Carregar {
 		}
 	}
 	
-	public static void carregaFuncionario() {
-		try {
-			Cadastro.funcionarios.clear();
-			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("select * from funcionario");
-			 while(rs.next()) {
-				 if(rs.getInt("status") !=0) {
-					 Funcionario fun = new Funcionario(rs.getString("cpffuncionario"), rs.getString("telefone"), rs.getString("nome"),  rs.getDouble("salario"), rs.getInt("status"));
-					 Cadastro.funcionarios.add(fun);
-				 }
-			 }
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.closeConnection();
-			DB.fechaResultSet(rs);
-			DB.fechaStatement(st);
-		}
-	}
-	
 	public static void carregaTransacaoExpecifica(LocalDate data) {
 		Caixa.caixa.clear();
 		DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -102,36 +80,6 @@ public class Carregar {
 				 Transacao tran = new Transacao(rs.getInt("t.id"), rs.getDouble("t.valor"), rs.getString("c.nome"), 
 						 rs.getString("f.nome"),  rs.getString("t.formapagamento"), formataData.format(rs.getDate("t.data")));
 				 Caixa.caixa.add(tran);
-			 }
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.closeConnection();
-			DB.fechaResultSet(rs);
-			DB.fechaStatement(st);
-		}
-	}
-	
-	public static void carregaAgendaFuncionario(LocalDate data) {
-		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		try {
-			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("SELECT * FROM agenda a inner join cliente c on(a.idcliente = c.idcliente) "
-					 +"WHERE data = "
-					 +"'"+localDateFormatada.format(data)+"'"
-					 );
-			 SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm");
-			 for (Funcionario fun : Cadastro.funcionarios) {
-				 fun.zeraHorarios();
-			 }
-			 while(rs.next()) {
-				 for(Funcionario fun : Cadastro.funcionarios) {
-					if(rs.getString("cpffuncionario").equals(fun.getCpf())) {
-						fun.retornaHorario(formataHora.format(rs.getTime("a.time")), rs.getString("c.nome"));
-					}
-				}
 			 }
 		}
 		catch(SQLException e) {
@@ -179,9 +127,9 @@ public class Carregar {
 		}
 	}
 	
-	public static void carregar() {
+	public static void carregarBase() {
 		carregaCliente();
-		carregaFuncionario();
+		DaoFuncionario.carregaFuncionario();
 		carregaCaixa();
 	}
 }

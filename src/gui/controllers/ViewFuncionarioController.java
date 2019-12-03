@@ -20,11 +20,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.dao.DaoFuncionario;
 import model.entities.Funcionario;
 import model.services.Cadastro;
-import model.services.Carregar;
-import model.services.Excluir;
-import model.services.Salvar;
 
 public class ViewFuncionarioController implements Initializable{
 	
@@ -90,9 +88,9 @@ public class ViewFuncionarioController implements Initializable{
 					Alerts.showAlert("Aviso", "Falta informações", "Coloco no mínimo: CPF e Nome", AlertType.INFORMATION);
 				}
 				else {
-					if(Salvar.salvarFuncionario(txtCpfFuncionario, txtTelefoneFuncionario, txtNomeFuncionario) == false) {
-						Carregar.carregaFuncionario();
-						Carregar.carregaAgendaFuncionario(ViewController.getDpDataTemp());
+					if(DaoFuncionario.salvarFuncionario(txtCpfFuncionario, txtTelefoneFuncionario, txtNomeFuncionario) == false) {
+						DaoFuncionario.carregaFuncionario();
+						DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 						carregaFuncionario();
 						obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 				    	ViewController.getTvAgendaTemp().setItems(obFuncionario);
@@ -129,11 +127,11 @@ public class ViewFuncionarioController implements Initializable{
 		if(Alerts.showAlertExclusao()) {		
 			for(Funcionario fun : obFuncionario) {
 				if(fun.getSelect().isSelected()) {
-					Excluir.excluirFuncionario(fun);
+					DaoFuncionario.excluirFuncionario(fun);
 				}
 			}
-			Carregar.carregaFuncionario();
-			Carregar.carregaAgendaFuncionario(ViewController.getDpDataTemp());
+			DaoFuncionario.carregaFuncionario();
+			DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 			carregaFuncionario();
 			//vai atulizar no stage main se excluir funcion�rios
 			obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
