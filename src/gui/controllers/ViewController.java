@@ -26,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.dao.DaoAgendamento;
 import model.dao.DaoFuncionario;
 import model.entities.Agendamento;
 import model.entities.Funcionario;
@@ -362,6 +363,7 @@ public class ViewController implements Initializable {
 		tvAgenda.refresh();
 		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Cadastro.funcionarios);
 		tvAgenda.setItems(obAgenda);
+		retornaInformacaoAgenda();
 	}
 	
 	private void populaTabela() {
@@ -377,7 +379,7 @@ public class ViewController implements Initializable {
 
 	@FXML
 	public void onBtPesquisaAgendamento() {
-		Carregar.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
+		DaoAgendamento.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
 		tfCliente.clear();
 		populaTabela();
 	}
@@ -389,7 +391,7 @@ public class ViewController implements Initializable {
 			for (Agendamento age : obAgendamento) {
 				if (age.getSelect().isSelected()) {
 					obExcluirAgendamento.add(age);
-					Excluir.excluirAgendamento(age, dpDataExcluir.getValue());
+					DaoAgendamento.excluirAgendamento(age, dpDataExcluir.getValue());
 				}
 			}
 			obAgendamento.removeAll(obExcluirAgendamento);

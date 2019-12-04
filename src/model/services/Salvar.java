@@ -118,37 +118,6 @@ public class Salvar{
 		}
 	}
 	
-	public static void salvarAgendamento(String funcionario, int cliente, LocalDate dpData, String horario) {
-		try {
-			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm:ss");
-			Date data = formataData.parse(dpData.toString());
-			for(Funcionario fun : Cadastro.funcionarios) {
-				if(funcionario.equals(fun.getNome())) {
-					funcionario = fun.getCpf();
-				}
-			}
-			
-			st = DB.getConnection().prepareStatement(
-						"INSERT INTO agenda"
-						+ "(idcliente, cpffuncionario, data, time) "
-						+ "VALUES "
-						+ "(?, ?, ?, ? )");
-			st.setInt(1, cliente);
-			st.setString(2, funcionario);
-			st.setDate(3, new java.sql.Date(data.getTime()));
-			st.setTime(4, new java.sql.Time(formataHora.parse(horario).getTime()));
-			st.execute();
-		}
-		catch(SQLException | ParseException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.fechaStatement(st);
-			DB.closeConnection();
-		}
-		
-	}
 	public static void salvar() {
 		salvarStatus();
 	}

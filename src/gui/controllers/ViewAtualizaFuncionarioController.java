@@ -94,6 +94,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 			else {
 				DaoFuncionario.atualizarFuncionario(nome, telefone, cpf);
 				DaoFuncionario.carregaFuncionario();
+				DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 				carregaFuncionario();
 				obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 				ViewController.getTvAgendaTemp().setItems(obFuncionario);
