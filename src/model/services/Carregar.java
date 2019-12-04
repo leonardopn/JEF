@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import db.DB;
+import model.dao.DaoCliente;
 import model.dao.DaoFuncionario;
 import model.entities.Agendamento;
 import model.entities.Caixa;
@@ -22,28 +23,6 @@ import model.entities.Transacao;
 public class Carregar {
 	static Statement st = null;
 	static ResultSet rs = null;
-	
-	public static void carregaCliente() {
-		try {	
-			Cadastro.clientes.clear();
-			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("select * from cliente");
-			 while(rs.next()) {
-				 if(rs.getInt("status") !=0) {
-					 Cliente cliente = new Cliente(rs.getInt("idcliente"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rede_social"));
-					 Cadastro.clientes.add(cliente);
-				 }
-			 }
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.closeConnection();
-			DB.fechaResultSet(rs);
-			DB.fechaStatement(st);
-		}
-	}
 	
 	public static void carregaCaixa() {
 		String linha = "";
@@ -128,7 +107,7 @@ public class Carregar {
 	}
 	
 	public static void carregarBase() {
-		carregaCliente();
+		DaoCliente.carregaCliente();
 		DaoFuncionario.carregaFuncionario();
 		carregaCaixa();
 	}

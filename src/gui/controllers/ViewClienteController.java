@@ -22,11 +22,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.dao.DaoCliente;
 import model.entities.Cliente;
 import model.services.Cadastro;
-import model.services.Carregar;
-import model.services.Excluir;
-import model.services.Salvar;
 
 public class ViewClienteController implements Initializable{
 	
@@ -89,6 +87,7 @@ public class ViewClienteController implements Initializable{
 	public void carregaCliente() {
 		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
         tvCliente.setItems(obCliente);
+        tvCliente.refresh();
 	}
 	
 	@FXML
@@ -99,8 +98,8 @@ public class ViewClienteController implements Initializable{
 					Alerts.showAlert("Aviso", "Falta informações", "Coloco no mínimo: Nome e CPF", AlertType.INFORMATION);
 				}
 				else {
-					if(Salvar.salvarCliente(txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente) == false) {
-						Carregar.carregaCliente();
+					if(DaoCliente.salvarCliente(txtNomeCliente, txtEmailCliente, txtTelefoneCliente, txtRedeSocialCliente) == false) {
+						DaoCliente.carregaCliente();
 						carregaCliente();
 						ViewController.bindAutoCompleteCliente.dispose();
 						ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
@@ -133,24 +132,21 @@ public class ViewClienteController implements Initializable{
 	}
 	
 	public void excluirCliente() {
-		if(Alerts.showAlertExclusao()) {
-			ObservableList<Cliente> obExcluirCliente = FXCollections.observableArrayList();
-			
+		if(Alerts.showAlertExclusao()) {		
 			for(Cliente cli : obCliente) {
 				if(cli.getSelect().isSelected()) {
-					obExcluirCliente.add(cli);
-					Excluir.excluirCliente(cli);
+					DaoCliente.excluirCliente(cli);
 				}
 			}
-			obCliente.removeAll(obExcluirCliente);
-			Cadastro.clientes.removeAll(obExcluirCliente);
-			
+			DaoCliente.carregaCliente();
+			carregaCliente();
 			ViewController.bindAutoCompleteCliente.dispose();
 			ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
-			if(ViewController.getStageCaixa().isShowing()) {
-				ViewCaixaController.bindAutoCompleteCliente.dispose();
-				ViewCaixaController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewCaixaController.tfClienteTemp, Cadastro.clientes);
-			}
+			ViewController.getStageCaixa().hide();
+			Notificacoes.mostraNotificacao("Concluído!", "Cliente excluído com sucesso!");
+		}
+		else {
+			Alerts.showAlert("Cancelado", "Você cancelou a operação", "Cliente não excluído", AlertType.INFORMATION);
 		}
 	}
 	
