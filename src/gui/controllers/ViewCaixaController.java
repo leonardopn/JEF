@@ -26,15 +26,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Paint;
 import model.dao.DaoFuncionario;
+import model.dao.DaoTransacao;
 import model.entities.Caixa;
 import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Transacao;
-import model.services.Atualizar;
 import model.services.Cadastro;
-import model.services.Carregar;
-import model.services.Excluir;
-import model.services.Salvar;
 
 public class ViewCaixaController implements Initializable {
 
@@ -204,7 +201,7 @@ public class ViewCaixaController implements Initializable {
 			lbStatus.setTextFill(Paint.valueOf("#10bf24"));
 			lbStatus.setText("Aberto");
 			Caixa.setStatus(true);
-			Salvar.salvarStatus();
+			DaoTransacao.salvarStatus();
 			bloqueio();
 		}
 		else {
@@ -213,7 +210,7 @@ public class ViewCaixaController implements Initializable {
 			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
 			lbStatus.setText("Fechado");
 			Caixa.setStatus(false);
-			Salvar.salvarStatus();
+			DaoTransacao.salvarStatus();
 			bloqueio();
 		}
 
@@ -238,7 +235,7 @@ public class ViewCaixaController implements Initializable {
 		lbValorTotal.setText(String.valueOf(total));
 		lbValorDinheiro.setText(String.valueOf(totalDinheiro));
 		lbValorCartao.setText(String.valueOf(totalCartao));
-		Salvar.salvarCaixa(dpSelecao.getValue(), Double.parseDouble(lbValorTotal.getText()), Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
+		DaoTransacao.salvarCaixa(dpSelecao.getValue(), Double.parseDouble(lbValorTotal.getText()), Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
 	}
 
 	public void carregaFuncionario() {
@@ -267,12 +264,12 @@ public class ViewCaixaController implements Initializable {
 		String data = localDateFormatada.format((dpData.getValue()));
 		double valor = Double.parseDouble(tfValor.getText().replaceAll(",", "."));
 		String formaPaga = cbFormaPagamento.getValue();
-		id = Salvar.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
+		id = DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
 		Transacao tran = new Transacao(id, valor, cliente, fun, formaPaga, data);
 		Caixa.verificaTransacao(tran);
 		Caixa.caixa.add(tran);
 		valor = (valor*0.40);
-		Atualizar.atualizarSalario(fun, (valor));
+		DaoFuncionario.atualizarSalario(fun, (valor));
 		DaoFuncionario.carregaFuncionario();
 		carregaTransacao();
 		calculaCaixa();	
@@ -287,11 +284,11 @@ public class ViewCaixaController implements Initializable {
 				valor = valor - (valor*2);
 				for (Funcionario fun: Cadastro.funcionarios) {
 					if(fun.getNome().equals(tran.getAtendente())) {
-						Atualizar.atualizarSalario(fun.getCpf(), valor);
+						DaoFuncionario.atualizarSalario(fun.getCpf(), valor);
 					}
 				}		
 				DaoFuncionario.carregaFuncionario();
-				Excluir.excluirTransacao(tran);
+				DaoTransacao.excluirTransacao(tran);
 			}
 		}
 		Caixa.caixa.removeAll(obExcluirTransacao);
@@ -301,7 +298,7 @@ public class ViewCaixaController implements Initializable {
 
 
 	public void carregaTransacao() {
-			Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
+			DaoTransacao.carregaTransacaoExpecifica(dpSelecao.getValue());
 			carregaTable();
 			calculaCaixa();
 	}
