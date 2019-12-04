@@ -14,9 +14,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.collection.Colecao;
+import model.collection.entities.Funcionario;
 import model.dao.DaoFuncionario;
-import model.entities.Funcionario;
-import model.services.Cadastro;
 
 public class ViewSalarioController implements Initializable{
 
@@ -61,7 +61,7 @@ public class ViewSalarioController implements Initializable{
 	    }
 	    
 	    public void populaTabela() {
-	    	obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+	    	obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 	        tvFuncionario.setItems(obFuncionario);
 	        tvFuncionario.refresh();
 	    }

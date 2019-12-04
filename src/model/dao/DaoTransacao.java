@@ -21,11 +21,11 @@ import javax.swing.JOptionPane;
 import db.DB;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import model.entities.Caixa;
-import model.entities.Cliente;
-import model.entities.Funcionario;
-import model.entities.Transacao;
-import model.services.Cadastro;
+import model.collection.Colecao;
+import model.collection.entities.Caixa;
+import model.collection.entities.Cliente;
+import model.collection.entities.Funcionario;
+import model.collection.entities.Transacao;
 import model.services.IdentificadorSO;
 
 public class DaoTransacao {
@@ -39,7 +39,7 @@ public class DaoTransacao {
 			int clienteId = 0;
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			Date data = formataData.parse(dpData.toString());
-			for(Cliente cliente : Cadastro.clientes) {
+			for(Cliente cliente : Colecao.clientes) {
 				if(tfCliente.getText().equals(cliente.getNome())) {
 					clienteId = cliente.getId();
 					tfCliente.setText("");

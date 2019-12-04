@@ -25,13 +25,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Paint;
+import model.collection.Colecao;
+import model.collection.entities.Caixa;
+import model.collection.entities.Cliente;
+import model.collection.entities.Funcionario;
+import model.collection.entities.Transacao;
 import model.dao.DaoFuncionario;
 import model.dao.DaoTransacao;
-import model.entities.Caixa;
-import model.entities.Cliente;
-import model.entities.Funcionario;
-import model.entities.Transacao;
-import model.services.Cadastro;
 
 public class ViewCaixaController implements Initializable {
 
@@ -239,7 +239,7 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	public void carregaFuncionario() {
-		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 		cbFuncionario.setItems(obFuncionario);
 	}
 
@@ -282,7 +282,7 @@ public class ViewCaixaController implements Initializable {
 				obExcluirTransacao.add(tran);
 				double valor = (tran.getValor()*0.40);			
 				valor = valor - (valor*2);
-				for (Funcionario fun: Cadastro.funcionarios) {
+				for (Funcionario fun: Colecao.funcionarios) {
 					if(fun.getNome().equals(tran.getAtendente())) {
 						DaoFuncionario.atualizarSalario(fun.getCpf(), valor);
 					}
@@ -320,6 +320,7 @@ public class ViewCaixaController implements Initializable {
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		tfClienteTemp = this.tfCliente;
 		cbFuncionarioTemp = this.cbFuncionario;
-		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
+		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
+		carregaTransacao();
 	}
 }

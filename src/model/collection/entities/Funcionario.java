@@ -1,4 +1,4 @@
-package model.entities;
+package model.collection.entities;
 
 import java.util.Objects;
 
@@ -39,7 +39,7 @@ public class Funcionario implements Comparable<Funcionario> {
 		this.cpf = cpf;
 		this.salario = salario;
 		this.select = new CheckBox();
-		this.status = status;
+		this.setStatus(status);
 		this.h8 = "Livre"; this.h8_3 = "Livre"; this.h9 = "Livre"; this.h9_3 = "Livre"; this.h10 = "Livre";
 		this.h10_3 = "Livre"; this.h11 = "Livre"; this.h11_3 = "Livre";
 		this.h12 = "Livre"; this.h12_3 = "Livre"; this.h13 = "Livre"; this.h13_3 = "Livre"; this.h14 = "Livre";
@@ -249,6 +249,14 @@ public class Funcionario implements Comparable<Funcionario> {
 	
 	public String getTelefone() {
 		return telefone;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public void zeraHorarios() {

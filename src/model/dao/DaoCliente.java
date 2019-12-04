@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import db.DB;
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
-import model.entities.Cliente;
-import model.services.Cadastro;
 import javafx.scene.control.TextField;
+import model.collection.Colecao;
+import model.collection.entities.Cliente;
 
 public class DaoCliente {
 	static PreparedStatement st = null;
@@ -47,15 +47,15 @@ public class DaoCliente {
 	}
 	
 	public static void carregaCliente() {
-		Cadastro.clientes.clear();
+		Colecao.clientes.clear();
 		try {	
-			Cadastro.clientes.clear();
+			Colecao.clientes.clear();
 			 st = DB.getConnection().prepareStatement("select * from cliente");
 			 rs = st.executeQuery();
 			 while(rs.next()) {
 				 if(rs.getInt("status") !=0) {
 					 Cliente cliente = new Cliente(rs.getInt("idcliente"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rede_social"));
-					 Cadastro.clientes.add(cliente);
+					 Colecao.clientes.add(cliente);
 				 }
 			 }
 		}

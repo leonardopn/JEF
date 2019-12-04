@@ -10,10 +10,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import db.DB;
-import model.entities.Agendamento;
-import model.entities.Cliente;
-import model.entities.Funcionario;
-import model.services.Cadastro;
+import model.collection.Colecao;
+import model.collection.entities.Agendamento;
+import model.collection.entities.Cliente;
+import model.collection.entities.Funcionario;
 
 public class DaoAgendamento {
 	static private PreparedStatement st = null;
@@ -24,7 +24,7 @@ public class DaoAgendamento {
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm:ss");
 			Date data = formataData.parse(dpData.toString());
-			for(Funcionario fun : Cadastro.funcionarios) {
+			for(Funcionario fun : Colecao.funcionarios) {
 				if(funcionario.equals(fun.getNome())) {
 					funcionario = fun.getCpf();
 				}
@@ -51,10 +51,10 @@ public class DaoAgendamento {
 	}
 	
 	public static void carregaAgendamento(LocalDate data, String cliente) {
-		Cadastro.agendamentos.clear();
+		Colecao.agendamentos.clear();
 		int idCliente = 0;
 		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		for(Cliente cli : Cadastro.clientes) {
+		for(Cliente cli : Colecao.clientes) {
 			if(cliente.equals(cli.getNome())) {
 				idCliente = cli.getId();
 			}
@@ -71,7 +71,7 @@ public class DaoAgendamento {
 			 SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm");
 			 while(rs.next()) {
 				 Agendamento agen = new Agendamento(rs.getString("f.nome"), rs.getString("f.cpffuncionario"), rs.getString("c.nome"), rs.getInt("c.idcliente"), formataData.format(rs.getDate("data")), formataHora.format(rs.getTime("a.time")));
-				 Cadastro.agendamentos.add(agen);
+				 Colecao.agendamentos.add(agen);
 			 }
 		}
 		catch(SQLException e) {

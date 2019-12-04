@@ -22,9 +22,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.collection.Colecao;
+import model.collection.entities.Cliente;
 import model.dao.DaoCliente;
-import model.entities.Cliente;
-import model.services.Cadastro;
 
 public class ViewClienteController implements Initializable{
 	
@@ -85,7 +85,7 @@ public class ViewClienteController implements Initializable{
 	}
 	
 	public void carregaCliente() {
-		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
+		obCliente = FXCollections.observableArrayList(Colecao.clientes);
         tvCliente.setItems(obCliente);
         tvCliente.refresh();
 	}
@@ -102,7 +102,7 @@ public class ViewClienteController implements Initializable{
 						DaoCliente.carregaCliente();
 						carregaCliente();
 						ViewController.bindAutoCompleteCliente.dispose();
-						ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+						ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Colecao.clientes);
 						ViewController.getStageCaixa().hide();
 						txtNomeCliente.setText("");
 						txtEmailCliente.setText("");
@@ -141,7 +141,7 @@ public class ViewClienteController implements Initializable{
 			DaoCliente.carregaCliente();
 			carregaCliente();
 			ViewController.bindAutoCompleteCliente.dispose();
-			ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+			ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Colecao.clientes);
 			ViewController.getStageCaixa().hide();
 			Notificacoes.mostraNotificacao("Concluído!", "Cliente excluído com sucesso!");
 		}
