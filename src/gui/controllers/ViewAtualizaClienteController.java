@@ -21,10 +21,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.collection.Colecao;
+import model.collection.entities.Cliente;
 import model.dao.DaoCliente;
 import model.dao.DaoFuncionario;
-import model.entities.Cliente;
-import model.services.Cadastro;
 
 public class ViewAtualizaClienteController implements Initializable{
 	
@@ -62,7 +62,7 @@ public class ViewAtualizaClienteController implements Initializable{
     private TableColumn<Cliente, Integer> colunaId;
 	
 	public void carregaCliente() {
-		obCliente = FXCollections.observableArrayList(Cadastro.clientes);
+		obCliente = FXCollections.observableArrayList(Colecao.clientes);
         tvCliente.setItems(obCliente);
         
 	}
@@ -104,7 +104,7 @@ public class ViewAtualizaClienteController implements Initializable{
 				carregaCliente();
 				DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 				ViewController.bindAutoCompleteCliente.dispose();
-				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
+				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Colecao.clientes);
 				ViewController.getTvAgendaTemp().refresh();
 				ViewController.getStageCaixa().hide();
 				Notificacoes.mostraNotificacao("Concluído!", "Cliente atualizado com sucesso!");

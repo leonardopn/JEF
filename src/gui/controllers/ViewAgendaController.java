@@ -15,10 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import model.collection.Colecao;
+import model.collection.entities.Cliente;
 import model.dao.DaoAgendamento;
 import model.dao.DaoFuncionario;
-import model.entities.Cliente;
-import model.services.Cadastro;
 
 public class ViewAgendaController implements Initializable{
 	
@@ -117,7 +117,7 @@ public class ViewAgendaController implements Initializable{
 
     public void salvaHorario() {
     	int idCliente = 0;
-    	for(Cliente cli : Cadastro.clientes) {
+    	for(Cliente cli : Colecao.clientes) {
 			if(txtCliente.getText().equals(cli.getNome())) {
 				idCliente = cli.getId();
 				txtCliente.setText("");;
@@ -292,6 +292,6 @@ public class ViewAgendaController implements Initializable{
 		dpData.setEditable(false);
 		dpData.getEditor().setEditable(false);
 		carregaHorarios();
-		TextFields.bindAutoCompletion(txtCliente, Cadastro.clientes);
+		TextFields.bindAutoCompletion(txtCliente, Colecao.clientes);
 	}
 }

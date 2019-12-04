@@ -13,7 +13,7 @@ import gui.controllers.ViewLoginController;
 import gui.util.Notificacoes;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import model.entities.Login;
+import model.collection.entities.Login;
 
 public class DaoLogin {
 	static private PreparedStatement st = null;

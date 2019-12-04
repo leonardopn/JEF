@@ -9,8 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import model.collection.entities.Login;
 import model.dao.DaoLogin;
-import model.entities.Login;
 
 public class ViewLoginController {
 	static Statement st = null;

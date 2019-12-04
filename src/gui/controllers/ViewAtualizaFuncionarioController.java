@@ -18,9 +18,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.collection.Colecao;
+import model.collection.entities.Funcionario;
 import model.dao.DaoFuncionario;
-import model.entities.Funcionario;
-import model.services.Cadastro;
 
 public class ViewAtualizaFuncionarioController implements Initializable{
 	
@@ -77,7 +77,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	}
 	
 	public void carregaFuncionario() {
-		obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
         tvFuncionario.setItems(obFuncionario);
         tvFuncionario.refresh();
 	}
@@ -96,7 +96,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 				DaoFuncionario.carregaFuncionario();
 				DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 				carregaFuncionario();
-				obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+				obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 				ViewController.getTvAgendaTemp().setItems(obFuncionario);
 				ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
 				ViewController.getTvAgendaTemp().refresh();

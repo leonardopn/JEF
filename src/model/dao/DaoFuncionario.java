@@ -9,8 +9,8 @@ import java.time.format.DateTimeFormatter;
 
 import db.DB;
 import javafx.scene.control.TextField;
-import model.entities.Funcionario;
-import model.services.Cadastro;
+import model.collection.Colecao;
+import model.collection.entities.Funcionario;
 
 public class DaoFuncionario {
 
@@ -49,13 +49,13 @@ public class DaoFuncionario {
 	
 	public static void carregaFuncionario() {
 		try {
-			Cadastro.funcionarios.clear();
+			Colecao.funcionarios.clear();
 			 st = DB.getConnection().prepareStatement("select * from funcionario");
 			 rs = st.executeQuery();
 			 while(rs.next()) {
 				 if(rs.getInt("status") !=0) {
 					 Funcionario fun = new Funcionario(rs.getString("cpffuncionario"), rs.getString("telefone"), rs.getString("nome"),  rs.getDouble("salario"), rs.getInt("status"));
-					 Cadastro.funcionarios.add(fun);
+					 Colecao.funcionarios.add(fun);
 				 }
 			 }
 		}
@@ -77,11 +77,11 @@ public class DaoFuncionario {
 			 st.setString(1, localDateFormatada.format(data));
 			 rs = st.executeQuery();
 			 SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm");
-			 for (Funcionario fun : Cadastro.funcionarios) {
+			 for (Funcionario fun : Colecao.funcionarios) {
 				 fun.zeraHorarios();
 			 }
 			 while(rs.next()) {
-				 for(Funcionario fun : Cadastro.funcionarios) {
+				 for(Funcionario fun : Colecao.funcionarios) {
 					if(rs.getString("cpffuncionario").equals(fun.getCpf())) {
 						fun.retornaHorario(formataHora.format(rs.getTime("a.time")), rs.getString("c.nome"));
 					}

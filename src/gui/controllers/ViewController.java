@@ -26,13 +26,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.collection.Colecao;
+import model.collection.entities.Agendamento;
+import model.collection.entities.Funcionario;
 import model.dao.DaoAgendamento;
+import model.dao.DaoCliente;
 import model.dao.DaoFuncionario;
-import model.entities.Agendamento;
-import model.entities.Funcionario;
-import model.services.Cadastro;
-import model.services.Carregar;
-import model.services.Excluir;
+import model.dao.DaoTransacao;
 
 public class ViewController implements Initializable {
 
@@ -330,7 +330,7 @@ public class ViewController implements Initializable {
 	public void carregaFuncionario() {
 		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		tvFuncionario.refresh();
-		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 		tvFuncionario.setItems(obFuncionario);
 		
 	}
@@ -361,13 +361,13 @@ public class ViewController implements Initializable {
 		DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
 		dpDataExcluir.setValue(dpData.getValue());
 		tvAgenda.refresh();
-		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Cadastro.funcionarios);
+		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Colecao.funcionarios);
 		tvAgenda.setItems(obAgenda);
 		retornaInformacaoAgenda();
 	}
 	
 	private void populaTabela() {
-		obAgendamento = FXCollections.observableArrayList(Cadastro.agendamentos);
+		obAgendamento = FXCollections.observableArrayList(Colecao.agendamentos);
 		colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		colunaHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
 		colunaExcluir.setCellValueFactory(new PropertyValueFactory<>("select"));
@@ -395,7 +395,7 @@ public class ViewController implements Initializable {
 				}
 			}
 			obAgendamento.removeAll(obExcluirAgendamento);
-			Cadastro.agendamentos.removeAll(obExcluirAgendamento);
+			Colecao.agendamentos.removeAll(obExcluirAgendamento);
 			carregaAgenda();
 		}
 	}
@@ -409,13 +409,20 @@ public class ViewController implements Initializable {
 		tvFuncionarioTemp = this.tvFuncionario;
 		tfClienteTemp = this.tfCliente;
 	}
+	
+	public static void carregarBase() {
+		DaoCliente.carregaCliente();
+		DaoFuncionario.carregaFuncionario();
+		DaoTransacao.carregaCaixa();
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		dpData.setValue(LocalDate.now());
-		Carregar.carregarBase();
+		DaoFuncionario.carregaFuncionario();
+		carregarBase();
 		carregaFuncionario();
-		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
+		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
 		dpDataExcluir.setValue(LocalDate.now());
 		carregaAgenda();
 	}
