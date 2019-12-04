@@ -18,10 +18,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.dao.DaoFuncionario;
 import model.entities.Funcionario;
-import model.services.Atualizar;
 import model.services.Cadastro;
-import model.services.Carregar;
 
 public class ViewAtualizaFuncionarioController implements Initializable{
 	
@@ -93,8 +92,8 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 				Notificacoes.mostraNotificacao("Atenção!", "Campos de nome ou cpf estão vazios!");
 			}
 			else {
-				Atualizar.atualizarFuncionario(nome, telefone, cpf);
-				Carregar.carregaFuncionario();
+				DaoFuncionario.atualizarFuncionario(nome, telefone, cpf);
+				DaoFuncionario.carregaFuncionario();
 				carregaFuncionario();
 				obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
 				ViewController.getTvAgendaTemp().setItems(obFuncionario);

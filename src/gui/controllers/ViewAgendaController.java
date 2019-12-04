@@ -15,9 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import model.dao.DaoFuncionario;
 import model.entities.Cliente;
 import model.services.Cadastro;
-import model.services.Carregar;
 import model.services.Salvar;
 
 public class ViewAgendaController implements Initializable{
@@ -110,7 +110,7 @@ public class ViewAgendaController implements Initializable{
     	else {
     		salvaHorario();
     		//vai atualizar no stage main se eu criar um agendamento
-    		Carregar.carregaAgendaFuncionario(dpData.getValue());
+    		DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
     		ViewController.getTvAgendaTemp().refresh();
     	}
     }

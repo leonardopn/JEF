@@ -14,10 +14,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.dao.DaoFuncionario;
 import model.entities.Funcionario;
 import model.services.Atualizar;
 import model.services.Cadastro;
-import model.services.Carregar;
 
 public class ViewSalarioController implements Initializable{
 
@@ -52,7 +52,7 @@ public class ViewSalarioController implements Initializable{
 	    	else {
 	    		Double salarioAtualizado = Double.parseDouble(tfSalario.getText());
 	    		Atualizar.atualizarSalario(tfCpf.getText(), (-salarioAtualizado));
-		    	Carregar.carregaFuncionario();
+		    	DaoFuncionario.carregaFuncionario();
 		    	tfFuncionario.clear();
 				tfCpf.clear();
 				tfSalario.clear();

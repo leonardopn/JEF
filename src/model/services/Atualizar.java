@@ -11,58 +11,6 @@ public class Atualizar {
 	static PreparedStatement st = null;
 	static ResultSet rs = null;
 	
-	public static boolean atualizarCliente(int id, String nome, String email, String telefone, String redeSocial ) {
-		boolean count = true;
-		try {
-			st = DB.getConnection().prepareStatement("select idcliente from cliente where nome = ?");
-			st.setString(1, nome);
-			rs = st.executeQuery();
-			count = rs.next();
-			if(count == false || rs.getInt(1) == id) {
-				st = DB.getConnection().prepareStatement(
-						"UPDATE cliente "
-						+"SET nome = ?, email = ?, telefone = ?, rede_social = ?"
-						+"WHERE idcliente=(?)");
-				st.setString(1, nome);
-				st.setString(2, email);
-				st.setString(3, telefone);
-				st.setString(4, redeSocial); 
-				st.setInt(5, id); 
-				st.execute();
-				return false;
-			}
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.fechaStatement(st);
-			DB.fechaResultSet(rs);
-			DB.closeConnection();
-		}
-		return count;
-	}
-	
-	public static void atualizarFuncionario(String nome, String telefone, String cpf) {
-		try {
-			st = DB.getConnection().prepareStatement(
-					"UPDATE funcionario "
-					+"SET nome = ?, telefone = ?"
-					+"WHERE cpffuncionario=?");
-			st.setString(1, nome);
-			st.setString(2, telefone); 
-			st.setString(3, cpf); 
-			st.execute();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.fechaStatement(st);
-			DB.closeConnection();
-		}
-	}
-	
 	public static void atualizarSalario(String cpf, double salario) {
 		try {
 			st = DB.getConnection().prepareStatement(

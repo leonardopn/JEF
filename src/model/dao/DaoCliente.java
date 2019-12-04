@@ -47,6 +47,7 @@ public class DaoCliente {
 	}
 	
 	public static void carregaCliente() {
+		Cadastro.clientes.clear();
 		try {	
 			Cadastro.clientes.clear();
 			 st = DB.getConnection().prepareStatement("select * from cliente");
@@ -98,5 +99,21 @@ public class DaoCliente {
 			DB.closeConnection();
 		}
 		return count;
+	}
+	
+	public static void excluirCliente(Cliente cli) {
+		try {
+			st = DB.getConnection().prepareStatement("UPDATE cliente "
+													+ "SET status = 0 WHERE idcliente= (?)");
+			st.setInt(1, cli.getId()); 
+			st.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
 	}
 }

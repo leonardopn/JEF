@@ -10,8 +10,6 @@ import java.util.Date;
 
 import db.DB;
 import model.entities.Agendamento;
-import model.entities.Cliente;
-import model.entities.Funcionario;
 import model.entities.Transacao;
 
 public class Excluir {
@@ -25,42 +23,6 @@ public class Excluir {
 					+ "WHERE id= "
 					+ "(?)");
 			st.setInt(1, tran.getId()); 
-			st.execute();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.fechaStatement(st);
-			DB.closeConnection();
-		}
-	}
-	
-	public static void excluirFuncionario(Funcionario fun) {
-		try {
-			st = DB.getConnection().prepareStatement(
-					"UPDATE funcionario "
-					+ "SET status = 0 WHERE cpffuncionario= "
-					+ "(?)");
-			st.setString(1, fun.getCpf()); 
-			st.execute();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			DB.fechaStatement(st);
-			DB.closeConnection();
-		}
-	}
-	
-	public static void excluirCliente(Cliente cli) {
-		try {
-			st = DB.getConnection().prepareStatement(
-					"UPDATE cliente "
-							+ "SET status = 0 WHERE idcliente= "
-							+ "(?)");
-			st.setInt(1, cli.getId()); 
 			st.execute();
 		}
 		catch(SQLException e) {

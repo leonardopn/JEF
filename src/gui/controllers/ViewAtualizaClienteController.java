@@ -15,16 +15,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.dao.DaoCliente;
+import model.dao.DaoFuncionario;
 import model.entities.Cliente;
-import model.services.Atualizar;
 import model.services.Cadastro;
-import model.services.Carregar;
 
 public class ViewAtualizaClienteController implements Initializable{
 	
@@ -99,15 +99,14 @@ public class ViewAtualizaClienteController implements Initializable{
 			String telefone = txtTelefoneCliente.getText();
 			String redeSocial = txtRedeSocialCliente.getText();
 			int id = clienteTemp.getId();
-			if(Atualizar.atualizarCliente(id, nome, email, telefone, redeSocial) == false) {
-				Carregar.carregaCliente();
+			if(DaoCliente.atualizarCliente(id, nome, email, telefone, redeSocial) == false) {
+				DaoCliente.carregaCliente();
 				carregaCliente();
-				Carregar.carregaAgendaFuncionario(ViewController.getDpDataTemp());
+				DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 				ViewController.bindAutoCompleteCliente.dispose();
 				ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(ViewController.getTfClienteTemp(), Cadastro.clientes);
 				ViewController.getTvAgendaTemp().refresh();
 				ViewController.getStageCaixa().hide();
-				ViewController.getStagePagamento().hide();
 				Notificacoes.mostraNotificacao("Concluído!", "Cliente atualizado com sucesso!");
 			}
 			else {

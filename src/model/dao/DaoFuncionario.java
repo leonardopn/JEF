@@ -24,7 +24,6 @@ public class DaoFuncionario {
 			st.setString(1, txtCpfFuncionario.getText());
 			rs = st.executeQuery();
 			count = rs.next();
-			
 			if(count == false) {
 				st = DB.getConnection().prepareStatement(
 						"INSERT INTO funcionario "
@@ -33,7 +32,7 @@ public class DaoFuncionario {
 						+ "(?, ?, ?)");
 				st.setString(1, txtCpfFuncionario.getText());
 				st.setString(2, txtNomeFuncionario.getText());
-				st.setString(3, txtTelefoneFuncionario.getText());
+				st.setString(3, txtTelefoneFuncionario.getText());  
 				st.execute();
 			}
 		}
