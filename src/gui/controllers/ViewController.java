@@ -12,6 +12,7 @@ import org.controlsfx.control.textfield.TextFields;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +22,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -54,6 +57,7 @@ public class ViewController implements Initializable {
 	private static TableView<Funcionario> tvFuncionarioTemp;
 	public static TextField tfClienteTemp;
 	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
+	public boolean parada;
 	
 	ObservableList<Agendamento> obAgendamento;
 
@@ -62,6 +66,9 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private DatePicker dpData;
+	
+	@FXML
+	private ProgressIndicator pb;
 
 	@FXML
 	private DatePicker dpDataExcluir;
@@ -338,6 +345,24 @@ public class ViewController implements Initializable {
 	
 	@FXML
 	public void carregaAgenda() {
+		pb.setVisible(true);
+		parada = true;
+		
+		Task<Void> tarefa = new Task<Void>() {
+		    @Override
+		    protected Void call() throws Exception {
+		    	int i =1;
+		        while(parada == true) {
+		        	Thread.sleep(1200);
+		        	
+		        }
+		        	pb.setVisible(false);
+		        	System.out.println("entrou");
+		        	
+		        return null;
+		    }       
+		};
+		new Thread(tarefa).start();
 		coluna8.setCellValueFactory(new PropertyValueFactory<>("h8"));
 		coluna8_3.setCellValueFactory(new PropertyValueFactory<>("h8_3"));
 		coluna9.setCellValueFactory(new PropertyValueFactory<>("h9"));
@@ -360,6 +385,7 @@ public class ViewController implements Initializable {
 		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
 		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
 		DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
+		parada = false;
 		dpDataExcluir.setValue(dpData.getValue());
 		tvAgenda.refresh();
 		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Colecao.funcionarios);
@@ -419,6 +445,7 @@ public class ViewController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		pb.setVisible(false);
 		dpData.setValue(LocalDate.now());
 		DaoFuncionario.carregaFuncionario();
 		carregarBase();
