@@ -28,6 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.collection.Colecao;
 import model.collection.entities.Agendamento;
+import model.collection.entities.Cliente;
 import model.collection.entities.Funcionario;
 import model.dao.DaoAgendamento;
 import model.dao.DaoCliente;
@@ -52,7 +53,7 @@ public class ViewController implements Initializable {
 	private static TableView<Funcionario> tvAgendaTemp;
 	private static TableView<Funcionario> tvFuncionarioTemp;
 	public static TextField tfClienteTemp;
-	public static AutoCompletionBinding bindAutoCompleteCliente;
+	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 	
 	ObservableList<Agendamento> obAgendamento;
 
