@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import db.DB;
+import gui.util.Alerts;
+import javafx.scene.control.Alert.AlertType;
 import model.collection.Colecao;
 import model.collection.entities.Agendamento;
 import model.collection.entities.Cliente;
@@ -42,7 +44,7 @@ public class DaoAgendamento {
 			st.execute();
 		}
 		catch(SQLException | ParseException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -75,7 +77,7 @@ public class DaoAgendamento {
 			 }
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.closeConnection();
@@ -102,7 +104,7 @@ public class DaoAgendamento {
 			st.execute();
 		}
 		catch(SQLException | ParseException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);

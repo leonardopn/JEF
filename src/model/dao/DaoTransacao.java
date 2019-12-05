@@ -19,8 +19,10 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 import db.DB;
+import gui.util.Alerts;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import model.collection.Colecao;
 import model.collection.entities.Caixa;
 import model.collection.entities.Cliente;
@@ -77,7 +79,7 @@ public class DaoTransacao {
 			}	
 		}
 		catch(SQLException | ParseException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -100,9 +102,9 @@ public class DaoTransacao {
 			}
 			brCaixa.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 	}
 	
@@ -122,7 +124,7 @@ public class DaoTransacao {
 				st.execute();
 		}
 		catch(SQLException | ParseException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -149,7 +151,7 @@ public class DaoTransacao {
 			 }
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.closeConnection();
@@ -168,7 +170,7 @@ public class DaoTransacao {
 			st.execute();
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -189,7 +191,7 @@ public class DaoTransacao {
 			st.execute();
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -208,7 +210,7 @@ public class DaoTransacao {
 			bwCaixa.close();
 			
 		} catch (IOException e) {
-			System.out.println("Ocorreu um erro ao salvar o arquivo caixa.csv: " + e.getMessage());
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 	}
 }

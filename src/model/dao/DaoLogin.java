@@ -10,9 +10,11 @@ import javax.swing.JOptionPane;
 import application.Main;
 import db.DB;
 import gui.controllers.ViewLoginController;
+import gui.util.Alerts;
 import gui.util.Notificacoes;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import model.collection.entities.Login;
 
 public class DaoLogin {
@@ -47,7 +49,7 @@ public class DaoLogin {
 			}
 		}
 		catch(SQLException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 			System.exit(0);
 		}
 		finally {
