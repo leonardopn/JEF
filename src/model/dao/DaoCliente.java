@@ -36,7 +36,7 @@ public class DaoCliente {
 			}
 		}
 		catch(SQLException e) {
-			Alerts.showAlert("ERRO!", e.getMessage(), null, AlertType.ERROR);
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -60,7 +60,7 @@ public class DaoCliente {
 			 }
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.closeConnection();
@@ -91,7 +91,7 @@ public class DaoCliente {
 			}
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -109,7 +109,7 @@ public class DaoCliente {
 			st.execute();
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);

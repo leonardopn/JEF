@@ -47,7 +47,7 @@ public class ViewCaixaController implements Initializable {
 	
 	public static ChoiceBox<Funcionario> cbFuncionarioTemp;
 	
-	public static AutoCompletionBinding bindAutoCompleteCliente;
+	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 
 	@FXML
 	private Button btVoltar;

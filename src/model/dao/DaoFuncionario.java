@@ -8,7 +8,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import db.DB;
+import gui.util.Alerts;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import model.collection.Colecao;
 import model.collection.entities.Funcionario;
 
@@ -37,7 +39,7 @@ public class DaoFuncionario {
 			}
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -60,7 +62,7 @@ public class DaoFuncionario {
 			 }
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.closeConnection();
@@ -89,7 +91,7 @@ public class DaoFuncionario {
 			 }
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.closeConnection();
@@ -108,7 +110,7 @@ public class DaoFuncionario {
 			st.execute();
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -128,7 +130,7 @@ public class DaoFuncionario {
 			st.execute();
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
@@ -147,7 +149,7 @@ public class DaoFuncionario {
 			st.execute();
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
 		}
 		finally {
 			DB.fechaStatement(st);
