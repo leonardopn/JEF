@@ -2,7 +2,6 @@ package gui.controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,6 +10,8 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import application.Main;
+import gui.util.Alerts;
+import gui.util.Notificacoes;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -246,15 +247,15 @@ public class ViewCaixaController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 				DaoTransacao.salvarCaixa(dpSelecao.getValue(), Double.parseDouble(lbValorTotal.getText()),
-				Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
+						Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
 				return null;
-			}		
+			}
 		};
 		javafx.application.Platform.runLater(() -> {
 			Thread t = new Thread(taskDaoTransacao);
 			t.start();
 		});
-		
+
 	}
 
 	public void carregaFuncionario() {
@@ -286,55 +287,138 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	@FXML
-	public void onBtEnviarTransacaoAction() {
+	public void onBtEnviarTransacaoAction() {		
+		if(tfCliente.getText().isEmpty() || tfValor.getText().isEmpty() || cbFormaPagamento.getSelectionModel().isEmpty() || cbFuncionario.getSelectionModel().isEmpty()) {
+			Notificacoes.mostraNotificacao("Aviso!", "Preencha todos os campos!");
+		}
+		else {
+			String fun = cbFuncionario.getValue().getCpf();
+			parada = true;
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					piStatus.setVisible(true);
+					labelStatus.setVisible(true);
+					labelStatus.setText("Gerando transação!");
+				}
+			});
 
-		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		int id;
-		String cliente = tfCliente.getText();
-		String fun = cbFuncionario.getValue().getCpf();
-		String data = localDateFormatada.format((dpData.getValue()));
-		double valor = Double.parseDouble(tfValor.getText().replaceAll(",", "."));
-		String formaPaga = cbFormaPagamento.getValue();
-		id = DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
-		Task<Void> taskEnviaTransacao = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				DaoFuncionario.carregaFuncionario();
-				carregaTransacao();
-				calculaCaixa();
-				return null;
-			}	
-		};
-		Transacao tran = new Transacao(id, valor, cliente, fun, formaPaga, data);
-		Caixa.caixa.add(tran);
-		valor = (valor * 0.40);
-		DaoFuncionario.atualizarSalario(fun, (valor));
-		
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+
+					while (parada == true) {
+						Thread.sleep(0);
+					}
+					piStatus.setVisible(false);
+					labelStatus.setVisible(false);
+					return null;
+				}
+			};
+			
+			Task<Void> taskEnviaTransacao = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+					DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
+					carregaTransacao();
+					DaoFuncionario.atualizarSalario(fun,
+							0.40 * (Double.parseDouble(tfValor.getText().replaceAll(",", "."))));
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							tfValor.setText("");
+							cbFuncionario.getSelectionModel().clearSelection();
+							cbFormaPagamento.getSelectionModel().clearSelection();
+						}
+					});
+					parada = false;
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(taskEnviaTransacao);
+				t.start();
+			});
+		}
 	}
 
 	public void excluirTransacao() {
-		ObservableList<Transacao> obExcluirTransacao = FXCollections.observableArrayList();
-		for (Transacao tran : obTable) {
-			if (tran.getSelect().isSelected()) {
-				obExcluirTransacao.add(tran);
-				double valor = (tran.getValor() * 0.40);
-				valor = valor - (valor * 2);
-				for (Funcionario fun : Colecao.funcionarios) {
-					if (fun.getNome().equals(tran.getAtendente())) {
-						DaoFuncionario.atualizarSalario(fun.getCpf(), valor);
-					}
+		if (!(Alerts.showAlertGenerico("Atenção!", "Deseja mesmo excluir algumas transações?",
+				"A exclusão de transações "
+						+ "Influenciam no salário do funcionário e no controle do caixa, CUIDADO!"))) {
+			Notificacoes.mostraNotificacao("Aviso!", "Exclusão cancelada!");
+		} else {
+			parada = true;
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					piStatus.setVisible(true);
+					labelStatus.setVisible(true);
+					labelStatus.setText("Excluindo Transações!");
 				}
-				DaoFuncionario.carregaFuncionario();
-				DaoTransacao.excluirTransacao(tran);
-			}
+			});
+
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+
+					while (parada == true) {
+						Thread.sleep(0);
+					}
+					piStatus.setVisible(false);
+					labelStatus.setVisible(false);
+					return null;
+				}
+			};
+			
+			Task<Void> acaoExcluirTransacao = new Task<Void>() {
+
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+					for (Transacao tran : obTable) {
+						if (tran.getSelect().isSelected()) {
+							double valor = (tran.getValor() * 0.40);
+							valor = valor - (valor * 2);
+							for (Funcionario fun : Colecao.funcionarios) {
+								if (fun.getNome().equals(tran.getAtendente())) {
+									DaoFuncionario.atualizarSalario(fun.getCpf(), valor);
+								}
+							}
+							DaoTransacao.excluirTransacao(tran);
+						}
+					}
+					carregaTransacao();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							Notificacoes.mostraNotificacao("Aviso!", "Exclusão Concluída!");
+						}
+					});	
+					
+					parada = false;
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(acaoExcluirTransacao);
+				t.start();
+			});
 		}
-		Caixa.caixa.removeAll(obExcluirTransacao);
-		carregaTable();
-		calculaCaixa();
 	}
 
 	public void carregaTransacao() {
 		parada = true;
+		dpData.setValue(dpSelecao.getValue());
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -346,7 +430,7 @@ public class ViewCaixaController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				
+
 				while (parada == true) {
 					Thread.sleep(0);
 				}

@@ -374,9 +374,9 @@ public class ViewController implements Initializable {
 			t.start();
 		});
 
-		Task acaoCarregarAgenda = new Task() {
+		Task<Void> acaoCarregarAgenda = new Task<Void>() {
 			@Override
-			protected Object call() throws Exception {
+			protected Void call() throws Exception {
 				tvAgenda.setItems(null);
 				dpDataExcluir.setValue(dpData.getValue());
 				DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
@@ -426,9 +426,9 @@ public class ViewController implements Initializable {
 			t.start();
 		});
 
-		Task acaoPesquisaAgendamento = new Task() {
+		Task<Void> acaoPesquisaAgendamento = new Task<Void>() {
 			@Override
-			protected Object call() throws Exception {
+			protected Void call() throws Exception {
 				DaoAgendamento.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
 				tfCliente.clear();
 				populaTabela();
@@ -448,9 +448,9 @@ public class ViewController implements Initializable {
 		if (Alerts.showAlertExclusao()) {
 			pb.setVisible(true);
 			labelStatus.setVisible(true);
-			Task acaoExcluir = new Task() {
+			Task<Void> acaoExcluir = new Task<Void>() {
 				@Override
-				protected Object call() throws Exception {
+				protected Void call() throws Exception {
 					for (Agendamento age : obAgendamento) {
 						if (age.getSelect().isSelected()) {
 							DaoAgendamento.excluirAgendamento(age, dpDataExcluir.getValue());
@@ -508,7 +508,7 @@ public class ViewController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		
+
 		coluna8.setCellValueFactory(new PropertyValueFactory<>("h8"));
 		coluna8_3.setCellValueFactory(new PropertyValueFactory<>("h8_3"));
 		coluna9.setCellValueFactory(new PropertyValueFactory<>("h9"));
@@ -542,6 +542,6 @@ public class ViewController implements Initializable {
 		carregaFuncionario();
 		carregaAgenda();
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
-		dpDataExcluir.setValue(LocalDate.now());	
+		dpDataExcluir.setValue(LocalDate.now());
 	}
 }

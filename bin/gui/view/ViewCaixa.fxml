@@ -48,7 +48,6 @@
                </graphic>
                <columns>
                 <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" prefWidth="165.0" sortable="false" text="Data" />
-                  <TableColumn editable="false" minWidth="0.0" prefWidth="0.0" sortable="false" text="Column X" />
                </columns>
             </TableColumn>
         </columns>
