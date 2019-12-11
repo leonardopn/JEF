@@ -16,7 +16,7 @@ public class Decoracao {
 		Decorator.addDecoration(txt, new StyleClassDecoration("warning"));
 	}
 	
-	public static void setDecoracao(ChoiceBox cb) {
+	public static void setDecoracao(ChoiceBox<?> cb) {
 		ValidationSupport validacao = new ValidationSupport();
 		validacao.registerValidator(cb, Validator.createEmptyValidator("Text is Required"));
 		Decorator.addDecoration(cb, new StyleClassDecoration("warning"));

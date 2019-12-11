@@ -29,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.collection.Colecao;
 import model.collection.entities.Agendamento;
@@ -260,6 +261,8 @@ public class ViewController implements Initializable {
 			stageFuncionario.setScene(funcionario);
 			stageFuncionario.show();
 			stageFuncionario.centerOnScreen();
+			stageFuncionario.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageFuncionario.setTitle("JEF - Funcionário");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -276,6 +279,8 @@ public class ViewController implements Initializable {
 					stageAgenda.setScene(agenda);
 					stageAgenda.show();
 					stageAgenda.centerOnScreen();
+					stageAgenda.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+					stageAgenda.setTitle("JEF - Agendamento");		
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -292,7 +297,8 @@ public class ViewController implements Initializable {
 			stageCliente.setScene(cliente);
 			stageCliente.show();
 			stageCliente.centerOnScreen();
-
+			stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageCliente.setTitle("JEF - Cliente");	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -306,6 +312,8 @@ public class ViewController implements Initializable {
 			stageCaixa.setScene(caixa);
 			stageCaixa.show();
 			stageCaixa.centerOnScreen();
+			stageCaixa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageCaixa.setTitle("JEF - Caixa");	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -319,6 +327,8 @@ public class ViewController implements Initializable {
 			stagePagamento.setScene(pagamento);
 			stagePagamento.show();
 			stagePagamento.centerOnScreen();
+			stagePagamento.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stagePagamento.setTitle("JEF - Pagamento");	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -332,6 +342,8 @@ public class ViewController implements Initializable {
 			stageSobre.setScene(sobre);
 			stageSobre.show();
 			stageSobre.centerOnScreen();
+			stageSobre.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageSobre.setTitle("JEF - Sobre");	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

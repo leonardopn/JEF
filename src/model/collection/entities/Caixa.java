@@ -2,9 +2,6 @@ package model.collection.entities;
 
 import java.util.TreeSet;
 
-import gui.util.Alerts;
-import javafx.scene.control.Alert.AlertType;
-
 public class Caixa {
 
 	private static double total;
