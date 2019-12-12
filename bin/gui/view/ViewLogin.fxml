@@ -1,23 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="251.0" prefWidth="369.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewLoginController">
+<AnchorPane cacheShape="false" centerShape="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="372.0" scaleShape="false" style="-fx-background-color: #3D4857;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewLoginController">
    <children>
-      <Label layoutX="91.0" layoutY="29.0" prefHeight="45.0" prefWidth="187.0" text="Tela de login">
+      <ImageView fitHeight="314.0" fitWidth="413.0" layoutX="-5.0" layoutY="-4.0" pickOnBounds="true" AnchorPane.bottomAnchor="-35.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="-36.0" AnchorPane.topAnchor="-4.0">
+         <image>
+            <Image url="@../../model/images/1385482.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="9.0" layoutY="58.0" minHeight="-Infinity" minWidth="-Infinity" opacity="0.18" prefHeight="218.0" prefWidth="363.0" style="-fx-background-color: white; -fx-background-radius: 2em;" />
+      <Label layoutX="76.0" layoutY="140.0" text="Usuário:" textFill="WHITE">
          <font>
-            <Font size="29.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="59.0" layoutY="100.0" text="Usuario:" />
-      <Label layoutX="59.0" layoutY="154.0" text="Senha:" />
-      <TextField fx:id="tfUsuario" layoutX="130.0" layoutY="95.0" />
-      <PasswordField fx:id="pfSenha" layoutX="130.0" layoutY="149.0" />
-      <Button fx:id="btLogin" layoutX="239.0" layoutY="197.0" mnemonicParsing="false" onAction="#onBtLoginAction" text="Login" />
+      <TextField fx:id="tfUsuario" layoutX="156.0" layoutY="141.0" promptText="Nome de usuário" style="-fx-border-radius: 5em; -fx-background-radius: 5em;" />
+      <PasswordField fx:id="pfSenha" layoutX="157.0" layoutY="179.0" onAction="#onBtLoginAction" promptText="Senha do usuário" style="-fx-background-radius: 5em; -fx-border-radius: 5em;" />
+      <TextField fx:id="tfSenhaVisivel" editable="false" layoutX="157.0" layoutY="179.0" onAction="#onBtLoginAction" promptText="Não editável" style="-fx-border-radius: 5em; -fx-background-radius: 5em;" visible="false" />
+      <ImageView fitHeight="39.0" fitWidth="25.0" layoutX="51.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_user_male_52px.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ivOlho" fitHeight="25.0" fitWidth="27.0" layoutX="316.0" layoutY="179.0" onMouseClicked="#onBtOlhoAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_closed_eye_100px.png" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="64.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_password_60px_1.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="90.0" layoutY="177.0" text="Senha:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="92.0" fitWidth="109.0" layoutX="148.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icon.png" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <AnchorPane layoutX="235.0" layoutY="225.0" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: black; -fx-background-radius: 5em;" />
+      <Button fx:id="btLogin" layoutX="234.0" layoutY="222.0" mnemonicParsing="false" onAction="#onBtLoginAction" prefHeight="25.0" prefWidth="70.0" style="-fx-border-radius: 5em; -fx-background-radius: 5em; -fx-background-color: #152D48;" text="Entrar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="10.0" layoutY="6.0" text="Versão 2.0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
