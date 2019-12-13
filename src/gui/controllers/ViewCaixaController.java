@@ -34,7 +34,6 @@ import model.collection.entities.Caixa;
 import model.collection.entities.Cliente;
 import model.collection.entities.Funcionario;
 import model.collection.entities.Transacao;
-import model.dao.DaoFuncionario;
 import model.dao.DaoTransacao;
 
 public class ViewCaixaController implements Initializable {
@@ -292,7 +291,6 @@ public class ViewCaixaController implements Initializable {
 			Notificacoes.mostraNotificacao("Aviso!", "Preencha todos os campos!");
 		}
 		else {
-			String fun = cbFuncionario.getValue().getCpf();
 			parada = true;
 			Platform.runLater(new Runnable() {
 				@Override
@@ -325,8 +323,6 @@ public class ViewCaixaController implements Initializable {
 					});
 					DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
 					carregaTransacao();
-					DaoFuncionario.atualizarSalario(fun,
-							0.40 * (Double.parseDouble(tfValor.getText().replaceAll(",", "."))));
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -341,6 +337,7 @@ public class ViewCaixaController implements Initializable {
 			};
 
 			javafx.application.Platform.runLater(() -> {
+				ViewController.getStagePagamento().hide();
 				Thread t = new Thread(taskEnviaTransacao);
 				t.start();
 			});
@@ -386,13 +383,6 @@ public class ViewCaixaController implements Initializable {
 					});
 					for (Transacao tran : obTable) {
 						if (tran.getSelect().isSelected()) {
-							double valor = (tran.getValor() * 0.40);
-							valor = valor - (valor * 2);
-							for (Funcionario fun : Colecao.funcionarios) {
-								if (fun.getNome().equals(tran.getAtendente())) {
-									DaoFuncionario.atualizarSalario(fun.getCpf(), valor);
-								}
-							}
 							DaoTransacao.excluirTransacao(tran);
 						}
 					}
