@@ -85,7 +85,7 @@ public class ViewFuncionarioController implements Initializable {
 		}
 	}
 
-	public void carregaFuncionario() {
+	public void carregaFuncionario() {//colocar task futuramente
 		obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 		tvFuncionario.setItems(obFuncionario);
 		tvFuncionario.refresh();
