@@ -144,9 +144,6 @@ public class ViewClienteController implements Initializable {
 										ViewController.bindAutoCompleteCliente.dispose();
 										ViewController.bindAutoCompleteCliente = TextFields.bindAutoCompletion(
 												ViewController.getTfClienteTemp(), Colecao.clientes);
-										ViewController.getStageCaixa().hide();
-										ViewController.getStageFuncionario().hide();
-										ViewController.getStagePagamento().hide();
 										txtNomeCliente.setText("");
 										txtEmailCliente.setText("");
 										txtTelefoneCliente.setText("");
@@ -173,6 +170,9 @@ public class ViewClienteController implements Initializable {
 					};
 
 					javafx.application.Platform.runLater(() -> {
+						ViewController.getStageCaixa().hide();
+						ViewController.getStageFuncionario().hide();
+						ViewController.getStagePagamento().hide();
 						Thread t = new Thread(acaoCriarCliente);
 						t.start();
 					});
