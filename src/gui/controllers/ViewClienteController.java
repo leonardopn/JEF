@@ -203,7 +203,7 @@ public class ViewClienteController implements Initializable {
 				return null;
 			}
 		};
-		
+
 		if (Alerts.showAlertExclusao()) {
 			piStatus.setVisible(true);
 			labelStatus.setVisible(true);
@@ -215,7 +215,7 @@ public class ViewClienteController implements Initializable {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
-					
+
 					for (Cliente cli : obCliente) {
 						if (cli.getSelect().isSelected()) {
 							DaoCliente.excluirCliente(cli);
@@ -237,12 +237,12 @@ public class ViewClienteController implements Initializable {
 					return null;
 				}
 			};
-			
+
 			javafx.application.Platform.runLater(() -> {
 				Thread t = new Thread(acaoExcluirCliente);
 				t.start();
 			});
-			
+
 		} else {
 			Alerts.showAlert("Cancelado", "Você cancelou a operação", "Cliente não excluído", AlertType.INFORMATION);
 		}

@@ -75,7 +75,6 @@ public class ViewAtualizaClienteController implements Initializable {
 	public void carregaCliente() {
 		obCliente = FXCollections.observableArrayList(Colecao.clientes);
 		tvCliente.setItems(obCliente);
-
 	}
 
 	public void voltaScene() {
@@ -103,7 +102,6 @@ public class ViewAtualizaClienteController implements Initializable {
 	@FXML
 	public void atualizaCliente() {
 		if (Alerts.showAlertAtualizacao()) {
-			//Cliente clienteTemp = tvCliente.getSelectionModel().getSelectedItem();
 			String nome = txtNomeCliente.getText();
 			String email = txtEmailCliente.getText();
 			String telefone = txtTelefoneCliente.getText();
@@ -147,11 +145,16 @@ public class ViewAtualizaClienteController implements Initializable {
 							}
 						});
 					} else {
-						Alerts.showAlert("Aviso", "Cliente já adicionado", "Já existe cliente com esse nome"
-								+ " no programa ou o cliente não foi excluído no banco de dados\n\n"
-								+ "Peça ao ADMINISTRADOR para excluir o "
-								+ "registro desse cliente no BANCO ou então coloque um nome mais extenso para ocorrer a diferenciação.",
-								AlertType.INFORMATION);
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								Alerts.showAlert("Aviso", "Cliente já adicionado", "Já existe cliente com esse nome"
+										+ " no programa ou o cliente não foi excluído no banco de dados\n\n"
+										+ "Peça ao ADMINISTRADOR para excluir o "
+										+ "registro desse cliente no BANCO ou então coloque um nome mais extenso para ocorrer a diferenciação.",
+										AlertType.INFORMATION);
+							}
+						});
 					}
 					parada = false;
 					return null;

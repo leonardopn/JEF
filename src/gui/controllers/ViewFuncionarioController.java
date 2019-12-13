@@ -140,12 +140,17 @@ public class ViewFuncionarioController implements Initializable {
 									}
 								});
 							} else {
-								Alerts.showAlert("Aviso", "Funcionário já adicionado",
-										"Já existe funcionário com esse cpf"
-												+ " no programa ou o funcionário não foi excluído no banco de dados\n\n"
-												+ "Peça ao ADMINISTRADOR para excluir o "
-												+ "registro desse funcionário no BANCO ou então cpf diferente para ocorrer a diferenciação.",
-										AlertType.INFORMATION);
+								Platform.runLater(new Runnable() {
+									@Override
+									public void run() {
+										Alerts.showAlert("Aviso", "Funcionário já adicionado",
+												"Já existe funcionário com esse cpf"
+														+ " no programa ou o funcionário não foi excluído no banco de dados\n\n"
+														+ "Peça ao ADMINISTRADOR para excluir o "
+														+ "registro desse funcionário no BANCO ou então cpf diferente para ocorrer a diferenciação.",
+												AlertType.INFORMATION);
+									}
+								});
 							}
 							parada = false;
 							return null;
