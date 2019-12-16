@@ -25,11 +25,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.collection.Colecao;
 import model.collection.entities.Agendamento;
@@ -64,6 +66,9 @@ public class ViewController implements Initializable {
 	ObservableList<Agendamento> obAgendamento;
 
 	@FXML
+	private SplitPane splitPaneCentral;
+	
+	@FXML
 	private Button btCriaFuncionario;
 
 	@FXML
@@ -92,6 +97,9 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private Button btSalvar;
+	
+	@FXML
+	private ImageView iVSplit;
 
 	@FXML
 	private Button btCarregar;
@@ -502,6 +510,17 @@ public class ViewController implements Initializable {
 	}
 
 	// métodos avulsos
+	
+	public void abreFechaSplit() {
+		double[] divisor = splitPaneCentral.getDividerPositions();
+		if(divisor[0] < 0.12290909090909091) {
+			splitPaneCentral.setDividerPositions(0.1229);
+		}
+		else {
+			splitPaneCentral.setDividerPositions(0.0022);
+		}
+	}
+	
 
 	public void retornaInformacaoAgenda() {
 		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();

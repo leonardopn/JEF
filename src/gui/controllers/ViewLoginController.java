@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import application.Main;
 import gui.util.Notificacoes;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -44,26 +43,7 @@ public class ViewLoginController implements Initializable{
 	@FXML
 	public void onBtLoginAction() {
 		String useTemp = tfUsuario.getText();
-		String passTemp = pfSenha.getText();
-		Task<Void> tarefa = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				btLogin.setLayoutX(235);
-				btLogin.setLayoutY(225);
-				
-				Thread.sleep(500);
-				
-				btLogin.setLayoutX(234);
-				btLogin.setLayoutY(222);
-				return null;
-			}
-		};
-		
-		javafx.application.Platform.runLater(() -> {
-			Thread t = new Thread(tarefa);
-			t.start();
-		});
-		
+		String passTemp = pfSenha.getText();		
 		Login login = new Login(useTemp, passTemp);
 		if (useTemp.isEmpty() || passTemp.isEmpty()) {
 			Notificacoes.mostraNotificacao("Aviso!", "Há campos vazios, preencha usuário ou senha!");

@@ -57,11 +57,18 @@
             <Rectangle2D />
          </viewport>
       </ImageView>
-      <AnchorPane layoutX="235.0" layoutY="225.0" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: black; -fx-background-radius: 5em;" />
-      <Button fx:id="btLogin" layoutX="234.0" layoutY="222.0" mnemonicParsing="false" onAction="#onBtLoginAction" prefHeight="25.0" prefWidth="70.0" style="-fx-border-radius: 5em; -fx-background-radius: 5em; -fx-background-color: #152D48;" text="Entrar" textFill="WHITE">
+      <AnchorPane layoutX="243.0" layoutY="222.0" prefHeight="33.0" prefWidth="92.0" style="-fx-background-radius: 5em; -fx-background-color: black;" />
+      <Button fx:id="btLogin" layoutX="243.0" layoutY="221.0" mnemonicParsing="false" onAction="#onBtLoginAction" prefHeight="33.0" prefWidth="92.0" style="-fx-background-radius: 5em;" text="Entrar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_login_64px_1.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
       <Label layoutX="10.0" layoutY="6.0" text="Versão 2.0" textFill="WHITE">
          <font>
