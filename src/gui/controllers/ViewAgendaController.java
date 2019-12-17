@@ -9,11 +9,15 @@ import org.controlsfx.control.textfield.TextFields;
 
 import gui.util.Decoracao;
 import gui.util.Notificacoes;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import model.collection.Colecao;
 import model.collection.entities.Cliente;
@@ -99,6 +103,14 @@ public class ViewAgendaController implements Initializable{
 
     @FXML
     private TextField txtFuncionario;
+    
+    @FXML
+	private ProgressIndicator piCarregando;
+    
+    @FXML
+    private Label labelStatus;
+    
+    private boolean parada;
 	    
     
     @FXML
@@ -108,10 +120,51 @@ public class ViewAgendaController implements Initializable{
 			Notificacoes.mostraNotificacao("Campos vazios!", "Preencha o campo nome!");
     	}
     	else {
-    		salvaHorario();
-    		//vai atualizar no stage main se eu criar um agendamento
-    		DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
-    		ViewController.getTvAgendaTemp().refresh();
+    		parada = true;
+    		Task<Void> tarefa = new Task<Void>() {
+    			@Override
+    			protected Void call() throws Exception {
+    				while (parada == true) {
+    					Thread.sleep(0);
+    				}
+    				piCarregando.setVisible(false);
+    				labelStatus.setVisible(false);
+    				return null;
+    			}
+    		};
+
+    		Task<Void> acaoAgendamento = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+		    			Thread t = new Thread(tarefa);
+		    			t.start();
+		    		});
+					piCarregando.setVisible(true);
+    				labelStatus.setVisible(true);
+					salvaHorario();
+		    		DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
+		    		ViewController.getTvAgendaTemp().refresh();
+		    		parada = false;
+					return null;
+				}
+				
+				@Override
+				protected void done() {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							ViewController.getStageAgenda().close();
+						}
+					});	
+					super.done();
+				}
+    		};
+    		
+    		javafx.application.Platform.runLater(() -> {
+    			Thread t = new Thread(acaoAgendamento);
+    			t.start(); 
+    		});    		
     	}
     }
 
@@ -193,7 +246,6 @@ public class ViewAgendaController implements Initializable{
         		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "18:00:00");
         	}
     	}
-    	ViewController.getStageAgenda().close();
     }
     
     @FXML

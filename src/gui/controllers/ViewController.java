@@ -25,10 +25,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.collection.Colecao;
 import model.collection.entities.Agendamento;
@@ -63,6 +66,9 @@ public class ViewController implements Initializable {
 	ObservableList<Agendamento> obAgendamento;
 
 	@FXML
+	private SplitPane splitPaneCentral;
+	
+	@FXML
 	private Button btCriaFuncionario;
 
 	@FXML
@@ -91,6 +97,9 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private Button btSalvar;
+	
+	@FXML
+	private ImageView iVSplit;
 
 	@FXML
 	private Button btCarregar;
@@ -260,6 +269,8 @@ public class ViewController implements Initializable {
 			stageFuncionario.setScene(funcionario);
 			stageFuncionario.show();
 			stageFuncionario.centerOnScreen();
+			stageFuncionario.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageFuncionario.setTitle("JEF - Funcionário");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -276,6 +287,8 @@ public class ViewController implements Initializable {
 					stageAgenda.setScene(agenda);
 					stageAgenda.show();
 					stageAgenda.centerOnScreen();
+					stageAgenda.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+					stageAgenda.setTitle("JEF - Agendamento");		
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -292,7 +305,8 @@ public class ViewController implements Initializable {
 			stageCliente.setScene(cliente);
 			stageCliente.show();
 			stageCliente.centerOnScreen();
-
+			stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageCliente.setTitle("JEF - Cliente");	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -306,6 +320,8 @@ public class ViewController implements Initializable {
 			stageCaixa.setScene(caixa);
 			stageCaixa.show();
 			stageCaixa.centerOnScreen();
+			stageCaixa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageCaixa.setTitle("JEF - Caixa");	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -319,6 +335,8 @@ public class ViewController implements Initializable {
 			stagePagamento.setScene(pagamento);
 			stagePagamento.show();
 			stagePagamento.centerOnScreen();
+			stagePagamento.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stagePagamento.setTitle("JEF - Pagamento");	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -332,6 +350,8 @@ public class ViewController implements Initializable {
 			stageSobre.setScene(sobre);
 			stageSobre.show();
 			stageSobre.centerOnScreen();
+			stageSobre.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageSobre.setTitle("JEF - Sobre");	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -374,9 +394,9 @@ public class ViewController implements Initializable {
 			t.start();
 		});
 
-		Task acaoCarregarAgenda = new Task() {
+		Task<Void> acaoCarregarAgenda = new Task<Void>() {
 			@Override
-			protected Object call() throws Exception {
+			protected Void call() throws Exception {
 				tvAgenda.setItems(null);
 				dpDataExcluir.setValue(dpData.getValue());
 				DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
@@ -426,9 +446,9 @@ public class ViewController implements Initializable {
 			t.start();
 		});
 
-		Task acaoPesquisaAgendamento = new Task() {
+		Task<Void> acaoPesquisaAgendamento = new Task<Void>() {
 			@Override
-			protected Object call() throws Exception {
+			protected Void call() throws Exception {
 				DaoAgendamento.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
 				tfCliente.clear();
 				populaTabela();
@@ -448,9 +468,9 @@ public class ViewController implements Initializable {
 		if (Alerts.showAlertExclusao()) {
 			pb.setVisible(true);
 			labelStatus.setVisible(true);
-			Task acaoExcluir = new Task() {
+			Task<Void> acaoExcluir = new Task<Void>() {
 				@Override
-				protected Object call() throws Exception {
+				protected Void call() throws Exception {
 					for (Agendamento age : obAgendamento) {
 						if (age.getSelect().isSelected()) {
 							DaoAgendamento.excluirAgendamento(age, dpDataExcluir.getValue());
@@ -490,6 +510,17 @@ public class ViewController implements Initializable {
 	}
 
 	// métodos avulsos
+	
+	public void abreFechaSplit() {
+		double[] divisor = splitPaneCentral.getDividerPositions();
+		if(divisor[0] < 0.12290909090909091) {
+			splitPaneCentral.setDividerPositions(0.1229);
+		}
+		else {
+			splitPaneCentral.setDividerPositions(0.0022);
+		}
+	}
+	
 
 	public void retornaInformacaoAgenda() {
 		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
@@ -508,7 +539,7 @@ public class ViewController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		
+
 		coluna8.setCellValueFactory(new PropertyValueFactory<>("h8"));
 		coluna8_3.setCellValueFactory(new PropertyValueFactory<>("h8_3"));
 		coluna9.setCellValueFactory(new PropertyValueFactory<>("h9"));
@@ -542,6 +573,6 @@ public class ViewController implements Initializable {
 		carregaFuncionario();
 		carregaAgenda();
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
-		dpDataExcluir.setValue(LocalDate.now());	
+		dpDataExcluir.setValue(LocalDate.now());
 	}
 }

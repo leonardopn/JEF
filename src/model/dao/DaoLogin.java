@@ -5,16 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import application.Main;
 import db.DB;
 import gui.controllers.ViewLoginController;
 import gui.util.Alerts;
 import gui.util.Notificacoes;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import model.collection.entities.Login;
 
 public class DaoLogin {
