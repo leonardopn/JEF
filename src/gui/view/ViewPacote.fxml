@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Pacotes">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tvPacotes" layoutX="10.0" layoutY="11.0" prefHeight="200.0" prefWidth="581.0">
+                           <columns>
+                              <TableColumn fx:id="colunaId" prefWidth="48.0" text="ID" />
+                              <TableColumn fx:id="colunaPacote" prefWidth="101.0" text="Pacote" />
+                              <TableColumn fx:id="colunaValor" prefWidth="57.0" text="Valor" />
+                              <TableColumn fx:id="colunaQuantMao" prefWidth="107.0" text="Quantidade Mão" />
+                              <TableColumn fx:id="colunaQuantPe" prefWidth="99.0" text="Quantidade Pé" />
+                              <TableColumn fx:id="ColunaValorMao" prefWidth="94.0" text="Valor Mão" />
+                              <TableColumn fx:id="ColunaValorPe" prefWidth="74.0" text="Valor Pé" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="btAddPacote" layoutX="345.0" layoutY="326.0" mnemonicParsing="false" text="Adicionar" />
+                        <Label layoutX="25.0" layoutY="225.0" text="Pacote:" />
+                        <Label layoutX="33.0" layoutY="259.0" text="Valor:" />
+                        <Label layoutX="169.0" layoutY="330.0" text="Quantidade Mão:" />
+                        <Label layoutX="181.0" layoutY="295.0" text="Quantidade Pé:" />
+                        <Label layoutX="7.0" layoutY="295.0" text="Valor Mão:" />
+                        <Label layoutX="17.0" layoutY="330.0" text="Valor Pé:" />
+                        <TextField fx:id="tfNome" layoutX="74.0" layoutY="221.0" />
+                        <TextField fx:id="tfValor" layoutX="74.0" layoutY="256.0" prefHeight="25.0" prefWidth="74.0" />
+                        <TextField fx:id="tfValorMao" layoutX="74.0" layoutY="291.0" prefHeight="25.0" prefWidth="74.0" />
+                        <TextField fx:id="tfQuantMao" layoutX="272.0" layoutY="326.0" prefHeight="25.0" prefWidth="49.0" />
+                        <TextField fx:id="tfQuantPe" layoutX="273.0" layoutY="291.0" prefHeight="25.0" prefWidth="48.0" />
+                        <TextField fx:id="tfValorPe" layoutX="74.0" layoutY="326.0" prefHeight="25.0" prefWidth="74.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+          <Tab text="Clientes c/ pacotes">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tvPacotesAssociados" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="566.0">
+                          <columns>
+                            <TableColumn fx:id="calunaIdCliente" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="colunaCliente" prefWidth="153.0" text="Cliente" />
+                              <TableColumn fx:id="colunaPacoteAssociado" prefWidth="92.0" text="Pacote" />
+                              <TableColumn fx:id="colunaQuantMaoAssociado" prefWidth="134.0" text="Quantidade Mão" />
+                              <TableColumn fx:id="colunaQuantPeAssociado" prefWidth="111.0" text="Quantidade Pé" />
+                          </columns>
+                        </TableView>
+                        <GridPane layoutX="20.0" layoutY="230.0" prefHeight="97.0" prefWidth="277.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="53.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="224.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="tfCliente" GridPane.columnIndex="1" />
+                              <Label text="Cliente" />
+                              <Label text="Pacote" GridPane.rowIndex="1" />
+                              <ChoiceBox fx:id="cbPacote" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Button layoutX="248.0" layoutY="327.0" mnemonicParsing="false" text="Adicionar" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

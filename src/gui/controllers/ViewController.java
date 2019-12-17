@@ -49,12 +49,14 @@ public class ViewController implements Initializable {
 	private static Scene funcionario;
 	private static Scene cliente;
 	private static Scene sobre;
+	private static Scene pacote;
 	private static Stage stageAgenda = new Stage();
 	private static Stage stageFuncionario = new Stage();
 	private static Stage stageCliente = new Stage();
 	private static Stage stageCaixa = new Stage();
 	private static Stage stagePagamento = new Stage();
 	private static Stage stageSobre = new Stage();
+	private static Stage stagePacote = new Stage();
 	private static Funcionario funTemp;
 	private static LocalDate dpDataTemp;
 	private static TableView<Funcionario> tvAgendaTemp;
@@ -97,6 +99,9 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private Button btSalvar;
+	
+	@FXML
+	private Button btPacote;
 	
 	@FXML
 	private ImageView iVSplit;
@@ -233,6 +238,10 @@ public class ViewController implements Initializable {
 	public static Scene getCliente() {
 		return cliente;
 	}
+	
+	public static Scene getPacote() {
+		return pacote;
+	}
 
 	public static Stage getStageAgenda() {
 		return stageAgenda;
@@ -257,6 +266,11 @@ public class ViewController implements Initializable {
 	public static Stage getStagePagamento() {
 		return stagePagamento;
 	}
+	
+	public static Stage getStagePacote() {
+		return stagePacote;
+	}
+	
 
 	// abre páginas
 
@@ -271,6 +285,22 @@ public class ViewController implements Initializable {
 			stageFuncionario.centerOnScreen();
 			stageFuncionario.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
 			stageFuncionario.setTitle("JEF - Funcionário");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void onBtAbrePacoteAction() {
+		try {
+			retornaInformacaoAgenda();
+			Parent fxmlPacote = FXMLLoader.load(getClass().getResource("/gui/view/ViewPacote.fxml"));
+			pacote = new Scene(fxmlPacote);
+			stagePacote.setScene(pacote);
+			stagePacote.show();
+			stagePacote.centerOnScreen();
+			stagePacote.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stagePacote.setTitle("JEF - Pacotes");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
