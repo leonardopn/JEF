@@ -40,6 +40,7 @@ import model.collection.entities.Funcionario;
 import model.dao.DaoAgendamento;
 import model.dao.DaoCliente;
 import model.dao.DaoFuncionario;
+import model.dao.DaoPacote;
 import model.dao.DaoTransacao;
 
 public class ViewController implements Initializable {
@@ -564,6 +565,7 @@ public class ViewController implements Initializable {
 		DaoCliente.carregaCliente();
 		DaoFuncionario.carregaFuncionario();
 		DaoTransacao.carregaCaixa();
+		DaoPacote.carregaPacote();
 	}
 
 	@Override

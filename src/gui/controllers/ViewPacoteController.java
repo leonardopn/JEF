@@ -3,6 +3,8 @@ package gui.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,9 +13,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.collection.Colecao;
 import model.collection.entities.Pacote;
+import model.dao.DaoPacote;
 
-public class ViewPacote implements Initializable{
+public class ViewPacoteController implements Initializable{
+	
+	ObservableList<Pacote> obPacote;
 	
 	@FXML
     private TableView<Pacote> tvPacotes;
@@ -84,6 +90,18 @@ public class ViewPacote implements Initializable{
     @FXML
     private ChoiceBox<?> cbPacote;
 
+    @FXML
+	public void onBtCriaPacoteAction() {
+		DaoPacote.salvarPacote(tfNome, tfValor, tfValorMao, tfQuantMao, tfQuantPe, tfValorPe);
+		carregaTabelaPacote();
+	}
+    
+    public void carregaTabelaPacote() {
+    	tvPacotes.setItems(null);
+		obPacote = FXCollections.observableArrayList(Colecao.pacotes);
+		tvPacotes.setItems(obPacote);
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -93,6 +111,7 @@ public class ViewPacote implements Initializable{
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		ColunaValorMao.setCellValueFactory(new PropertyValueFactory<>("precoMao"));
 		ColunaValorPe.setCellValueFactory(new PropertyValueFactory<>("precoPe"));
+		carregaTabelaPacote();
 	}
 
 }
