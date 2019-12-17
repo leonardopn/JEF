@@ -3,26 +3,30 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewPacoteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewPacoteController">
    <children>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="520.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="Pacotes">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="600.0">
                      <children>
-                        <TableView fx:id="tvPacotes" layoutX="10.0" layoutY="11.0" prefHeight="200.0" prefWidth="581.0">
+                        <TableView fx:id="tvPacotes" layoutX="10.0" layoutY="11.0" prefHeight="250.0" prefWidth="581.0">
                            <columns>
                               <TableColumn fx:id="colunaId" prefWidth="48.0" text="ID" />
                               <TableColumn fx:id="colunaPacote" prefWidth="101.0" text="Pacote" />
@@ -33,19 +37,56 @@
                               <TableColumn fx:id="ColunaValorPe" prefWidth="74.0" text="Valor Pé" />
                            </columns>
                         </TableView>
-                        <Label layoutX="25.0" layoutY="225.0" text="Pacote:" />
-                        <Label layoutX="33.0" layoutY="259.0" text="Valor:" />
-                        <Label layoutX="169.0" layoutY="330.0" text="Quantidade Mão:" />
-                        <Label layoutX="181.0" layoutY="295.0" text="Quantidade Pé:" />
-                        <Label layoutX="7.0" layoutY="295.0" text="Valor Mão:" />
-                        <Label layoutX="17.0" layoutY="330.0" text="Valor Pé:" />
-                        <TextField fx:id="tfNome" layoutX="74.0" layoutY="221.0" />
-                        <TextField fx:id="tfValor" layoutX="74.0" layoutY="256.0" prefHeight="25.0" prefWidth="74.0" />
-                        <TextField fx:id="tfValorMao" layoutX="74.0" layoutY="291.0" prefHeight="25.0" prefWidth="74.0" />
-                        <TextField fx:id="tfValorPe" layoutX="74.0" layoutY="326.0" prefHeight="25.0" prefWidth="74.0" />
-                        <TextField fx:id="tfQuantPe" layoutX="273.0" layoutY="291.0" prefHeight="25.0" prefWidth="48.0" />
-                        <TextField fx:id="tfQuantMao" layoutX="272.0" layoutY="326.0" prefHeight="25.0" prefWidth="49.0" />
-                        <Button fx:id="btAddPacote" layoutX="345.0" layoutY="326.0" mnemonicParsing="false" onAction="#onBtCriaPacoteAction" text="Adicionar" />
+                        <Button fx:id="btAddPacote" layoutX="198.0" layoutY="451.0" mnemonicParsing="false" onAction="#onBtCriaPacoteAction" text="Adicionar">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_add_96px_1.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <GridPane layoutX="14.0" layoutY="276.0" prefHeight="179.0" prefWidth="101.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="0.0" prefWidth="98.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Pacote:" GridPane.halignment="RIGHT" />
+                              <Label text="Valor:" GridPane.rowIndex="1" />
+                              <Label text="Valor Mão:" GridPane.rowIndex="2" />
+                              <Label text="Valor Pé:" GridPane.rowIndex="3" />
+                              <Label text="Quantidade Pé:" GridPane.rowIndex="4" />
+                              <Label text="Quantidade Mão:" GridPane.rowIndex="5" />
+                           </children>
+                        </GridPane>
+                        <TextField fx:id="tfNome" layoutX="128.0" layoutY="280.0" minHeight="0.0" minWidth="0.0" prefHeight="26.0" prefWidth="133.0" />
+                        <TextField fx:id="tfValor" layoutX="129.0" layoutY="310.0" prefHeight="25.0" prefWidth="74.0" />
+                        <TextField fx:id="tfValorMao" layoutX="129.0" layoutY="339.0" prefHeight="25.0" prefWidth="74.0" />
+                        <TextField fx:id="tfValorPe" layoutX="130.0" layoutY="370.0" prefHeight="25.0" prefWidth="74.0" />
+                        <TextField fx:id="tfQuantPe" layoutX="131.0" layoutY="399.0" prefHeight="25.0" prefWidth="48.0" />
+                        <TextField fx:id="tfQuantMao" layoutX="131.0" layoutY="430.0" prefHeight="25.0" prefWidth="47.0" />
+                        <Line endX="100.0" endY="195.0" layoutX="200.0" layoutY="296.0" startX="100.5" startY="-35.0" />
+                        <GridPane layoutX="391.0" layoutY="451.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="149.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="51.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ProgressIndicator fx:id="piStatus" prefHeight="35.0" prefWidth="38.0" visible="false" GridPane.columnIndex="1" />
+                              <Label fx:id="labelStatus" disable="true" text="Excluindo projeto!" visible="false" GridPane.halignment="RIGHT" />
+                           </children>
+                        </GridPane>
                      </children>
                   </AnchorPane>
               </content>

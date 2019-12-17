@@ -45,7 +45,7 @@ public class DaoPacote {
 			rs = st.executeQuery();
 
 			while (rs.next()) {
-				Pacote pacote = new Pacote(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor"), rs.getInt("quant_mao"), rs.getInt("quant_pe"), rs.getDouble("unit_mao"), rs.getDouble("unit_pe"));
+				Pacote pacote = new Pacote(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor"), rs.getInt("quant_pe"), rs.getInt("quant_mao"), rs.getDouble("unit_mao"), rs.getDouble("unit_pe"));
 				Colecao.pacotes.add(pacote);
 			}
 		} catch (SQLException e) {
