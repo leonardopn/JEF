@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import db.DB;
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import model.collection.Colecao;
 import model.collection.entities.Pacote;
@@ -21,18 +22,28 @@ public class DaoPacote {
 					+ "(nome, valor, quant_mao, quant_pe, unit_mao, unit_pe) "
 					+ "values (?, ?, ?, ?, ?, ?)");
 			st.setString(1, tfNome.getText());
-			st.setDouble(2, Double.parseDouble(tfValor.getText()));
-			st.setInt(3, Integer.parseInt(tfQuantMao.getText()));
-			st.setInt(4, Integer.parseInt(tfQuantPe.getText()));
-			st.setDouble(5, Double.parseDouble(tfValorMao.getText()));
-			st.setDouble(6, Double.parseDouble(tfValorPe.getText()));
+			st.setDouble(2, Double.parseDouble(tfValor.getText().replaceAll(",", ".")));
+			st.setInt(3, Integer.parseInt(tfQuantMao.getText().replaceAll(",", ".")));
+			st.setInt(4, Integer.parseInt(tfQuantPe.getText().replaceAll(",", ".")));
+			st.setDouble(5, Double.parseDouble(tfValorMao.getText().replaceAll(",", ".")));
+			st.setDouble(6, Double.parseDouble(tfValorPe.getText().replaceAll(",", ".")));
 			st.executeQuery();
 			carregaPacote();
 			
 		} catch (SQLException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
-		} finally {
+		}
+		catch (NumberFormatException e) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alerts.showAlert("ERRO", "Erro de conversão ", e.getMessage(),
+							AlertType.ERROR);
+				}
+			}); 
+		}	
+		finally {
 			DB.closeConnection();
 			DB.fechaStatement(st);
 		}
@@ -51,7 +62,8 @@ public class DaoPacote {
 		} catch (SQLException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
-		} finally {
+		}
+		finally {
 			DB.closeConnection();
 			DB.fechaResultSet(rs);
 			DB.fechaStatement(st);

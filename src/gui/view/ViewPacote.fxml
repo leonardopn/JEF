@@ -17,7 +17,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewPacoteController">
    <children>
       <TabPane prefHeight="520.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
@@ -74,7 +73,7 @@
                         <TextField fx:id="tfQuantPe" layoutX="131.0" layoutY="399.0" prefHeight="25.0" prefWidth="48.0" />
                         <TextField fx:id="tfQuantMao" layoutX="131.0" layoutY="430.0" prefHeight="25.0" prefWidth="47.0" />
                         <Line endX="100.0" endY="195.0" layoutX="200.0" layoutY="296.0" startX="100.5" startY="-35.0" />
-                        <GridPane layoutX="391.0" layoutY="451.0">
+                        <GridPane alignment="CENTER_RIGHT" layoutX="391.0" layoutY="451.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="149.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="51.0" />
@@ -84,7 +83,7 @@
                           </rowConstraints>
                            <children>
                               <ProgressIndicator fx:id="piStatus" prefHeight="35.0" prefWidth="38.0" visible="false" GridPane.columnIndex="1" />
-                              <Label fx:id="labelStatus" disable="true" text="Excluindo projeto!" visible="false" GridPane.halignment="RIGHT" />
+                              <Label fx:id="labelStatus" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="149.0" text="Criando projeto!" textAlignment="RIGHT" visible="false" />
                            </children>
                         </GridPane>
                      </children>
