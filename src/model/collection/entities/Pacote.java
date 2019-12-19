@@ -2,6 +2,8 @@ package model.collection.entities;
 
 import java.util.Objects;
 
+import javafx.scene.control.CheckBox;
+
 public class Pacote implements Comparable<Pacote>{
 	private int id;
 	private String pacote;
@@ -10,6 +12,7 @@ public class Pacote implements Comparable<Pacote>{
 	private int quantMao;
 	private double precoMao;
 	private double precoPe;
+	private CheckBox select;
 	
 	public Pacote(int id, String pacote, double valor, int quantPe, int quantMao, double precoMao, double precoPe) {
 		this.id = id;
@@ -19,6 +22,7 @@ public class Pacote implements Comparable<Pacote>{
 		this.quantMao = quantMao;
 		this.precoMao = precoMao;
 		this.precoPe = precoPe;
+		this.select = new CheckBox();
 	}
 
 	public int getId() {
@@ -49,6 +53,10 @@ public class Pacote implements Comparable<Pacote>{
 		return precoPe;
 	}
 	
+	public CheckBox getSelect() {
+		return select;
+	}
+
 	@Override
 	public boolean equals(Object outroObjeto) {
 		if(this==outroObjeto)

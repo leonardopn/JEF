@@ -3,6 +3,7 @@ package gui.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gui.util.Alerts;
 import gui.util.Notificacoes;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -46,19 +48,31 @@ public class ViewPacoteController implements Initializable {
 	private TableColumn<Pacote, Integer> colunaQuantPe;
 
 	@FXML
-	private TableColumn<Pacote, Double> ColunaValorMao;
+	private TableColumn<Pacote, Double> colunaValorMao;
 
 	@FXML
-	private TableColumn<Pacote, Double> ColunaValorPe;
+	private TableColumn<Pacote, Double> colunaValorPe;
+
+	@FXML
+	private TableColumn<Pacote, CheckBox> colunaExcluirPacote;
 
 	@FXML
 	private Button btAddPacote;
+
+	@FXML
+	private Button btExcluiPacote;
+
+	@FXML
+	private Button btAtualizaPacote;
 
 	@FXML
 	private TextField tfNome;
 
 	@FXML
 	private TextField tfValor;
+
+	@FXML
+	private TextField tfIdPacote;
 
 	@FXML
 	private TextField tfValorMao;
@@ -71,6 +85,24 @@ public class ViewPacoteController implements Initializable {
 
 	@FXML
 	private TextField tfValorPe;
+
+	@FXML
+	private TextField tfNomeAtualizado;
+
+	@FXML
+	private TextField tfValorAtualizado;
+
+	@FXML
+	private TextField tfValorMaoAtualizado;
+
+	@FXML
+	private TextField tfValorPeAtualizado;
+
+	@FXML
+	private TextField tfQuantPeAtualizado;
+
+	@FXML
+	private TextField tfQuantMaoAtualizado;
 
 	@FXML
 	private TableView<?> tvPacotesAssociados;
@@ -115,13 +147,11 @@ public class ViewPacoteController implements Initializable {
 				return null;
 			}
 		};
-		
+
 		if (tfNome.getText().isEmpty() || tfValor.getText().isEmpty() || tfValorMao.getText().isEmpty()
-				|| tfQuantMao.getText().isEmpty() || tfQuantPe.getText().isEmpty()
-				|| tfValorPe.getText().isEmpty()) {
+				|| tfQuantMao.getText().isEmpty() || tfQuantPe.getText().isEmpty() || tfValorPe.getText().isEmpty()) {
 			Notificacoes.mostraNotificacao("Aviso!", "Preencha todos os campos!");
-		}
-		else {
+		} else {
 			piStatus.setVisible(true);
 			labelStatus.setVisible(true);
 			parada = true;
@@ -132,7 +162,7 @@ public class ViewPacoteController implements Initializable {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
-					
+
 					DaoPacote.salvarPacote(tfNome, tfValor, tfValorMao, tfQuantMao, tfQuantPe, tfValorPe);
 					carregaTabelaPacote();
 					parada = false;
@@ -158,10 +188,126 @@ public class ViewPacoteController implements Initializable {
 		}
 	}
 
+	@FXML
+	public void onBtExcluiPacoteAction() {
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				piStatus.setVisible(false);
+				labelStatus.setVisible(false);
+				return null;
+			}
+		};
+		if (Alerts.showAlertGenerico("ATENÇÃO!", "Deseja mesmo excluír um pacote?",
+				"Pacotes só serão desativados, para excluí-los no " + "banco de dados, contate o ADMINISTRADOR!")) {
+			piStatus.setVisible(true);
+			labelStatus.setVisible(true);
+			labelStatus.setText("Excluíndo pacote!");
+			parada = true;
+			Task<Void> acaoExcluiPacote = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+
+					for (Pacote pacote : Colecao.pacotes) {
+						if (pacote.getSelect().isSelected()) {
+							DaoPacote.excluiPacote(pacote);
+						}
+					}
+					carregaTabelaPacote();
+					parada = false;
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(acaoExcluiPacote);
+				t.start();
+			});
+		} else {
+			Notificacoes.mostraNotificacao("Aviso!", "Operação cancelada");
+		}
+	}
+
+	@FXML
+	public void selecionaPacote() {
+		Pacote pacote = tvPacotes.getSelectionModel().getSelectedItem();
+		tfNomeAtualizado.setText(pacote.getPacote());
+		tfQuantMaoAtualizado.setText(String.valueOf(pacote.getQuantMao()));
+		tfQuantPeAtualizado.setText(String.valueOf(pacote.getQuantPe()));
+		tfValorAtualizado.setText(String.valueOf(pacote.getValor()));
+		tfValorMaoAtualizado.setText(String.valueOf(pacote.getPrecoMao()));
+		tfIdPacote.setText(String.valueOf(pacote.getId()));
+		tfValorPeAtualizado.setText(String.valueOf(pacote.getPrecoPe()));
+	}
+
+	@FXML
+	public void onBtAtualizaPacoteAction() {
+		if (Alerts.showAlertGenerico("AVISO!", "Deseja mesmo atualizar um pacote?",
+				"ATENÇÃO\n\nAtualizar um pacote não vai alterar pacotes antigos associados a um cliente!")) {
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					while (parada == true) {
+						Thread.sleep(0);
+					}
+					piStatus.setVisible(false);
+					labelStatus.setVisible(false);
+					return null;
+				}
+			};
+
+			piStatus.setVisible(true);
+			labelStatus.setVisible(true);
+			labelStatus.setText("Atualizando pacote!");
+
+			parada = true;
+			Task<Void> acaoAtualizaPacote = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+					DaoPacote.atualizaPacote(tfNomeAtualizado, tfValorAtualizado, tfValorMaoAtualizado, tfQuantMaoAtualizado, tfQuantPeAtualizado, tfValorPeAtualizado, tfIdPacote);
+					carregaTabelaPacote();
+					parada = false;
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							tfValorAtualizado.setText("");
+							tfNomeAtualizado.setText("");
+							tfValorMaoAtualizado.setText("");
+							tfValorPeAtualizado.setText("");
+							tfQuantMaoAtualizado.setText("");
+							tfQuantPeAtualizado.setText("");
+							tfIdPacote.setText("");
+						}
+					});
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(acaoAtualizaPacote);
+				t.start();
+			});
+		} else {
+			Notificacoes.mostraNotificacao("AVISO!", "Operação cancelada!");
+		}
+	}
+
 	public void carregaTabelaPacote() {
 		tvPacotes.setItems(null);
 		obPacote = FXCollections.observableArrayList(Colecao.pacotes);
 		tvPacotes.setItems(obPacote);
+		tvPacotes.refresh();
 	}
 
 	@Override
@@ -171,8 +317,9 @@ public class ViewPacoteController implements Initializable {
 		colunaQuantMao.setCellValueFactory(new PropertyValueFactory<>("quantMao"));
 		colunaQuantPe.setCellValueFactory(new PropertyValueFactory<>("quantPe"));
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-		ColunaValorMao.setCellValueFactory(new PropertyValueFactory<>("precoMao"));
-		ColunaValorPe.setCellValueFactory(new PropertyValueFactory<>("precoPe"));
+		colunaValorMao.setCellValueFactory(new PropertyValueFactory<>("precoMao"));
+		colunaValorPe.setCellValueFactory(new PropertyValueFactory<>("precoPe"));
+		colunaExcluirPacote.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaTabelaPacote();
 	}
 
