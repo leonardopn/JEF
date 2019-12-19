@@ -77,7 +77,6 @@ public class Pacote implements Comparable<Pacote>{
 
 	@Override
 	public String toString() {
-		return "Pacote [id=" + id + ", pacote=" + pacote + ", valor=" + valor + ", quantPe=" + quantPe + ", quantMao="
-				+ quantMao + ", precoMao=" + precoMao + ", precoPe=" + precoPe + "]";
+		return pacote;
 	}
 }

@@ -64,6 +64,12 @@ public class ViewPacoteController implements Initializable {
 
 	@FXML
 	private Button btAtualizaPacote;
+	
+	@FXML
+	private Button btAddAssociacao;
+	
+	@FXML
+	private Button btExcluiAssociacao;
 
 	@FXML
 	private TextField tfNome;
@@ -126,7 +132,7 @@ public class ViewPacoteController implements Initializable {
 	private TextField tfCliente;
 
 	@FXML
-	private ChoiceBox<?> cbPacote;
+	private ChoiceBox<Pacote> cbPacote;
 
 	@FXML
 	private ProgressIndicator piStatus;
@@ -309,6 +315,16 @@ public class ViewPacoteController implements Initializable {
 		tvPacotes.setItems(obPacote);
 		tvPacotes.refresh();
 	}
+	
+	@FXML
+	public void onBtCriaAssociacaoAction() {
+		//Preencher
+	}
+	
+	@FXML
+	public void onBtExcluiAssociacaoAction() {
+		//Preencher
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -321,6 +337,7 @@ public class ViewPacoteController implements Initializable {
 		colunaValorPe.setCellValueFactory(new PropertyValueFactory<>("precoPe"));
 		colunaExcluirPacote.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaTabelaPacote();
+		cbPacote.setItems(obPacote);
 	}
 
 }
