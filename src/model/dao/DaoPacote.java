@@ -6,11 +6,14 @@ import java.sql.SQLException;
 
 import db.DB;
 import gui.util.Alerts;
-import javafx.scene.control.Alert.AlertType;
 import javafx.application.Platform;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import model.collection.Colecao;
+import model.collection.entities.Cliente;
 import model.collection.entities.Pacote;
+import model.collection.entities.PacoteAssociado;
 
 public class DaoPacote {
 	static private PreparedStatement st = null;
@@ -113,6 +116,57 @@ public class DaoPacote {
 			DB.closeConnection();
 			DB.fechaStatement(st);
 		}
+	}
 
+	public static void carregaPacoteAssociado() {
+		Colecao.pacoteAssociados.clear();
+		try {
+			st = DB.getConnection().prepareStatement("select * from pacotes_associados pa inner join cliente c on (c.idcliente = pa.idcliente) inner join pacotes p on (p.id = pa.idpacote)");
+			rs = st.executeQuery();
+			while(rs.next()) {
+				PacoteAssociado pacoteAssociado = new PacoteAssociado(rs.getInt("pa.id"), rs.getString("c.nome"), rs.getString("p.nome"), rs.getInt("pa.quant_mao"), rs.getInt("pa.quant_pe"));
+				Colecao.pacoteAssociados.add(pacoteAssociado);
+			}
+		} catch (SQLException e) {
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
+					AlertType.ERROR);
+		} finally {
+			DB.closeConnection();
+			DB.fechaStatement(st);
+			DB.fechaResultSet(rs);
+		}
+	}
+
+	public static void salvarPacoteAssociado(TextField tfCliente, ChoiceBox<Pacote> cbPacote) {
+		try {
+			int idCliente = -1;
+			st = DB.getConnection()
+					.prepareStatement("insert into pacotes_associados " + "(idcliente, idpacote) " + "values (?, ?)");
+			for (Cliente cliente : Colecao.clientes) {
+				if (cliente.getNome().contentEquals(tfCliente.getText())) {
+					idCliente = cliente.getId();
+					st.setInt(1, idCliente);
+					st.setInt(2, cbPacote.getValue().getId());
+					st.executeQuery();
+					carregaPacoteAssociado();
+				}
+			}
+
+			if (idCliente == -1) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						Alerts.showAlert("AVISO", "Nenhum cliente encontrado para associar! ", "", AlertType.ERROR);
+					}
+				});
+			}
+
+		} catch (SQLException e) {
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
+					AlertType.ERROR);
+		} finally {
+			DB.closeConnection();
+			DB.fechaStatement(st);
+		}
 	}
 }

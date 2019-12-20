@@ -135,11 +135,12 @@
                      <children>
                         <TableView fx:id="tvPacotesAssociados" layoutX="10.0" layoutY="10.0" prefHeight="311.0" prefWidth="663.0">
                           <columns>
-                            <TableColumn fx:id="calunaIdCliente" prefWidth="56.0" text="ID" />
-                            <TableColumn fx:id="colunaCliente" prefWidth="270.0" text="Cliente" />
-                              <TableColumn fx:id="colunaPacoteAssociado" prefWidth="126.0" text="Pacote" />
-                              <TableColumn fx:id="colunaQuantMaoAssociado" prefWidth="107.0" text="Quantidade Mão" />
-                              <TableColumn fx:id="colunaQuantPeAssociado" minWidth="7.0" prefWidth="103.0" text="Quantidade Pé" />
+                            <TableColumn fx:id="colunaIdPacoteAssociado" prefWidth="56.0" text="ID" />
+                            <TableColumn fx:id="colunaCliente" prefWidth="235.0" text="Cliente" />
+                              <TableColumn fx:id="colunaPacoteAssociado" prefWidth="102.0" text="Pacote" />
+                              <TableColumn fx:id="colunaQuantMaoAssociado" minWidth="0.0" prefWidth="105.0" text="Quantidade Mão" />
+                              <TableColumn fx:id="colunaQuantPeAssociado" minWidth="7.0" prefWidth="98.0" text="Quantidade Pé" />
+                              <TableColumn fx:id="colunaExcluirPacoteAssociado" prefWidth="65.0" text="Excluir?" />
                           </columns>
                         </TableView>
                         <Pane layoutX="10.0" layoutY="330.0" prefHeight="135.0" prefWidth="384.0" style="-fx-border-color: #cccccc;">

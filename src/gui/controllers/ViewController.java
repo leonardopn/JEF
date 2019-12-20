@@ -566,6 +566,7 @@ public class ViewController implements Initializable {
 		DaoFuncionario.carregaFuncionario();
 		DaoTransacao.carregaCaixa();
 		DaoPacote.carregaPacote();
+		DaoPacote.carregaPacoteAssociado();
 	}
 
 	@Override

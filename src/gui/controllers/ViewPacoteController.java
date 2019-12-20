@@ -1,7 +1,11 @@
 package gui.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 
 import gui.util.Alerts;
 import gui.util.Notificacoes;
@@ -21,12 +25,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.collection.Colecao;
+import model.collection.entities.Cliente;
 import model.collection.entities.Pacote;
+import model.collection.entities.PacoteAssociado;
 import model.dao.DaoPacote;
 
 public class ViewPacoteController implements Initializable {
 
 	ObservableList<Pacote> obPacote;
+	ObservableList<PacoteAssociado> obPacotesAssociados;
+	ArrayList<Cliente> teste = new ArrayList<>();
+	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 	private boolean parada;
 
 	@FXML
@@ -64,10 +73,10 @@ public class ViewPacoteController implements Initializable {
 
 	@FXML
 	private Button btAtualizaPacote;
-	
+
 	@FXML
 	private Button btAddAssociacao;
-	
+
 	@FXML
 	private Button btExcluiAssociacao;
 
@@ -111,22 +120,25 @@ public class ViewPacoteController implements Initializable {
 	private TextField tfQuantMaoAtualizado;
 
 	@FXML
-	private TableView<?> tvPacotesAssociados;
+	private TableView<PacoteAssociado> tvPacotesAssociados;
 
 	@FXML
-	private TableColumn<?, ?> calunaIdCliente;
+	private TableColumn<PacoteAssociado, Integer> colunaIdPacoteAssociado;
 
 	@FXML
-	private TableColumn<?, ?> colunaCliente;
+	private TableColumn<PacoteAssociado, String> colunaCliente;
 
 	@FXML
-	private TableColumn<?, ?> colunaPacoteAssociado;
+	private TableColumn<PacoteAssociado, String> colunaPacoteAssociado;
 
 	@FXML
-	private TableColumn<?, ?> colunaQuantMaoAssociado;
+	private TableColumn<PacoteAssociado, Integer> colunaQuantMaoAssociado;
 
 	@FXML
-	private TableColumn<?, ?> colunaQuantPeAssociado;
+	private TableColumn<PacoteAssociado, Integer> colunaQuantPeAssociado;
+	
+	@FXML
+	private TableColumn<PacoteAssociado, CheckBox> colunaExcluirPacoteAssociado;
 
 	@FXML
 	private TextField tfCliente;
@@ -171,6 +183,7 @@ public class ViewPacoteController implements Initializable {
 
 					DaoPacote.salvarPacote(tfNome, tfValor, tfValorMao, tfQuantMao, tfQuantPe, tfValorPe);
 					carregaTabelaPacote();
+					cbPacote.setItems(obPacote);
 					parada = false;
 					Platform.runLater(new Runnable() {
 						@Override
@@ -227,6 +240,7 @@ public class ViewPacoteController implements Initializable {
 						}
 					}
 					carregaTabelaPacote();
+					cbPacote.setItems(obPacote);
 					parada = false;
 					return null;
 				}
@@ -255,57 +269,65 @@ public class ViewPacoteController implements Initializable {
 
 	@FXML
 	public void onBtAtualizaPacoteAction() {
-		if (Alerts.showAlertGenerico("AVISO!", "Deseja mesmo atualizar um pacote?",
-				"ATENÇÃO\n\nAtualizar um pacote não vai alterar pacotes antigos associados a um cliente!")) {
-			Task<Void> tarefa = new Task<Void>() {
-				@Override
-				protected Void call() throws Exception {
-					while (parada == true) {
-						Thread.sleep(0);
-					}
-					piStatus.setVisible(false);
-					labelStatus.setVisible(false);
-					return null;
-				}
-			};
-
-			piStatus.setVisible(true);
-			labelStatus.setVisible(true);
-			labelStatus.setText("Atualizando pacote!");
-
-			parada = true;
-			Task<Void> acaoAtualizaPacote = new Task<Void>() {
-				@Override
-				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
-						Thread t = new Thread(tarefa);
-						t.start();
-					});
-					DaoPacote.atualizaPacote(tfNomeAtualizado, tfValorAtualizado, tfValorMaoAtualizado, tfQuantMaoAtualizado, tfQuantPeAtualizado, tfValorPeAtualizado, tfIdPacote);
-					carregaTabelaPacote();
-					parada = false;
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							tfValorAtualizado.setText("");
-							tfNomeAtualizado.setText("");
-							tfValorMaoAtualizado.setText("");
-							tfValorPeAtualizado.setText("");
-							tfQuantMaoAtualizado.setText("");
-							tfQuantPeAtualizado.setText("");
-							tfIdPacote.setText("");
-						}
-					});
-					return null;
-				}
-			};
-
-			javafx.application.Platform.runLater(() -> {
-				Thread t = new Thread(acaoAtualizaPacote);
-				t.start();
-			});
+		if (tfIdPacote.getText().isEmpty()) {
+			Notificacoes.mostraNotificacao("AVISO!", "Selecione um pacote primeiro!");
 		} else {
-			Notificacoes.mostraNotificacao("AVISO!", "Operação cancelada!");
+			if (Alerts.showAlertGenerico("AVISO!", "Deseja mesmo atualizar um pacote?",
+					"ATENÇÃO\n\nAtualizar um pacote não vai alterar pacotes antigos associados a um cliente!")) {
+				Task<Void> tarefa = new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+						while (parada == true) {
+							Thread.sleep(0);
+						}
+						piStatus.setVisible(false);
+						labelStatus.setVisible(false);
+						return null;
+					}
+				};
+
+				piStatus.setVisible(true);
+				labelStatus.setVisible(true);
+				labelStatus.setText("Atualizando pacote!");
+
+				parada = true;
+				Task<Void> acaoAtualizaPacote = new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+						javafx.application.Platform.runLater(() -> {
+							Thread t = new Thread(tarefa);
+							t.start();
+						});
+						DaoPacote.atualizaPacote(tfNomeAtualizado, tfValorAtualizado, tfValorMaoAtualizado,
+								tfQuantMaoAtualizado, tfQuantPeAtualizado, tfValorPeAtualizado, tfIdPacote);
+						DaoPacote.carregaPacoteAssociado();
+						carregaTabelaPacote();
+						carregaTabelaPacoteAssociado();
+						cbPacote.setItems(obPacote);
+						parada = false;
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								tfValorAtualizado.setText("");
+								tfNomeAtualizado.setText("");
+								tfValorMaoAtualizado.setText("");
+								tfValorPeAtualizado.setText("");
+								tfQuantMaoAtualizado.setText("");
+								tfQuantPeAtualizado.setText("");
+								tfIdPacote.setText("");
+							}
+						});
+						return null;
+					}
+				};
+
+				javafx.application.Platform.runLater(() -> {
+					Thread t = new Thread(acaoAtualizaPacote);
+					t.start();
+				});
+			} else {
+				Notificacoes.mostraNotificacao("AVISO!", "Operação cancelada!");
+			}
 		}
 	}
 
@@ -316,18 +338,27 @@ public class ViewPacoteController implements Initializable {
 		tvPacotes.refresh();
 	}
 	
+	public void carregaTabelaPacoteAssociado() {
+		tvPacotesAssociados.setItems(null);
+		obPacotesAssociados = FXCollections.observableArrayList(Colecao.pacoteAssociados);
+		tvPacotesAssociados.setItems(obPacotesAssociados);
+		tvPacotesAssociados.refresh();
+	}
+
 	@FXML
 	public void onBtCriaAssociacaoAction() {
-		//Preencher
+		DaoPacote.salvarPacoteAssociado(tfCliente, cbPacote);
+		carregaTabelaPacoteAssociado();
 	}
-	
+
 	@FXML
 	public void onBtExcluiAssociacaoAction() {
-		//Preencher
+		// Preencher
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colunaPacote.setCellValueFactory(new PropertyValueFactory<>("pacote"));
 		colunaQuantMao.setCellValueFactory(new PropertyValueFactory<>("quantMao"));
@@ -336,7 +367,16 @@ public class ViewPacoteController implements Initializable {
 		colunaValorMao.setCellValueFactory(new PropertyValueFactory<>("precoMao"));
 		colunaValorPe.setCellValueFactory(new PropertyValueFactory<>("precoPe"));
 		colunaExcluirPacote.setCellValueFactory(new PropertyValueFactory<>("select"));
+		
+		colunaIdPacoteAssociado.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colunaPacoteAssociado.setCellValueFactory(new PropertyValueFactory<>("pacote"));
+		colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
+		colunaQuantMaoAssociado.setCellValueFactory(new PropertyValueFactory<>("quantMao"));
+		colunaQuantPeAssociado.setCellValueFactory(new PropertyValueFactory<>("quantPe"));
+		colunaExcluirPacoteAssociado.setCellValueFactory(new PropertyValueFactory<>("select"));
+		
 		carregaTabelaPacote();
+		carregaTabelaPacoteAssociado();
 		cbPacote.setItems(obPacote);
 	}
 
