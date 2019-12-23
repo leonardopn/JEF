@@ -31,7 +31,7 @@ public class Main extends Application {
 			stage.setScene(login);
 			stage.centerOnScreen();
 			stage.show();
-			stage.setResizable(false);
+			stage.setResizable(true);
 			closeRequestProgram();
 			
 		} catch (IOException e) {

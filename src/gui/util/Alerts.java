@@ -1,8 +1,11 @@
 package gui.util;
 
+import java.util.Optional;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 
 public class Alerts {
 	static boolean teste;
@@ -75,5 +78,19 @@ public class Alerts {
 			}
 		});
 		return teste;
+	}
+	
+	public static String showAlertGenericoTextField(String titulo, String avisoCentral, String subAviso) {
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle(titulo);
+		dialog.setHeaderText(avisoCentral);
+		dialog.setContentText(subAviso);
+
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()){
+		   return result.get();
+		}
+
+		return "00,00";
 	}
 }

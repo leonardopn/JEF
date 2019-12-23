@@ -23,6 +23,7 @@ import gui.util.Alerts;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.collection.Colecao;
 import model.collection.entities.Caixa;
@@ -110,17 +111,24 @@ public class DaoTransacao {
 		}
 	}
 
-	public static void salvarCaixa(LocalDate dpData, double total, double cartao, double dinheiro) {
+	public static void salvarCaixa(LocalDate dpData, double fundoDeTroco) {
 		try {
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
-			Date data = formataData.parse(dpData.toString());
-			st = DB.getConnection().prepareStatement("REPLACE INTO caixa "
-					+ "(total, data, total_cartao, total_dinheiro) " + "VALUES " + "(?, ?, ?, ? )");
-			st.setDouble(1, total);
-			st.setDate(2, new java.sql.Date(data.getTime()));
-			st.setDouble(3, cartao);
-			st.setDouble(4, dinheiro);
-			st.execute();
+			Date data = formataData.parse(dpData.plusDays(-1).toString());
+			st = DB.getConnection().prepareStatement("select * from caixa where data = ?");
+			st.setDate(1, new java.sql.Date(data.getTime()));
+			rs = st.executeQuery();
+			while(rs.next()){
+				dpData.plusDays(1);
+				data = formataData.parse(dpData.toString());
+				st = DB.getConnection().prepareStatement("REPLACE INTO caixa "
+						+ "(data, fundoDeTroco, montanteAnterior) " + "VALUES " + "(?, ?, ?)");
+				st.setDate(1, new java.sql.Date(data.getTime()));
+				st.setDouble(2, fundoDeTroco);
+				st.setDouble(3, rs.getDouble("montanteTotal"));
+				st.execute();
+			}
+			
 		} catch (SQLException | ParseException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
@@ -172,15 +180,19 @@ public class DaoTransacao {
 		}
 	}
 
-	public static void atualizarTotalCaixa(String data, double total, double cartao, double dinheiro) {
+	public static void carregaTotalCaixa(Label totalCartao, Label totalDinheiro, Label valorTotalBruto, Label totalCaixa, LocalDate data) {
+		boolean count = true;
 		try {
-			st = DB.getConnection().prepareStatement("UPDATE fechamento_caixa "
-					+ "SET total = ?, total_cartao = ?, total_dinheiro = ?" + "WHERE data=?");
-			st.setDouble(1, total);
-			st.setDouble(2, cartao);
-			st.setDouble(3, dinheiro);
-			st.setString(4, data);
-			st.execute();
+			DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			st = DB.getConnection().prepareStatement("select * from caixa where data = ?");
+			st.setString(1, localDateFormatadaProcura.format(data));
+			rs = st.executeQuery();
+			while(rs.next()) {
+				totalCartao.setText(String.valueOf(String.format("%.2f", rs.getDouble("total_cartao"))));
+				totalDinheiro.setText(String.valueOf(String.format("%.2f", rs.getDouble("total_dinheiro"))));
+				valorTotalBruto.setText(String.valueOf(String.format("%.2f", rs.getDouble("totalDoDia"))));
+				totalCaixa.setText(String.valueOf(String.format("%.2f", rs.getDouble("fundoDeTroco"))));
+			}
 		} catch (SQLException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);

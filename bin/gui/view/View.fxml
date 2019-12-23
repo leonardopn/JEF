@@ -40,7 +40,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="669.0" prefWidth="0.0">
                <children>
-                  <GridPane layoutX="10.0" layoutY="11.0" prefHeight="281.0" prefWidth="111.0" vgap="10.0">
+                  <GridPane layoutX="10.0" layoutY="37.0" prefHeight="281.0" prefWidth="111.0" vgap="30.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -48,6 +48,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -83,29 +84,43 @@
                                  </image>
                               </ImageView>
                            </graphic></Button>
+                        <Button fx:id="btPacote" mnemonicParsing="false" onAction="#onBtAbrePacoteAction" prefHeight="62.0" prefWidth="62.0" GridPane.rowIndex="4">
+                           <graphic>
+                              <ImageView fitHeight="54.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_package_128px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </GridPane>
-                  <Label layoutX="81.0" layoutY="39.0" text="Funcionários">
+                  <Label layoutX="84.0" layoutY="47.0" text="Funcionários">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="81.0" layoutY="107.0" text="Clientes">
+                  <Label layoutX="85.0" layoutY="108.0" text="Clientes">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="83.0" layoutY="179.0" text="Caixa">
+                  <Label layoutX="85.0" layoutY="170.0" text="Caixa">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="82.0" layoutY="254.0" text="Pagamento">
+                  <Label layoutX="85.0" layoutY="233.0" text="Pagamento">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <Label layoutX="92.0" layoutY="647.0" text="Versão 2.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="13.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="86.0" layoutY="294.0" text="Pacotes">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
