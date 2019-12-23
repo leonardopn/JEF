@@ -55,27 +55,27 @@
                                                    </children>
                                                 </VBox>
                                                 <TextField fx:id="tfNome" layoutX="75.0" layoutY="13.0" minHeight="0.0" minWidth="0.0" prefHeight="26.0" prefWidth="133.0" />
-                                                <TextField fx:id="tfValorMao" layoutX="75.0" layoutY="118.0" prefHeight="25.0" prefWidth="74.0" />
                                                 <TextField fx:id="tfValor" layoutX="75.0" layoutY="49.0" prefHeight="25.0" prefWidth="74.0" />
                                                 <TextField fx:id="tfValorPe" layoutX="75.0" layoutY="83.0" prefHeight="25.0" prefWidth="74.0" />
+                                                <TextField fx:id="tfValorMao" layoutX="75.0" layoutY="118.0" prefHeight="25.0" prefWidth="74.0" />
                                                 <TextField fx:id="tfQuantMao" layoutX="337.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0" />
                                                 <TextField fx:id="tfQuantPe" layoutX="337.0" layoutY="49.0" prefHeight="25.0" prefWidth="47.0" />
                                                 <Label layoutX="239.0" layoutY="53.0" text="Quantidade Pé:" />
                                                 <Label layoutX="227.0" layoutY="18.0" text="Quantidade Mão:" />
-                                                <Button fx:id="btExcluiPacote" layoutX="378.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtExcluiPacoteAction" text="Excluir">
-                                                   <graphic>
-                                                      <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../model/images/icons8_trash_48px.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
                                                 <Button fx:id="btAddPacote" layoutX="276.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtCriaPacoteAction" text="Adicionar">
                                                    <graphic>
                                                       <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@../../model/images/icons8_add_96px_1.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="btExcluiPacote" layoutX="378.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtExcluiPacoteAction" text="Excluir">
+                                                   <graphic>
+                                                      <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../model/images/icons8_trash_48px.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -101,12 +101,14 @@
                                                 </VBox>
                                                 <TextField fx:id="tfNomeAtualizado" layoutX="75.0" layoutY="13.0" minHeight="0.0" minWidth="0.0" prefHeight="26.0" prefWidth="133.0" />
                                                 <TextField fx:id="tfValorAtualizado" layoutX="75.0" layoutY="49.0" prefHeight="25.0" prefWidth="74.0" />
-                                                <TextField fx:id="tfValorMaoAtualizado" layoutX="75.0" layoutY="118.0" prefHeight="25.0" prefWidth="74.0" />
                                                 <TextField fx:id="tfValorPeAtualizado" layoutX="75.0" layoutY="83.0" prefHeight="25.0" prefWidth="74.0" />
+                                                <TextField fx:id="tfValorMaoAtualizado" layoutX="75.0" layoutY="118.0" prefHeight="25.0" prefWidth="74.0" />
                                                 <TextField fx:id="tfQuantMaoAtualizado" layoutX="337.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0" />
                                                 <TextField fx:id="tfQuantPeAtualizado" layoutX="337.0" layoutY="49.0" prefHeight="25.0" prefWidth="47.0" />
+                                                <TextField fx:id="tfIdPacote" disable="true" editable="false" layoutX="337.0" layoutY="83.0" prefHeight="25.0" prefWidth="47.0" />
                                                 <Label layoutX="239.0" layoutY="53.0" text="Quantidade Pé:" />
                                                 <Label layoutX="227.0" layoutY="18.0" text="Quantidade Mão:" />
+                                                <Label layoutX="305.0" layoutY="87.0" text="ID:" />
                                                 <Button fx:id="btAtualizaPacote" layoutX="296.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtAtualizaPacoteAction" text="Atualizar">
                                                    <graphic>
                                                       <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
@@ -116,8 +118,6 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </Button>
-                                                <TextField fx:id="tfIdPacote" disable="true" editable="false" layoutX="337.0" layoutY="83.0" prefHeight="25.0" prefWidth="47.0" />
-                                                <Label layoutX="305.0" layoutY="87.0" text="ID:" />
                                              </children>
                                           </Pane>
                                        </children></AnchorPane>
@@ -156,9 +156,9 @@
                                 </rowConstraints>
                                  <children>
                                     <TextField fx:id="tfCliente" GridPane.columnIndex="1" />
+                                    <ChoiceBox fx:id="cbPacote" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Label text="Cliente" />
                                     <Label text="Pacote" GridPane.rowIndex="1" />
-                                    <ChoiceBox fx:id="cbPacote" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                               <Button fx:id="btAddAssociacao" layoutX="196.0" layoutY="97.0" mnemonicParsing="false" onAction="#onBtCriaAssociacaoAction" text="Adicionar">

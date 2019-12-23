@@ -136,7 +136,7 @@ public class ViewPacoteController implements Initializable {
 
 	@FXML
 	private TableColumn<PacoteAssociado, Integer> colunaQuantPeAssociado;
-	
+
 	@FXML
 	private TableColumn<PacoteAssociado, CheckBox> colunaExcluirPacoteAssociado;
 
@@ -172,6 +172,7 @@ public class ViewPacoteController implements Initializable {
 		} else {
 			piStatus.setVisible(true);
 			labelStatus.setVisible(true);
+			labelStatus.setText("Criando pacote!");
 			parada = true;
 			Task<Void> acaoSalvaPacote = new Task<Void>() {
 				@Override
@@ -239,8 +240,16 @@ public class ViewPacoteController implements Initializable {
 							DaoPacote.excluiPacote(pacote);
 						}
 					}
-					carregaTabelaPacote();
-					cbPacote.setItems(obPacote);
+
+					DaoPacote.carregaPacote();
+
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							carregaTabelaPacote();
+							cbPacote.setItems(obPacote);
+						}
+					});
 					parada = false;
 					return null;
 				}
@@ -337,7 +346,7 @@ public class ViewPacoteController implements Initializable {
 		tvPacotes.setItems(obPacote);
 		tvPacotes.refresh();
 	}
-	
+
 	public void carregaTabelaPacoteAssociado() {
 		tvPacotesAssociados.setItems(null);
 		obPacotesAssociados = FXCollections.observableArrayList(Colecao.pacoteAssociados);
@@ -347,13 +356,100 @@ public class ViewPacoteController implements Initializable {
 
 	@FXML
 	public void onBtCriaAssociacaoAction() {
-		DaoPacote.salvarPacoteAssociado(tfCliente, cbPacote);
-		carregaTabelaPacoteAssociado();
+		if (tfCliente.getText().isEmpty()) {
+			Notificacoes.mostraNotificacao("AVISO!", "Preencha todos os dados!");
+		} else {
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					while (parada == true) {
+						Thread.sleep(0);
+					}
+					piStatus.setVisible(false);
+					labelStatus.setVisible(false);
+					return null;
+				}
+			};
+			piStatus.setVisible(true);
+			labelStatus.setVisible(true);
+			labelStatus.setText("Associando pacote!");
+			parada = true;
+			Task<Void> acaoAdicionaPacoteAssociado = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+					DaoPacote.salvarPacoteAssociado(tfCliente, cbPacote);
+					carregaTabelaPacoteAssociado();
+
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							tfCliente.setText("");
+						}
+					});
+					parada = false;
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(acaoAdicionaPacoteAssociado);
+				t.start();
+			});
+		}
 	}
 
 	@FXML
 	public void onBtExcluiAssociacaoAction() {
-		// Preencher
+		if (Alerts.showAlertGenerico("ATENÇÃO!", "Deseja mesmo excluír uma associação?",
+				"O cliente que estiver associado perdera o pacote!")) {
+
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					while (parada == true) {
+						Thread.sleep(0);
+					}
+					piStatus.setVisible(false);
+					labelStatus.setVisible(false);
+					return null;
+				}
+			};
+			piStatus.setVisible(true);
+			labelStatus.setVisible(true);
+			labelStatus.setText("Excluindo associação!");
+			parada = true;
+			Task<Void> acaoExcluiPacoteAssociado = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+
+					for (PacoteAssociado pacote : Colecao.pacoteAssociados) {
+						if (pacote.getSelect().isSelected()) {
+							DaoPacote.excluirPacoteAssociado(pacote);
+						}
+					}
+					DaoPacote.carregaPacoteAssociado();
+					carregaTabelaPacoteAssociado();
+					parada = false;
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(acaoExcluiPacoteAssociado);
+				t.start();
+			});
+
+		} else {
+			Notificacoes.mostraNotificacao("AVISO!", "Operação cancelada!");
+		}
 	}
 
 	@Override
@@ -367,17 +463,20 @@ public class ViewPacoteController implements Initializable {
 		colunaValorMao.setCellValueFactory(new PropertyValueFactory<>("precoMao"));
 		colunaValorPe.setCellValueFactory(new PropertyValueFactory<>("precoPe"));
 		colunaExcluirPacote.setCellValueFactory(new PropertyValueFactory<>("select"));
-		
+
 		colunaIdPacoteAssociado.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colunaPacoteAssociado.setCellValueFactory(new PropertyValueFactory<>("pacote"));
 		colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		colunaQuantMaoAssociado.setCellValueFactory(new PropertyValueFactory<>("quantMao"));
 		colunaQuantPeAssociado.setCellValueFactory(new PropertyValueFactory<>("quantPe"));
 		colunaExcluirPacoteAssociado.setCellValueFactory(new PropertyValueFactory<>("select"));
-		
+
 		carregaTabelaPacote();
 		carregaTabelaPacoteAssociado();
 		cbPacote.setItems(obPacote);
+		if (!obPacote.isEmpty()) {
+			cbPacote.setValue(obPacote.get(0));
+		}
 	}
 
 }

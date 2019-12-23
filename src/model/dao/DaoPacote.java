@@ -78,7 +78,6 @@ public class DaoPacote {
 			st = DB.getConnection().prepareStatement("update pacotes set status = 0 where id = ?");
 			st.setInt(1, pacote.getId());
 			st.executeQuery();
-			carregaPacote();
 		} catch (SQLException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
@@ -168,5 +167,19 @@ public class DaoPacote {
 			DB.closeConnection();
 			DB.fechaStatement(st);
 		}
+	}
+
+	public static void excluirPacoteAssociado(PacoteAssociado pacote) {
+		try {
+			st = DB.getConnection().prepareStatement("delete from pacotes_associados where id = ?");
+			st.setInt(1, pacote.getId());
+			st.executeQuery();
+		} catch (SQLException e) {
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
+					AlertType.ERROR);
+		} finally {
+			DB.closeConnection();
+			DB.fechaStatement(st);
+		}	
 	}
 }

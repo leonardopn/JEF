@@ -38,6 +38,8 @@ import model.dao.DaoTransacao;
 
 public class ViewCaixaController implements Initializable {
 
+	double totalJaEmCaixa;
+	
 	ObservableList<Cliente> obCliente;
 
 	ObservableList<Transacao> obTable;
@@ -92,6 +94,9 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Label lbStatus;
+	
+	@FXML
+	private Label lbTotalEmCaixa;
 
 	@FXML
 	private Label lbTroco;
@@ -211,6 +216,10 @@ public class ViewCaixaController implements Initializable {
 			lbStatus.setText("Aberto");
 			Caixa.setStatus(true);
 			DaoTransacao.salvarStatus();
+			if(lbValorTotal.getText().equals("0.0")) {
+				lbTotalEmCaixa.setText(Alerts.showAlertGenericoTextField("AVISO!", "Informe quanto dinheiro tem no caixa\n*UTILIZE SÓ NÚMEROS", "Valor: "));
+				totalJaEmCaixa = Double.parseDouble(lbTotalEmCaixa.getText().replaceAll(",", "."));
+			}
 			bloqueio();
 		} else {
 			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
@@ -239,6 +248,9 @@ public class ViewCaixaController implements Initializable {
 				totalCartao += tran.getValor();
 			}
 		}
+		if(dpSelecao.getValue().toString().equals(LocalDate.now().toString())) {
+			lbTotalEmCaixa.setText(String.format("%.2f", totalJaEmCaixa+totalDinheiro));
+		}
 		lbValorTotal.setText(String.valueOf(total));
 		lbValorDinheiro.setText(String.valueOf(totalDinheiro));
 		lbValorCartao.setText(String.valueOf(totalCartao));
@@ -254,7 +266,7 @@ public class ViewCaixaController implements Initializable {
 			Thread t = new Thread(taskDaoTransacao);
 			t.start();
 		});
-
+		System.out.println(totalJaEmCaixa);
 	}
 
 	public void carregaFuncionario() {
