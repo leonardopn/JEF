@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1059.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1059.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
    <children>
       <Line endX="898.0" endY="-1.0000076293945312" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
       <Button fx:id="btAbrirFecharCaixa" layoutX="12.0" layoutY="55.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="46.0" prefWidth="150.0">
@@ -87,17 +89,17 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="29.0" prefWidth="192.0" text="Valor total:" GridPane.rowIndex="1">
+            <Label prefHeight="29.0" prefWidth="192.0" text="Faturado no dia:" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label text="Valor em dinheiro:" GridPane.rowIndex="2">
+            <Label text="Transação em dinheiro:" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label text="Valor em cartão:" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <Label text="Transação em cartão:" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
@@ -162,15 +164,14 @@
             <ProgressIndicator fx:id="piStatus" visible="false" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <GridPane layoutX="781.0" layoutY="4.0" prefHeight="30.0" prefWidth="278.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="134.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="8.0" prefWidth="35.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="109.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
+      <Button fx:id="btAjuda" layoutX="985.0" layoutY="3.0" mnemonicParsing="false" onAction="#onBtAjudaAction" text="Ajuda">
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_question_mark_512px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

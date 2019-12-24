@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.PopOver;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -58,6 +59,9 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Button btVoltar;
+	
+	@FXML
+	private Button btAjuda;
 
 	@FXML
 	private Button btExcluir;
@@ -222,7 +226,7 @@ public class ViewCaixaController implements Initializable {
 				fundoDeTroco = Double.parseDouble(lbTotalEmCaixa.getText().replaceAll(",", "."));
 			
 			DaoTransacao.salvarCaixa(dpData.getValue(), fundoDeTroco);
-			calculaCaixa();
+			carregaCaixa();
 			bloqueio();
 		} else {
 			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
@@ -236,7 +240,34 @@ public class ViewCaixaController implements Initializable {
 
 	}
 
-	public void calculaCaixa() {
+	public void carregaCaixa() {
+		DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa, dpSelecao.getValue());
+//		Task<Void> taskDaoTransacao = new Task<Void>() {
+//			@Override
+//			protected Void call() throws Exception {
+//				
+//				return null;
+//			}
+//		};
+//		javafx.application.Platform.runLater(() -> {
+//			Thread t = new Thread(taskDaoTransacao);
+//			t.start();
+//		});
+	}
+	
+	public void calculaCaixa(TextField tfValor, ChoiceBox<String> cbPagamento) {
+		double valotTotal = Double.parseDouble(lbValorTotal.getText().replaceAll(",", "."));
+		double valorDinheiro = Double.parseDouble(lbValorDinheiro.getText().replaceAll(",", "."));
+		double valorCartao = Double.parseDouble(lbValorCartao.getText().replaceAll(",", "."));
+		if(cbPagamento.getValue().equals("Dinheiro")) {
+			valorDinheiro += Double.parseDouble(tfValor.getText().replaceAll(",", "."));
+			fundoDeTroco += Double.parseDouble(tfValor.getText().replaceAll(",", "."));
+		}
+		else {
+			valorCartao += Double.parseDouble(tfValor.getText().replaceAll(",", "."));
+		}
+		
+		DaoTransacao.calculaCaixa(dpData.getValue(), fundoDeTroco, valotTotal, valorDinheiro, valorCartao);
 		DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa, dpSelecao.getValue());
 //		Task<Void> taskDaoTransacao = new Task<Void>() {
 //			@Override
@@ -280,6 +311,12 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	@FXML
+	public void onBtAjudaAction() {
+		PopOver popOver = new PopOver();
+		popOver.show(btAjuda);
+	}
+	
+	@FXML
 	public void onBtEnviarTransacaoAction() {
 		if (tfCliente.getText().isEmpty() || tfValor.getText().isEmpty()
 				|| cbFormaPagamento.getSelectionModel().isEmpty() || cbFuncionario.getSelectionModel().isEmpty()) {
@@ -317,10 +354,12 @@ public class ViewCaixaController implements Initializable {
 					});
 					DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
 							cbFormaPagamento);
-					carregaTransacao();
+					
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
+							calculaCaixa(tfValor, cbFormaPagamento);
+							carregaTransacao();
 							tfValor.setText("");
 							cbFuncionario.getSelectionModel().clearSelection();
 							cbFormaPagamento.getSelectionModel().clearSelection();
@@ -437,7 +476,7 @@ public class ViewCaixaController implements Initializable {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						calculaCaixa();
+						carregaCaixa();
 					}
 				});
 				parada = false;

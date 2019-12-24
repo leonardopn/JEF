@@ -111,6 +111,40 @@ public class DaoTransacao {
 		}
 	}
 
+	public static void calculaCaixa(LocalDate dpData, double fundoDeTroco, double valorTotal, double valorDinheiro,
+			double valorCartao) {
+		
+		valorTotal = fundoDeTroco + valorCartao;
+		try {
+			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+			Date data = formataData.parse(dpData.toString());
+			
+			st = DB.getConnection().prepareStatement("select * from caixa where data = ?");
+			st.setDate(1, new java.sql.Date(data.getTime()));
+			rs = st.executeQuery();
+			while (rs.next()) {
+				st = DB.getConnection().prepareStatement(
+						"update caixa " + "set fundoDeTroco = ?, totalDoDia = ?, total_dinheiro = ?, total_cartao = ?, montanteTotal = ? where data = ?");
+				st.setDate(6, new java.sql.Date(data.getTime()));
+				st.setDouble(1, fundoDeTroco);
+				st.setDouble(2, valorTotal);
+				st.setDouble(3, valorDinheiro);
+				st.setDouble(4, valorCartao);
+				st.setDouble(5, (rs.getDouble("montanteAnterior") + valorDinheiro + valorCartao));
+				st.execute();
+			}
+
+		} catch (SQLException |
+
+				ParseException e) {
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
+					AlertType.ERROR);
+		} finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
+	}
+
 	public static void salvarCaixa(LocalDate dpData, double fundoDeTroco) {
 		try {
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,17 +152,18 @@ public class DaoTransacao {
 			st = DB.getConnection().prepareStatement("select * from caixa where data = ?");
 			st.setDate(1, new java.sql.Date(data.getTime()));
 			rs = st.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				dpData.plusDays(1);
 				data = formataData.parse(dpData.toString());
-				st = DB.getConnection().prepareStatement("REPLACE INTO caixa "
-						+ "(data, fundoDeTroco, montanteAnterior) " + "VALUES " + "(?, ?, ?)");
+				st = DB.getConnection().prepareStatement(
+						"REPLACE INTO caixa " + "(data, fundoDeTroco, montanteAnterior, montanteTotal) " + "VALUES " + "(?, ?, ?, ?)");
 				st.setDate(1, new java.sql.Date(data.getTime()));
 				st.setDouble(2, fundoDeTroco);
 				st.setDouble(3, rs.getDouble("montanteTotal"));
+				st.setDouble(4, rs.getDouble("montanteTotal"));
 				st.execute();
 			}
-			
+
 		} catch (SQLException | ParseException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
@@ -180,14 +215,14 @@ public class DaoTransacao {
 		}
 	}
 
-	public static void carregaTotalCaixa(Label totalCartao, Label totalDinheiro, Label valorTotalBruto, Label totalCaixa, LocalDate data) {
-		boolean count = true;
+	public static void carregaTotalCaixa(Label totalCartao, Label totalDinheiro, Label valorTotalBruto,
+			Label totalCaixa, LocalDate data) {
 		try {
 			DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			st = DB.getConnection().prepareStatement("select * from caixa where data = ?");
 			st.setString(1, localDateFormatadaProcura.format(data));
 			rs = st.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				totalCartao.setText(String.valueOf(String.format("%.2f", rs.getDouble("total_cartao"))));
 				totalDinheiro.setText(String.valueOf(String.format("%.2f", rs.getDouble("total_dinheiro"))));
 				valorTotalBruto.setText(String.valueOf(String.format("%.2f", rs.getDouble("totalDoDia"))));
