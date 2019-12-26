@@ -35,6 +35,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.collection.Colecao;
 import model.collection.entities.Agendamento;
+import model.collection.entities.Caixa;
 import model.collection.entities.Cliente;
 import model.collection.entities.Funcionario;
 import model.dao.DaoAgendamento;
@@ -564,7 +565,7 @@ public class ViewController implements Initializable {
 	public static void carregarBase() {
 		DaoCliente.carregaCliente();
 		DaoFuncionario.carregaFuncionario();
-		DaoTransacao.carregaCaixa();
+		Caixa.setStatus(DaoTransacao.carregaCaixa());
 		DaoPacote.carregaPacote();
 		DaoPacote.carregaPacoteAssociado();
 	}

@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -40,6 +41,7 @@ import model.dao.DaoTransacao;
 public class ViewCaixaController implements Initializable {
 
 	double fundoDeTroco;
+	private int statusCaixa;
 
 	ObservableList<Cliente> obCliente;
 
@@ -59,7 +61,7 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Button btVoltar;
-	
+
 	@FXML
 	private Button btAjuda;
 
@@ -214,34 +216,44 @@ public class ViewCaixaController implements Initializable {
 	@FXML
 	public void onBtAbrirFecharCaixaAction() {
 		if (Caixa.isStatus() == false) {
-			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#ff0606"));
-			btAbrirFecharCaixa.setText("Fechar Caixa!");
-			lbStatus.setTextFill(Paint.valueOf("#10bf24"));
-			lbStatus.setText("Aberto");
-			Caixa.setStatus(true);
-			DaoTransacao.salvarStatus();
-			
+			if (statusCaixa != 0) {
 				lbTotalEmCaixa.setText(Alerts.showAlertGenericoTextField("AVISO!",
 						"Informe quanto dinheiro tem no caixa\n*UTILIZE SÓ NÚMEROS", "Valor: "));
 				fundoDeTroco = Double.parseDouble(lbTotalEmCaixa.getText().replaceAll(",", "."));
-			
-			DaoTransacao.salvarCaixa(dpData.getValue(), fundoDeTroco);
-			carregaCaixa();
-			bloqueio();
+				btAbrirFecharCaixa.setTextFill(Paint.valueOf("#ff0606"));
+				btAbrirFecharCaixa.setText("Fechar Caixa!");
+				lbStatus.setTextFill(Paint.valueOf("#10bf24"));
+				lbStatus.setText("Aberto");
+				Caixa.setStatus(true);
+				DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, true);
+				carregaCaixa();
+				bloqueio();
+			} else {
+				Alerts.showAlert("AVISO!", "Caixa ja fechado!",
+						"\nO caixa foi fechado uma vez HOJE, não existe a opção para reabri-lo, por favor, fale com o ADMINISTRADOR!",
+						AlertType.WARNING);
+			}
+
 		} else {
 			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
 			btAbrirFecharCaixa.setText("Abrir Caixa!");
 			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
 			lbStatus.setText("Fechado");
 			Caixa.setStatus(false);
-			DaoTransacao.salvarStatus();
+			statusCaixa = 0;
+			DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, false);
 			bloqueio();
 		}
-
 	}
 
 	public void carregaCaixa() {
-		DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa, dpSelecao.getValue());
+		if (dpSelecao.getValue().toString().equals(LocalDate.now().toString())) {
+			btAbrirFecharCaixa.setDisable(false);
+		} else {
+			btAbrirFecharCaixa.setDisable(true);
+		}
+		statusCaixa = DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa,
+				dpSelecao.getValue());
 //		Task<Void> taskDaoTransacao = new Task<Void>() {
 //			@Override
 //			protected Void call() throws Exception {
@@ -254,21 +266,21 @@ public class ViewCaixaController implements Initializable {
 //			t.start();
 //		});
 	}
-	
-	public void calculaCaixa(TextField tfValor, ChoiceBox<String> cbPagamento) {
+
+	public void calculaCaixa(String valor, String formaPagamento) {
 		double valotTotal = Double.parseDouble(lbValorTotal.getText().replaceAll(",", "."));
 		double valorDinheiro = Double.parseDouble(lbValorDinheiro.getText().replaceAll(",", "."));
 		double valorCartao = Double.parseDouble(lbValorCartao.getText().replaceAll(",", "."));
-		if(cbPagamento.getValue().equals("Dinheiro")) {
-			valorDinheiro += Double.parseDouble(tfValor.getText().replaceAll(",", "."));
-			fundoDeTroco += Double.parseDouble(tfValor.getText().replaceAll(",", "."));
+		if (formaPagamento.equals("Dinheiro")) {
+			valorDinheiro += Double.parseDouble(valor);
+			fundoDeTroco += Double.parseDouble(valor);
+		} else {
+			valorCartao += Double.parseDouble(valor);
 		}
-		else {
-			valorCartao += Double.parseDouble(tfValor.getText().replaceAll(",", "."));
-		}
-		
+
 		DaoTransacao.calculaCaixa(dpData.getValue(), fundoDeTroco, valotTotal, valorDinheiro, valorCartao);
-		DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa, dpSelecao.getValue());
+		statusCaixa = DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa,
+				dpSelecao.getValue());
 //		Task<Void> taskDaoTransacao = new Task<Void>() {
 //			@Override
 //			protected Void call() throws Exception {
@@ -315,7 +327,7 @@ public class ViewCaixaController implements Initializable {
 		PopOver popOver = new PopOver();
 		popOver.show(btAjuda);
 	}
-	
+
 	@FXML
 	public void onBtEnviarTransacaoAction() {
 		if (tfCliente.getText().isEmpty() || tfValor.getText().isEmpty()
@@ -354,11 +366,11 @@ public class ViewCaixaController implements Initializable {
 					});
 					DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
 							cbFormaPagamento);
-					
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							calculaCaixa(tfValor, cbFormaPagamento);
+							calculaCaixa(tfValor.getText().replaceAll(",", "."), cbFormaPagamento.getValue());
 							carregaTransacao();
 							tfValor.setText("");
 							cbFuncionario.getSelectionModel().clearSelection();
@@ -408,7 +420,6 @@ public class ViewCaixaController implements Initializable {
 			};
 
 			Task<Void> acaoExcluirTransacao = new Task<Void>() {
-
 				@Override
 				protected Void call() throws Exception {
 					javafx.application.Platform.runLater(() -> {
