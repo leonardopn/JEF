@@ -41,6 +41,9 @@ import model.dao.DaoTransacao;
 public class ViewCaixaController implements Initializable {
 
 	double fundoDeTroco;
+	double valorTotal;
+	double valorDinheiro;
+	double valorCartao;
 	private int statusCaixa;
 
 	ObservableList<Cliente> obCliente;
@@ -268,9 +271,9 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	public void calculaCaixa(String valor, String formaPagamento) {
-		double valotTotal = Double.parseDouble(lbValorTotal.getText().replaceAll(",", "."));
-		double valorDinheiro = Double.parseDouble(lbValorDinheiro.getText().replaceAll(",", "."));
-		double valorCartao = Double.parseDouble(lbValorCartao.getText().replaceAll(",", "."));
+		valorTotal = Double.parseDouble(lbValorTotal.getText().replaceAll(",", "."));
+		valorDinheiro = Double.parseDouble(lbValorDinheiro.getText().replaceAll(",", "."));
+		valorCartao = Double.parseDouble(lbValorCartao.getText().replaceAll(",", "."));
 		if (formaPagamento.equals("Dinheiro")) {
 			valorDinheiro += Double.parseDouble(valor);
 			fundoDeTroco += Double.parseDouble(valor);
@@ -278,7 +281,7 @@ public class ViewCaixaController implements Initializable {
 			valorCartao += Double.parseDouble(valor);
 		}
 
-		DaoTransacao.calculaCaixa(dpData.getValue(), fundoDeTroco, valotTotal, valorDinheiro, valorCartao);
+		DaoTransacao.calculaCaixa(dpData.getValue(), fundoDeTroco, valorTotal, valorDinheiro, valorCartao);
 		statusCaixa = DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa,
 				dpSelecao.getValue());
 //		Task<Void> taskDaoTransacao = new Task<Void>() {
@@ -499,6 +502,13 @@ public class ViewCaixaController implements Initializable {
 			Thread t = new Thread(acaoCarregaTransacao);
 			t.start();
 		});
+	}
+	
+	public void setaLabels() {
+		lbValorTotal.setText(String.valueOf(String.format("%.2f", valorTotal)));
+		lbValorDinheiro.setText(String.valueOf(String.format("%.2f", valorDinheiro)));
+		lbTotalEmCaixa.setText(String.valueOf(String.format("%.2f", fundoDeTroco)));
+		lbValorCartao.setText(String.valueOf(String.format("%.2f", valorCartao)));
 	}
 
 	@Override
