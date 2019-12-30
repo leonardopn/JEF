@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -18,7 +19,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -30,6 +34,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import model.collection.Colecao;
 import model.collection.entities.Caixa;
@@ -40,11 +46,13 @@ import model.dao.DaoTransacao;
 
 public class ViewCaixaController implements Initializable {
 
-	double fundoDeTroco;
-	double valorTotal;
-	double valorDinheiro;
-	double valorCartao;
+	private static double fundoDeTroco;
+	private static double valorTotal;
+	private static double valorDinheiro;
+	private static double valorCartao;
 	private int statusCaixa;
+	final Image caixaAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
+	final Image caixaFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
 
 	ObservableList<Cliente> obCliente;
 
@@ -63,16 +71,13 @@ public class ViewCaixaController implements Initializable {
 	private boolean parada;
 
 	@FXML
-	private Button btVoltar;
-
-	@FXML
 	private Button btAjuda;
 
 	@FXML
-	private Button btExcluir;
+	private ImageView ivCaixa;
 
 	@FXML
-	private Button btAtualizar;
+	private Button btExcluir;
 
 	@FXML
 	private Button btAbrirFecharCaixa;
@@ -155,10 +160,45 @@ public class ViewCaixaController implements Initializable {
 	@FXML
 	private ProgressIndicator piStatus;
 
+	// GETS & SETS
+
+	public static void setFundoDeTroco(double fundoDeTroco) {
+		ViewCaixaController.fundoDeTroco = fundoDeTroco;
+	}
+
+	public static void setValorTotal(double valorTotal) {
+		ViewCaixaController.valorTotal = valorTotal;
+	}
+
+	public static void setValorDinheiro(double valorDinheiro) {
+		ViewCaixaController.valorDinheiro = valorDinheiro;
+	}
+
+	public static void setValorCartao(double valorCartao) {
+		ViewCaixaController.valorCartao = valorCartao;
+	}
+
+	public static double getFundoDeTroco() {
+		return fundoDeTroco;
+	}
+
+	public static double getValorTotal() {
+		return valorTotal;
+	}
+
+	public static double getValorDinheiro() {
+		return valorDinheiro;
+	}
+
+	public static double getValorCartao() {
+		return valorCartao;
+	}
+
+	// Botão AJUDA
 	@FXML
-	public void onBtVoltarAction() {
-		Main.getStage().setScene(Main.getMain());
-		Main.getStage().centerOnScreen();
+	public void onBtAjudaAction() {
+		PopOver popOver = new PopOver();
+		popOver.show(btAjuda);
 	}
 
 	@FXML
@@ -195,22 +235,13 @@ public class ViewCaixaController implements Initializable {
 		}
 	}
 
-	@FXML
-	public void onBtAtualizarAction() {
-		carregaFuncionario();
-		carregaFormaPagamento();
-
-	}
-
 	public void mudaCaixa() {
 		if (Caixa.isStatus() == false) {
-			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
-			btAbrirFecharCaixa.setText("Abrir Caixa!");
+			ivCaixa.setImage(caixaAberto);
 			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
 			lbStatus.setText("Fechado");
 		} else {
-			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#ff0606"));
-			btAbrirFecharCaixa.setText("Fechar Caixa!");
+			ivCaixa.setImage(caixaFechado);
 			lbStatus.setTextFill(Paint.valueOf("#10bf24"));
 			lbStatus.setText("Aberto");
 		}
@@ -218,117 +249,48 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	public void onBtAbrirFecharCaixaAction() {
+		Parent parent;
+		try {
+			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewLoginConfirmacao.fxml"));
+			Scene scene = new Scene(parent);
+			Main.getStageLoginConfirmacao().setScene(scene);
+			Main.getStageLoginConfirmacao().centerOnScreen();
+			Main.getStageLoginConfirmacao().getIcons()
+					.add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			Main.getStageLoginConfirmacao().setTitle("JEF - Confirmação de Operação");
+			Main.getStageLoginConfirmacao().showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (Caixa.isStatus() == false) {
-			if (statusCaixa != 0) {
-				lbTotalEmCaixa.setText(Alerts.showAlertGenericoTextField("AVISO!",
-						"Informe quanto dinheiro tem no caixa\n*UTILIZE SÓ NÚMEROS", "Valor: "));
-				fundoDeTroco = Double.parseDouble(lbTotalEmCaixa.getText().replaceAll(",", "."));
-				btAbrirFecharCaixa.setTextFill(Paint.valueOf("#ff0606"));
-				btAbrirFecharCaixa.setText("Fechar Caixa!");
-				lbStatus.setTextFill(Paint.valueOf("#10bf24"));
-				lbStatus.setText("Aberto");
-				Caixa.setStatus(true);
-				DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, true);
-				carregaCaixa();
+			if (ViewLoginConfirmacaoController.status == true) {
+				if (statusCaixa != 0) {
+					lbTotalEmCaixa.setText(Alerts.showAlertGenericoTextField("AVISO!",
+							"Informe quanto dinheiro tem no caixa\n*UTILIZE SÓ NÚMEROS", "Valor: "));
+					fundoDeTroco = Double.parseDouble(lbTotalEmCaixa.getText().replaceAll(",", "."));
+					lbStatus.setTextFill(Paint.valueOf("#10bf24"));
+					Caixa.setStatus(true);
+					DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, true);
+					carregaCaixa();
+					bloqueio();
+					ivCaixa.setImage(caixaFechado);
+				} else {
+					Alerts.showAlert("AVISO!", "Caixa ja fechado!",
+							"\nO caixa foi fechado uma vez HOJE, não existe a opção para reabri-lo, por favor, fale com o ADMINISTRADOR!",
+							AlertType.WARNING);
+				}
+			}
+		} else {
+			if (ViewLoginConfirmacaoController.status == true) {
+				lbStatus.setTextFill(Paint.valueOf("#ff0606"));
+				lbStatus.setText("Fechado");
+				Caixa.setStatus(false);
+				statusCaixa = 0;
+				DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, false);
 				bloqueio();
-			} else {
-				Alerts.showAlert("AVISO!", "Caixa ja fechado!",
-						"\nO caixa foi fechado uma vez HOJE, não existe a opção para reabri-lo, por favor, fale com o ADMINISTRADOR!",
-						AlertType.WARNING);
+				ivCaixa.setImage(caixaAberto);
 			}
-
-		} else {
-			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
-			btAbrirFecharCaixa.setText("Abrir Caixa!");
-			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
-			lbStatus.setText("Fechado");
-			Caixa.setStatus(false);
-			statusCaixa = 0;
-			DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, false);
-			bloqueio();
 		}
-	}
-
-	public void carregaCaixa() {
-		if (dpSelecao.getValue().toString().equals(LocalDate.now().toString())) {
-			btAbrirFecharCaixa.setDisable(false);
-		} else {
-			btAbrirFecharCaixa.setDisable(true);
-		}
-		statusCaixa = DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa,
-				dpSelecao.getValue());
-//		Task<Void> taskDaoTransacao = new Task<Void>() {
-//			@Override
-//			protected Void call() throws Exception {
-//				
-//				return null;
-//			}
-//		};
-//		javafx.application.Platform.runLater(() -> {
-//			Thread t = new Thread(taskDaoTransacao);
-//			t.start();
-//		});
-	}
-
-	public void calculaCaixa(String valor, String formaPagamento) {
-		valorTotal = Double.parseDouble(lbValorTotal.getText().replaceAll(",", "."));
-		valorDinheiro = Double.parseDouble(lbValorDinheiro.getText().replaceAll(",", "."));
-		valorCartao = Double.parseDouble(lbValorCartao.getText().replaceAll(",", "."));
-		if (formaPagamento.equals("Dinheiro")) {
-			valorDinheiro += Double.parseDouble(valor);
-			fundoDeTroco += Double.parseDouble(valor);
-		} else {
-			valorCartao += Double.parseDouble(valor);
-		}
-
-		DaoTransacao.calculaCaixa(dpData.getValue(), fundoDeTroco, valorTotal, valorDinheiro, valorCartao);
-		statusCaixa = DaoTransacao.carregaTotalCaixa(lbValorCartao, lbValorDinheiro, lbValorTotal, lbTotalEmCaixa,
-				dpSelecao.getValue());
-//		Task<Void> taskDaoTransacao = new Task<Void>() {
-//			@Override
-//			protected Void call() throws Exception {
-//				
-//				return null;
-//			}
-//		};
-//		javafx.application.Platform.runLater(() -> {
-//			Thread t = new Thread(taskDaoTransacao);
-//			t.start();
-//		});
-	}
-
-	public void carregaFuncionario() {
-		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
-		cbFuncionario.setItems(obFuncionario);
-	}
-
-	public void carregaFormaPagamento() {
-		List<String> listMetPag = Arrays.asList("Dinheiro", "Cartão");
-		obFormaPagamento = FXCollections.observableArrayList(listMetPag);
-		cbFormaPagamento.setItems(obFormaPagamento);
-	}
-
-	public void carregaTable() {
-		Task<Void> acaoCarregaTable = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				obTable = FXCollections.observableArrayList(Caixa.caixa);
-				tvTransacao.setItems(obTable);
-				return null;
-			}
-		};
-
-		javafx.application.Platform.runLater(() -> {
-			Thread t = new Thread(acaoCarregaTable);
-			t.start();
-		});
-
-	}
-
-	@FXML
-	public void onBtAjudaAction() {
-		PopOver popOver = new PopOver();
-		popOver.show(btAjuda);
 	}
 
 	@FXML
@@ -369,11 +331,9 @@ public class ViewCaixaController implements Initializable {
 					});
 					DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
 							cbFormaPagamento);
-
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							calculaCaixa(tfValor.getText().replaceAll(",", "."), cbFormaPagamento.getValue());
 							carregaTransacao();
 							tfValor.setText("");
 							cbFuncionario.getSelectionModel().clearSelection();
@@ -391,6 +351,111 @@ public class ViewCaixaController implements Initializable {
 				t.start();
 			});
 		}
+	}
+
+	public void carregaCaixa() {
+		zeraValores();
+
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				if (dpSelecao.getValue().toString().equals(LocalDate.now().toString())) {
+					btAbrirFecharCaixa.setDisable(false);
+				} else {
+					btAbrirFecharCaixa.setDisable(true);
+				}
+				piStatus.setVisible(true);
+				labelStatus.setVisible(true);
+				labelStatus.setText("Calculando Caixa!");
+			}
+		});
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				piStatus.setVisible(false);
+				labelStatus.setVisible(false);
+				return null;
+			}
+		};
+
+		Task<Void> taskDaoTransacao = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				parada = true;
+				javafx.application.Platform.runLater(() -> {
+					Thread t = new Thread(tarefa);
+					t.start();
+				});
+				statusCaixa = DaoTransacao.carregaTotalCaixa(dpSelecao.getValue());
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						setaLabels();
+					}
+				});
+				parada = false;
+				return null;
+			}
+		};
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(taskDaoTransacao);
+			t.start();
+		});
+	}
+
+	public void carregaTransacao() {
+		parada = true;
+		dpData.setValue(dpSelecao.getValue());
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				piStatus.setVisible(true);
+				labelStatus.setVisible(true);
+				labelStatus.setText("Carregando tabela!");
+			}
+		});
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				piStatus.setVisible(false);
+				labelStatus.setVisible(false);
+				return null;
+			}
+		};
+
+		Task<Void> acaoCarregaTransacao = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				javafx.application.Platform.runLater(() -> {
+					Thread t = new Thread(tarefa);
+					t.start();
+				});
+				DaoTransacao.carregaTransacaoExpecifica(dpSelecao.getValue());
+
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						carregaCaixa();
+						carregaTable();
+					}
+				});
+				parada = false;
+				return null;
+			}
+		};
+
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(acaoCarregaTransacao);
+			t.start();
+		});
 	}
 
 	public void excluirTransacao() {
@@ -434,10 +499,10 @@ public class ViewCaixaController implements Initializable {
 							DaoTransacao.excluirTransacao(tran);
 						}
 					}
-					carregaTransacao();
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
+							carregaTransacao();
 							Notificacoes.mostraNotificacao("Aviso!", "Exclusão Concluída!");
 						}
 					});
@@ -454,61 +519,34 @@ public class ViewCaixaController implements Initializable {
 		}
 	}
 
-	public void carregaTransacao() {
-		parada = true;
-		dpData.setValue(dpSelecao.getValue());
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				piStatus.setVisible(true);
-				labelStatus.setVisible(true);
-				labelStatus.setText("Carregando tabela!");
-			}
-		});
-		Task<Void> tarefa = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-
-				while (parada == true) {
-					Thread.sleep(0);
-				}
-				piStatus.setVisible(false);
-				labelStatus.setVisible(false);
-				return null;
-			}
-		};
-
-		Task<Void> acaoCarregaTransacao = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				javafx.application.Platform.runLater(() -> {
-					Thread t = new Thread(tarefa);
-					t.start();
-				});
-				DaoTransacao.carregaTransacaoExpecifica(dpSelecao.getValue());
-				carregaTable();
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						carregaCaixa();
-					}
-				});
-				parada = false;
-				return null;
-			}
-		};
-
-		javafx.application.Platform.runLater(() -> {
-			Thread t = new Thread(acaoCarregaTransacao);
-			t.start();
-		});
+	public void carregaFuncionario() {
+		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
+		cbFuncionario.setItems(obFuncionario);
 	}
-	
+
+	public void carregaFormaPagamento() {
+		List<String> listMetPag = Arrays.asList("Dinheiro", "Cartão");
+		obFormaPagamento = FXCollections.observableArrayList(listMetPag);
+		cbFormaPagamento.setItems(obFormaPagamento);
+	}
+
+	public void carregaTable() {
+		obTable = FXCollections.observableArrayList(Caixa.caixa);
+		tvTransacao.setItems(obTable);
+	}
+
 	public void setaLabels() {
 		lbValorTotal.setText(String.valueOf(String.format("%.2f", valorTotal)));
 		lbValorDinheiro.setText(String.valueOf(String.format("%.2f", valorDinheiro)));
 		lbTotalEmCaixa.setText(String.valueOf(String.format("%.2f", fundoDeTroco)));
 		lbValorCartao.setText(String.valueOf(String.format("%.2f", valorCartao)));
+	}
+
+	public void zeraValores() {
+		setValorTotal(0.0);
+		setValorDinheiro(0.0);
+		setFundoDeTroco(0.0);
+		setValorCartao(0.0);
 	}
 
 	@Override
