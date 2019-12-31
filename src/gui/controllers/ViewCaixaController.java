@@ -50,7 +50,7 @@ public class ViewCaixaController implements Initializable {
 	private static double valorTotal;
 	private static double valorDinheiro;
 	private static double valorCartao;
-	private int statusCaixa;
+	private static int statusCaixa;
 	final Image caixaAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
 	final Image caixaFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
 
@@ -194,6 +194,10 @@ public class ViewCaixaController implements Initializable {
 		return valorCartao;
 	}
 
+	public static void setStatusCaixa(int statusCaixa) {
+		ViewCaixaController.statusCaixa = statusCaixa;
+	}
+
 	// Botão AJUDA
 	@FXML
 	public void onBtAjudaAction() {
@@ -262,33 +266,35 @@ public class ViewCaixaController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (Caixa.isStatus() == false) {
-			if (ViewLoginConfirmacaoController.status == true) {
-				if (statusCaixa != 0) {
+		if (ViewLoginConfirmacaoController.status == true) {
+			if (Caixa.isStatus() == false) {
+				if (statusCaixa == 0) {
+					Alerts.showAlert("AVISO!", "Caixa ja fechado!",
+							"\nO caixa foi fechado uma vez HOJE, não existe a opção para reabri-lo, por favor, fale com o ADMINISTRADOR!",
+							AlertType.WARNING);
+				}
+				else {
 					lbTotalEmCaixa.setText(Alerts.showAlertGenericoTextField("AVISO!",
 							"Informe quanto dinheiro tem no caixa\n*UTILIZE SÓ NÚMEROS", "Valor: "));
 					fundoDeTroco = Double.parseDouble(lbTotalEmCaixa.getText().replaceAll(",", "."));
 					lbStatus.setTextFill(Paint.valueOf("#10bf24"));
+					statusCaixa = 1;
+					lbStatus.setText("Aberto");
 					Caixa.setStatus(true);
 					DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, true);
 					carregaCaixa();
 					bloqueio();
 					ivCaixa.setImage(caixaFechado);
-				} else {
-					Alerts.showAlert("AVISO!", "Caixa ja fechado!",
-							"\nO caixa foi fechado uma vez HOJE, não existe a opção para reabri-lo, por favor, fale com o ADMINISTRADOR!",
-							AlertType.WARNING);
 				}
 			}
-		} else {
-			if (ViewLoginConfirmacaoController.status == true) {
-				lbStatus.setTextFill(Paint.valueOf("#ff0606"));
-				lbStatus.setText("Fechado");
-				Caixa.setStatus(false);
-				statusCaixa = 0;
-				DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, false);
-				bloqueio();
-				ivCaixa.setImage(caixaAberto);
+			else {
+					lbStatus.setTextFill(Paint.valueOf("#ff0606"));
+					lbStatus.setText("Fechado");
+					Caixa.setStatus(false);
+					bloqueio();
+					statusCaixa = 0;
+					DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, false);
+					ivCaixa.setImage(caixaAberto);
 			}
 		}
 	}

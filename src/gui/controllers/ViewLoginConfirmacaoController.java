@@ -76,6 +76,7 @@ public class ViewLoginConfirmacaoController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		status = false;
 		btLogin.setDefaultButton(true);
 	}
 }

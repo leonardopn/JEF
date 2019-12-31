@@ -82,12 +82,21 @@ public class DaoTransacao {
 
 	public static boolean carregaCaixa() {
 		try {
+			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			st = DB.getConnection().prepareStatement("select * from caixa order by data");
 			rs = st.executeQuery();
 			rs.last();
 			int i = rs.getInt("status");
+			String data = formataData.format(rs.getDate("data"));
 			if (i == 0) {
-				return false;
+				if(data.equals(LocalDate.now().toString())) {
+					ViewCaixaController.setStatusCaixa(0);
+					return false;
+				}
+				else {
+					ViewCaixaController.setStatusCaixa(1);
+					return false;
+				}	
 			} else {
 				return true;
 			}
