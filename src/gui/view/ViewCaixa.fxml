@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1190.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="1190.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
    <children>
       <Line endX="1029.0" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
       <Button fx:id="btAbrirFecharCaixa" layoutX="43.0" layoutY="55.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="69.0" prefWidth="88.0">
@@ -279,5 +280,6 @@
             </Label>
          </children>
       </GridPane>
+      <TreeView fx:id="trvServicos" layoutX="10.0" layoutY="505.0" onMouseClicked="#printaValores" prefHeight="146.0" prefWidth="151.0" />
    </children>
 </AnchorPane>

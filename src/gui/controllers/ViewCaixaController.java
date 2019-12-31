@@ -33,6 +33,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -72,6 +74,9 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Button btAjuda;
+	
+	@FXML
+	private TreeView<String> trvServicos;
 
 	@FXML
 	private ImageView ivCaixa;
@@ -205,6 +210,40 @@ public class ViewCaixaController implements Initializable {
 		popOver.show(btAjuda);
 	}
 
+	
+	public void carregaTreeView() {
+		TreeItem<String> servicos = new TreeItem<String>("Serviços");
+		
+		servicos.setExpanded(true);
+		
+		TreeItem<String> simples = new TreeItem<String>("Simples");
+		TreeItem<String> fibraDeVidro = new TreeItem<String>("Fibra de Vidro");
+		TreeItem<String> extra = new TreeItem<String>("Extras");
+		TreeItem<String> combos = new TreeItem<String>("Combos");
+		
+		servicos.getChildren().add(simples);
+		servicos.getChildren().add(fibraDeVidro);
+		servicos.getChildren().add(extra);
+		servicos.getChildren().add(combos);
+		
+		
+		TreeItem<String> pe = new TreeItem<String>("Pé");
+		TreeItem<String> mao = new TreeItem<String>("Mão");
+		TreeItem<String> infantil = new TreeItem<String>("Esmaltação Infantil");
+		
+		simples.getChildren().addAll(pe, mao, infantil);
+		
+		
+		trvServicos.setRoot(servicos);
+		
+	}
+	
+	public void printaValores() {
+		System.out.println(trvServicos.getSelectionModel().getSelectedItem().getValue());
+	}
+	
+	
+	
 	@FXML
 	public void calculaTroco() {
 		if (tfValorServico.getText().isEmpty() || tfDinheiroDado.getText().isEmpty()) {
@@ -574,5 +613,6 @@ public class ViewCaixaController implements Initializable {
 		cbFuncionarioTemp = this.cbFuncionario;
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
 		carregaTransacao();
+		carregaTreeView();
 	}
 }
