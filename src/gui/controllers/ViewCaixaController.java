@@ -41,8 +41,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import model.collection.Colecao;
 import model.collection.entities.Caixa;
+import model.collection.entities.Categoria;
 import model.collection.entities.Cliente;
 import model.collection.entities.Funcionario;
+import model.collection.entities.Servico;
 import model.collection.entities.Transacao;
 import model.dao.DaoTransacao;
 
@@ -98,12 +100,18 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private TextField tfValorServico;
+	
+	@FXML
+	private CheckBox cbBloqueiaPreco;
 
 	@FXML
 	private TextField tfDinheiroDado;
 
 	@FXML
 	private TextField tfCliente;
+	
+	@FXML
+	private TextField tfObs;
 
 	@FXML
 	private ChoiceBox<Funcionario> cbFuncionario;
@@ -140,6 +148,12 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private TableColumn<Transacao, Integer> colunaId;
+	
+	@FXML
+	private TableColumn<Transacao, String> colunaServico;
+	
+	@FXML
+	private TableColumn<Transacao, String> colunaObs;
 
 	@FXML
 	private TableColumn<Transacao, String> colunaData;
@@ -213,36 +227,38 @@ public class ViewCaixaController implements Initializable {
 	
 	public void carregaTreeView() {
 		TreeItem<String> servicos = new TreeItem<String>("Serviços");
-		
 		servicos.setExpanded(true);
 		
-		TreeItem<String> simples = new TreeItem<String>("Simples");
-		TreeItem<String> fibraDeVidro = new TreeItem<String>("Fibra de Vidro");
-		TreeItem<String> extra = new TreeItem<String>("Extras");
-		TreeItem<String> combos = new TreeItem<String>("Combos");
-		
-		servicos.getChildren().add(simples);
-		servicos.getChildren().add(fibraDeVidro);
-		servicos.getChildren().add(extra);
-		servicos.getChildren().add(combos);
-		
-		
-		TreeItem<String> pe = new TreeItem<String>("Pé");
-		TreeItem<String> mao = new TreeItem<String>("Mão");
-		TreeItem<String> infantil = new TreeItem<String>("Esmaltação Infantil");
-		
-		simples.getChildren().addAll(pe, mao, infantil);
-		
+		for (Categoria catg : Colecao.categorias) {
+			catg.getSelect().setIndeterminate(true);
+			catg.getSelect().setAllowIndeterminate(true);
+			catg.getSelect().setDisable(true);
+			
+			TreeItem<String> categoria = new TreeItem<String>(catg.getNome());
+			servicos.getChildren().add(categoria);
+			for (Servico serv : Colecao.servicos) {
+				if(serv.getCategoria().equals(catg.getNome())) {
+					TreeItem<String> servico = new TreeItem<String>(serv.getNome());
+					categoria.getChildren().add(servico);
+				}
+			}
+		}
 		
 		trvServicos.setRoot(servicos);
-		
 	}
 	
 	public void printaValores() {
-		System.out.println(trvServicos.getSelectionModel().getSelectedItem().getValue());
+		if(trvServicos.getSelectionModel().getSelectedItem() != null) {
+			if(trvServicos.getSelectionModel().getSelectedItem().isLeaf() ) {
+				String servico = trvServicos.getSelectionModel().getSelectedItem().getValue();
+				for (Servico servi : Colecao.servicos) {
+					if(servi.getNome().equals(servico)) {
+						tfValor.setText(String.valueOf(servi.getPreco()));
+					}
+				}
+			}
+		}
 	}
-	
-	
 	
 	@FXML
 	public void calculaTroco() {
@@ -586,6 +602,15 @@ public class ViewCaixaController implements Initializable {
 		lbTotalEmCaixa.setText(String.valueOf(String.format("%.2f", fundoDeTroco)));
 		lbValorCartao.setText(String.valueOf(String.format("%.2f", valorCartao)));
 	}
+	
+	public void bloqDesbloqValor() {
+		if(cbBloqueiaPreco.isSelected()) {
+			tfValor.setDisable(true);
+		}
+		else {
+			tfValor.setDisable(false);
+		}
+	}
 
 	public void zeraValores() {
 		setValorTotal(0.0);
@@ -614,5 +639,6 @@ public class ViewCaixaController implements Initializable {
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
 		carregaTransacao();
 		carregaTreeView();
+		bloqDesbloqValor();
 	}
 }

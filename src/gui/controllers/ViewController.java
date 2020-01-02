@@ -42,6 +42,7 @@ import model.dao.DaoAgendamento;
 import model.dao.DaoCliente;
 import model.dao.DaoFuncionario;
 import model.dao.DaoPacote;
+import model.dao.DaoServico;
 import model.dao.DaoTransacao;
 
 public class ViewController implements Initializable {
@@ -563,6 +564,8 @@ public class ViewController implements Initializable {
 	}
 
 	public static void carregarBase() {
+		DaoServico.carregaServicos();
+		DaoServico.carregaCategoria();
 		DaoCliente.carregaCliente();
 		DaoFuncionario.carregaFuncionario();
 		Caixa.setStatus(DaoTransacao.carregaCaixa());
