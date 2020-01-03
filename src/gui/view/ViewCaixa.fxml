@@ -6,6 +6,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -19,7 +21,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="1344.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1377.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
    <children>
       <Line endX="1183.0" endY="7.62939453125E-6" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
       <Button fx:id="btAbrirFecharCaixa" layoutX="45.0" layoutY="46.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="63.0" prefWidth="164.0">
@@ -35,10 +37,7 @@
          </graphic></Button>
       <Line endX="1233.0" layoutX="111.0" layoutY="137.0" startX="-110.0" stroke="#827f7f" />
       <Line endX="100.0" endY="549.0" layoutX="155.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
-      <Label layoutX="42.0" layoutY="151.0" text="Cliente:" />
-      <Label layoutX="39.0" layoutY="217.0" text="Atendente:" />
-      <Label layoutX="43.0" layoutY="280.0" text="Data" />
-      <ChoiceBox fx:id="cbFuncionario" layoutX="10.0" layoutY="235.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label layoutX="43.0" layoutY="280.0" text="Data:" />
       <DatePicker fx:id="dpData" layoutX="9.0" layoutY="298.0" prefHeight="25.0" prefWidth="150.0" />
       <TextField fx:id="tfValor" layoutX="10.0" layoutY="359.0" prefHeight="26.0" prefWidth="151.0" />
       <Label layoutX="41.0" layoutY="341.0" text="Valor:" />
@@ -130,7 +129,7 @@
         </columns>
       </TableView>
       <ChoiceBox fx:id="cbFormaPagamento" layoutX="9.0" layoutY="418.0" prefWidth="150.0" />
-      <Label layoutX="43.0" layoutY="399.0" text="Forma de pagamento" />
+      <Label layoutX="43.0" layoutY="399.0" text="Forma de pagamento:" />
       <Line endX="1228.0" layoutX="116.0" layoutY="631.0" startX="141.0" stroke="#827f7f" />
       <Button fx:id="btExcluir" layoutX="371.0" layoutY="642.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="32.0" prefWidth="79.0" text="Excluir">
          <graphic>
@@ -140,7 +139,6 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <TextField fx:id="tfCliente" layoutX="10.0" layoutY="170.0" prefHeight="26.0" prefWidth="234.0" />
       <GridPane layoutX="266.0" layoutY="51.0" prefHeight="65.0" prefWidth="403.0" vgap="10.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="202.0" />
@@ -238,16 +236,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../model/images/icons8_businesswoman_48px.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../model/images/icons8_female_worker_48px.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_calendar_48px.png" />
@@ -284,15 +272,15 @@
             </Label>
          </children>
       </GridPane>
-      <TreeView fx:id="trvServicos" layoutX="10.0" layoutY="535.0" onMouseClicked="#printaValores" prefHeight="122.0" prefWidth="234.0" />
+      <TreeView fx:id="trvServicos" layoutX="10.0" layoutY="535.0" onMouseClicked="#selecionaServico" prefHeight="122.0" prefWidth="234.0" />
       <TextField fx:id="tfObs" layoutX="10.0" layoutY="477.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label layoutX="43.0" layoutY="460.0" text="Observação" />
+      <Label layoutX="43.0" layoutY="460.0" text="Observação:" />
       <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="12.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_talk_80px.png" />
          </image>
       </ImageView>
-      <Label layoutX="38.0" layoutY="517.0" text="Serviços" />
+      <Label layoutX="38.0" layoutY="517.0" text="Serviços:" />
       <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="9.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_moleskine_96px_1.png" />
@@ -319,5 +307,56 @@
             <Button fx:id="btCalTroco" mnemonicParsing="false" onAction="#calculaTroco" prefHeight="25.0" prefWidth="37.0" text="=" GridPane.rowIndex="2" />
          </children>
       </GridPane>
+      <TabPane layoutX="-1.0" layoutY="138.0" prefHeight="133.0" prefWidth="255.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Transação">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="39.0" layoutY="5.0" text="Cliente:" />
+                        <Label layoutX="36.0" layoutY="58.0" text="Atendente:" />
+                        <ChoiceBox fx:id="cbFuncionario" layoutX="7.0" layoutY="76.0" prefHeight="25.0" prefWidth="234.0" />
+                        <TextField fx:id="tfCliente" layoutX="7.0" layoutY="24.0" prefHeight="26.0" prefWidth="234.0" />
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_businesswoman_48px.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="7.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_female_worker_48px.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Associar Pacote">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="255.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_package_128px.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="40.0" layoutY="17.0" text="Pacote associado:" />
+                        <Button fx:id="btBuscar" layoutX="12.0" layoutY="66.0" mnemonicParsing="false" text="Buscar">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_search_48px_1.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Line endX="100.0" layoutX="161.0" layoutY="104.0" startX="-161.0" stroke="#827f7f" />
+                        <ChoiceBox fx:id="cbPacoteAssociado" layoutX="12.0" layoutY="33.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

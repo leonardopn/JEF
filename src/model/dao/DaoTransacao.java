@@ -29,7 +29,7 @@ public class DaoTransacao {
 	static private ResultSet rs = null;
 
 	public static void salvarTransacao(TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData,
-			TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
+			TextField tfValor, ChoiceBox<String> cbFormaPagamento, String servico, String obs) {
 		try {
 			int clienteId = 0;
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
@@ -48,8 +48,10 @@ public class DaoTransacao {
 						"Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
 				tfCliente.setText("");
 			} else {
-				st = DB.getConnection().prepareStatement("INSERT INTO transacao "
-						+ "(idcliente, cpffuncionario, formapagamento, data, valor) " + "VALUES " + "(?, ?, ?, ?, ?)");
+				st = DB.getConnection()
+						.prepareStatement("INSERT INTO transacao "
+								+ "(idcliente, cpffuncionario, formapagamento, data, valor, obs, servico) " + "VALUES "
+								+ "(?, ?, ?, ?, ?, ?, ?)");
 
 				double valor = Double.parseDouble(tfValor.getText().replaceAll(",", "."));
 				st.setInt(1, clienteId);
@@ -57,6 +59,8 @@ public class DaoTransacao {
 				st.setString(3, cbFormaPagamento.getValue());
 				st.setDate(4, new java.sql.Date(data.getTime()));
 				st.setDouble(5, valor);
+				st.setString(6, obs);
+				st.setString(7, servico);
 				st.execute();
 			}
 		} catch (SQLException e) {
@@ -89,19 +93,17 @@ public class DaoTransacao {
 			int i = rs.getInt("status");
 			String data = formataData.format(rs.getDate("data"));
 			if (i == 0) {
-				if(data.equals(LocalDate.now().toString())) {
+				if (data.equals(LocalDate.now().toString())) {
 					ViewCaixaController.setStatusCaixa(0);
 					return false;
-				}
-				else {
+				} else {
 					ViewCaixaController.setStatusCaixa(1);
 					return false;
-				}	
-			} else {
-				if(data.equals(LocalDate.now().toString())) {
-					return true;
 				}
-				else {
+			} else {
+				if (data.equals(LocalDate.now().toString())) {
+					return true;
+				} else {
 					LocalDate date = LocalDate.parse(data);
 					abreFechaCaixa(date, 0.0, false);
 					ViewCaixaController.setStatusCaixa(1);
@@ -161,7 +163,7 @@ public class DaoTransacao {
 				SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
 				Transacao tran = new Transacao(rs.getInt("t.id"), rs.getDouble("t.valor"), rs.getString("c.nome"),
 						rs.getString("f.nome"), rs.getString("t.formapagamento"),
-						formataData.format(rs.getDate("t.data")));
+						formataData.format(rs.getDate("t.data")), rs.getString("obs"), rs.getString("servico") );
 				Caixa.caixa.add(tran);
 			}
 		} catch (SQLException e) {

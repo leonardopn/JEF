@@ -44,6 +44,7 @@ import model.collection.entities.Caixa;
 import model.collection.entities.Categoria;
 import model.collection.entities.Cliente;
 import model.collection.entities.Funcionario;
+import model.collection.entities.PacoteAssociado;
 import model.collection.entities.Servico;
 import model.collection.entities.Transacao;
 import model.dao.DaoTransacao;
@@ -94,6 +95,9 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Button btCalTroco;
+	
+	@FXML
+	private Button btBuscar;
 
 	@FXML
 	private TextField tfValor;
@@ -103,6 +107,9 @@ public class ViewCaixaController implements Initializable {
 	
 	@FXML
 	private CheckBox cbBloqueiaPreco;
+	
+	@FXML
+	private ChoiceBox<PacoteAssociado> cbPacoteAssociado;
 
 	@FXML
 	private TextField tfDinheiroDado;
@@ -247,17 +254,19 @@ public class ViewCaixaController implements Initializable {
 		trvServicos.setRoot(servicos);
 	}
 	
-	public void printaValores() {
+	public String selecionaServico() {
 		if(trvServicos.getSelectionModel().getSelectedItem() != null) {
 			if(trvServicos.getSelectionModel().getSelectedItem().isLeaf() ) {
 				String servico = trvServicos.getSelectionModel().getSelectedItem().getValue();
 				for (Servico servi : Colecao.servicos) {
 					if(servi.getNome().equals(servico)) {
 						tfValor.setText(String.valueOf(servi.getPreco()));
+						return servico;
 					}
 				}
 			}
 		}
+		return null;
 	}
 	
 	@FXML
@@ -399,14 +408,16 @@ public class ViewCaixaController implements Initializable {
 						t.start();
 					});
 					DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
-							cbFormaPagamento);
+							cbFormaPagamento, selecionaServico(), tfObs.getText());
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
 							carregaTransacao();
+							tfObs.setText("");
 							tfValor.setText("");
 							cbFuncionario.getSelectionModel().clearSelection();
 							cbFormaPagamento.getSelectionModel().clearSelection();
+							trvServicos.getSelectionModel().clearSelection();
 						}
 					});
 					parada = false;
@@ -642,6 +653,8 @@ public class ViewCaixaController implements Initializable {
 		colunaMeioPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
+		colunaObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
+		colunaServico.setCellValueFactory(new PropertyValueFactory<>("servico"));
 		tfClienteTemp = this.tfCliente;
 		cbFuncionarioTemp = this.cbFuncionario;
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
