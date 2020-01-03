@@ -98,7 +98,15 @@ public class DaoTransacao {
 					return false;
 				}	
 			} else {
-				return true;
+				if(data.equals(LocalDate.now().toString())) {
+					return true;
+				}
+				else {
+					LocalDate date = LocalDate.parse(data);
+					abreFechaCaixa(date, 0.0, false);
+					ViewCaixaController.setStatusCaixa(1);
+					return false;
+				}
 			}
 		} catch (SQLException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),

@@ -280,17 +280,25 @@ public class ViewCaixaController implements Initializable {
 			btExcluir.setDisable(true);
 			tfCliente.setDisable(true);
 			cbFuncionario.setDisable(true);
-			dpData.setDisable(true);
 			tfValor.setDisable(true);
+			dpData.setDisable(true);
 			cbFormaPagamento.setDisable(true);
+			cbBloqueiaPreco.setDisable(true);
+			trvServicos.setDisable(true);
+			tfObs.setDisable(true);
 		} else {
 			btEnviarTransacao.setDisable(false);
 			btExcluir.setDisable(false);
 			tfCliente.setDisable(false);
 			cbFuncionario.setDisable(false);
 			dpData.setDisable(false);
-			tfValor.setDisable(false);
+			if(!(cbBloqueiaPreco.isSelected())) {
+				tfValor.setDisable(false);
+			}
 			cbFormaPagamento.setDisable(false);
+			cbBloqueiaPreco.setDisable(false);
+			trvServicos.setDisable(false);
+			tfObs.setDisable(false);
 		}
 	}
 
