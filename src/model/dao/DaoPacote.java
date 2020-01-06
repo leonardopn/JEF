@@ -120,10 +120,12 @@ public class DaoPacote {
 	public static void carregaPacoteAssociado() {
 		Colecao.pacoteAssociados.clear();
 		try {
-			st = DB.getConnection().prepareStatement("select * from pacotes_associados pa inner join cliente c on (c.idcliente = pa.idcliente) inner join pacotes p on (p.id = pa.idpacote)");
+			st = DB.getConnection().prepareStatement(
+					"select * from pacotes_associados pa inner join cliente c on (c.idcliente = pa.idcliente) inner join pacotes p on (p.id = pa.idpacote)");
 			rs = st.executeQuery();
-			while(rs.next()) {
-				PacoteAssociado pacoteAssociado = new PacoteAssociado(rs.getInt("pa.id"), rs.getString("c.nome"), rs.getString("p.nome"), rs.getInt("pa.quant_mao"), rs.getInt("pa.quant_pe"));
+			while (rs.next()) {
+				PacoteAssociado pacoteAssociado = new PacoteAssociado(rs.getInt("pa.id"), rs.getString("c.nome"),
+						rs.getString("p.nome"), rs.getInt("pa.quant_mao"), rs.getInt("pa.quant_pe"));
 				Colecao.pacoteAssociados.add(pacoteAssociado);
 			}
 		} catch (SQLException e) {
@@ -139,13 +141,15 @@ public class DaoPacote {
 	public static void salvarPacoteAssociado(TextField tfCliente, ChoiceBox<Pacote> cbPacote) {
 		try {
 			int idCliente = -1;
-			st = DB.getConnection()
-					.prepareStatement("insert into pacotes_associados " + "(idcliente, idpacote) " + "values (?, ?)");
+			st = DB.getConnection().prepareStatement("insert into pacotes_associados "
+					+ "(idcliente, idpacote, quant_mao, quant_pe) " + "values (?, ?, ?, ?)");
 			for (Cliente cliente : Colecao.clientes) {
 				if (cliente.getNome().contentEquals(tfCliente.getText())) {
 					idCliente = cliente.getId();
 					st.setInt(1, idCliente);
 					st.setInt(2, cbPacote.getValue().getId());
+					st.setInt(3, cbPacote.getValue().getQuantMao());
+					st.setInt(4, cbPacote.getValue().getQuantPe());
 					st.executeQuery();
 					carregaPacoteAssociado();
 				}
@@ -169,6 +173,21 @@ public class DaoPacote {
 		}
 	}
 
+	public static void atualizaPacoteAssociado(PacoteAssociado pacote, String servico) {
+		try {
+			if (servico.equals("Pé"))
+				st = DB.getConnection().prepareStatement("update pacotes_associados set ");
+			st.setInt(1, pacote.getId());
+			st.executeQuery();
+		} catch (SQLException e) {
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
+					AlertType.ERROR);
+		} finally {
+			DB.closeConnection();
+			DB.fechaStatement(st);
+		}
+	}
+
 	public static void excluirPacoteAssociado(PacoteAssociado pacote) {
 		try {
 			st = DB.getConnection().prepareStatement("delete from pacotes_associados where id = ?");
@@ -180,6 +199,6 @@ public class DaoPacote {
 		} finally {
 			DB.closeConnection();
 			DB.fechaStatement(st);
-		}	
+		}
 	}
 }

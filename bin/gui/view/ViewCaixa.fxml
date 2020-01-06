@@ -83,7 +83,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="colunaValor" prefWidth="104.0" text="Valor">
+            <TableColumn fx:id="colunaValor" prefWidth="71.0" text="Valor">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -91,7 +91,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="colunaServico" prefWidth="115.0" text="Serviço">
+            <TableColumn fx:id="colunaServico" prefWidth="148.0" text="Serviço">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -100,7 +100,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="colunaObs" prefWidth="168.0" text="Observação">
+            <TableColumn fx:id="colunaObs" prefWidth="162.0" text="Observação">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -109,7 +109,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-          <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" prefWidth="85.0" sortable="false" text="Data">
+          <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" sortable="false" text="Data">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -118,7 +118,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="colunaSelect" prefWidth="86.0" text="Excluir?">
+            <TableColumn fx:id="colunaSelect" prefWidth="94.0" text="Excluir?">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -335,13 +335,13 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="255.0">
                      <children>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="11.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../model/images/icons8_package_128px.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="40.0" layoutY="17.0" text="Pacote associado:" />
-                        <Button fx:id="btBuscar" layoutX="12.0" layoutY="66.0" mnemonicParsing="false" text="Buscar">
+                        <Label layoutX="40.0" layoutY="52.0" text="Pacote associado:" />
+                        <Button fx:id="btBuscar" layoutX="147.0" layoutY="63.0" mnemonicParsing="false" onAction="#buscaPacoteAssociado" text="Buscar">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -351,7 +351,25 @@
                            </graphic>
                         </Button>
                         <Line endX="100.0" layoutX="161.0" layoutY="104.0" startX="-161.0" stroke="#827f7f" />
-                        <ChoiceBox fx:id="cbPacoteAssociado" layoutX="12.0" layoutY="33.0" prefWidth="150.0" />
+                        <ChoiceBox fx:id="cbPacoteAssociado" layoutX="12.0" layoutY="68.0" prefHeight="25.0" prefWidth="124.0" />
+                        <Button fx:id="btAssociar" layoutX="12.0" layoutY="4.0" mnemonicParsing="false" onAction="#setPacote" text="Associar">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_talk_80px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btLimpar" layoutX="111.0" layoutY="3.0" mnemonicParsing="false" onAction="#limpaPacotes" prefHeight="25.0" prefWidth="86.0" text="Limpar">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_trash_48px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </AnchorPane>
             </content>

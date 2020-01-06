@@ -72,7 +72,7 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private SplitPane splitPaneCentral;
-	
+
 	@FXML
 	private Button btCriaFuncionario;
 
@@ -102,10 +102,10 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private Button btSalvar;
-	
+
 	@FXML
 	private Button btPacote;
-	
+
 	@FXML
 	private ImageView iVSplit;
 
@@ -241,7 +241,7 @@ public class ViewController implements Initializable {
 	public static Scene getCliente() {
 		return cliente;
 	}
-	
+
 	public static Scene getPacote() {
 		return pacote;
 	}
@@ -269,11 +269,10 @@ public class ViewController implements Initializable {
 	public static Stage getStagePagamento() {
 		return stagePagamento;
 	}
-	
+
 	public static Stage getStagePacote() {
 		return stagePacote;
 	}
-	
 
 	// abre páginas
 
@@ -292,7 +291,7 @@ public class ViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void onBtAbrePacoteAction() {
 		try {
@@ -321,7 +320,7 @@ public class ViewController implements Initializable {
 					stageAgenda.show();
 					stageAgenda.centerOnScreen();
 					stageAgenda.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-					stageAgenda.setTitle("JEF - Agendamento");		
+					stageAgenda.setTitle("JEF - Agendamento");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -339,7 +338,7 @@ public class ViewController implements Initializable {
 			stageCliente.show();
 			stageCliente.centerOnScreen();
 			stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-			stageCliente.setTitle("JEF - Cliente");	
+			stageCliente.setTitle("JEF - Cliente");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -354,7 +353,7 @@ public class ViewController implements Initializable {
 			stageCaixa.show();
 			stageCaixa.centerOnScreen();
 			stageCaixa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-			stageCaixa.setTitle("JEF - Caixa");	
+			stageCaixa.setTitle("JEF - Caixa");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -369,7 +368,7 @@ public class ViewController implements Initializable {
 			stagePagamento.show();
 			stagePagamento.centerOnScreen();
 			stagePagamento.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-			stagePagamento.setTitle("JEF - Pagamento");	
+			stagePagamento.setTitle("JEF - Pagamento");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -384,7 +383,7 @@ public class ViewController implements Initializable {
 			stageSobre.show();
 			stageSobre.centerOnScreen();
 			stageSobre.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-			stageSobre.setTitle("JEF - Sobre");	
+			stageSobre.setTitle("JEF - Sobre");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -543,17 +542,15 @@ public class ViewController implements Initializable {
 	}
 
 	// métodos avulsos
-	
+
 	public void abreFechaSplit() {
 		double[] divisor = splitPaneCentral.getDividerPositions();
-		if(divisor[0] < 0.12290909090909091) {
+		if (divisor[0] < 0.12290909090909091) {
 			splitPaneCentral.setDividerPositions(0.1229);
-		}
-		else {
+		} else {
 			splitPaneCentral.setDividerPositions(0.0022);
 		}
 	}
-	
 
 	public void retornaInformacaoAgenda() {
 		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
