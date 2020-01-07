@@ -450,10 +450,31 @@ public class ViewCaixaController implements Initializable {
 						DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
 								cbFormaPagamento, selecionaServico(), tfObs.getText(), -1);
 					} else {
-						DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
-								cbFormaPagamento, selecionaServico(), tfObs.getText(),
-								cbPacoteAssociado.getValue().getId());
-						DaoPacote.carregaPacoteAssociado();
+						if (cbPacoteAssociado.getValue().getQuantMao() < 1 & selecionaServico().contains("Mão(Pacote")) {
+							Platform.runLater(new Runnable() {
+								@Override
+								public void run() {
+									Alerts.showAlert("AVISO!", "Transação cancelada","Esse cliente não possuí mais mãos em seu pacote!",AlertType.WARNING);
+								}
+							});
+							
+						} else {
+							if (cbPacoteAssociado.getValue().getQuantPe() < 1 & selecionaServico().contains("Pé(Pacote")) {
+								Platform.runLater(new Runnable() {
+									@Override
+									public void run() {
+										Alerts.showAlert("AVISO!", "Transação cancelada","Esse cliente não possuí mais pés em seu pacote!",AlertType.WARNING);
+									}
+								});
+							} else {
+								PacoteAssociado pac = cbPacoteAssociado.getValue();
+								String text = "Pacote(Mão: " + pac.getQuantMao() + ", Pé: " + pac.getQuantPe() + ")";
+								DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
+										cbFormaPagamento, selecionaServico(), text,
+										cbPacoteAssociado.getValue().getId());
+								DaoPacote.carregaPacoteAssociado();
+							}
+						}
 					}
 					Platform.runLater(new Runnable() {
 						@Override

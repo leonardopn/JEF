@@ -124,9 +124,15 @@ public class DaoPacote {
 					"select * from pacotes_associados pa inner join cliente c on (c.idcliente = pa.idcliente) inner join pacotes p on (p.id = pa.idpacote)");
 			rs = st.executeQuery();
 			while (rs.next()) {
-				PacoteAssociado pacoteAssociado = new PacoteAssociado(rs.getInt("pa.id"), rs.getString("c.nome"),
-						rs.getString("p.nome"), rs.getInt("pa.quant_mao"), rs.getInt("pa.quant_pe"));
-				Colecao.pacoteAssociados.add(pacoteAssociado);
+				if (rs.getInt("pa.quant_mao") == 0 & rs.getInt("pa.quant_pe") == 0) {
+					st = DB.getConnection().prepareStatement("delete from pacotes_associados where id = ?");
+					st.setInt(1, rs.getInt("pa.id"));
+					st.execute();
+				} else {
+					PacoteAssociado pacoteAssociado = new PacoteAssociado(rs.getInt("pa.id"), rs.getString("c.nome"),
+							rs.getString("p.nome"), rs.getInt("pa.quant_mao"), rs.getInt("pa.quant_pe"));
+					Colecao.pacoteAssociados.add(pacoteAssociado);
+				}
 			}
 		} catch (SQLException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
