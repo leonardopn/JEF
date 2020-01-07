@@ -17,13 +17,13 @@ import javafx.scene.image.ImageView;
 import model.collection.entities.Login;
 import model.dao.DaoLogin;
 
-public class ViewLoginController implements Initializable {
+public class ViewLoginConfirmacaoController implements Initializable {
 	static Statement st = null;
 	static ResultSet rs = null;
-	private static int tentativas = 1;
+	public static boolean status = false;
 
-	final Image olhoFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_closed_eye_100px.png")));
-	final Image olhoAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_eye_48px.png")));
+	final Image olhoFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_closed_eye_48px.png")));
+	final Image olhoAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_eye_60px_1.png")));
 
 	@FXML
 	private ImageView ivOlho;
@@ -51,11 +51,13 @@ public class ViewLoginController implements Initializable {
 			ivOlho.setImage(olhoFechado);
 			tfSenhaVisivel.setVisible(false);
 			pfSenha.setVisible(true);
-			if (DaoLogin.carregaLogin(login, tfUsuario, pfSenha) == false && tentativas > 4) {
-				Main.getStage().close();
+			if (DaoLogin.carregaLoginConfirmacao(login, tfUsuario, pfSenha) == false) {
+				status = false;
+			} else {
+				status = true;
+				Main.getStageLoginConfirmacao().hide();
 			}
 		}
-
 	}
 
 	@FXML
@@ -72,16 +74,9 @@ public class ViewLoginController implements Initializable {
 		}
 	}
 
-	public static int getTentativas() {
-		return tentativas;
-	}
-
-	public static void setTentativas(int tentativas) {
-		ViewLoginController.tentativas = tentativas;
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		status = false;
 		btLogin.setDefaultButton(true);
 	}
 }

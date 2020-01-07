@@ -1,12 +1,5 @@
 package model.dao;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +12,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 import db.DB;
+import gui.controllers.ViewCaixaController;
 import gui.util.Alerts;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
@@ -29,14 +23,13 @@ import model.collection.entities.Caixa;
 import model.collection.entities.Cliente;
 import model.collection.entities.Funcionario;
 import model.collection.entities.Transacao;
-import model.services.IdentificadorSO;
 
 public class DaoTransacao {
 	static private PreparedStatement st = null;
 	static private ResultSet rs = null;
 
 	public static void salvarTransacao(TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData,
-			TextField tfValor, ChoiceBox<String> cbFormaPagamento) {
+			TextField tfValor, ChoiceBox<String> cbFormaPagamento, String servico, String obs, int idPacote) {
 		try {
 			int clienteId = 0;
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
@@ -55,8 +48,10 @@ public class DaoTransacao {
 						"Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
 				tfCliente.setText("");
 			} else {
-				st = DB.getConnection().prepareStatement("INSERT INTO transacao "
-						+ "(idcliente, cpffuncionario, formapagamento, data, valor) " + "VALUES " + "(?, ?, ?, ?, ?)");
+				st = DB.getConnection()
+						.prepareStatement("INSERT INTO transacao "
+								+ "(idcliente, cpffuncionario, formapagamento, data, valor, obs, servico, pacote) "
+								+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?)");
 
 				double valor = Double.parseDouble(tfValor.getText().replaceAll(",", "."));
 				st.setInt(1, clienteId);
@@ -64,6 +59,9 @@ public class DaoTransacao {
 				st.setString(3, cbFormaPagamento.getValue());
 				st.setDate(4, new java.sql.Date(data.getTime()));
 				st.setDouble(5, valor);
+				st.setString(6, obs);
+				st.setString(7, servico);
+				st.setInt(8, idPacote);
 				st.execute();
 			}
 		} catch (SQLException e) {
@@ -87,40 +85,61 @@ public class DaoTransacao {
 		}
 	}
 
-	public static void carregaCaixa() {
-		String linha = "";
-		String caminho = System.getProperty("user.home") + File.separatorChar + "Documents" + File.separatorChar
-				+ "JEF_DATA" + File.separatorChar + "caixa.csv";
-		if (IdentificadorSO.sistema() == "linux") {
-			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos" + File.separatorChar
-					+ "JEF_DATA" + File.separatorChar + "caixa.csv";
-		}
-		try (BufferedReader brCaixa = new BufferedReader(new FileReader(caminho));) {
-			while ((linha = brCaixa.readLine()) != null) {
-				String[] linhaCaixa = linha.split(";");
-				Caixa.setStatus(Boolean.parseBoolean(linhaCaixa[0]));
-			}
-			brCaixa.close();
-		} catch (FileNotFoundException e) {
-			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
-					AlertType.ERROR);
-		} catch (IOException e) {
-			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
-					AlertType.ERROR);
-		}
-	}
-
-	public static void salvarCaixa(LocalDate dpData, double total, double cartao, double dinheiro) {
+	public static boolean carregaCaixa() {
 		try {
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
-			Date data = formataData.parse(dpData.toString());
-			st = DB.getConnection().prepareStatement("REPLACE INTO caixa "
-					+ "(total, data, total_cartao, total_dinheiro) " + "VALUES " + "(?, ?, ?, ? )");
-			st.setDouble(1, total);
-			st.setDate(2, new java.sql.Date(data.getTime()));
-			st.setDouble(3, cartao);
-			st.setDouble(4, dinheiro);
-			st.execute();
+			st = DB.getConnection().prepareStatement("select * from caixa order by data");
+			rs = st.executeQuery();
+			rs.last();
+			int i = rs.getInt("status");
+			String data = formataData.format(rs.getDate("data"));
+			if (i == 0) {
+				if (data.equals(LocalDate.now().toString())) {
+					ViewCaixaController.setStatusCaixa(0);
+					return false;
+				} else {
+					ViewCaixaController.setStatusCaixa(1);
+					return false;
+				}
+			} else {
+				if (data.equals(LocalDate.now().toString())) {
+					return true;
+				} else {
+					LocalDate date = LocalDate.parse(data);
+					abreFechaCaixa(date, 0.0, false);
+					ViewCaixaController.setStatusCaixa(1);
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
+					AlertType.ERROR);
+		}
+		return false;
+	}
+
+	public static void abreFechaCaixa(LocalDate dpData, double fundoDeTroco, boolean status) {
+		try {
+			if (status == true) {
+				SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+				st = DB.getConnection().prepareStatement("select * from caixa order by data");
+				rs = st.executeQuery();
+				rs.last();
+				Date data = formataData.parse(dpData.toString());
+				st = DB.getConnection().prepareStatement("REPLACE INTO caixa "
+						+ "(data, fundoDeTroco, montanteAnterior, montanteTotal) " + "VALUES " + "(?, ?, ?, ?)");
+				st.setDate(1, new java.sql.Date(data.getTime()));
+				st.setDouble(2, fundoDeTroco);
+				st.setDouble(3, rs.getDouble("montanteTotal"));
+				st.setDouble(4, rs.getDouble("montanteTotal"));
+				st.execute();
+			} else {
+				SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+				Date data = formataData.parse(dpData.toString());
+				st = DB.getConnection().prepareStatement("update caixa set status = 0 where data = ?;");
+				st.setDate(1, new java.sql.Date(data.getTime()));
+				st.executeQuery();
+			}
 		} catch (SQLException | ParseException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
@@ -145,7 +164,7 @@ public class DaoTransacao {
 				SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
 				Transacao tran = new Transacao(rs.getInt("t.id"), rs.getDouble("t.valor"), rs.getString("c.nome"),
 						rs.getString("f.nome"), rs.getString("t.formapagamento"),
-						formataData.format(rs.getDate("t.data")));
+						formataData.format(rs.getDate("t.data")), rs.getString("obs"), rs.getString("servico"));
 				Caixa.caixa.add(tran);
 			}
 		} catch (SQLException e) {
@@ -172,15 +191,20 @@ public class DaoTransacao {
 		}
 	}
 
-	public static void atualizarTotalCaixa(String data, double total, double cartao, double dinheiro) {
+	public static int carregaTotalCaixa(LocalDate data) {
 		try {
-			st = DB.getConnection().prepareStatement("UPDATE fechamento_caixa "
-					+ "SET total = ?, total_cartao = ?, total_dinheiro = ?" + "WHERE data=?");
-			st.setDouble(1, total);
-			st.setDouble(2, cartao);
-			st.setDouble(3, dinheiro);
-			st.setString(4, data);
-			st.execute();
+
+			DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			st = DB.getConnection().prepareStatement("select * from caixa where data = ?");
+			st.setString(1, localDateFormatadaProcura.format(data));
+			rs = st.executeQuery();
+			while (rs.next()) {
+				ViewCaixaController.setValorCartao(rs.getDouble("total_cartao"));
+				ViewCaixaController.setValorDinheiro(rs.getDouble("total_dinheiro"));
+				ViewCaixaController.setValorTotal(rs.getDouble("totalDoDia"));
+				ViewCaixaController.setFundoDeTroco(rs.getDouble("fundoDeTroco"));
+				return rs.getInt("status");
+			}
 		} catch (SQLException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
@@ -188,23 +212,6 @@ public class DaoTransacao {
 			DB.fechaStatement(st);
 			DB.closeConnection();
 		}
-	}
-
-	public static void salvarStatus() {
-		String caminho = System.getProperty("user.home") + File.separatorChar + "Documents" + File.separatorChar
-				+ "JEF_DATA" + File.separatorChar + "caixa.csv";
-		if (IdentificadorSO.sistema() == "linux") {
-			caminho = System.getProperty("user.home") + File.separatorChar + "Documentos" + File.separatorChar
-					+ "JEF_DATA" + File.separatorChar + "caixa.csv";
-		}
-		File arquivoCaixa = new File(caminho);
-		try (BufferedWriter bwCaixa = new BufferedWriter(new FileWriter(arquivoCaixa))) {
-			bwCaixa.write(Caixa.isStatus() + ";");
-			bwCaixa.close();
-
-		} catch (IOException e) {
-			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
-					AlertType.ERROR);
-		}
+		return 1;
 	}
 }

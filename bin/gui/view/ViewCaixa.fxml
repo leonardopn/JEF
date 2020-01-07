@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,66 +21,125 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1059.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1377.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
    <children>
-      <Line endX="898.0" endY="-1.0000076293945312" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
-      <Button fx:id="btAbrirFecharCaixa" layoutX="12.0" layoutY="55.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="46.0" prefWidth="150.0">
+      <Line endX="1183.0" endY="7.62939453125E-6" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
+      <Button fx:id="btAbrirFecharCaixa" layoutX="45.0" layoutY="46.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="63.0" prefWidth="164.0">
          <font>
             <Font name="System Bold" size="15.0" />
-         </font></Button>
-      <Line endX="948.0" layoutX="111.0" layoutY="137.0" startX="-110.0" stroke="#827f7f" />
-      <Line endX="100.0" endY="455.0" layoutX="71.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
-      <Label layoutX="14.0" layoutY="187.0" text="Cliente:" />
-      <Label layoutX="12.0" layoutY="251.0" text="Atendente:" />
-      <Label layoutX="12.0" layoutY="315.0" text="Data" />
-      <ChoiceBox fx:id="cbFuncionario" layoutX="12.0" layoutY="279.0" prefWidth="150.0" />
-      <DatePicker fx:id="dpData" layoutX="11.0" layoutY="342.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField fx:id="tfValor" layoutX="12.0" layoutY="403.0" prefHeight="26.0" prefWidth="151.0" />
-      <Label layoutX="14.0" layoutY="376.0" text="Valor:" />
-      <Button fx:id="btEnviarTransacao" layoutX="78.0" layoutY="515.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar" />
-      <Label layoutX="28.0" layoutY="137.0" text="Adicione os valores" />
-      <Label layoutX="39.0" layoutY="154.0" text="Das transações" />
-      <TableView fx:id="tvTransacao" layoutX="172.0" layoutY="138.0" prefHeight="410.0" prefWidth="888.0">
+         </font>
+         <graphic>
+            <ImageView fx:id="ivCaixa" fitHeight="70.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_open_sign_96px.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Line endX="1233.0" layoutX="111.0" layoutY="137.0" startX="-110.0" stroke="#827f7f" />
+      <Line endX="100.0" endY="549.0" layoutX="155.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
+      <Label layoutX="43.0" layoutY="280.0" text="Data:" />
+      <DatePicker fx:id="dpData" layoutX="9.0" layoutY="298.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField fx:id="tfValor" layoutX="10.0" layoutY="359.0" prefHeight="26.0" prefWidth="151.0" />
+      <Label layoutX="41.0" layoutY="341.0" text="Valor:" />
+      <Button fx:id="btEnviarTransacao" layoutX="266.0" layoutY="642.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_add_96px_1.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <TableView fx:id="tvTransacao" layoutX="256.0" layoutY="138.0" prefHeight="492.0" prefWidth="1089.0">
         <columns>
-          <TableColumn fx:id="colunaId" prefWidth="49.0" text="ID" />
-            <TableColumn fx:id="colunaCliente" prefWidth="188.0" text="Cliente" />
-            <TableColumn fx:id="colunaAtendente" prefWidth="150.0" text="Atendente" />
-            <TableColumn fx:id="colunaMeioPagamento" prefWidth="162.0" text="Meio de pagamento" />
-            <TableColumn fx:id="colunaValor" prefWidth="91.0" text="Valor" />
-            <TableColumn fx:id="colunaSelect" text="Excluir?" />
-            <TableColumn prefWidth="167.0" text="Column X">
+          <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="65.0" text="ID">
                <graphic>
-                  <DatePicker fx:id="dpSelecao" editable="false" onAction="#carregaTransacao" prefHeight="26.0" prefWidth="162.0" />
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_tags_48px.png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+            <TableColumn fx:id="colunaCliente" prefWidth="146.0" text="Cliente">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_businesswoman_48px.png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+            <TableColumn fx:id="colunaAtendente" prefWidth="161.0" text="Atendente">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_female_worker_48px.png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+            <TableColumn fx:id="colunaMeioPagamento" prefWidth="158.0" text="Meio de pagamento">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_card_payment_40px_1.png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+            <TableColumn fx:id="colunaValor" prefWidth="71.0" text="Valor">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_money_40px.png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+            <TableColumn fx:id="colunaServico" prefWidth="148.0" text="Serviço">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_moleskine_96px_1.png" />
+                     </image>
+                  </ImageView>
                </graphic>
-               <columns>
-                <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" prefWidth="165.0" sortable="false" text="Data" />
-               </columns>
             </TableColumn>
+            <TableColumn fx:id="colunaObs" prefWidth="162.0" text="Observação">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_talk_80px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </TableColumn>
+          <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" sortable="false" text="Data">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_calendar_48px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </TableColumn>
+            <TableColumn fx:id="colunaSelect" prefWidth="94.0" text="Excluir?">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_trash_48px.png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
         </columns>
       </TableView>
-      <ChoiceBox fx:id="cbFormaPagamento" layoutX="11.0" layoutY="466.0" prefWidth="150.0" />
-      <Label layoutX="11.0" layoutY="439.0" text="Forma de pagamento" />
-      <Label layoutX="9.0" layoutY="3.0" text="Status do caixa:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbStatus" layoutX="179.0" layoutY="2.0" prefHeight="30.0" prefWidth="151.0" textFill="#10bf24">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="192.0" layoutY="81.0" text="Dinheiro dado:" />
-      <TextField fx:id="tfValorServico" layoutX="305.0" layoutY="49.0" prefHeight="25.0" prefWidth="79.0" />
-      <Label layoutX="183.0" layoutY="52.0" text="Valor do serviço:" />
-      <TextField fx:id="tfDinheiroDado" layoutX="305.0" layoutY="77.0" prefHeight="25.0" prefWidth="79.0" />
-      <Label fx:id="lbTroco" layoutX="434.0" layoutY="69.0" text="Troco de: " />
-      <Button fx:id="btCalTroco" layoutX="394.0" layoutY="64.0" mnemonicParsing="false" onAction="#calculaTroco" prefHeight="16.0" prefWidth="13.0" text="=" />
-      <Line endX="943.0" layoutX="116.0" layoutY="548.0" startX="56.0" stroke="#827f7f" />
-      <Button fx:id="btExcluir" layoutX="184.0" layoutY="558.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="25.0" prefWidth="70.0" text="Excluir" />
-      <Label layoutX="271.0" layoutY="562.0" text="Excluir transações selecionadas" />
-      <TextField fx:id="tfCliente" layoutX="12.0" layoutY="214.0" prefHeight="26.0" prefWidth="150.0" />
-      <GridPane layoutX="721.0" layoutY="50.0" prefHeight="65.0" prefWidth="403.0" vgap="10.0">
+      <ChoiceBox fx:id="cbFormaPagamento" layoutX="9.0" layoutY="418.0" prefWidth="150.0" />
+      <Label layoutX="43.0" layoutY="399.0" text="Forma de pagamento:" />
+      <Line endX="1228.0" layoutX="116.0" layoutY="631.0" startX="141.0" stroke="#827f7f" />
+      <Button fx:id="btExcluir" layoutX="371.0" layoutY="642.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="32.0" prefWidth="79.0" text="Excluir">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_trash_48px.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <GridPane layoutX="266.0" layoutY="51.0" prefHeight="65.0" prefWidth="403.0" vgap="10.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="202.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="0.0" prefWidth="34.0" />
@@ -87,17 +152,17 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="29.0" prefWidth="192.0" text="Valor total:" GridPane.rowIndex="1">
+            <Label prefHeight="29.0" prefWidth="192.0" text="Faturado no dia:" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label text="Valor em dinheiro:" GridPane.rowIndex="2">
+            <Label text="Transação em dinheiro:" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label text="Valor em cartão:" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <Label text="Transação em cartão:" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
@@ -142,14 +207,14 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lbValorTotal13" prefHeight="27.0" prefWidth="23.0" text="R$" textFill="#10bf24" GridPane.columnIndex="1">
+            <Label fx:id="lbValorTotal13" prefHeight="21.0" prefWidth="35.0" text="R$" textFill="#10bf24" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <GridPane layoutX="885.0" layoutY="555.0" prefHeight="30.0" prefWidth="164.0">
+      <GridPane layoutX="1169.0" layoutY="642.0" prefHeight="30.0" prefWidth="164.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="114.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="50.0" />
@@ -162,15 +227,154 @@
             <ProgressIndicator fx:id="piStatus" visible="false" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <GridPane layoutX="781.0" layoutY="4.0" prefHeight="30.0" prefWidth="278.0">
+      <Button fx:id="btAjuda" layoutX="1264.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtAjudaAction" text="Ajuda">
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_question_mark_512px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_calendar_48px.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_money_40px.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_card_payment_40px_1.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="12.0" layoutY="2.0" prefHeight="32.0" prefWidth="273.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="134.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="8.0" prefWidth="35.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="109.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="161.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="136.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <children>
+            <Label fx:id="lbStatus" prefHeight="33.0" prefWidth="126.0" textFill="#10bf24" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label prefHeight="30.0" prefWidth="140.0" text="Status do caixa:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
       </GridPane>
+      <TreeView fx:id="trvServicos" layoutX="10.0" layoutY="535.0" onMouseClicked="#selecionaServico" prefHeight="122.0" prefWidth="234.0" />
+      <TextField fx:id="tfObs" layoutX="10.0" layoutY="477.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label layoutX="43.0" layoutY="460.0" text="Observação:" />
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="12.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_talk_80px.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="38.0" layoutY="517.0" text="Serviços:" />
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="9.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_moleskine_96px_1.png" />
+         </image>
+      </ImageView>
+      <CheckBox fx:id="cbBloqueiaPreco" layoutX="165.0" layoutY="363.0" mnemonicParsing="false" onAction="#bloqDesbloqValor" selected="true" text="Bloq/Liberar" />
+      <DatePicker fx:id="dpSelecao" editable="false" layoutX="1114.0" layoutY="5.0" onAction="#carregaTransacao" prefHeight="26.0" prefWidth="140.0" />
+      <GridPane layoutX="1134.0" layoutY="42.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Valor do serviço:" />
+            <Label text="Dinheiro dado:" GridPane.rowIndex="1" />
+            <TextField fx:id="tfValorServico" prefHeight="25.0" prefWidth="79.0" GridPane.columnIndex="1" />
+            <TextField fx:id="tfDinheiroDado" prefHeight="25.0" prefWidth="79.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lbTroco" text="Troco de: " GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="btCalTroco" mnemonicParsing="false" onAction="#calculaTroco" prefHeight="25.0" prefWidth="37.0" text="=" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <TabPane layoutX="-1.0" layoutY="138.0" prefHeight="133.0" prefWidth="255.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Transação">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="39.0" layoutY="5.0" text="Cliente:" />
+                        <Label layoutX="36.0" layoutY="58.0" text="Atendente:" />
+                        <ChoiceBox fx:id="cbFuncionario" layoutX="7.0" layoutY="76.0" prefHeight="25.0" prefWidth="234.0" />
+                        <TextField fx:id="tfCliente" layoutX="7.0" layoutY="24.0" prefHeight="26.0" prefWidth="234.0" />
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_businesswoman_48px.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="7.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_female_worker_48px.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Associar Pacote">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="255.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="11.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_package_128px.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="40.0" layoutY="52.0" text="Pacote associado:" />
+                        <Button fx:id="btBuscar" layoutX="147.0" layoutY="63.0" mnemonicParsing="false" onAction="#buscaPacoteAssociado" text="Buscar">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_search_48px_1.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Line endX="100.0" layoutX="161.0" layoutY="104.0" startX="-161.0" stroke="#827f7f" />
+                        <ChoiceBox fx:id="cbPacoteAssociado" layoutX="12.0" layoutY="68.0" prefHeight="25.0" prefWidth="124.0" />
+                        <Button fx:id="btAssociar" layoutX="12.0" layoutY="4.0" mnemonicParsing="false" onAction="#setPacote" text="Associar">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_talk_80px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btLimpar" layoutX="111.0" layoutY="3.0" mnemonicParsing="false" onAction="#limpaPacotes" prefHeight="25.0" prefWidth="86.0" text="Limpar">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_trash_48px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

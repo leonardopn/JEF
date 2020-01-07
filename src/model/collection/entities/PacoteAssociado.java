@@ -9,9 +9,7 @@ public class PacoteAssociado {
 	private int quantMao;
 	private int quantPe;
 	private CheckBox select;
-	
-	
-	
+
 	public PacoteAssociado(int id, String cliente, String pacote, int quantMao, int quantPe) {
 		this.id = id;
 		this.cliente = cliente;
@@ -24,24 +22,30 @@ public class PacoteAssociado {
 	public int getId() {
 		return id;
 	}
-	
+
 	public String getCliente() {
 		return cliente;
 	}
-	
+
 	public String getPacote() {
 		return pacote;
 	}
-	
+
 	public int getQuantMao() {
 		return quantMao;
 	}
-	
+
 	public int getQuantPe() {
 		return quantPe;
 	}
-	
+
 	public CheckBox getSelect() {
 		return select;
 	}
+
+	@Override
+	public String toString() {
+		return "(" + "Mão: " + quantMao + ", Pé: " + quantPe + ")";
+	}
+
 }
