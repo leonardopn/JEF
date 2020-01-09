@@ -1,4 +1,4 @@
-package model.entities;
+package model.collection.entities;
 
 import java.util.Objects;
 
@@ -13,14 +13,18 @@ public class Transacao implements Comparable<Transacao>{
 	private String atendente;
 	private CheckBox select;
 	private String formaPagamento;
+	private String obs;
+	private String servico;
 	
-	public Transacao(int id, double valor, String cliente, String atendente, String formaPagamento, String data) {
+	public Transacao(int id, double valor, String cliente, String atendente, String formaPagamento, String data, String obs, String servico) {
 		this.id = id;
 		this.valor = valor;
 		this.data = data;
 		this.cliente = cliente;
 		this.atendente = atendente;
 		this.setFormaPagamento(formaPagamento);
+		this.obs = obs;
+		this.servico = servico;
 		select = new CheckBox();
 	}
 	
@@ -70,6 +74,14 @@ public class Transacao implements Comparable<Transacao>{
 	
 	public String getFormaPagamento() {
 		return formaPagamento;
+	}
+
+	public String getObs() {
+		return obs;
+	}
+
+	public String getServico() {
+		return servico;
 	}
 
 	public void setFormaPagamento(String formaPagamento) {

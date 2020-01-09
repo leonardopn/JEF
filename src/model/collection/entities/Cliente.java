@@ -1,4 +1,4 @@
-package model.entities;
+package model.collection.entities;
 
 import java.util.Objects;
 
@@ -11,6 +11,7 @@ public class Cliente implements Comparable<Cliente>{
 	private String telefone;
 	private String redeSocial;
 	private CheckBox select;
+	public Pacote pacotes;
 	
 	public Cliente(int id, String nome, String email, String telefone, String redeSocial) {
 		this.id = id;

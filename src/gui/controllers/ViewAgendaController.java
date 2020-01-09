@@ -9,16 +9,20 @@ import org.controlsfx.control.textfield.TextFields;
 
 import gui.util.Decoracao;
 import gui.util.Notificacoes;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import model.entities.Cliente;
-import model.services.Cadastro;
-import model.services.Carregar;
-import model.services.Salvar;
+import model.collection.Colecao;
+import model.collection.entities.Cliente;
+import model.dao.DaoAgendamento;
+import model.dao.DaoFuncionario;
 
 public class ViewAgendaController implements Initializable{
 	
@@ -99,6 +103,14 @@ public class ViewAgendaController implements Initializable{
 
     @FXML
     private TextField txtFuncionario;
+    
+    @FXML
+	private ProgressIndicator piCarregando;
+    
+    @FXML
+    private Label labelStatus;
+    
+    private boolean parada;
 	    
     
     @FXML
@@ -108,16 +120,57 @@ public class ViewAgendaController implements Initializable{
 			Notificacoes.mostraNotificacao("Campos vazios!", "Preencha o campo nome!");
     	}
     	else {
-    		salvaHorario();
-    		//vai atualizar no stage main se eu criar um agendamento
-    		Carregar.carregaAgendaFuncionario(dpData.getValue());
-    		ViewController.getTvAgendaTemp().refresh();
+    		parada = true;
+    		Task<Void> tarefa = new Task<Void>() {
+    			@Override
+    			protected Void call() throws Exception {
+    				while (parada == true) {
+    					Thread.sleep(0);
+    				}
+    				piCarregando.setVisible(false);
+    				labelStatus.setVisible(false);
+    				return null;
+    			}
+    		};
+
+    		Task<Void> acaoAgendamento = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+		    			Thread t = new Thread(tarefa);
+		    			t.start();
+		    		});
+					piCarregando.setVisible(true);
+    				labelStatus.setVisible(true);
+					salvaHorario();
+		    		DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
+		    		ViewController.getTvAgendaTemp().refresh();
+		    		parada = false;
+					return null;
+				}
+				
+				@Override
+				protected void done() {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							ViewController.getStageAgenda().close();
+						}
+					});	
+					super.done();
+				}
+    		};
+    		
+    		javafx.application.Platform.runLater(() -> {
+    			Thread t = new Thread(acaoAgendamento);
+    			t.start(); 
+    		});    		
     	}
     }
 
     public void salvaHorario() {
     	int idCliente = 0;
-    	for(Cliente cli : Cadastro.clientes) {
+    	for(Cliente cli : Colecao.clientes) {
 			if(txtCliente.getText().equals(cli.getNome())) {
 				idCliente = cli.getId();
 				txtCliente.setText("");;
@@ -130,70 +183,69 @@ public class ViewAgendaController implements Initializable{
     	}
     	else {
     		if(cb8.isSelected() && !(cb8.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "08:00:00");       			
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "08:00:00");       			
         	}
         	if(cb8_3.isSelected() && !(cb8_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "08:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "08:30:00");
         	}
         	if(cb9.isSelected() && !(cb9.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "09:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "09:00:00");
         	}
         	if(cb9_3.isSelected() && !(cb9_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "09:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "09:30:00");
         	}
         	if(cb10.isSelected() && !(cb10.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "10:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "10:00:00");
         	}
         	if(cb10_3.isSelected() && !(cb10_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "10:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "10:30:00");
         	}
         	if(cb11.isSelected() && !(cb11.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "11:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "11:00:00");
         	}
         	if(cb11_3.isSelected() && !(cb11_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "11:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "11:30:00");
         	}
         	if(cb12.isSelected() && !(cb12.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "12:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "12:00:00");
         	}
         	if(cb12_3.isSelected() && !(cb12_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "12:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "12:30:00");
         	}
         	if(cb13.isSelected() && !(cb13.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "13:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "13:00:00");
         	}
         	if(cb13_3.isSelected() && !(cb13_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "13:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "13:30:00");
         	}
         	if(cb14.isSelected() && !(cb14.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "14:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "14:00:00");
         	}
         	if(cb14_3.isSelected() && !(cb14_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "14:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "14:30:00");
         	}
         	if(cb15.isSelected() && !(cb15.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "15:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "15:00:00");
         	}
         	if(cb15_3.isSelected() && !(cb15_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "15:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "15:30:00");
         	}
         	if(cb16.isSelected() && !(cb16.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "16:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "16:00:00");
         	}
         	if(cb16_3.isSelected() && !(cb16_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "16:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "16:30:00");
         	}
         	if(cb17.isSelected() && !(cb17.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "17:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "17:00:00");
         	}
         	if(cb17_3.isSelected() && !(cb17_3.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "17:30:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "17:30:00");
         	}
         	if(cb18.isSelected() && !(cb18.isDisable())) {
-        		Salvar.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "18:00:00");
+        		DaoAgendamento.salvarAgendamento(txtFuncionario.getText(), idCliente, dpData.getValue(), "18:00:00");
         	}
     	}
-    	ViewController.getStageAgenda().close();
     }
     
     @FXML
@@ -292,6 +344,6 @@ public class ViewAgendaController implements Initializable{
 		dpData.setEditable(false);
 		dpData.getEditor().setEditable(false);
 		carregaHorarios();
-		TextFields.bindAutoCompletion(txtCliente, Cadastro.clientes);
+		TextFields.bindAutoCompletion(txtCliente, Colecao.clientes);
 	}
 }

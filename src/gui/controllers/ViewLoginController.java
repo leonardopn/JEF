@@ -1,82 +1,87 @@
 package gui.controllers;
 
+import java.net.URL;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
+import java.util.ResourceBundle;
 
 import application.Main;
-import db.DB;
-import gui.util.Alerts;
 import gui.util.Notificacoes;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert.AlertType;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import model.entities.Login;
-import model.exceptions.DbException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import model.collection.entities.Login;
+import model.dao.DaoLogin;
 
-public class ViewLoginController {
+public class ViewLoginController implements Initializable {
 	static Statement st = null;
 	static ResultSet rs = null;
 	private static int tentativas = 1;
-	
+
+	final Image olhoFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_closed_eye_100px.png")));
+	final Image olhoAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_eye_48px.png")));
+
 	@FXML
-	private Button btLogin; 
-	
+	private ImageView ivOlho;
+
+	@FXML
+	private Button btLogin;
+
 	@FXML
 	private TextField tfUsuario;
-	
+
+	@FXML
+	private TextField tfSenhaVisivel;
+
 	@FXML
 	private PasswordField pfSenha;
-	
+
 	@FXML
 	public void onBtLoginAction() {
 		String useTemp = tfUsuario.getText();
 		String passTemp = pfSenha.getText();
 		Login login = new Login(useTemp, passTemp);
-		if(carregaLogin(login) == false && tentativas >4) {
-			Main.getStage().close();
+		if (useTemp.isEmpty() || passTemp.isEmpty()) {
+			Notificacoes.mostraNotificacao("Aviso!", "Há campos vazios, preencha usuário ou senha!");
+		} else {
+			ivOlho.setImage(olhoFechado);
+			tfSenhaVisivel.setVisible(false);
+			pfSenha.setVisible(true);
+			if (DaoLogin.carregaLogin(login, tfUsuario, pfSenha) == false && tentativas > 4) {
+				Main.getStage().close();
+			}
+		}
+
+	}
+
+	@FXML
+	public void onBtOlhoAction() {
+		if (ivOlho.getImage() == olhoAberto) {
+			ivOlho.setImage(olhoFechado);
+			tfSenhaVisivel.setVisible(false);
+			pfSenha.setVisible(true);
+		} else {
+			ivOlho.setImage(olhoAberto);
+			tfSenhaVisivel.setText(pfSenha.getText());
+			tfSenhaVisivel.setVisible(true);
+			pfSenha.setVisible(false);
 		}
 	}
-	
-	public boolean carregaLogin(Login login) {
-		try {	
-			 st = DB.getConnection().createStatement();
-			 rs = st.executeQuery("select * from usuario");
-			 ArrayList<Login> arrayLogin = new ArrayList<>();
-			 while(rs.next()) {
-				 String usuario = rs.getString("login");
-				 String senha = rs.getString("senha");
-				 Login loginTemp = new Login(usuario, senha);
-				 arrayLogin.add(loginTemp);
-			 }
-			 if(arrayLogin.contains(login)) {
-				Main.getStage().setScene(Main.getMain());
-				Main.getStage().centerOnScreen();
-				arrayLogin.clear();;
-				return true;
-			}
-			else {
-				Notificacoes.mostraNotificacao("Erro de login!!", "Usuário ou senha incorreto\nEssa é a tentativa: "+(tentativas)+" de 3");
-				tfUsuario.clear();
-				pfSenha.clear();
-				tentativas += 1;
-				return false;
-			}
-		}
-		catch(SQLException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
-		}
-		finally {
-			DB.closeConnection();
-			DB.fechaResultSet(rs);
-			DB.fechaStatement(st);
-		}
-		return false;
+
+	public static int getTentativas() {
+		return tentativas;
+	}
+
+	public static void setTentativas(int tentativas) {
+		ViewLoginController.tentativas = tentativas;
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		btLogin.setDefaultButton(true);
 	}
 }

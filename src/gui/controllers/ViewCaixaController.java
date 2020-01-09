@@ -1,41 +1,65 @@
 package gui.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.PopOver;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import application.Main;
+import gui.util.Alerts;
+import gui.util.Notificacoes;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
-import model.entities.Caixa;
-import model.entities.Cliente;
-import model.entities.Funcionario;
-import model.entities.Transacao;
-import model.services.Atualizar;
-import model.services.Cadastro;
-import model.services.Carregar;
-import model.services.Excluir;
-import model.services.Salvar;
+import model.collection.Colecao;
+import model.collection.entities.Caixa;
+import model.collection.entities.Categoria;
+import model.collection.entities.Cliente;
+import model.collection.entities.Funcionario;
+import model.collection.entities.PacoteAssociado;
+import model.collection.entities.Servico;
+import model.collection.entities.Transacao;
+import model.dao.DaoPacote;
+import model.dao.DaoTransacao;
 
 public class ViewCaixaController implements Initializable {
+
+	private static double fundoDeTroco;
+	private static double valorTotal;
+	private static double valorDinheiro;
+	private static double valorCartao;
+	private static int statusCaixa;
+	final Image caixaAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
+	final Image caixaFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
 
 	ObservableList<Cliente> obCliente;
 
@@ -44,21 +68,29 @@ public class ViewCaixaController implements Initializable {
 	ObservableList<Transacao> obTableTemp;
 
 	ObservableList<String> obFormaPagamento;
-	
+
 	public static TextField tfClienteTemp;
-	
+
 	public static ChoiceBox<Funcionario> cbFuncionarioTemp;
-	
-	public static AutoCompletionBinding bindAutoCompleteCliente;
+
+	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
+
+	private boolean parada;
 
 	@FXML
-	private Button btVoltar;
+	private Button btAjuda;
+
+	@FXML
+	private Button btAssociar;
+
+	@FXML
+	private TreeView<String> trvServicos;
+
+	@FXML
+	private ImageView ivCaixa;
 
 	@FXML
 	private Button btExcluir;
-
-	@FXML
-	private Button btAtualizar;
 
 	@FXML
 	private Button btAbrirFecharCaixa;
@@ -70,16 +102,31 @@ public class ViewCaixaController implements Initializable {
 	private Button btCalTroco;
 
 	@FXML
+	private Button btBuscar;
+
+	@FXML
+	private Button btLimpar;
+
+	@FXML
 	private TextField tfValor;
 
 	@FXML
 	private TextField tfValorServico;
 
 	@FXML
+	private CheckBox cbBloqueiaPreco;
+
+	@FXML
+	private ChoiceBox<PacoteAssociado> cbPacoteAssociado;
+
+	@FXML
 	private TextField tfDinheiroDado;
 
 	@FXML
 	private TextField tfCliente;
+
+	@FXML
+	private TextField tfObs;
 
 	@FXML
 	private ChoiceBox<Funcionario> cbFuncionario;
@@ -89,6 +136,9 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Label lbStatus;
+
+	@FXML
+	private Label lbTotalEmCaixa;
 
 	@FXML
 	private Label lbTroco;
@@ -115,6 +165,12 @@ public class ViewCaixaController implements Initializable {
 	private TableColumn<Transacao, Integer> colunaId;
 
 	@FXML
+	private TableColumn<Transacao, String> colunaServico;
+
+	@FXML
+	private TableColumn<Transacao, String> colunaObs;
+
+	@FXML
 	private TableColumn<Transacao, String> colunaData;
 
 	@FXML
@@ -133,9 +189,124 @@ public class ViewCaixaController implements Initializable {
 	private TableColumn<Transacao, CheckBox> colunaSelect;
 
 	@FXML
-	public void onBtVoltarAction() {
-		Main.getStage().setScene(Main.getMain());
-		Main.getStage().centerOnScreen();
+	private Label labelStatus;
+
+	@FXML
+	private ProgressIndicator piStatus;
+
+	// GETS & SETS
+
+	public static void setFundoDeTroco(double fundoDeTroco) {
+		ViewCaixaController.fundoDeTroco = fundoDeTroco;
+	}
+
+	public static void setValorTotal(double valorTotal) {
+		ViewCaixaController.valorTotal = valorTotal;
+	}
+
+	public static void setValorDinheiro(double valorDinheiro) {
+		ViewCaixaController.valorDinheiro = valorDinheiro;
+	}
+
+	public static void setValorCartao(double valorCartao) {
+		ViewCaixaController.valorCartao = valorCartao;
+	}
+
+	public static double getFundoDeTroco() {
+		return fundoDeTroco;
+	}
+
+	public static double getValorTotal() {
+		return valorTotal;
+	}
+
+	public static double getValorDinheiro() {
+		return valorDinheiro;
+	}
+
+	public static double getValorCartao() {
+		return valorCartao;
+	}
+
+	public static void setStatusCaixa(int statusCaixa) {
+		ViewCaixaController.statusCaixa = statusCaixa;
+	}
+
+	// Botão AJUDA
+	@FXML
+	public void onBtAjudaAction() {
+		PopOver popOver = new PopOver();
+		popOver.show(btAjuda);
+	}
+
+	@FXML
+	public void buscaPacoteAssociado() {
+		ObservableList<PacoteAssociado> obPacoteAssociados;
+		String text = tfCliente.getText();
+		ArrayList<PacoteAssociado> pacotesTemp = new ArrayList<>();
+		for (PacoteAssociado pacote : Colecao.pacoteAssociados) {
+			if (pacote.getCliente().equals(text)) {
+				pacotesTemp.add(pacote);
+			}
+		}
+		obPacoteAssociados = FXCollections.observableArrayList(pacotesTemp);
+		tfObs.setText(" ");
+		if (obPacoteAssociados.isEmpty()) {
+			cbPacoteAssociado.setDisable(true);
+			btAssociar.setDisable(true);
+			cbPacoteAssociado.setItems(obPacoteAssociados);
+		} else {
+			cbPacoteAssociado.setDisable(false);
+			btAssociar.setDisable(false);
+			cbPacoteAssociado.setItems(obPacoteAssociados);
+			cbPacoteAssociado.getSelectionModel().select(0);
+		}
+	}
+
+	@FXML
+	public void setPacote() {
+		if (cbPacoteAssociado.getSelectionModel().getSelectedItem() != null) {
+			PacoteAssociado pacote = cbPacoteAssociado.getSelectionModel().getSelectedItem();
+			String text = "Pacote(Mão: " + pacote.getQuantMao() + ", Pé: " + pacote.getQuantPe() + ")";
+			tfObs.setText(text);
+		}
+	}
+
+	public void carregaTreeView() {
+		TreeItem<String> servicos = new TreeItem<String>("Serviços");
+		servicos.setExpanded(true);
+
+		for (Categoria catg : Colecao.categorias) {
+			catg.getSelect().setIndeterminate(true);
+			catg.getSelect().setAllowIndeterminate(true);
+			catg.getSelect().setDisable(true);
+
+			TreeItem<String> categoria = new TreeItem<String>(catg.getNome());
+			servicos.getChildren().add(categoria);
+			for (Servico serv : Colecao.servicos) {
+				if (serv.getCategoria().equals(catg.getNome())) {
+					TreeItem<String> servico = new TreeItem<String>(serv.getNome());
+					categoria.getChildren().add(servico);
+				}
+			}
+		}
+
+		trvServicos.setRoot(servicos);
+	}
+
+	public String selecionaServico() {
+		if (trvServicos.getSelectionModel().getSelectedItem() != null) {
+			if (trvServicos.getSelectionModel().getSelectedItem().isLeaf()) {
+				String servico = trvServicos.getSelectionModel().getSelectedItem().getValue();
+				for (Servico servi : Colecao.servicos) {
+					if (servi.getNome().equals(servico)) {
+						tfValor.setText(String.valueOf(servi.getPreco()));
+						return servi.getNome();
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	@FXML
@@ -151,45 +322,42 @@ public class ViewCaixaController implements Initializable {
 			}
 		}
 	}
-	
+
 	public void bloqueio() {
-		if(Caixa.isStatus() != true) {
+		if (Caixa.isStatus() != true) {
 			btEnviarTransacao.setDisable(true);
 			btExcluir.setDisable(true);
 			tfCliente.setDisable(true);
 			cbFuncionario.setDisable(true);
-			dpData.setDisable(true);
 			tfValor.setDisable(true);
+			dpData.setDisable(true);
 			cbFormaPagamento.setDisable(true);
-		}
-		else {
+			cbBloqueiaPreco.setDisable(true);
+			trvServicos.setDisable(true);
+			tfObs.setDisable(true);
+		} else {
 			btEnviarTransacao.setDisable(false);
 			btExcluir.setDisable(false);
 			tfCliente.setDisable(false);
 			cbFuncionario.setDisable(false);
 			dpData.setDisable(false);
-			tfValor.setDisable(false);
+			if (!(cbBloqueiaPreco.isSelected())) {
+				tfValor.setDisable(false);
+			}
 			cbFormaPagamento.setDisable(false);
+			cbBloqueiaPreco.setDisable(false);
+			trvServicos.setDisable(false);
+			tfObs.setDisable(false);
 		}
 	}
 
-	@FXML
-	public void onBtAtualizarAction() {
-		carregaFuncionario();
-		carregaFormaPagamento();
-
-	}
-	
 	public void mudaCaixa() {
-		if(Caixa.isStatus() == false) {
-			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
-			btAbrirFecharCaixa.setText("Abrir Caixa!");
+		if (Caixa.isStatus() == false) {
+			ivCaixa.setImage(caixaAberto);
 			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
 			lbStatus.setText("Fechado");
-		}
-		else {
-			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#ff0606"));
-			btAbrirFecharCaixa.setText("Fechar Caixa!");
+		} else {
+			ivCaixa.setImage(caixaFechado);
 			lbStatus.setTextFill(Paint.valueOf("#10bf24"));
 			lbStatus.setText("Aberto");
 		}
@@ -197,51 +365,311 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	public void onBtAbrirFecharCaixaAction() {
-		if(Caixa.isStatus() == false) {
-			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#ff0606"));
-			btAbrirFecharCaixa.setText("Fechar Caixa!");
-			lbStatus.setTextFill(Paint.valueOf("#10bf24"));
-			lbStatus.setText("Aberto");
-			Caixa.setStatus(true);
-			Salvar.salvarStatus();
-			bloqueio();
+		Parent parent;
+		try {
+			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewLoginConfirmacao.fxml"));
+			Scene scene = new Scene(parent);
+			Main.getStageLoginConfirmacao().setScene(scene);
+			Main.getStageLoginConfirmacao().centerOnScreen();
+			Main.getStageLoginConfirmacao().getIcons()
+					.add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			Main.getStageLoginConfirmacao().setTitle("JEF - Confirmação de Operação");
+			Main.getStageLoginConfirmacao().showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		else {
-			btAbrirFecharCaixa.setTextFill(Paint.valueOf("#10bf24"));
-			btAbrirFecharCaixa.setText("Abrir Caixa!");
-			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
-			lbStatus.setText("Fechado");
-			Caixa.setStatus(false);
-			Salvar.salvarStatus();
-			bloqueio();
+		if (ViewLoginConfirmacaoController.status == true) {
+			if (Caixa.isStatus() == false) {
+				if (statusCaixa == 0) {
+					Alerts.showAlert("AVISO!", "Caixa ja fechado!",
+							"\nO caixa foi fechado uma vez HOJE, não existe a opção para reabri-lo, por favor, fale com o ADMINISTRADOR!",
+							AlertType.WARNING);
+				} else {
+					lbTotalEmCaixa.setText(Alerts.showAlertGenericoTextField("AVISO!",
+							"Informe quanto dinheiro tem no caixa\n*UTILIZE SÓ NÚMEROS", "Valor: "));
+					fundoDeTroco = Double.parseDouble(lbTotalEmCaixa.getText().replaceAll(",", "."));
+					lbStatus.setTextFill(Paint.valueOf("#10bf24"));
+					statusCaixa = 1;
+					lbStatus.setText("Aberto");
+					Caixa.setStatus(true);
+					DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, true);
+					carregaCaixa();
+					bloqueio();
+					ivCaixa.setImage(caixaFechado);
+				}
+			} else {
+				lbStatus.setTextFill(Paint.valueOf("#ff0606"));
+				lbStatus.setText("Fechado");
+				Caixa.setStatus(false);
+				bloqueio();
+				statusCaixa = 0;
+				DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, false);
+				ivCaixa.setImage(caixaAberto);
+			}
 		}
-
 	}
-	
-	public void calculaCaixa() {
-		double total = 0.00;
-		double totalDinheiro = 0.00;
-		double totalCartao = 0.00;
-		lbValorTotal.setText(String.valueOf(total));
-		lbValorDinheiro.setText(String.valueOf(totalDinheiro));
-		lbValorCartao.setText(String.valueOf(totalCartao));
-		for(Transacao tran : Caixa.caixa) {
-			total += tran.getValor();
-			if(tran.getFormaPagamento().equals("Dinheiro")) {
-				totalDinheiro += tran.getValor();
-			}
-			else {
-				totalCartao += tran.getValor();
-			}
+
+	@FXML
+	public void onBtEnviarTransacaoAction() {
+		if (tfCliente.getText().isEmpty() || tfValor.getText().isEmpty()
+				|| cbFormaPagamento.getSelectionModel().isEmpty() || cbFuncionario.getSelectionModel().isEmpty()
+				|| !(trvServicos.getSelectionModel().getSelectedItem().isLeaf())) {
+			Notificacoes.mostraNotificacao("Aviso!", "Preencha todos os campos!");
+		} else {
+			parada = true;
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					piStatus.setVisible(true);
+					labelStatus.setVisible(true);
+					labelStatus.setText("Gerando transação!");
+				}
+			});
+
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+
+					while (parada == true) {
+						Thread.sleep(0);
+					}
+					piStatus.setVisible(false);
+					labelStatus.setVisible(false);
+					return null;
+				}
+			};
+
+			Task<Void> taskEnviaTransacao = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+					if (cbPacoteAssociado.isDisable()) {
+						DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
+								cbFormaPagamento, selecionaServico(), tfObs.getText(), -1);
+					} else {
+						if (cbPacoteAssociado.getValue().getQuantMao() < 1 & selecionaServico().contains("Mão(Pacote")) {
+							Platform.runLater(new Runnable() {
+								@Override
+								public void run() {
+									Alerts.showAlert("AVISO!", "Transação cancelada","Esse cliente não possuí mais mãos em seu pacote!",AlertType.WARNING);
+								}
+							});
+							
+						} else {
+							if (cbPacoteAssociado.getValue().getQuantPe() < 1 & selecionaServico().contains("Pé(Pacote")) {
+								Platform.runLater(new Runnable() {
+									@Override
+									public void run() {
+										Alerts.showAlert("AVISO!", "Transação cancelada","Esse cliente não possuí mais pés em seu pacote!",AlertType.WARNING);
+									}
+								});
+							} else {
+								PacoteAssociado pac = cbPacoteAssociado.getValue();
+								String text = "Pacote(Mão: " + pac.getQuantMao() + ", Pé: " + pac.getQuantPe() + ")";
+								DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
+										cbFormaPagamento, selecionaServico(), text,
+										cbPacoteAssociado.getValue().getId());
+								DaoPacote.carregaPacoteAssociado();
+							}
+						}
+					}
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							carregaTransacao();
+							tfObs.setText("");
+							tfValor.setText("");
+							cbFuncionario.getSelectionModel().clearSelection();
+							cbFormaPagamento.getSelectionModel().clearSelection();
+							trvServicos.getSelectionModel().clearSelection();
+							buscaPacoteAssociado();
+						}
+					});
+					parada = false;
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				ViewController.getStagePagamento().hide();
+				Thread t = new Thread(taskEnviaTransacao);
+				t.start();
+			});
 		}
-		lbValorTotal.setText(String.valueOf(total));
-		lbValorDinheiro.setText(String.valueOf(totalDinheiro));
-		lbValorCartao.setText(String.valueOf(totalCartao));
-		Salvar.salvarCaixa(dpSelecao.getValue(), Double.parseDouble(lbValorTotal.getText()), Double.parseDouble(lbValorCartao.getText()), Double.parseDouble(lbValorDinheiro.getText()));
+	}
+
+	public void carregaCaixa() {
+		zeraValores();
+
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				if (dpSelecao.getValue().toString().equals(LocalDate.now().toString())) {
+					btAbrirFecharCaixa.setDisable(false);
+				} else {
+					btAbrirFecharCaixa.setDisable(true);
+				}
+				piStatus.setVisible(true);
+				labelStatus.setVisible(true);
+				labelStatus.setText("Calculando Caixa!");
+			}
+		});
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				piStatus.setVisible(false);
+				labelStatus.setVisible(false);
+				return null;
+			}
+		};
+
+		Task<Void> taskDaoTransacao = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				parada = true;
+				javafx.application.Platform.runLater(() -> {
+					Thread t = new Thread(tarefa);
+					t.start();
+				});
+				statusCaixa = DaoTransacao.carregaTotalCaixa(dpSelecao.getValue());
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						setaLabels();
+					}
+				});
+				parada = false;
+				return null;
+			}
+		};
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(taskDaoTransacao);
+			t.start();
+		});
+	}
+
+	public void carregaTransacao() {
+		parada = true;
+		dpData.setValue(dpSelecao.getValue());
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				piStatus.setVisible(true);
+				labelStatus.setVisible(true);
+				labelStatus.setText("Carregando tabela!");
+			}
+		});
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				piStatus.setVisible(false);
+				labelStatus.setVisible(false);
+				return null;
+			}
+		};
+
+		Task<Void> acaoCarregaTransacao = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				javafx.application.Platform.runLater(() -> {
+					Thread t = new Thread(tarefa);
+					t.start();
+				});
+				DaoTransacao.carregaTransacaoExpecifica(dpSelecao.getValue());
+
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						carregaCaixa();
+						carregaTable();
+					}
+				});
+				parada = false;
+				return null;
+			}
+		};
+
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(acaoCarregaTransacao);
+			t.start();
+		});
+	}
+
+	public void excluirTransacao() {
+		if (!(Alerts.showAlertGenerico("Atenção!", "Deseja mesmo excluir algumas transações?",
+				"A exclusão de transações "
+						+ "Influenciam no salário do funcionário e no controle do caixa, CUIDADO!"))) {
+			Notificacoes.mostraNotificacao("Aviso!", "Exclusão cancelada!");
+		} else {
+			parada = true;
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					piStatus.setVisible(true);
+					labelStatus.setVisible(true);
+					labelStatus.setText("Excluindo Transações!");
+				}
+			});
+
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+
+					while (parada == true) {
+						Thread.sleep(0);
+					}
+					piStatus.setVisible(false);
+					labelStatus.setVisible(false);
+					return null;
+				}
+			};
+
+			Task<Void> acaoExcluirTransacao = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+					for (Transacao tran : obTable) {
+						if (tran.getSelect().isSelected()) {
+							DaoTransacao.excluirTransacao(tran);
+						}
+					}
+					DaoPacote.carregaPacoteAssociado();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							carregaTransacao();
+							Notificacoes.mostraNotificacao("Aviso!", "Exclusão Concluída!");
+						}
+					});
+
+					parada = false;
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(acaoExcluirTransacao);
+				t.start();
+			});
+		}
 	}
 
 	public void carregaFuncionario() {
-		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 		cbFuncionario.setItems(obFuncionario);
 	}
 
@@ -256,53 +684,33 @@ public class ViewCaixaController implements Initializable {
 		tvTransacao.setItems(obTable);
 	}
 
-	@FXML
-	public void onBtEnviarTransacaoAction() {
-		
-		DateTimeFormatter localDateFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		int id;
-		String cliente = tfCliente.getText();
-		String fun = cbFuncionario.getValue().getCpf();
-		String data = localDateFormatada.format((dpData.getValue()));
-		double valor = Double.parseDouble(tfValor.getText().replaceAll(",", "."));
-		String formaPaga = cbFormaPagamento.getValue();
-		id = Salvar.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor, cbFormaPagamento);
-		Transacao tran = new Transacao(id, valor, cliente, fun, formaPaga, data);
-		Caixa.verificaTransacao(tran);
-		Caixa.caixa.add(tran);
-		valor = (valor*0.40);
-		Atualizar.atualizarSalario(fun, (valor));
-		Carregar.carregaFuncionario();
-		carregaTransacao();
-		calculaCaixa();	
+	public void setaLabels() {
+		lbValorTotal.setText(String.valueOf(String.format("%.2f", valorTotal)));
+		lbValorDinheiro.setText(String.valueOf(String.format("%.2f", valorDinheiro)));
+		lbTotalEmCaixa.setText(String.valueOf(String.format("%.2f", fundoDeTroco)));
+		lbValorCartao.setText(String.valueOf(String.format("%.2f", valorCartao)));
 	}
 
-	public void excluirTransacao() {
-		ObservableList<Transacao> obExcluirTransacao = FXCollections.observableArrayList();
-		for (Transacao tran : obTable) {
-			if (tran.getSelect().isSelected()) {
-				obExcluirTransacao.add(tran);
-				double valor = (tran.getValor()*0.40);			
-				valor = valor - (valor*2);
-				for (Funcionario fun: Cadastro.funcionarios) {
-					if(fun.getNome().equals(tran.getAtendente())) {
-						Atualizar.atualizarSalario(fun.getCpf(), valor);
-					}
-				}		
-				Carregar.carregaFuncionario();
-				Excluir.excluirTransacao(tran);
-			}
+	public void bloqDesbloqValor() {
+		if (cbBloqueiaPreco.isSelected()) {
+			tfValor.setDisable(true);
+		} else {
+			tfValor.setDisable(false);
 		}
-		Caixa.caixa.removeAll(obExcluirTransacao);
-		carregaTable();
-		calculaCaixa();
 	}
 
+	public void zeraValores() {
+		setValorTotal(0.0);
+		setValorDinheiro(0.0);
+		setFundoDeTroco(0.0);
+		setValorCartao(0.0);
+	}
 
-	public void carregaTransacao() {
-			Carregar.carregaTransacaoExpecifica(dpSelecao.getValue());
-			carregaTable();
-			calculaCaixa();
+	public void limpaPacotes() {
+		cbPacoteAssociado.setDisable(true);
+		btAssociar.setDisable(true);
+		ObservableList<PacoteAssociado> obPacoteAssociados = FXCollections.observableArrayList();
+		cbPacoteAssociado.setItems(obPacoteAssociados);
 	}
 
 	@Override
@@ -320,8 +728,15 @@ public class ViewCaixaController implements Initializable {
 		colunaMeioPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
 		colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
+		colunaObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
+		colunaServico.setCellValueFactory(new PropertyValueFactory<>("servico"));
 		tfClienteTemp = this.tfCliente;
 		cbFuncionarioTemp = this.cbFuncionario;
-		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
+		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
+		carregaTransacao();
+		carregaTreeView();
+		bloqDesbloqValor();
+		cbPacoteAssociado.setDisable(true);
+		btAssociar.setDisable(true);
 	}
 }

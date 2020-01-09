@@ -10,8 +10,10 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import gui.util.Alerts;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,16 +23,27 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.entities.Agendamento;
-import model.entities.Funcionario;
-import model.services.Cadastro;
-import model.services.Carregar;
-import model.services.Excluir;
+import model.collection.Colecao;
+import model.collection.entities.Agendamento;
+import model.collection.entities.Caixa;
+import model.collection.entities.Cliente;
+import model.collection.entities.Funcionario;
+import model.dao.DaoAgendamento;
+import model.dao.DaoCliente;
+import model.dao.DaoFuncionario;
+import model.dao.DaoPacote;
+import model.dao.DaoServico;
+import model.dao.DaoTransacao;
 
 public class ViewController implements Initializable {
 
@@ -39,26 +52,35 @@ public class ViewController implements Initializable {
 	private static Scene funcionario;
 	private static Scene cliente;
 	private static Scene sobre;
+	private static Scene pacote;
 	private static Stage stageAgenda = new Stage();
 	private static Stage stageFuncionario = new Stage();
 	private static Stage stageCliente = new Stage();
 	private static Stage stageCaixa = new Stage();
 	private static Stage stagePagamento = new Stage();
 	private static Stage stageSobre = new Stage();
+	private static Stage stagePacote = new Stage();
 	private static Funcionario funTemp;
 	private static LocalDate dpDataTemp;
 	private static TableView<Funcionario> tvAgendaTemp;
 	private static TableView<Funcionario> tvFuncionarioTemp;
 	public static TextField tfClienteTemp;
-	public static AutoCompletionBinding bindAutoCompleteCliente;
-	
+	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
+	public boolean parada;
+
 	ObservableList<Agendamento> obAgendamento;
+
+	@FXML
+	private SplitPane splitPaneCentral;
 
 	@FXML
 	private Button btCriaFuncionario;
 
 	@FXML
 	private DatePicker dpData;
+
+	@FXML
+	private ProgressIndicator pb;
 
 	@FXML
 	private DatePicker dpDataExcluir;
@@ -74,7 +96,7 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private Button btCaixa;
-	
+
 	@FXML
 	private Button btPagamento;
 
@@ -82,7 +104,16 @@ public class ViewController implements Initializable {
 	private Button btSalvar;
 
 	@FXML
+	private Button btPacote;
+
+	@FXML
+	private ImageView iVSplit;
+
+	@FXML
 	private Button btCarregar;
+
+	@FXML
+	private Label labelStatus;
 
 	@FXML
 	private TableView<Funcionario> tvFuncionario = new TableView<>();
@@ -92,31 +123,31 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private TableView<Funcionario> tvAgenda = new TableView<>();
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna8;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna8_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna9;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna9_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna10;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna10_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna11;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna11_3;
-	
+
 	@FXML
 	private TableColumn<Funcionario, String> coluna12;
 
@@ -211,41 +242,67 @@ public class ViewController implements Initializable {
 		return cliente;
 	}
 
+	public static Scene getPacote() {
+		return pacote;
+	}
+
 	public static Stage getStageAgenda() {
 		return stageAgenda;
 	}
-	
+
 	public static TableView<Funcionario> getTvFuncionarioTemp() {
 		return tvFuncionarioTemp;
 	}
-	
+
 	public static TextField getTfClienteTemp() {
 		return tfClienteTemp;
 	}
-	
+
 	public static Stage getStageSobre() {
 		return stageSobre;
 	}
-	
+
 	public static Stage getStageCaixa() {
 		return stageCaixa;
 	}
-	
+
 	public static Stage getStagePagamento() {
 		return stagePagamento;
 	}
-	
-	// abre p�ginas
+
+	public static Stage getStagePacote() {
+		return stagePacote;
+	}
+
+	// abre páginas
 
 	@FXML
 	public void onBtCriaFuncionarioAction() {
 		try {
-				retornaInformacaoAgenda();
-				Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
-				funcionario = new Scene(fxmlfuncionario);
-				stageFuncionario.setScene(funcionario);
-				stageFuncionario.show();
-				stageFuncionario.centerOnScreen();
+			retornaInformacaoAgenda();
+			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
+			funcionario = new Scene(fxmlfuncionario);
+			stageFuncionario.setScene(funcionario);
+			stageFuncionario.show();
+			stageFuncionario.centerOnScreen();
+			stageFuncionario.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageFuncionario.setTitle("JEF - Funcionário");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void onBtAbrePacoteAction() {
+		try {
+			retornaInformacaoAgenda();
+			Parent fxmlPacote = FXMLLoader.load(getClass().getResource("/gui/view/ViewPacote.fxml"));
+			pacote = new Scene(fxmlPacote);
+			stagePacote.setScene(pacote);
+			stagePacote.show();
+			stagePacote.centerOnScreen();
+			stagePacote.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stagePacote.setTitle("JEF - Pacotes");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -262,6 +319,8 @@ public class ViewController implements Initializable {
 					stageAgenda.setScene(agenda);
 					stageAgenda.show();
 					stageAgenda.centerOnScreen();
+					stageAgenda.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+					stageAgenda.setTitle("JEF - Agendamento");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -272,13 +331,14 @@ public class ViewController implements Initializable {
 	@FXML
 	public void onBtCriaClienteAction() {
 		try {
-				retornaInformacaoAgenda();
-				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
-				cliente = new Scene(fxmlCliente);
-				stageCliente.setScene(cliente);
-				stageCliente.show();
-				stageCliente.centerOnScreen();
-
+			retornaInformacaoAgenda();
+			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
+			cliente = new Scene(fxmlCliente);
+			stageCliente.setScene(cliente);
+			stageCliente.show();
+			stageCliente.centerOnScreen();
+			stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageCliente.setTitle("JEF - Cliente");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -292,11 +352,13 @@ public class ViewController implements Initializable {
 			stageCaixa.setScene(caixa);
 			stageCaixa.show();
 			stageCaixa.centerOnScreen();
+			stageCaixa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageCaixa.setTitle("JEF - Caixa");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void onBtAbrePagamentoAction() {
 		try {
@@ -305,11 +367,13 @@ public class ViewController implements Initializable {
 			stagePagamento.setScene(pagamento);
 			stagePagamento.show();
 			stagePagamento.centerOnScreen();
+			stagePagamento.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stagePagamento.setTitle("JEF - Pagamento");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void onBtAbreSobreAction() {
 		try {
@@ -318,23 +382,198 @@ public class ViewController implements Initializable {
 			stageSobre.setScene(sobre);
 			stageSobre.show();
 			stageSobre.centerOnScreen();
+			stageSobre.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageSobre.setTitle("JEF - Sobre");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// fun��es para popular tabelas
+	// funções para popular tabelas
 
 	public void carregaFuncionario() {
-		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		tvFuncionario.refresh();
-		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Cadastro.funcionarios);
+		ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 		tvFuncionario.setItems(obFuncionario);
-		
 	}
-	
+
 	@FXML
 	public void carregaAgenda() {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				pb.setVisible(true);
+				labelStatus.setVisible(true);
+				labelStatus.setText("Preenchendo tabela!");
+			}
+		});
+
+		parada = true;
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				pb.setVisible(false);
+				labelStatus.setVisible(false);
+				return null;
+			}
+		};
+
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(tarefa);
+			t.start();
+		});
+
+		Task<Void> acaoCarregarAgenda = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				tvAgenda.setItems(null);
+				dpDataExcluir.setValue(dpData.getValue());
+				DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
+				tvAgenda.refresh();
+				ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Colecao.funcionarios);
+				tvAgenda.setItems(obAgenda);
+				retornaInformacaoAgenda();
+				parada = false;
+				return null;
+			}
+		};
+
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(acaoCarregarAgenda);
+			t.start();
+		});
+	}
+
+	private void populaTabela() {
+		tvAgendamento.setItems(null);
+		obAgendamento = FXCollections.observableArrayList(Colecao.agendamentos);
+		tvAgendamento.setItems(obAgendamento);
+	}
+
+	// ações de botões
+
+	@FXML
+	public void onBtPesquisaAgendamento() {
+		parada = true;
+		pb.setVisible(true);
+		labelStatus.setVisible(true);
+		labelStatus.setText("Preenchendo tabela!");
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				pb.setVisible(false);
+				labelStatus.setVisible(false);
+				return null;
+			}
+		};
+
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(tarefa);
+			t.start();
+		});
+
+		Task<Void> acaoPesquisaAgendamento = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				DaoAgendamento.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
+				tfCliente.clear();
+				populaTabela();
+				parada = false;
+				return null;
+			}
+		};
+
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(acaoPesquisaAgendamento);
+			t.start();
+		});
+	}
+
+	@FXML
+	public void onBtExcluirAgendamento() {
+		if (Alerts.showAlertExclusao()) {
+			pb.setVisible(true);
+			labelStatus.setVisible(true);
+			Task<Void> acaoExcluir = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					for (Agendamento age : obAgendamento) {
+						if (age.getSelect().isSelected()) {
+							DaoAgendamento.excluirAgendamento(age, dpDataExcluir.getValue());
+						}
+					}
+					tvAgendamento.setItems(null);
+					carregaAgenda();
+					parada = false;
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(acaoExcluir);
+				t.start();
+			});
+
+			parada = true;
+			labelStatus.setText("Excluíndo agendamentos!");
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					while (parada == true) {
+						Thread.sleep(1);
+					}
+					pb.setVisible(false);
+					labelStatus.setVisible(false);
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(tarefa);
+				t.start();
+			});
+		}
+	}
+
+	// métodos avulsos
+
+	public void abreFechaSplit() {
+		double[] divisor = splitPaneCentral.getDividerPositions();
+		if (divisor[0] < 0.12290909090909091) {
+			splitPaneCentral.setDividerPositions(0.135);
+		} else {
+			splitPaneCentral.setDividerPositions(0.0022);
+		}
+	}
+
+	public void retornaInformacaoAgenda() {
+		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
+		dpDataTemp = this.dpData.getValue();
+		tvAgendaTemp = this.tvAgenda;
+		tvFuncionarioTemp = this.tvFuncionario;
+		tfClienteTemp = this.tfCliente;
+	}
+
+	public static void carregarBase() {
+		DaoServico.carregaServicos();
+		DaoServico.carregaCategoria();
+		DaoCliente.carregaCliente();
+		DaoFuncionario.carregaFuncionario();
+		Caixa.setStatus(DaoTransacao.carregaCaixa());
+		DaoPacote.carregaPacote();
+		DaoPacote.carregaPacoteAssociado();
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
 		coluna8.setCellValueFactory(new PropertyValueFactory<>("h8"));
 		coluna8_3.setCellValueFactory(new PropertyValueFactory<>("h8_3"));
 		coluna9.setCellValueFactory(new PropertyValueFactory<>("h9"));
@@ -356,64 +595,18 @@ public class ViewController implements Initializable {
 		coluna17.setCellValueFactory(new PropertyValueFactory<>("h17"));
 		coluna17_3.setCellValueFactory(new PropertyValueFactory<>("h17_3"));
 		coluna18.setCellValueFactory(new PropertyValueFactory<>("h18"));
-		Carregar.carregaAgendaFuncionario(dpData.getValue());
-		dpDataExcluir.setValue(dpData.getValue());
-		tvAgenda.refresh();
-		ObservableList<Funcionario> obAgenda = FXCollections.observableArrayList(Cadastro.funcionarios);
-		tvAgenda.setItems(obAgenda);
-	}
-	
-	private void populaTabela() {
-		obAgendamento = FXCollections.observableArrayList(Cadastro.agendamentos);
+
 		colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 		colunaHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
 		colunaExcluir.setCellValueFactory(new PropertyValueFactory<>("select"));
 		colunaFuncionarioAgendamento.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
-		tvAgendamento.setItems(obAgendamento);
-	}
 
-	// a��es de bot�es
-
-	@FXML
-	public void onBtPesquisaAgendamento() {
-		Carregar.carregaAgendamento(dpDataExcluir.getValue(), tfCliente.getText());
-		tfCliente.clear();
-		populaTabela();
-	}
-
-	@FXML
-	public void onBtExcluirAgendamento() {
-		if (Alerts.showAlertExclusao()) {
-			ObservableList<Agendamento> obExcluirAgendamento = FXCollections.observableArrayList();
-			for (Agendamento age : obAgendamento) {
-				if (age.getSelect().isSelected()) {
-					obExcluirAgendamento.add(age);
-					Excluir.excluirAgendamento(age, dpDataExcluir.getValue());
-				}
-			}
-			obAgendamento.removeAll(obExcluirAgendamento);
-			Cadastro.agendamentos.removeAll(obExcluirAgendamento);
-			carregaAgenda();
-		}
-	}
-
-	//m�todos avulsos
-	
-	public void retornaInformacaoAgenda() {
-		funTemp = this.tvAgenda.getSelectionModel().getSelectedItem();
-		dpDataTemp = this.dpData.getValue();
-		tvAgendaTemp = this.tvAgenda;
-		tvFuncionarioTemp = this.tvFuncionario;
-		tfClienteTemp = this.tfCliente;
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+		pb.setVisible(false);
 		dpData.setValue(LocalDate.now());
-		Carregar.carregar();
+		carregarBase();
 		carregaFuncionario();
-		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Cadastro.clientes);
-		dpDataExcluir.setValue(LocalDate.now());
 		carregaAgenda();
+		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
+		dpDataExcluir.setValue(LocalDate.now());
 	}
 }
