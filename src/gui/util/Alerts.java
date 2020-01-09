@@ -64,6 +64,7 @@ public class Alerts {
 		ButtonType btnSim = new ButtonType("Sim");
         ButtonType btnNao = new ButtonType("Não");
 		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeight(avisoCentral.length()+50);
 		alert.setResizable(true);
 		alert.setTitle(titulo);
 		alert.setHeaderText(avisoCentral);

@@ -546,7 +546,7 @@ public class ViewController implements Initializable {
 	public void abreFechaSplit() {
 		double[] divisor = splitPaneCentral.getDividerPositions();
 		if (divisor[0] < 0.12290909090909091) {
-			splitPaneCentral.setDividerPositions(0.1229);
+			splitPaneCentral.setDividerPositions(0.135);
 		} else {
 			splitPaneCentral.setDividerPositions(0.0022);
 		}

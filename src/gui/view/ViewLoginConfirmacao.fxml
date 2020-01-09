@@ -13,12 +13,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="151.0" prefWidth="418.0" style="-fx-border-color: #cccccc;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="gui.controllers.ViewLoginConfirmacaoController">
+<AnchorPane prefHeight="151.0" prefWidth="418.0" style="-fx-border-color: #cccccc;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewLoginConfirmacaoController">
    <children>
       <Pane layoutX="121.0" layoutY="11.0" prefHeight="134.0" prefWidth="286.0" style="-fx-border-color: #cccccc;">
          <children>
-            <GridPane layoutX="17.0" layoutY="17.0" prefHeight="112.0" prefWidth="221.0">
+            <GridPane layoutX="11.0" layoutY="17.0" prefHeight="105.0" prefWidth="234.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="71.0" />
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="184.0" />
@@ -29,12 +28,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label prefHeight="17.0" prefWidth="53.0" text="Usuário:">
+                  <Label prefHeight="17.0" prefWidth="61.0" text="Usuário:">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="17.0" prefWidth="47.0" text="Senha:" GridPane.rowIndex="1">
+                  <Label prefHeight="17.0" prefWidth="53.0" text="Senha:" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -56,16 +55,16 @@
                   <TextField fx:id="tfSenhaVisivel" editable="false" style="-fx-background-radius: 5em;" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <ImageView fx:id="ivOlho" fitHeight="25.0" fitWidth="27.0" layoutX="249.0" layoutY="61.0" onMouseClicked="#onBtOlhoAction" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivOlho" fitHeight="25.0" fitWidth="27.0" layoutX="252.0" layoutY="58.0" onMouseClicked="#onBtOlhoAction" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../model/images/icons8_eye_60px_1.png" />
+                  <Image url="@../../model/images/icons8_closed_eye_48px.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
       <Pane layoutX="16.0" layoutY="22.0" prefHeight="112.0" prefWidth="89.0" style="-fx-border-color: #cccccc; -fx-border-radius: 3em;">
          <children>
-            <ImageView fitHeight="77.0" fitWidth="76.0" layoutX="7.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="77.0" fitWidth="76.0" layoutX="7.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../model/images/icons8_female_worker_48px.png" />
                </image>

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewPacoteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewPacoteController">
    <children>
       <TabPane prefHeight="504.0" prefWidth="683.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -28,14 +28,14 @@
                      <children>
                         <TableView fx:id="tvPacotes" layoutX="10.0" layoutY="11.0" onMouseClicked="#selecionaPacote" prefHeight="250.0" prefWidth="663.0">
                            <columns>
-                              <TableColumn fx:id="colunaId" prefWidth="48.0" text="ID" />
-                              <TableColumn fx:id="colunaPacote" prefWidth="101.0" text="Pacote" />
-                              <TableColumn fx:id="colunaValor" prefWidth="57.0" text="Valor" />
-                              <TableColumn fx:id="colunaValorPe" prefWidth="74.0" text="Valor Pé" />
-                              <TableColumn fx:id="colunaValorMao" prefWidth="94.0" text="Valor Mão" />
-                              <TableColumn fx:id="colunaQuantMao" prefWidth="107.0" text="Quantidade Mão" />
-                              <TableColumn fx:id="colunaQuantPe" prefWidth="99.0" text="Quantidade Pé" />
-                              <TableColumn fx:id="colunaExcluirPacote" prefWidth="82.0" text="Excluir?" />
+                              <TableColumn fx:id="colunaId" prefWidth="34.0" text="ID" />
+                              <TableColumn fx:id="colunaPacote" prefWidth="95.0" text="Pacote" />
+                              <TableColumn fx:id="colunaValor" prefWidth="66.0" text="Valor" />
+                              <TableColumn fx:id="colunaValorPe" prefWidth="70.0" text="Valor Pé" />
+                              <TableColumn fx:id="colunaValorMao" prefWidth="81.0" text="Valor Mão" />
+                              <TableColumn fx:id="colunaQuantMao" prefWidth="134.0" text="Quantidade Mão" />
+                              <TableColumn fx:id="colunaQuantPe" prefWidth="117.0" text="Quantidade Pé" />
+                              <TableColumn fx:id="colunaExcluirPacote" prefWidth="65.0" text="Excluir?" />
                            </columns>
                         </TableView>
                         <TabPane layoutY="270.0" prefHeight="207.0" prefWidth="683.0" tabClosingPolicy="UNAVAILABLE">
@@ -44,25 +44,25 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="172.0" prefWidth="602.0">
                                        <children>
-                                          <Pane layoutX="10.0" layoutY="10.0" prefHeight="156.0" prefWidth="465.0" style="-fx-border-color: #cccccc;">
+                                          <Pane layoutX="8.0" layoutY="6.0" prefHeight="156.0" prefWidth="465.0" style="-fx-border-color: #cccccc;">
                                              <children>
-                                                <VBox layoutX="2.0" layoutY="16.0" prefHeight="103.0" prefWidth="62.0" spacing="18.0">
+                                                <VBox layoutX="11.0" layoutY="16.0" prefHeight="118.0" prefWidth="71.0" spacing="18.0">
                                                    <children>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="64.0" text="Pacote:" />
                                                       <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="71.0" text="Valor:" />
                                                       <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="66.0" text="Valor Pé:" />
-                                                      <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="75.0" text="Valor Mão:" />
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="81.0" text="Valor Mão:" />
                                                    </children>
                                                 </VBox>
-                                                <TextField fx:id="tfNome" layoutX="75.0" layoutY="13.0" minHeight="0.0" minWidth="0.0" prefHeight="26.0" prefWidth="133.0" />
-                                                <TextField fx:id="tfValor" layoutX="75.0" layoutY="49.0" prefHeight="25.0" prefWidth="74.0" />
-                                                <TextField fx:id="tfValorPe" layoutX="75.0" layoutY="83.0" prefHeight="25.0" prefWidth="74.0" />
-                                                <TextField fx:id="tfValorMao" layoutX="75.0" layoutY="118.0" prefHeight="25.0" prefWidth="74.0" />
-                                                <TextField fx:id="tfQuantMao" layoutX="337.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0" />
-                                                <TextField fx:id="tfQuantPe" layoutX="337.0" layoutY="49.0" prefHeight="25.0" prefWidth="47.0" />
+                                                <TextField fx:id="tfNome" layoutX="86.0" layoutY="13.0" minHeight="0.0" minWidth="0.0" prefHeight="26.0" prefWidth="133.0" />
+                                                <TextField fx:id="tfValor" layoutX="86.0" layoutY="49.0" prefHeight="25.0" prefWidth="74.0" />
+                                                <TextField fx:id="tfValorPe" layoutX="86.0" layoutY="83.0" prefHeight="25.0" prefWidth="74.0" />
+                                                <TextField fx:id="tfValorMao" layoutX="86.0" layoutY="118.0" prefHeight="25.0" prefWidth="74.0" />
+                                                <TextField fx:id="tfQuantMao" layoutX="350.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0" />
+                                                <TextField fx:id="tfQuantPe" layoutX="350.0" layoutY="49.0" prefHeight="25.0" prefWidth="47.0" />
                                                 <Label layoutX="239.0" layoutY="53.0" text="Quantidade Pé:" />
                                                 <Label layoutX="227.0" layoutY="18.0" text="Quantidade Mão:" />
-                                                <Button fx:id="btAddPacote" layoutX="276.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtCriaPacoteAction" text="Adicionar">
+                                                <Button fx:id="btAddPacote" layoutX="252.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtCriaPacoteAction" text="Adicionar">
                                                    <graphic>
                                                       <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -71,7 +71,7 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </Button>
-                                                <Button fx:id="btExcluiPacote" layoutX="378.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtExcluiPacoteAction" text="Excluir">
+                                                <Button fx:id="btExcluiPacote" layoutX="366.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtExcluiPacoteAction" text="Excluir">
                                                    <graphic>
                                                       <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -89,9 +89,9 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <Pane layoutX="10.0" layoutY="10.0" prefHeight="156.0" prefWidth="399.0" style="-fx-border-color: #cccccc;">
+                                          <Pane layoutX="9.0" layoutY="6.0" prefHeight="156.0" prefWidth="416.0" style="-fx-border-color: #cccccc;">
                                              <children>
-                                                <VBox layoutX="2.0" layoutY="16.0" prefHeight="103.0" prefWidth="62.0" spacing="18.0">
+                                                <VBox layoutX="2.0" layoutY="16.0" prefHeight="127.0" prefWidth="72.0" spacing="18.0">
                                                    <children>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="64.0" text="Pacote:" />
                                                       <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="71.0" text="Valor:" />
@@ -99,17 +99,17 @@
                                                       <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="75.0" text="Valor Mão:" />
                                                    </children>
                                                 </VBox>
-                                                <TextField fx:id="tfNomeAtualizado" layoutX="75.0" layoutY="13.0" minHeight="0.0" minWidth="0.0" prefHeight="26.0" prefWidth="133.0" />
-                                                <TextField fx:id="tfValorAtualizado" layoutX="75.0" layoutY="49.0" prefHeight="25.0" prefWidth="74.0" />
-                                                <TextField fx:id="tfValorPeAtualizado" layoutX="75.0" layoutY="83.0" prefHeight="25.0" prefWidth="74.0" />
-                                                <TextField fx:id="tfValorMaoAtualizado" layoutX="75.0" layoutY="118.0" prefHeight="25.0" prefWidth="74.0" />
-                                                <TextField fx:id="tfQuantMaoAtualizado" layoutX="337.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0" />
-                                                <TextField fx:id="tfQuantPeAtualizado" layoutX="337.0" layoutY="49.0" prefHeight="25.0" prefWidth="47.0" />
-                                                <TextField fx:id="tfIdPacote" disable="true" editable="false" layoutX="337.0" layoutY="83.0" prefHeight="25.0" prefWidth="47.0" />
-                                                <Label layoutX="239.0" layoutY="53.0" text="Quantidade Pé:" />
-                                                <Label layoutX="227.0" layoutY="18.0" text="Quantidade Mão:" />
-                                                <Label layoutX="305.0" layoutY="87.0" text="ID:" />
-                                                <Button fx:id="btAtualizaPacote" layoutX="296.0" layoutY="115.0" mnemonicParsing="false" onAction="#onBtAtualizaPacoteAction" text="Atualizar">
+                                                <TextField fx:id="tfNomeAtualizado" layoutX="76.0" layoutY="13.0" minHeight="0.0" minWidth="0.0" prefHeight="26.0" prefWidth="133.0" />
+                                                <TextField fx:id="tfValorAtualizado" layoutX="76.0" layoutY="49.0" prefHeight="25.0" prefWidth="74.0" />
+                                                <TextField fx:id="tfValorPeAtualizado" layoutX="76.0" layoutY="83.0" prefHeight="25.0" prefWidth="74.0" />
+                                                <TextField fx:id="tfValorMaoAtualizado" layoutX="76.0" layoutY="118.0" prefHeight="25.0" prefWidth="74.0" />
+                                                <TextField fx:id="tfQuantMaoAtualizado" layoutX="357.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0" />
+                                                <TextField fx:id="tfQuantPeAtualizado" layoutX="358.0" layoutY="49.0" prefHeight="25.0" prefWidth="47.0" />
+                                                <TextField fx:id="tfIdPacote" disable="true" editable="false" layoutX="358.0" layoutY="83.0" prefHeight="25.0" prefWidth="47.0" />
+                                                <Label layoutX="248.0" layoutY="53.0" text="Quantidade Pé:" />
+                                                <Label layoutX="235.0" layoutY="19.0" text="Quantidade Mão:" />
+                                                <Label layoutX="330.0" layoutY="87.0" text="ID:" />
+                                                <Button fx:id="btAtualizaPacote" layoutX="301.0" layoutY="118.0" mnemonicParsing="false" onAction="#onBtAtualizaPacoteAction" text="Atualizar">
                                                    <graphic>
                                                       <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -136,10 +136,10 @@
                         <TableView fx:id="tvPacotesAssociados" layoutX="10.0" layoutY="10.0" prefHeight="311.0" prefWidth="663.0">
                           <columns>
                             <TableColumn fx:id="colunaIdPacoteAssociado" prefWidth="56.0" text="ID" />
-                            <TableColumn fx:id="colunaCliente" prefWidth="235.0" text="Cliente" />
-                              <TableColumn fx:id="colunaPacoteAssociado" prefWidth="102.0" text="Pacote" />
-                              <TableColumn fx:id="colunaQuantMaoAssociado" minWidth="0.0" prefWidth="105.0" text="Quantidade Mão" />
-                              <TableColumn fx:id="colunaQuantPeAssociado" minWidth="7.0" prefWidth="98.0" text="Quantidade Pé" />
+                            <TableColumn fx:id="colunaCliente" prefWidth="193.0" text="Cliente" />
+                              <TableColumn fx:id="colunaPacoteAssociado" prefWidth="96.0" text="Pacote" />
+                              <TableColumn fx:id="colunaQuantMaoAssociado" minWidth="0.0" prefWidth="134.0" text="Quantidade Mão" />
+                              <TableColumn fx:id="colunaQuantPeAssociado" minWidth="7.0" prefWidth="117.0" text="Quantidade Pé" />
                               <TableColumn fx:id="colunaExcluirPacoteAssociado" prefWidth="65.0" text="Excluir?" />
                           </columns>
                         </TableView>
@@ -161,7 +161,7 @@
                                     <Label text="Pacote" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
-                              <Button fx:id="btAddAssociacao" layoutX="196.0" layoutY="97.0" mnemonicParsing="false" onAction="#onBtCriaAssociacaoAction" text="Adicionar">
+                              <Button fx:id="btAddAssociacao" layoutX="170.0" layoutY="96.0" mnemonicParsing="false" onAction="#onBtCriaAssociacaoAction" text="Adicionar">
                                  <graphic>
                                     <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -170,7 +170,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button fx:id="btExcluiAssociacao" layoutX="298.0" layoutY="97.0" mnemonicParsing="false" onAction="#onBtExcluiAssociacaoAction" text="Excluir">
+                              <Button fx:id="btExcluiAssociacao" layoutX="285.0" layoutY="96.0" mnemonicParsing="false" onAction="#onBtExcluiAssociacaoAction" text="Excluir">
                                  <graphic>
                                     <ImageView fitHeight="22.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                                        <image>

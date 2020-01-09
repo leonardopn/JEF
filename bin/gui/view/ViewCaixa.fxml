@@ -21,9 +21,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1377.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewCaixaController">
    <children>
-      <Line endX="1183.0" endY="7.62939453125E-6" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
+      <Line endX="1205.0" layoutX="161.0" layoutY="35.0" startX="-161.0" stroke="#827f7f" />
       <Button fx:id="btAbrirFecharCaixa" layoutX="45.0" layoutY="46.0" mnemonicParsing="false" onAction="#onBtAbrirFecharCaixaAction" prefHeight="63.0" prefWidth="164.0">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -35,13 +35,13 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Line endX="1233.0" layoutX="111.0" layoutY="137.0" startX="-110.0" stroke="#827f7f" />
-      <Line endX="100.0" endY="549.0" layoutX="155.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
-      <Label layoutX="43.0" layoutY="280.0" text="Data:" />
-      <DatePicker fx:id="dpData" layoutX="9.0" layoutY="298.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField fx:id="tfValor" layoutX="10.0" layoutY="359.0" prefHeight="26.0" prefWidth="151.0" />
-      <Label layoutX="41.0" layoutY="341.0" text="Valor:" />
-      <Button fx:id="btEnviarTransacao" layoutX="266.0" layoutY="642.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar">
+      <Line endX="1255.0" layoutX="111.0" layoutY="137.0" startX="-110.0" stroke="#827f7f" />
+      <Line endX="100.0" endY="561.0" layoutX="155.0" layoutY="134.0" startX="100.0" startY="-98.0" stroke="#827f7f" />
+      <Label layoutX="43.0" layoutY="287.0" text="Data:" />
+      <DatePicker fx:id="dpData" layoutX="9.0" layoutY="305.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField fx:id="tfValor" layoutX="10.0" layoutY="366.0" prefHeight="26.0" prefWidth="151.0" />
+      <Label layoutX="41.0" layoutY="348.0" text="Valor:" />
+      <Button fx:id="btEnviarTransacao" layoutX="266.0" layoutY="651.0" mnemonicParsing="false" onAction="#onBtEnviarTransacaoAction" text="Adicionar">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -49,9 +49,9 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <TableView fx:id="tvTransacao" layoutX="256.0" layoutY="138.0" prefHeight="492.0" prefWidth="1089.0">
+      <TableView fx:id="tvTransacao" layoutX="256.0" layoutY="138.0" prefHeight="502.0" prefWidth="1097.0">
         <columns>
-          <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="65.0" text="ID">
+          <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="54.0" text="ID">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -59,7 +59,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="colunaCliente" prefWidth="146.0" text="Cliente">
+            <TableColumn fx:id="colunaCliente" prefWidth="148.0" text="Cliente">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -67,7 +67,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="colunaAtendente" prefWidth="161.0" text="Atendente">
+            <TableColumn fx:id="colunaAtendente" prefWidth="143.0" text="Atendente">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -75,7 +75,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="colunaMeioPagamento" prefWidth="158.0" text="Meio de pagamento">
+            <TableColumn fx:id="colunaMeioPagamento" prefWidth="185.0" text="Meio de pagamento">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -83,7 +83,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="colunaValor" prefWidth="71.0" text="Valor">
+            <TableColumn fx:id="colunaValor" prefWidth="85.0" text="Valor">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -91,7 +91,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="colunaServico" prefWidth="148.0" text="Serviço">
+            <TableColumn fx:id="colunaServico" prefWidth="134.0" text="Serviço">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -100,7 +100,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="colunaObs" prefWidth="162.0" text="Observação">
+            <TableColumn fx:id="colunaObs" prefWidth="169.0" text="Observação">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -109,7 +109,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-          <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" sortable="false" text="Data">
+          <TableColumn fx:id="colunaData" editable="false" minWidth="0.0" prefWidth="83.0" sortable="false" text="Data">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -128,10 +128,10 @@
                </graphic></TableColumn>
         </columns>
       </TableView>
-      <ChoiceBox fx:id="cbFormaPagamento" layoutX="9.0" layoutY="418.0" prefWidth="150.0" />
-      <Label layoutX="43.0" layoutY="399.0" text="Forma de pagamento:" />
-      <Line endX="1228.0" layoutX="116.0" layoutY="631.0" startX="141.0" stroke="#827f7f" />
-      <Button fx:id="btExcluir" layoutX="371.0" layoutY="642.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="32.0" prefWidth="79.0" text="Excluir">
+      <ChoiceBox fx:id="cbFormaPagamento" layoutX="9.0" layoutY="425.0" prefHeight="26.0" prefWidth="184.0" />
+      <Label layoutX="43.0" layoutY="406.0" text="Forma de pagamento:" />
+      <Line endX="1250.0" layoutX="116.0" layoutY="641.0" startX="141.0" stroke="#827f7f" />
+      <Button fx:id="btExcluir" layoutX="385.0" layoutY="651.0" mnemonicParsing="false" onAction="#excluirTransacao" prefHeight="34.0" prefWidth="96.0" text="Excluir">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -139,7 +139,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <GridPane layoutX="266.0" layoutY="51.0" prefHeight="65.0" prefWidth="403.0" vgap="10.0">
+      <GridPane layoutX="266.0" layoutY="51.0" prefHeight="63.0" prefWidth="438.0" vgap="10.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="202.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="0.0" prefWidth="34.0" />
@@ -214,7 +214,7 @@
             </Label>
          </children>
       </GridPane>
-      <GridPane layoutX="1169.0" layoutY="642.0" prefHeight="30.0" prefWidth="164.0">
+      <GridPane layoutX="1159.0" layoutY="655.0" prefHeight="30.0" prefWidth="197.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="114.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="50.0" />
@@ -227,7 +227,7 @@
             <ProgressIndicator fx:id="piStatus" visible="false" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="btAjuda" layoutX="1264.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBtAjudaAction" text="Ajuda">
+      <Button fx:id="btAjuda" layoutX="1278.0" layoutY="3.0" mnemonicParsing="false" onAction="#onBtAjudaAction" text="Ajuda">
          <graphic>
             <ImageView fitHeight="19.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -236,25 +236,25 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_calendar_48px.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_money_40px.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="402.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_card_payment_40px_1.png" />
          </image>
       </ImageView>
-      <GridPane layoutX="12.0" layoutY="2.0" prefHeight="32.0" prefWidth="273.0">
+      <GridPane layoutX="12.0" layoutY="2.0" prefHeight="30.0" prefWidth="336.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="161.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="136.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="166.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="176.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -265,30 +265,30 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label prefHeight="30.0" prefWidth="140.0" text="Status do caixa:">
+            <Label prefHeight="30.0" prefWidth="166.0" text="Status do caixa:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <TreeView fx:id="trvServicos" layoutX="10.0" layoutY="535.0" onMouseClicked="#selecionaServico" prefHeight="122.0" prefWidth="234.0" />
-      <TextField fx:id="tfObs" layoutX="10.0" layoutY="477.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label layoutX="43.0" layoutY="460.0" text="Observação:" />
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="12.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true">
+      <TreeView fx:id="trvServicos" layoutX="10.0" layoutY="542.0" onMouseClicked="#selecionaServico" prefHeight="122.0" prefWidth="234.0" />
+      <TextField fx:id="tfObs" layoutX="10.0" layoutY="484.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label layoutX="43.0" layoutY="467.0" text="Observação:" />
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="12.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_talk_80px.png" />
          </image>
       </ImageView>
-      <Label layoutX="38.0" layoutY="517.0" text="Serviços:" />
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="9.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+      <Label layoutX="38.0" layoutY="524.0" text="Serviços:" />
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="9.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_moleskine_96px_1.png" />
          </image>
       </ImageView>
-      <CheckBox fx:id="cbBloqueiaPreco" layoutX="165.0" layoutY="363.0" mnemonicParsing="false" onAction="#bloqDesbloqValor" selected="true" text="Bloq/Liberar" />
-      <DatePicker fx:id="dpSelecao" editable="false" layoutX="1114.0" layoutY="5.0" onAction="#carregaTransacao" prefHeight="26.0" prefWidth="140.0" />
-      <GridPane layoutX="1134.0" layoutY="42.0">
+      <CheckBox fx:id="cbBloqueiaPreco" layoutX="170.0" layoutY="370.0" mnemonicParsing="false" onAction="#bloqDesbloqValor" selected="true" text="Liberar /" wrapText="true" />
+      <DatePicker fx:id="dpSelecao" editable="false" layoutX="1128.0" layoutY="4.0" onAction="#carregaTransacao" prefHeight="26.0" prefWidth="140.0" />
+      <GridPane layoutX="1122.0" layoutY="41.0" prefHeight="91.0" prefWidth="234.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -307,11 +307,11 @@
             <Button fx:id="btCalTroco" mnemonicParsing="false" onAction="#calculaTroco" prefHeight="25.0" prefWidth="37.0" text="=" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <TabPane layoutX="-1.0" layoutY="138.0" prefHeight="133.0" prefWidth="255.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="-1.0" layoutY="138.0" prefHeight="148.0" prefWidth="255.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Transação">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="115.0" prefWidth="255.0">
                      <children>
                         <Label layoutX="39.0" layoutY="5.0" text="Cliente:" />
                         <Label layoutX="36.0" layoutY="58.0" text="Atendente:" />
@@ -340,8 +340,8 @@
                               <Image url="@../../model/images/icons8_package_128px.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="40.0" layoutY="52.0" text="Pacote associado:" />
-                        <Button fx:id="btBuscar" layoutX="147.0" layoutY="63.0" mnemonicParsing="false" onAction="#buscaPacoteAssociado" text="Buscar">
+                        <Label layoutX="40.0" layoutY="52.0" text="Pacote:" />
+                        <Button fx:id="btBuscar" layoutX="154.0" layoutY="61.0" mnemonicParsing="false" onAction="#buscaPacoteAssociado" text="Buscar">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -350,7 +350,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Line endX="100.0" layoutX="161.0" layoutY="104.0" startX="-161.0" stroke="#827f7f" />
+                        <Line endX="100.0" layoutX="161.0" layoutY="100.0" startX="-161.0" stroke="#827f7f" />
                         <ChoiceBox fx:id="cbPacoteAssociado" layoutX="12.0" layoutY="68.0" prefHeight="25.0" prefWidth="124.0" />
                         <Button fx:id="btAssociar" layoutX="12.0" layoutY="4.0" mnemonicParsing="false" onAction="#setPacote" text="Associar">
                            <graphic>
@@ -361,7 +361,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="btLimpar" layoutX="111.0" layoutY="3.0" mnemonicParsing="false" onAction="#limpaPacotes" prefHeight="25.0" prefWidth="86.0" text="Limpar">
+                        <Button fx:id="btLimpar" layoutX="124.0" layoutY="3.0" mnemonicParsing="false" onAction="#limpaPacotes" prefHeight="35.0" prefWidth="96.0" text="Limpar">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -376,5 +376,6 @@
           </Tab>
         </tabs>
       </TabPane>
+      <Label layoutX="194.0" layoutY="386.0" text="Bloq" />
    </children>
 </AnchorPane>
