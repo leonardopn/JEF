@@ -50,10 +50,12 @@ public class ViewController implements Initializable {
 	private static Scene caixa;
 	private static Scene pagamento;
 	private static Scene funcionario;
+	private static Scene operacoes;
 	private static Scene cliente;
 	private static Scene sobre;
 	private static Scene pacote;
 	private static Stage stageAgenda = new Stage();
+	private static Stage stageOperacoes = new Stage();
 	private static Stage stageFuncionario = new Stage();
 	private static Stage stageCliente = new Stage();
 	private static Stage stageCaixa = new Stage();
@@ -75,6 +77,9 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private Button btCriaFuncionario;
+	
+	@FXML
+	private Button btOperacoes;
 
 	@FXML
 	private DatePicker dpData;
@@ -287,6 +292,22 @@ public class ViewController implements Initializable {
 			stageFuncionario.centerOnScreen();
 			stageFuncionario.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
 			stageFuncionario.setTitle("JEF - Funcionário");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void onBtAbreOperacoesAction() {
+		try {
+			retornaInformacaoAgenda();
+			Parent fxmlOperacoes = FXMLLoader.load(getClass().getResource("/gui/view/ViewOperacoes.fxml"));
+			operacoes = new Scene(fxmlOperacoes);
+			stageOperacoes.setScene(operacoes);
+			stageOperacoes.show();
+			stageOperacoes.centerOnScreen();
+			stageOperacoes.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageOperacoes.setTitle("JEF - Operações");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -24,7 +24,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1377.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1377.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewController">
    <children>
       <Line endX="-101.5" endY="469.0" layoutX="224.0" layoutY="32.0" startX="1152.0" startY="470.0" stroke="#827f7f" />
       <MenuBar layoutY="-1.0" prefHeight="25.0" prefWidth="1377.0" style="-fx-border-bottom-color: #827f7f; -fx-background-color: #363a39;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
@@ -36,11 +36,11 @@
           </Menu>
         </menus>
       </MenuBar>
-      <SplitPane fx:id="splitPaneCentral" dividerPositions="0.002909090909090909" layoutX="84.0" layoutY="25.0" prefHeight="671.0" prefWidth="1293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <SplitPane fx:id="splitPaneCentral" dividerPositions="0.002181818181818182" layoutX="84.0" layoutY="25.0" prefHeight="671.0" prefWidth="1293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="669.0" prefWidth="0.0">
                <children>
-                  <GridPane layoutX="10.0" layoutY="37.0" prefHeight="281.0" prefWidth="111.0" vgap="30.0">
+                  <GridPane layoutX="10.0" layoutY="37.0" prefHeight="340.0" prefWidth="111.0" vgap="30.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -48,6 +48,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
@@ -76,7 +77,7 @@
                                  </image>
                               </ImageView>
                            </graphic></Button>
-                        <Button fx:id="btPagamento" mnemonicParsing="false" onAction="#onBtAbrePagamentoAction" prefHeight="62.0" prefWidth="62.0" GridPane.rowIndex="3">
+                        <Button fx:id="btPagamento" mnemonicParsing="false" onAction="#onBtAbrePagamentoAction" prefHeight="62.0" prefWidth="62.0" GridPane.rowIndex="4">
                            <graphic>
                               <ImageView fitHeight="54.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -84,11 +85,20 @@
                                  </image>
                               </ImageView>
                            </graphic></Button>
-                        <Button fx:id="btPacote" mnemonicParsing="false" onAction="#onBtAbrePacoteAction" prefHeight="62.0" prefWidth="62.0" GridPane.rowIndex="4">
+                        <Button fx:id="btPacote" mnemonicParsing="false" onAction="#onBtAbrePacoteAction" prefHeight="62.0" prefWidth="62.0" GridPane.rowIndex="5">
                            <graphic>
                               <ImageView fitHeight="54.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../model/images/icons8_package_128px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btOperacoes" mnemonicParsing="false" onAction="#onBtAbreOperacoesAction" prefHeight="63.0" prefWidth="61.0" GridPane.rowIndex="3">
+                           <graphic>
+                              <ImageView fitHeight="54.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_increase_96px.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -110,7 +120,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="85.0" layoutY="233.0" text="Pagamento">
+                  <Label layoutX="85.0" layoutY="296.0" text="Pagamento">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -120,7 +130,12 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="86.0" layoutY="294.0" text="Pacotes">
+                  <Label layoutX="84.0" layoutY="353.0" text="Pacotes">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="85.0" layoutY="231.0" text="Operações">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
