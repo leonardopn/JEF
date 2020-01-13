@@ -312,7 +312,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btPesquisar" layoutX="135.0" layoutY="136.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="104.0" text="Pesquisar">
+                  <Button fx:id="btPesquisar" layoutX="135.0" layoutY="136.0" mnemonicParsing="false" onAction="#selecionaMes" prefHeight="29.0" prefWidth="104.0" text="Pesquisar">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -386,67 +386,67 @@
       </Pane>
       <Pane prefHeight="32.0" prefWidth="961.0" style="-fx-background-color: #243a51;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Spinner fx:id="spinAno" layoutX="3.0" layoutY="3.0" style="-fx-background-color: #dddddd;" />
-            <Button fx:id="btJaneiro" layoutX="162.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 1em 0em 0em 1em; -fx-background-color: #dddddd;" text="Janeiro" textFill="#243a51">
+            <Spinner fx:id="spinAno" layoutX="3.0" layoutY="3.0" onMouseClicked="#selecionaMes" style="-fx-background-color: #dddddd;" />
+            <Button fx:id="btJaneiro" layoutX="162.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 1em 0em 0em 1em; -fx-background-color: #dddddd;" text="Janeiro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="btFevereiro" layoutX="221.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Fevereiro" textFill="#243a51">
+            <Button fx:id="btFevereiro" layoutX="221.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Fevereiro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btMarco" layoutX="292.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Março" textFill="#243a51">
+            <Button fx:id="btMarco" layoutX="292.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Março" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btAbril" layoutX="346.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Abril" textFill="#243a51">
+            <Button fx:id="btAbril" layoutX="346.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Abril" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btMaio" layoutX="391.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Maio" textFill="#243a51">
+            <Button fx:id="btMaio" layoutX="391.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Maio" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btJunho" layoutX="438.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Junho" textFill="#243a51">
+            <Button fx:id="btJunho" layoutX="438.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Junho" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btJulho" layoutX="491.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Julho" textFill="#243a51">
+            <Button fx:id="btJulho" layoutX="491.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Julho" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btAgosto" layoutX="540.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Agosto" textFill="#243a51">
+            <Button fx:id="btAgosto" layoutX="540.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Agosto" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btStembro" layoutX="599.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Setembro" textFill="#243a51">
+            <Button fx:id="btStembro" layoutX="599.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Setembro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btOutubro" layoutX="672.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Outubro" textFill="#243a51">
+            <Button fx:id="btOutubro" layoutX="672.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Outubro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btNovembro" layoutX="738.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Novembro" textFill="#243a51">
+            <Button fx:id="btNovembro" layoutX="738.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Novembro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btDezembro" layoutX="817.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em 1em 1em 0em; -fx-background-color: #dddddd;" text="Dezembro" textFill="#243a51">
+            <Button fx:id="btDezembro" layoutX="817.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em 1em 1em 0em; -fx-background-color: #dddddd;" text="Dezembro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btAnual" layoutX="910.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-radius: 0em; -fx-background-color: #a6fca6;" text="Anual" textFill="#243a51">
+            <Button fx:id="btAnual" layoutX="910.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #a6fca6;" text="Anual" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

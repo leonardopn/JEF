@@ -36,7 +36,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <SplitPane fx:id="splitPaneCentral" dividerPositions="0.16072727272727272" layoutX="84.0" layoutY="25.0" prefHeight="671.0" prefWidth="1293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <SplitPane fx:id="splitPaneCentral" dividerPositions="0.002181818181818182" layoutX="84.0" layoutY="25.0" prefHeight="671.0" prefWidth="1293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="669.0" prefWidth="0.0">
                <children>
