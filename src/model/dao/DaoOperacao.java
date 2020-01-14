@@ -36,6 +36,11 @@ public class DaoOperacao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		finally {
+			DB.closeConnection();
+			DB.fechaResultSet(rs);
+			DB.fechaStatement(st);
+		}
 	}
 	
 	public static ArrayList<Integer> carregaAno() {

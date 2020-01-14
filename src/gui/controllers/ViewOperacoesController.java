@@ -2,6 +2,7 @@ package gui.controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -53,6 +54,18 @@ public class ViewOperacoesController implements Initializable {
 
 	@FXML
 	private Label lbTotalDia;
+	
+	@FXML
+	private Label labelTotalMesAno;
+	
+	@FXML
+	private Label labelCifrao2;
+	
+	@FXML
+	private Label labelTotalDia;
+	
+	@FXML
+	private Label labelCifrao;
 
 	@FXML
 	private Label lbReceitaDia;
@@ -253,11 +266,129 @@ public class ViewOperacoesController implements Initializable {
 		
 		DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
 		carregaOperacoes();
+		calculaMontante();
 	}
 	
-	public void selecionaMesPadrao() {
-		
+	public void selecionaMesPadrao(int mes) {
+		descoloreBotoes();
+		if (mes == 1) {
+			btJaneiro.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 2) {
+			btFevereiro.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 3) {
+			btMarco.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 4) {
+			btAbril.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 5) {
+			btMaio.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 6) {
+			btJunho.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 7) {	
+			btJulho.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 8) {
+			btAgosto.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 9) {
+			btStembro.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 10) {
+			btOutubro.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 11) {
+			btNovembro.setStyle("-fx-background-color:  #a6fca6");
+		}
+		if (mes == 12) {
+			btDezembro.setStyle("-fx-background-color:  #a6fca6");
+		}
 	}
+	
+	public void calculaMontante() {
+		double despesaMes = 0.0;
+		double receitaMes = 0.0;
+		double despesaDia = 0.0;
+		double receitaDia = 0.0;
+		double totalMes = 0.0;
+		double totalDia = 0.0;
+		
+		DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		for (Operacao op : Colecao.operacoes) {
+			if(op.getData().equals(formataData.format(LocalDate.now()))) {
+				if(op.getReceita()> 0.0) {
+					receitaDia += op.getReceita();
+					receitaMes += op.getReceita();
+				}
+				else {
+					despesaDia += op.getDespesa();
+					despesaMes += op.getDespesa();
+				}
+			}
+			else {
+				if(op.getReceita()> 0.0) {
+					receitaMes += op.getReceita();
+				}
+				else {
+					despesaMes += op.getDespesa();
+				}
+			}
+		}
+		
+		totalMes += despesaMes + receitaMes;
+		totalDia += despesaDia + receitaDia;
+		
+		lbDespesaMes.setText(String.valueOf(String.format("%.2f", despesaMes)));
+		lbReceitaMes.setText(String.valueOf(String.format("%.2f", receitaMes)));
+		lbTotalMes.setText(String.valueOf(String.format("%.2f", totalMes)));
+		lbDespesaDia.setText(String.valueOf(String.format("%.2f", despesaDia)));
+		lbReceitaDia.setText(String.valueOf(String.format("%.2f", receitaDia)));
+		lbTotalDia.setText(String.valueOf(String.format("%.2f", totalDia)));
+		
+		if(totalMes > 0.0) {//Verde
+			lbTotalMes.setStyle("-fx-text-fill: #0b611b");
+			labelCifrao.setStyle("-fx-text-fill: #0b611b");
+			labelTotalMesAno.setStyle("-fx-text-fill: #0b611b");
+			
+		}
+		else {
+			if(totalMes < 0.0) {//Vermelho
+				lbTotalMes.setStyle("-fx-text-fill: #f20303");	
+				labelCifrao.setStyle("-fx-text-fill: #f20303");
+				labelTotalMesAno.setStyle("-fx-text-fill: #f20303");
+			}
+			else {//Amarelo
+				lbTotalMes.setStyle("-fx-text-fill: #edae00");	
+				labelCifrao.setStyle("-fx-text-fill: #edae00");
+				labelTotalMesAno.setStyle("-fx-text-fill: #edae00");
+			}
+			
+		}
+		
+		if(totalDia > 0.0) {//Verde
+			labelTotalDia.setStyle("-fx-text-fill: #0b611b");
+			labelCifrao2.setStyle("-fx-text-fill: #0b611b");
+			lbTotalDia.setStyle("-fx-text-fill: #0b611b");
+		}
+		else{
+			if(totalDia< 0.0) {//Vermelho
+				lbTotalDia.setStyle("-fx-text-fill: #f20303");
+				labelCifrao2.setStyle("-fx-text-fill: #f20303");
+				labelTotalDia.setStyle("-fx-text-fill: #f20303");
+			}
+			else {//Amarelo
+				lbTotalDia.setStyle("-fx-text-fill: #edae00");
+				labelCifrao2.setStyle("-fx-text-fill: #edae00");
+				labelTotalDia.setStyle("-fx-text-fill:#edae00");
+			}
+		}	
+	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -268,8 +399,10 @@ public class ViewOperacoesController implements Initializable {
 		colunaExcluir.setCellValueFactory(new PropertyValueFactory<>("select"));
 		colunaReceita.setCellValueFactory(new PropertyValueFactory<>("receita"));
 		ColunaFormaPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
-		DaoOperacao.carregaOperacao(LocalDate.now().getYear(), 0);
+		selecionaMesPadrao(LocalDate.now().getMonthValue());
+		DaoOperacao.carregaOperacao(LocalDate.now().getYear(), LocalDate.now().getMonthValue());
 		carregaOperacoes();
+		calculaMontante();
 		carregaAno();
 	}
 }

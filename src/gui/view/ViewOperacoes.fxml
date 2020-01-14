@@ -97,7 +97,7 @@
                      </font>
                   </Label>
                   <Line endX="179.0" layoutX="114.0" layoutY="67.0" startX="-104.0" strokeWidth="0.5" />
-                  <Label layoutX="12.0" layoutY="69.0" text="Total do dia:" textFill="#0b611b">
+                  <Label fx:id="labelTotalDia" layoutX="12.0" layoutY="69.0" text="Total do dia:" textFill="#0b611b">
                      <font>
                         <Font name="System Bold" size="22.0" />
                      </font>
@@ -116,7 +116,7 @@
                               <Font name="System Bold" size="22.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="32.0" prefWidth="36.0" text="R$" textFill="#0b611b">
+                        <Label fx:id="labelCifrao2" prefHeight="32.0" prefWidth="36.0" text="R$" textFill="#0b611b">
                            <font>
                               <Font name="System Bold" size="22.0" />
                            </font>
@@ -189,7 +189,7 @@
                      </font>
                   </Label>
                   <Line endX="179.0" layoutX="114.0" layoutY="67.0" startX="-104.0" strokeWidth="0.5" />
-                  <Label layoutX="12.0" layoutY="69.0" text="Total do mês:" textFill="#0b611b">
+                  <Label fx:id="labelTotalMesAno" layoutX="12.0" layoutY="69.0" text="Total do mês:" textFill="#0b611b">
                      <font>
                         <Font name="System Bold" size="22.0" />
                      </font>
@@ -208,7 +208,7 @@
                               <Font name="System Bold" size="22.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="32.0" prefWidth="36.0" text="R$" textFill="#0b611b">
+                        <Label fx:id="labelCifrao" prefHeight="32.0" prefWidth="36.0" text="R$" textFill="#0b611b">
                            <font>
                               <Font name="System Bold" size="22.0" />
                            </font>
