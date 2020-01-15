@@ -58,6 +58,7 @@ public class ViewCaixaController implements Initializable {
 	private static double valorDinheiro;
 	private static double valorCartao;
 	private static int statusCaixa;
+	private static String servico;
 	final Image caixaAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
 	final Image caixaFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
 
@@ -294,19 +295,18 @@ public class ViewCaixaController implements Initializable {
 		trvServicos.setRoot(servicos);
 	}
 
-	public String selecionaServico() {
+	public void selecionaServico() {
 		if (trvServicos.getSelectionModel().getSelectedItem() != null) {
 			if (trvServicos.getSelectionModel().getSelectedItem().isLeaf()) {
 				String servico = trvServicos.getSelectionModel().getSelectedItem().getValue();
 				for (Servico servi : Colecao.servicos) {
 					if (servi.getNome().equals(servico)) {
 						tfValor.setText(String.valueOf(servi.getPreco()));
-						return servi.getNome();
+						ViewCaixaController.servico = servi.getNome();
 					}
 				}
 			}
 		}
-		return null;
 	}
 
 	@FXML
@@ -448,9 +448,9 @@ public class ViewCaixaController implements Initializable {
 					});
 					if (cbPacoteAssociado.isDisable()) {
 						DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
-								cbFormaPagamento, selecionaServico(), tfObs.getText(), -1);
+								cbFormaPagamento, servico, tfObs.getText(), -1);
 					} else {
-						if (cbPacoteAssociado.getValue().getQuantMao() < 1 & selecionaServico().contains("Mão(Pacote")) {
+						if (cbPacoteAssociado.getValue().getQuantMao() < 1 & servico.contains("Mão(Pacote")) {
 							Platform.runLater(new Runnable() {
 								@Override
 								public void run() {
@@ -459,7 +459,7 @@ public class ViewCaixaController implements Initializable {
 							});
 							
 						} else {
-							if (cbPacoteAssociado.getValue().getQuantPe() < 1 & selecionaServico().contains("Pé(Pacote")) {
+							if (cbPacoteAssociado.getValue().getQuantPe() < 1 & servico.contains("Pé(Pacote")) {
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
@@ -470,7 +470,7 @@ public class ViewCaixaController implements Initializable {
 								PacoteAssociado pac = cbPacoteAssociado.getValue();
 								String text = "Pacote(Mão: " + pac.getQuantMao() + ", Pé: " + pac.getQuantPe() + ")";
 								DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
-										cbFormaPagamento, selecionaServico(), text,
+										cbFormaPagamento, servico, text,
 										cbPacoteAssociado.getValue().getId());
 								DaoPacote.carregaPacoteAssociado();
 							}
