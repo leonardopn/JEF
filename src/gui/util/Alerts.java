@@ -86,6 +86,7 @@ public class Alerts {
 		dialog.setTitle(titulo);
 		dialog.setHeaderText(avisoCentral);
 		dialog.setContentText(subAviso);
+		dialog.setResizable(true);
 
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()){
