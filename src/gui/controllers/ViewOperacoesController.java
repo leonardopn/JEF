@@ -3,6 +3,7 @@ package gui.controllers;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -13,11 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.collection.Colecao;
 import model.collection.entities.Operacao;
@@ -27,6 +31,10 @@ public class ViewOperacoesController implements Initializable {
 
 	ObservableList<Operacao> obOperacao;
 	ObservableList<Integer> obAnos;
+	private int mes;
+
+	final ToggleGroup group1 = new ToggleGroup();
+	final ToggleGroup group2 = new ToggleGroup();
 
 	@FXML
 	private TableView<Operacao> tvOperacoes;
@@ -54,16 +62,22 @@ public class ViewOperacoesController implements Initializable {
 
 	@FXML
 	private Label lbTotalDia;
-	
+
+	@FXML
+	private Label lbStatus;
+
+	@FXML
+	private ProgressIndicator piStatus;
+
 	@FXML
 	private Label labelTotalMesAno;
-	
+
 	@FXML
 	private Label labelCifrao2;
-	
+
 	@FXML
 	private Label labelTotalDia;
-	
+
 	@FXML
 	private Label labelCifrao;
 
@@ -104,19 +118,25 @@ public class ViewOperacoesController implements Initializable {
 	private CheckBox cbData;
 
 	@FXML
-	private CheckBox cbId;
+	private RadioButton rbId;
 
 	@FXML
-	private CheckBox cbFormaPagamento;
+	private RadioButton rbTodos;
 
 	@FXML
-	private CheckBox cbDespesa;
+	private RadioButton rbTodos1;
 
 	@FXML
-	private CheckBox cbReceita;
+	private RadioButton rbFormaPagamento;
 
 	@FXML
-	private CheckBox cbDescricao;
+	private RadioButton rbDespesa;
+
+	@FXML
+	private RadioButton rbReceita;
+
+	@FXML
+	private RadioButton rbDescricao;
 
 	@FXML
 	private Button btSaida;
@@ -176,6 +196,14 @@ public class ViewOperacoesController implements Initializable {
 
 	}
 
+	public void liberaData() {
+		if (cbData.isSelected()) {
+			dpData.setDisable(false);
+		} else {
+			dpData.setDisable(true);
+		}
+	}
+
 	public void carregaOperacoes() {
 		tvOperacoes.setItems(null);
 		obOperacao = FXCollections.observableArrayList(Colecao.operacoes);
@@ -193,24 +221,24 @@ public class ViewOperacoesController implements Initializable {
 	}
 
 	public void descoloreBotoes() {
-		btJaneiro.setStyle("-fx-background-color: #dddddd"); 
-		btFevereiro.setStyle("-fx-background-color: #dddddd"); 
-		btMarco.setStyle("-fx-background-color: #dddddd"); 
-		btAbril.setStyle("-fx-background-color: #dddddd"); 
-		btMaio.setStyle("-fx-background-color: #dddddd"); 
-		btJunho.setStyle("-fx-background-color: #dddddd"); 
-		btJulho.setStyle("-fx-background-color: #dddddd"); 
-		btAgosto.setStyle("-fx-background-color: #dddddd"); 
-		btStembro.setStyle("-fx-background-color: #dddddd"); 
-		btOutubro.setStyle("-fx-background-color: #dddddd"); 
-		btNovembro.setStyle("-fx-background-color: #dddddd"); 
-		btDezembro.setStyle("-fx-background-color: #dddddd"); 
-		btAnual.setStyle("-fx-background-color: #dddddd"); 
+		btJaneiro.setStyle("-fx-background-color: #dddddd");
+		btFevereiro.setStyle("-fx-background-color: #dddddd");
+		btMarco.setStyle("-fx-background-color: #dddddd");
+		btAbril.setStyle("-fx-background-color: #dddddd");
+		btMaio.setStyle("-fx-background-color: #dddddd");
+		btJunho.setStyle("-fx-background-color: #dddddd");
+		btJulho.setStyle("-fx-background-color: #dddddd");
+		btAgosto.setStyle("-fx-background-color: #dddddd");
+		btStembro.setStyle("-fx-background-color: #dddddd");
+		btOutubro.setStyle("-fx-background-color: #dddddd");
+		btNovembro.setStyle("-fx-background-color: #dddddd");
+		btDezembro.setStyle("-fx-background-color: #dddddd");
+		btAnual.setStyle("-fx-background-color: #dddddd");
 	}
-	
+
 	public void selecionaMes() {
 		descoloreBotoes();
-		int mes = 0;
+		mes = 0;
 		if (btJaneiro.isFocused()) {
 			mes = 1;
 			btJaneiro.setStyle("-fx-background-color:  #a6fca6");
@@ -259,16 +287,16 @@ public class ViewOperacoesController implements Initializable {
 			mes = 12;
 			btDezembro.setStyle("-fx-background-color:  #a6fca6");
 		}
-		if(btAnual.isFocused() || spinAno.isFocused()) {
+		if (btAnual.isFocused() || spinAno.isFocused()) {
 			mes = 0;
 			btAnual.setStyle("-fx-background-color:  #a6fca6");
 		}
-		
+
 		DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
 		carregaOperacoes();
 		calculaMontante();
 	}
-	
+
 	public void selecionaMesPadrao(int mes) {
 		descoloreBotoes();
 		if (mes == 1) {
@@ -289,7 +317,7 @@ public class ViewOperacoesController implements Initializable {
 		if (mes == 6) {
 			btJunho.setStyle("-fx-background-color:  #a6fca6");
 		}
-		if (mes == 7) {	
+		if (mes == 7) {
 			btJulho.setStyle("-fx-background-color:  #a6fca6");
 		}
 		if (mes == 8) {
@@ -308,7 +336,7 @@ public class ViewOperacoesController implements Initializable {
 			btDezembro.setStyle("-fx-background-color:  #a6fca6");
 		}
 	}
-	
+
 	public void calculaMontante() {
 		double despesaMes = 0.0;
 		double receitaMes = 0.0;
@@ -316,79 +344,124 @@ public class ViewOperacoesController implements Initializable {
 		double receitaDia = 0.0;
 		double totalMes = 0.0;
 		double totalDia = 0.0;
-		
+
 		DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		
+
 		for (Operacao op : Colecao.operacoes) {
-			if(op.getData().equals(formataData.format(LocalDate.now()))) {
-				if(op.getReceita()> 0.0) {
+			if (op.getData().equals(formataData.format(LocalDate.now()))) {
+				if (op.getReceita() > 0.0) {
 					receitaDia += op.getReceita();
 					receitaMes += op.getReceita();
-				}
-				else {
+				} else {
 					despesaDia += op.getDespesa();
 					despesaMes += op.getDespesa();
 				}
-			}
-			else {
-				if(op.getReceita()> 0.0) {
+			} else {
+				if (op.getReceita() > 0.0) {
 					receitaMes += op.getReceita();
-				}
-				else {
+				} else {
 					despesaMes += op.getDespesa();
 				}
 			}
 		}
-		
+
 		totalMes += despesaMes + receitaMes;
 		totalDia += despesaDia + receitaDia;
-		
+
 		lbDespesaMes.setText(String.valueOf(String.format("%.2f", despesaMes)));
 		lbReceitaMes.setText(String.valueOf(String.format("%.2f", receitaMes)));
 		lbTotalMes.setText(String.valueOf(String.format("%.2f", totalMes)));
 		lbDespesaDia.setText(String.valueOf(String.format("%.2f", despesaDia)));
 		lbReceitaDia.setText(String.valueOf(String.format("%.2f", receitaDia)));
 		lbTotalDia.setText(String.valueOf(String.format("%.2f", totalDia)));
-		
-		if(totalMes > 0.0) {//Verde
+
+		if (totalMes > 0.0) {// Verde
 			lbTotalMes.setStyle("-fx-text-fill: #0b611b");
 			labelCifrao.setStyle("-fx-text-fill: #0b611b");
 			labelTotalMesAno.setStyle("-fx-text-fill: #0b611b");
-			
-		}
-		else {
-			if(totalMes < 0.0) {//Vermelho
-				lbTotalMes.setStyle("-fx-text-fill: #f20303");	
+
+		} else {
+			if (totalMes < 0.0) {// Vermelho
+				lbTotalMes.setStyle("-fx-text-fill: #f20303");
 				labelCifrao.setStyle("-fx-text-fill: #f20303");
 				labelTotalMesAno.setStyle("-fx-text-fill: #f20303");
-			}
-			else {//Amarelo
-				lbTotalMes.setStyle("-fx-text-fill: #edae00");	
+			} else {// Amarelo
+				lbTotalMes.setStyle("-fx-text-fill: #edae00");
 				labelCifrao.setStyle("-fx-text-fill: #edae00");
 				labelTotalMesAno.setStyle("-fx-text-fill: #edae00");
 			}
-			
+
 		}
-		
-		if(totalDia > 0.0) {//Verde
+
+		if (totalDia > 0.0) {// Verde
 			labelTotalDia.setStyle("-fx-text-fill: #0b611b");
 			labelCifrao2.setStyle("-fx-text-fill: #0b611b");
 			lbTotalDia.setStyle("-fx-text-fill: #0b611b");
-		}
-		else{
-			if(totalDia< 0.0) {//Vermelho
+		} else {
+			if (totalDia < 0.0) {// Vermelho
 				lbTotalDia.setStyle("-fx-text-fill: #f20303");
 				labelCifrao2.setStyle("-fx-text-fill: #f20303");
 				labelTotalDia.setStyle("-fx-text-fill: #f20303");
-			}
-			else {//Amarelo
+			} else {// Amarelo
 				lbTotalDia.setStyle("-fx-text-fill: #edae00");
 				labelCifrao2.setStyle("-fx-text-fill: #edae00");
 				labelTotalDia.setStyle("-fx-text-fill:#edae00");
 			}
-		}	
+		}
 	}
-	
+
+	public void buscaOperacoes() {
+		int grupo1;
+		int grupo2;
+		
+		if (rbDescricao.isSelected()) {
+			grupo1 = 1;
+		}
+		else {
+			if (rbId.isSelected()) {
+				grupo1 = 2;
+			}
+			else {
+				if (rbFormaPagamento.isSelected()) {
+					grupo1 = 3;
+				}
+				else {
+					grupo1 = 4;
+				}
+			}
+		}
+
+		if(rbTodos1.isSelected()) {
+			grupo2 = 1;
+		}
+		else {
+			if(rbDespesa.isSelected()) {
+				grupo2 = 2;
+			}
+			else {
+				grupo2 = 3;
+			}
+		}
+		
+		ArrayList<Operacao> opTemp = new ArrayList<>();
+		opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2);
+		
+		tvOperacoes.setItems(null);
+		obOperacao = FXCollections.observableArrayList(opTemp);
+		tvOperacoes.setItems(obOperacao);
+		
+	}
+
+	public void setaRadioGrups() {
+		rbDescricao.setToggleGroup(group1);
+		rbFormaPagamento.setToggleGroup(group1);
+		rbId.setToggleGroup(group1);
+		rbTodos.setToggleGroup(group1);
+
+		rbReceita.setToggleGroup(group2);
+		rbDespesa.setToggleGroup(group2);
+		rbTodos1.setToggleGroup(group2);
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -404,5 +477,6 @@ public class ViewOperacoesController implements Initializable {
 		carregaOperacoes();
 		calculaMontante();
 		carregaAno();
+		setaRadioGrups();
 	}
 }

@@ -17,51 +17,104 @@ public class DaoOperacao {
 	public static void carregaOperacao(int data, int mes) {
 		Colecao.operacoes.clear();
 		try {
-			if(mes == 0) {
+			if (mes == 0) {
 				st = DB.getConnection().prepareStatement("select * from operacoes where year(data) = ?");
 				st.setInt(1, data);
 				rs = st.executeQuery();
-			}
-			else {
-				st = DB.getConnection().prepareStatement("select * from operacoes where year(data) = ? and month(data) = ?");
+			} else {
+				st = DB.getConnection()
+						.prepareStatement("select * from operacoes where year(data) = ? and month(data) = ?");
 				st.setInt(1, data);
 				st.setInt(2, mes);
 				rs = st.executeQuery();
 			}
 			SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
-			while(rs.next()) {
-				Operacao op = new Operacao(rs.getInt("id"), rs.getString("descricao"), formataData.format(rs.getDate("data")), rs.getDouble("valor"), rs.getString("formaDePagamento"));
+			while (rs.next()) {
+				Operacao op = new Operacao(rs.getInt("id"), rs.getString("descricao"),
+						formataData.format(rs.getDate("data")), rs.getDouble("valor"),
+						rs.getString("formaDePagamento"));
 				Colecao.operacoes.add(op);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			DB.closeConnection();
 			DB.fechaResultSet(rs);
 			DB.fechaStatement(st);
 		}
 	}
-	
+
 	public static ArrayList<Integer> carregaAno() {
 		Colecao.operacoes.clear();
 		ArrayList<Integer> anos = new ArrayList<>();
 		try {
 			st = DB.getConnection().prepareStatement("select distinct year(data) from operacoes order by data");
 			rs = st.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				anos.add(rs.getInt(1));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			DB.closeConnection();
 			DB.fechaResultSet(rs);
 			DB.fechaStatement(st);
 		}
 		return anos;
+	}
+
+	public static ArrayList<Operacao> carregaBusca(String busca, int opcao1, int opcao2/*, int ano, int mes, int dia*/) {
+		ArrayList<Operacao> opTemp = new ArrayList<>();
+		try {
+			String query;
+			String filtro;
+			if (opcao2 == 1) {
+				filtro = "<> ?";
+			} else {
+				if (opcao2 == 2) {
+					filtro = "< 0";
+				} else {
+					filtro = "> 0";
+				}
+			}
+
+			if (opcao1 == 1) {
+				query = "select * from operacoes where descricao like ''%?%'' and valor " + filtro;
+			} else {
+				if (opcao1 == 2) {
+					query = "select * from operacoes where id = ? and valor " + filtro;
+				} else {
+					if (opcao1 == 3) {
+						query = "select * from operacoes where formaDePagamento like ''%?%'' and valor " + filtro;
+					} else {
+						query = "select * from operacoes where valor " + filtro;
+					}
+				}
+			}
+
+			st = DB.getConnection().prepareStatement(query);
+			st.setString(1, busca);
+			rs = st.executeQuery();
+
+			SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
+
+			while (rs.next()) {
+				Operacao op = new Operacao(rs.getInt("id"), rs.getString("descricao"),
+						formataData.format(rs.getDate("data")), rs.getDouble("valor"),
+						rs.getString("formaDePagamento"));
+				opTemp.add(op);
+			}
+			return opTemp;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DB.closeConnection();
+			DB.fechaResultSet(rs);
+			DB.fechaStatement(st);
+		}
+		return opTemp;
 	}
 }
