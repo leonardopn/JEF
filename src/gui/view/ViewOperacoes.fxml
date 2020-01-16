@@ -284,15 +284,6 @@
                   </Label>
                   <DatePicker fx:id="dpData" layoutX="14.0" layoutY="40.0" prefHeight="25.0" prefWidth="149.0" />
                   <TextField fx:id="tfBusca" layoutX="14.0" layoutY="96.0" prefHeight="25.0" prefWidth="225.0" />
-                  <Button fx:id="btPesquisarNow" layoutX="11.0" layoutY="145.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="111.0" text="Pesquisar data de hoje" wrapText="true">
-                     <graphic>
-                        <ImageView fitHeight="28.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../model/images/icons8_search_48px_1.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                   <Label layoutX="50.0" layoutY="22.0" text="Data:" />
                   <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -305,7 +296,7 @@
                         <Image url="@../../model/images/icons8_search_48px_1.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btExcluir" layoutX="161.0" layoutY="174.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="78.0" text="Excluir">
+                  <Button fx:id="btExcluir" layoutX="161.0" layoutY="174.0" mnemonicParsing="false" onAction="#excluiOperacao" prefHeight="29.0" prefWidth="78.0" text="Excluir">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -323,7 +314,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <CheckBox fx:id="cbData" layoutX="166.0" layoutY="44.0" mnemonicParsing="false" text="Data Única" />
+                  <CheckBox fx:id="cbData" layoutX="166.0" layoutY="44.0" mnemonicParsing="false" onAction="#liberaData" text="Data Única" />
                </children>
             </Pane>
          </children>
@@ -343,10 +334,10 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <RadioButton fx:id="rbDescricao" mnemonicParsing="false" text="Descrição" />
-                        <RadioButton fx:id="rbId" mnemonicParsing="false" text="ID" GridPane.columnIndex="2" />
-                        <RadioButton fx:id="rbFormaPagamento" mnemonicParsing="false" text="Forma de Pagamento" GridPane.columnIndex="1" />
-                        <RadioButton fx:id="rbTodos" mnemonicParsing="false" selected="true" text="Todos" GridPane.columnIndex="3" />
+                        <RadioButton fx:id="rbDescricao" mnemonicParsing="false" onAction="#bloqComponents" text="Descrição" />
+                        <RadioButton fx:id="rbId" mnemonicParsing="false" onAction="#bloqComponents" text="ID" GridPane.columnIndex="2" />
+                        <RadioButton fx:id="rbFormaPagamento" mnemonicParsing="false" onAction="#bloqComponents" text="Forma de Pagamento" GridPane.columnIndex="1" />
+                        <RadioButton fx:id="rbTodos" mnemonicParsing="false" onAction="#bloqComponents" selected="true" text="Todos" GridPane.columnIndex="3" />
                      </children>
                   </GridPane>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="-8.0" prefHeight="17.0" prefWidth="52.0" style="-fx-background-color: #E9E9E9;" text="Filtros" textAlignment="CENTER">
@@ -395,8 +386,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <RadioButton fx:id="rbDespesa" mnemonicParsing="false" text="Despesa" />
-                        <RadioButton fx:id="rbReceita" mnemonicParsing="false" text="Receita" GridPane.columnIndex="1" />
+                        <RadioButton fx:id="rbDespesa" mnemonicParsing="false" onAction="#bloqComponents" text="Despesa" />
+                        <RadioButton fx:id="rbReceita" mnemonicParsing="false" onAction="#bloqComponents" text="Receita" GridPane.columnIndex="1" />
                         <RadioButton fx:id="rbTodos1" mnemonicParsing="false" selected="true" text="Todos" GridPane.columnIndex="2" />
                      </children>
                   </GridPane>

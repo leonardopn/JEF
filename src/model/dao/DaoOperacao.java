@@ -65,13 +65,14 @@ public class DaoOperacao {
 		return anos;
 	}
 
-	public static ArrayList<Operacao> carregaBusca(String busca, int opcao1, int opcao2/*, int ano, int mes, int dia*/) {
+	public static ArrayList<Operacao> carregaBusca(String busca, int opcao1, int opcao2, int mes, int mes2, int ano,
+			int dia) {
 		ArrayList<Operacao> opTemp = new ArrayList<>();
 		try {
 			String query;
 			String filtro;
 			if (opcao2 == 1) {
-				filtro = "<> ?";
+				filtro = "";
 			} else {
 				if (opcao2 == 2) {
 					filtro = "< 0";
@@ -80,22 +81,77 @@ public class DaoOperacao {
 				}
 			}
 
-			if (opcao1 == 1) {
-				query = "select * from operacoes where descricao like ''%?%'' and valor " + filtro;
-			} else {
-				if (opcao1 == 2) {
-					query = "select * from operacoes where id = ? and valor " + filtro;
+			if (dia == 0) {
+				if (opcao1 == 1) {
+					query = "select * from operacoes where descricao like ? and valor " + filtro
+							+ " and year(data) = ? and MONTH(data) BETWEEN (?) and (?);";
+					st = DB.getConnection().prepareStatement(query);
+					st.setString(1, "%" + busca + "%");
+					st.setInt(2, ano);
+					st.setInt(3, mes);
+					st.setInt(4, mes2);
 				} else {
-					if (opcao1 == 3) {
-						query = "select * from operacoes where formaDePagamento like ''%?%'' and valor " + filtro;
+					if (opcao1 == 2) {
+						query = "select * from operacoes where id = ?";
+						st = DB.getConnection().prepareStatement(query);
+						st.setString(1, busca);
 					} else {
-						query = "select * from operacoes where valor " + filtro;
+						if (opcao1 == 3) {
+							query = "select * from operacoes where formaDePagamento like ? and valor " + filtro
+									+ " and year(data) = ? and MONTH(data) BETWEEN (?) and (?);";
+							st = DB.getConnection().prepareStatement(query);
+							st.setString(1, "%" + busca + "%");
+							st.setInt(2, ano);
+							st.setInt(3, mes);
+							st.setInt(4, mes2);
+						} else {
+							query = "select * from operacoes where valor " + filtro
+									+ " and year(data) = ? and MONTH(data) BETWEEN (?) and (?);";
+							st = DB.getConnection().prepareStatement(query);
+							st.setInt(1, ano);
+							st.setInt(2, mes);
+							st.setInt(3, mes2);
+						}
+					}
+				}
+			} else {
+				if (opcao1 == 1) {
+					query = "select * from operacoes where descricao like ? and valor " + filtro
+							+ " and year(data) = ? and MONTH(data) BETWEEN (?) and (?) and day(data) = ?;";
+					st = DB.getConnection().prepareStatement(query);
+					st.setString(1, "%" + busca + "%");
+					st.setInt(2, ano);
+					st.setInt(3, mes);
+					st.setInt(4, mes2);
+					st.setInt(5, dia);
+				} else {
+					if (opcao1 == 2) {
+						query = "select * from operacoes where id = ?";
+						st = DB.getConnection().prepareStatement(query);
+						st.setString(1, busca);
+					} else {
+						if (opcao1 == 3) {
+							query = "select * from operacoes where formaDePagamento like ? and valor " + filtro
+									+ " and year(data) = ? and MONTH(data) BETWEEN (?) and (?) and day(data) = ?;";
+							st = DB.getConnection().prepareStatement(query);
+							st.setString(1, "%" + busca + "%");
+							st.setInt(2, ano);
+							st.setInt(3, mes);
+							st.setInt(4, mes2);
+							st.setInt(5, dia);
+						} else {
+							query = "select * from operacoes where valor " + filtro
+									+ " and year(data) = ? and MONTH(data) BETWEEN (?) and (?) and day(data) = ?;";
+							st = DB.getConnection().prepareStatement(query);
+							st.setInt(1, ano);
+							st.setInt(2, mes);
+							st.setInt(3, mes2);
+							st.setInt(4, dia);
+						}
 					}
 				}
 			}
 
-			st = DB.getConnection().prepareStatement(query);
-			st.setString(1, busca);
 			rs = st.executeQuery();
 
 			SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
@@ -116,5 +172,18 @@ public class DaoOperacao {
 			DB.fechaStatement(st);
 		}
 		return opTemp;
+	}
+
+	public static void excluiOperacao(int id) {
+		try {
+			st = DB.getConnection().prepareStatement("delete from operacoes where id = ?");
+			st.setInt(1, id);
+			st.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DB.closeConnection();
+			DB.fechaStatement(st);
+		}
 	}
 }

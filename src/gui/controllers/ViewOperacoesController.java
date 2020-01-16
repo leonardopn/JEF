@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import gui.util.Alerts;
+import gui.util.Notificacoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -106,9 +108,6 @@ public class ViewOperacoesController implements Initializable {
 	private TextField tfBusca;
 
 	@FXML
-	private Button btPesquisarNow;
-
-	@FXML
 	private Button btExcluir;
 
 	@FXML
@@ -200,6 +199,7 @@ public class ViewOperacoesController implements Initializable {
 		if (cbData.isSelected()) {
 			dpData.setDisable(false);
 		} else {
+			dpData.setValue(null);
 			dpData.setDisable(true);
 		}
 	}
@@ -238,58 +238,94 @@ public class ViewOperacoesController implements Initializable {
 
 	public void selecionaMes() {
 		descoloreBotoes();
+
+		rbTodos.setSelected(true);
+		rbTodos1.setSelected(true);
+		bloqComponents();
+
+		cbData.setSelected(false);
+		liberaData();
+
+		tfBusca.setText("");
+
 		mes = 0;
 		if (btJaneiro.isFocused()) {
 			mes = 1;
 			btJaneiro.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btFevereiro.isFocused()) {
 			mes = 2;
 			btFevereiro.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btMarco.isFocused()) {
 			mes = 3;
 			btMarco.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btAbril.isFocused()) {
 			mes = 4;
 			btAbril.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btMaio.isFocused()) {
 			mes = 5;
 			btMaio.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btJunho.isFocused()) {
 			mes = 6;
 			btJunho.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btJulho.isFocused()) {
 			mes = 7;
 			btJulho.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btAgosto.isFocused()) {
 			mes = 8;
 			btAgosto.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btStembro.isFocused()) {
 			mes = 9;
 			btStembro.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btOutubro.isFocused()) {
 			mes = 10;
 			btOutubro.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btNovembro.isFocused()) {
 			mes = 11;
 			btNovembro.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btDezembro.isFocused()) {
 			mes = 12;
 			btDezembro.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Mês");
+			labelTotalMesAno.setText("Total do Mês:");
 		}
 		if (btAnual.isFocused() || spinAno.isFocused()) {
 			mes = 0;
 			btAnual.setStyle("-fx-background-color:  #a6fca6");
+			lbResumoMes.setText("Resumo do Ano");
+			labelTotalMesAno.setText("Total do Ano:");
 		}
 
 		DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
@@ -299,6 +335,7 @@ public class ViewOperacoesController implements Initializable {
 
 	public void selecionaMesPadrao(int mes) {
 		descoloreBotoes();
+		this.mes = mes;
 		if (mes == 1) {
 			btJaneiro.setStyle("-fx-background-color:  #a6fca6");
 		}
@@ -413,43 +450,46 @@ public class ViewOperacoesController implements Initializable {
 	public void buscaOperacoes() {
 		int grupo1;
 		int grupo2;
-		
+
 		if (rbDescricao.isSelected()) {
 			grupo1 = 1;
-		}
-		else {
+		} else {
 			if (rbId.isSelected()) {
 				grupo1 = 2;
-			}
-			else {
+			} else {
 				if (rbFormaPagamento.isSelected()) {
 					grupo1 = 3;
-				}
-				else {
+				} else {
 					grupo1 = 4;
 				}
 			}
 		}
 
-		if(rbTodos1.isSelected()) {
+		if (rbTodos1.isSelected()) {
 			grupo2 = 1;
-		}
-		else {
-			if(rbDespesa.isSelected()) {
+		} else {
+			if (rbDespesa.isSelected()) {
 				grupo2 = 2;
-			}
-			else {
+			} else {
 				grupo2 = 3;
 			}
 		}
-		
+
 		ArrayList<Operacao> opTemp = new ArrayList<>();
-		opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2);
-		
+		if (!(dpData.isDisable())) {
+			opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2, dpData.getValue().getMonthValue(),
+					dpData.getValue().getMonthValue(), dpData.getValue().getYear(), dpData.getValue().getDayOfMonth());
+		} else {
+			if (mes == 0) {
+				opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2, 1, 12, spinAno.getValue(), 0);
+			} else {
+				opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2, mes, mes, spinAno.getValue(), 0);
+			}
+		}
+
 		tvOperacoes.setItems(null);
 		obOperacao = FXCollections.observableArrayList(opTemp);
 		tvOperacoes.setItems(obOperacao);
-		
 	}
 
 	public void setaRadioGrups() {
@@ -463,6 +503,40 @@ public class ViewOperacoesController implements Initializable {
 		rbTodos1.setToggleGroup(group2);
 	}
 
+	public void bloqComponents() {
+		if (rbTodos.isSelected()) {
+			tfBusca.setDisable(true);
+		} else {
+			tfBusca.setDisable(false);
+		}
+
+		if (rbId.isSelected()) {
+			rbDespesa.setDisable(true);
+			rbReceita.setDisable(true);
+			rbTodos1.setSelected(true);
+		} else {
+			rbDespesa.setDisable(false);
+			rbReceita.setDisable(false);
+		}
+
+	}
+
+	public void excluiOperacao() {
+		if (Alerts.showAlertGenerico("AVISO!", "Deseja excluir está operacao?",
+				"*Sera feito um novo cálculo de valores!")) {
+			for (Operacao op : tvOperacoes.getItems()) {
+				if (op.getSelect().isSelected()) {
+					DaoOperacao.excluiOperacao(op.getId());
+				}
+			}
+			buscaOperacoes();
+			DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
+			calculaMontante();
+		} else {
+			Notificacoes.mostraNotificacao("AVISO", "Operação cancelada!");
+		}
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -474,9 +548,11 @@ public class ViewOperacoesController implements Initializable {
 		ColunaFormaPagamento.setCellValueFactory(new PropertyValueFactory<>("formaPagamento"));
 		selecionaMesPadrao(LocalDate.now().getMonthValue());
 		DaoOperacao.carregaOperacao(LocalDate.now().getYear(), LocalDate.now().getMonthValue());
+		liberaData();
 		carregaOperacoes();
 		calculaMontante();
 		carregaAno();
 		setaRadioGrups();
+		bloqComponents();
 	}
 }
