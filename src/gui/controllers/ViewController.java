@@ -279,6 +279,10 @@ public class ViewController implements Initializable {
 		return stagePacote;
 	}
 
+	public static Stage getStageOperacoes() {
+		return stageOperacoes;
+	}
+	
 	// abre páginas
 
 	@FXML

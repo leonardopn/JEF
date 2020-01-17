@@ -193,14 +193,14 @@ public class DaoOperacao {
 		}
 	}
 
-	public static void salvaReceita(String descricao, LocalDate data, String entrada, String formaPagamento) {
+	public static void salvaOperacao(String descricao, LocalDate data, String valor, String formaPagamento) {
 		try {
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = formataData.parse(data.toString());
 			st = DB.getConnection().prepareStatement("INSERT INTO operacoes(data, descricao, valor, formaDePagamento) values (?, ?, ?, ?)");
 			st.setDate(1, new java.sql.Date(date.getTime()));
 			st.setString(2, descricao);
-			st.setDouble(3, Double.parseDouble(entrada.replaceAll(",", ".")));
+			st.setDouble(3, Double.parseDouble(valor.replaceAll(",", ".")));
 			st.setString(4, formaPagamento);
 			st.execute();
 		} catch (SQLException e) {

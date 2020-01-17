@@ -21,7 +21,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import model.dao.DaoOperacao;
 
-public class ViewReceitaController implements Initializable {
+public class ViewDespesaController implements Initializable {
 
 	private boolean parada;
 
@@ -32,7 +32,7 @@ public class ViewReceitaController implements Initializable {
 	private DatePicker dpData;
 
 	@FXML
-	private TextField tfEntrada;
+	private TextField tfSaida;
 
 	@FXML
 	private Button btEnviar;
@@ -47,11 +47,10 @@ public class ViewReceitaController implements Initializable {
 	private Label lbStatus;
 
 	@FXML
-	public void geraReceita() {
-		if(tfDescricao.getText().isEmpty() || tfEntrada.getText().isEmpty() || cbFormaPagamento.getValue() == null) {
+	public void geraDespesa() {
+		if (tfDescricao.getText().isEmpty() || tfSaida.getText().isEmpty() || cbFormaPagamento.getValue() == null) {
 			Notificacoes.mostraNotificacao("AVISO", "Preencha todos os campos!");
-		}
-		else {
+		} else {
 			piStatus.setVisible(true);
 			lbStatus.setVisible(true);
 			Task<Void> tarefa = new Task<Void>() {
@@ -65,7 +64,7 @@ public class ViewReceitaController implements Initializable {
 					return null;
 				}
 			};
-			
+
 			Task<Void> taskReceita = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
@@ -74,32 +73,36 @@ public class ViewReceitaController implements Initializable {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
-					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfEntrada.getText(), cbFormaPagamento.getValue());
+					if(!(tfSaida.getText().startsWith("-"))) {
+						tfSaida.setText("-"+tfSaida.getText());
+					}
+					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfSaida.getText(),
+							cbFormaPagamento.getValue());
 					parada = false;
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							ViewOperacoesController.getStageReceita().close();
+							ViewOperacoesController.getStageDespesa().close();
 						}
 					});
 					return null;
 				}
 			};
-			
+
 			javafx.application.Platform.runLater(() -> {
 				Thread t = new Thread(taskReceita);
 				t.start();
 			});
 		}
-		
+
 	}
 
 	public void carregaFormaPagamento() {
 		List<String> listMetPag = Arrays.asList("Dinheiro", "Cartão");
-		ObservableList<String>obFormaPagamento = FXCollections.observableArrayList(listMetPag);
+		ObservableList<String> obFormaPagamento = FXCollections.observableArrayList(listMetPag);
 		cbFormaPagamento.setItems(obFormaPagamento);
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		dpData.setValue(LocalDate.now());

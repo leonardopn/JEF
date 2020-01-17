@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 
 import gui.controllers.ViewController;
+import gui.controllers.ViewOperacoesController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -69,7 +70,11 @@ public class Main extends Application {
 				ViewController.getStageAgenda().close();
 				ViewController.getStageSobre().close();
 				ViewController.getStageCaixa().close();
+				ViewController.getStagePacote().close();
 				ViewController.getStagePagamento().close();
+				ViewController.getStageOperacoes().close();
+				ViewOperacoesController.getStageDespesa().close();
+				ViewOperacoesController.getStageReceita().close();
 			}
 		});
 

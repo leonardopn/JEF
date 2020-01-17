@@ -203,10 +203,10 @@ public class ViewOperacoesController implements Initializable {
 				Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewReceita.fxml"));
 				receita = new Scene(fxmlReceita);
 				stageReceita.setScene(receita);
-				stageReceita.showAndWait();
 				stageReceita.centerOnScreen();
 				stageReceita.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
 				stageReceita.setTitle("JEF - Receita");
+				stageReceita.showAndWait();
 				buscaOperacoes();
 				DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
 				calculaMontante();
@@ -221,7 +221,25 @@ public class ViewOperacoesController implements Initializable {
 
 	@FXML
 	void onBtSaidaAction() {
-
+		if(!(stageReceita.isShowing())) {
+			try {
+				Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewDespesa.fxml"));
+				despesa = new Scene(fxmlReceita);
+				stageDespesa.setScene(despesa);
+				stageDespesa.centerOnScreen();
+				stageDespesa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+				stageDespesa.setTitle("JEF - Despesa");
+				stageDespesa.showAndWait();
+				buscaOperacoes();
+				DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
+				calculaMontante();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			stageReceita.requestFocus();
+		}
 	}
 
 	public void liberaData() {
