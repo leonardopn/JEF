@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,7 +12,10 @@ import gui.util.Notificacoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -25,6 +29,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import model.collection.Colecao;
 import model.collection.entities.Operacao;
 import model.dao.DaoOperacao;
@@ -34,6 +40,11 @@ public class ViewOperacoesController implements Initializable {
 	ObservableList<Operacao> obOperacao;
 	ObservableList<Integer> obAnos;
 	private int mes;
+	
+	private static Scene receita;
+	private static Stage stageReceita = new Stage();
+	private static Scene despesa; 
+	private static Stage stageDespesa = new Stage();
 
 	final ToggleGroup group1 = new ToggleGroup();
 	final ToggleGroup group2 = new ToggleGroup();
@@ -187,7 +198,25 @@ public class ViewOperacoesController implements Initializable {
 
 	@FXML
 	void onBtEntradaAction() {
-
+		if(!(stageReceita.isShowing())) {
+			try {
+				Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewReceita.fxml"));
+				receita = new Scene(fxmlReceita);
+				stageReceita.setScene(receita);
+				stageReceita.showAndWait();
+				stageReceita.centerOnScreen();
+				stageReceita.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+				stageReceita.setTitle("JEF - Receita");
+				buscaOperacoes();
+				DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
+				calculaMontante();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			stageReceita.requestFocus();
+		}
 	}
 
 	@FXML
@@ -535,6 +564,22 @@ public class ViewOperacoesController implements Initializable {
 		} else {
 			Notificacoes.mostraNotificacao("AVISO", "Operação cancelada!");
 		}
+	}
+
+	public static Scene getDespesa() {
+		return despesa;
+	}
+
+	public static Stage getStageDespesa() {
+		return stageDespesa;
+	}
+
+	public static Scene getReceita() {
+		return receita;
+	}
+
+	public static Stage getStageReceita() {
+		return stageReceita;
 	}
 
 	@Override

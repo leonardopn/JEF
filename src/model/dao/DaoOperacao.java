@@ -3,10 +3,16 @@ package model.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 import db.DB;
+import gui.util.Alerts;
+import javafx.application.Platform;
+import javafx.scene.control.Alert.AlertType;
 import model.collection.Colecao;
 import model.collection.entities.Operacao;
 
@@ -182,6 +188,38 @@ public class DaoOperacao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DB.closeConnection();
+			DB.fechaStatement(st);
+		}
+	}
+
+	public static void salvaReceita(String descricao, LocalDate data, String entrada, String formaPagamento) {
+		try {
+			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = formataData.parse(data.toString());
+			st = DB.getConnection().prepareStatement("INSERT INTO operacoes(data, descricao, valor, formaDePagamento) values (?, ?, ?, ?)");
+			st.setDate(1, new java.sql.Date(date.getTime()));
+			st.setString(2, descricao);
+			st.setDouble(3, Double.parseDouble(entrada.replaceAll(",", ".")));
+			st.setString(4, formaPagamento);
+			st.execute();
+		} catch (SQLException e) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alerts.showAlert("ERRO", "Erro durante a conexão com o banco!", e.getMessage(), AlertType.ERROR);
+				}
+			});
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alerts.showAlert("ERRO", "Erro de conversão", "O valor digitado não é um número!", AlertType.ERROR);
+				}
+			});
+		}finally {
 			DB.closeConnection();
 			DB.fechaStatement(st);
 		}
