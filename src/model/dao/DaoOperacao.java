@@ -197,7 +197,8 @@ public class DaoOperacao {
 		try {
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = formataData.parse(data.toString());
-			st = DB.getConnection().prepareStatement("INSERT INTO operacoes(data, descricao, valor, formaDePagamento) values (?, ?, ?, ?)");
+			st = DB.getConnection().prepareStatement(
+					"INSERT INTO operacoes(data, descricao, valor, formaDePagamento) values (?, ?, ?, ?)");
 			st.setDate(1, new java.sql.Date(date.getTime()));
 			st.setString(2, descricao);
 			st.setDouble(3, Double.parseDouble(valor.replaceAll(",", ".")));
@@ -219,7 +220,32 @@ public class DaoOperacao {
 					Alerts.showAlert("ERRO", "Erro de conversão", "O valor digitado não é um número!", AlertType.ERROR);
 				}
 			});
-		}finally {
+		} finally {
+			DB.closeConnection();
+			DB.fechaStatement(st);
+		}
+	}
+
+	public static void atualizaMontante(String valor) {
+		try {
+			st = DB.getConnection().prepareStatement("UPDATE contas set montante = montante + ?;");
+			st.setString(1, valor);
+			st.execute();
+		} catch (SQLException e) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alerts.showAlert("ERRO", "Erro durante a conexão com o banco!", e.getMessage(), AlertType.ERROR);
+				}
+			});
+		} catch (NumberFormatException e) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alerts.showAlert("ERRO", "Erro de conversão", "O valor digitado não é um número!", AlertType.ERROR);
+				}
+			});
+		} finally {
 			DB.closeConnection();
 			DB.fechaStatement(st);
 		}

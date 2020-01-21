@@ -223,7 +223,7 @@ public class ViewOperacoesController implements Initializable {
 
 	@FXML
 	void onBtSaidaAction() {
-		if (!(stageReceita.isShowing())) {
+		if (!(stageDespesa.isShowing())) {
 			try {
 				Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewDespesa.fxml"));
 				despesa = new Scene(fxmlReceita);
@@ -239,7 +239,7 @@ public class ViewOperacoesController implements Initializable {
 				e.printStackTrace();
 			}
 		} else {
-			stageReceita.requestFocus();
+			stageDespesa.requestFocus();
 		}
 	}
 
@@ -378,6 +378,7 @@ public class ViewOperacoesController implements Initializable {
 
 		piStatus.setVisible(true);
 		lbStatus.setVisible(true);
+		lbStatus.setText("Carregando");
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -390,7 +391,7 @@ public class ViewOperacoesController implements Initializable {
 			}
 		};
 
-		Task<Void> taskReceita = new Task<Void>() {
+		Task<Void> taskOperacao = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
 				parada = true;
@@ -412,7 +413,7 @@ public class ViewOperacoesController implements Initializable {
 		};
 
 		javafx.application.Platform.runLater(() -> {
-			Thread t = new Thread(taskReceita);
+			Thread t = new Thread(taskOperacao);
 			t.start();
 		});
 	}
@@ -536,6 +537,7 @@ public class ViewOperacoesController implements Initializable {
 		int grupo2;
 		piStatus.setVisible(true);
 		lbStatus.setVisible(true);
+		lbStatus.setText("Carregando");
 
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
@@ -573,7 +575,7 @@ public class ViewOperacoesController implements Initializable {
 			}
 		}
 
-		Task<Void> taskReceita = new Task<Void>() {
+		Task<Void> taskOperacao = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
 				parada = true;
@@ -611,7 +613,7 @@ public class ViewOperacoesController implements Initializable {
 		};
 
 		javafx.application.Platform.runLater(() -> {
-			Thread t = new Thread(taskReceita);
+			Thread t = new Thread(taskOperacao);
 			t.start();
 		});
 	}
@@ -650,6 +652,7 @@ public class ViewOperacoesController implements Initializable {
 				"*Sera feito um novo cálculo de valores!")) {
 			piStatus.setVisible(true);
 			lbStatus.setVisible(true);
+			lbStatus.setText("Excluindo");
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
@@ -662,7 +665,7 @@ public class ViewOperacoesController implements Initializable {
 				}
 			};
 
-			Task<Void> taskReceita = new Task<Void>() {
+			Task<Void> taskExclusao = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
 					parada = true;
@@ -674,6 +677,13 @@ public class ViewOperacoesController implements Initializable {
 					for (Operacao op : tvOperacoes.getItems()) {
 						if (op.getSelect().isSelected()) {
 							DaoOperacao.excluiOperacao(op.getId());
+							if(op.getReceita() == 0.0) {
+								DaoOperacao.atualizaMontante(String.valueOf(op.getDespesa()).replace("-", "+"));
+							}
+							else {
+								DaoOperacao.atualizaMontante("-"+String.valueOf(op.getReceita()));
+							}
+							
 						}
 					}
 
@@ -692,7 +702,7 @@ public class ViewOperacoesController implements Initializable {
 			};
 
 			javafx.application.Platform.runLater(() -> {
-				Thread t = new Thread(taskReceita);
+				Thread t = new Thread(taskExclusao);
 				t.start();
 			});
 
