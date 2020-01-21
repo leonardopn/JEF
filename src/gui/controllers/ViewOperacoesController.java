@@ -9,8 +9,10 @@ import java.util.ResourceBundle;
 
 import gui.util.Alerts;
 import gui.util.Notificacoes;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,10 +42,11 @@ public class ViewOperacoesController implements Initializable {
 	ObservableList<Operacao> obOperacao;
 	ObservableList<Integer> obAnos;
 	private int mes;
-	
+	private boolean parada;
+
 	private static Scene receita;
 	private static Stage stageReceita = new Stage();
-	private static Scene despesa; 
+	private static Scene despesa;
 	private static Stage stageDespesa = new Stage();
 
 	final ToggleGroup group1 = new ToggleGroup();
@@ -198,7 +201,7 @@ public class ViewOperacoesController implements Initializable {
 
 	@FXML
 	void onBtEntradaAction() {
-		if(!(stageReceita.isShowing())) {
+		if (!(stageReceita.isShowing())) {
 			try {
 				Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewReceita.fxml"));
 				receita = new Scene(fxmlReceita);
@@ -213,15 +216,14 @@ public class ViewOperacoesController implements Initializable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			stageReceita.requestFocus();
 		}
 	}
 
 	@FXML
 	void onBtSaidaAction() {
-		if(!(stageReceita.isShowing())) {
+		if (!(stageReceita.isShowing())) {
 			try {
 				Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewDespesa.fxml"));
 				despesa = new Scene(fxmlReceita);
@@ -236,8 +238,7 @@ public class ViewOperacoesController implements Initializable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			stageReceita.requestFocus();
 		}
 	}
@@ -375,9 +376,45 @@ public class ViewOperacoesController implements Initializable {
 			labelTotalMesAno.setText("Total do Ano:");
 		}
 
-		DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
-		carregaOperacoes();
-		calculaMontante();
+		piStatus.setVisible(true);
+		lbStatus.setVisible(true);
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				piStatus.setVisible(false);
+				lbStatus.setVisible(false);
+				return null;
+			}
+		};
+
+		Task<Void> taskReceita = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				parada = true;
+				javafx.application.Platform.runLater(() -> {
+					Thread t = new Thread(tarefa);
+					t.start();
+				});
+				DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
+				parada = false;
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						carregaOperacoes();
+						calculaMontante();
+					}
+				});
+				return null;
+			}
+		};
+
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(taskReceita);
+			t.start();
+		});
 	}
 
 	public void selecionaMesPadrao(int mes) {
@@ -497,6 +534,20 @@ public class ViewOperacoesController implements Initializable {
 	public void buscaOperacoes() {
 		int grupo1;
 		int grupo2;
+		piStatus.setVisible(true);
+		lbStatus.setVisible(true);
+
+		Task<Void> tarefa = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				while (parada == true) {
+					Thread.sleep(0);
+				}
+				piStatus.setVisible(false);
+				lbStatus.setVisible(false);
+				return null;
+			}
+		};
 
 		if (rbDescricao.isSelected()) {
 			grupo1 = 1;
@@ -522,21 +573,47 @@ public class ViewOperacoesController implements Initializable {
 			}
 		}
 
-		ArrayList<Operacao> opTemp = new ArrayList<>();
-		if (!(dpData.isDisable())) {
-			opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2, dpData.getValue().getMonthValue(),
-					dpData.getValue().getMonthValue(), dpData.getValue().getYear(), dpData.getValue().getDayOfMonth());
-		} else {
-			if (mes == 0) {
-				opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2, 1, 12, spinAno.getValue(), 0);
-			} else {
-				opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2, mes, mes, spinAno.getValue(), 0);
-			}
-		}
+		Task<Void> taskReceita = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				parada = true;
+				javafx.application.Platform.runLater(() -> {
+					Thread t = new Thread(tarefa);
+					t.start();
+				});
+				ArrayList<Operacao> opTemp = new ArrayList<>();
+				if (!(dpData.isDisable())) {
+					opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2,
+							dpData.getValue().getMonthValue(), dpData.getValue().getMonthValue(),
+							dpData.getValue().getYear(), dpData.getValue().getDayOfMonth());
+				} else {
+					if (mes == 0) {
+						opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2, 1, 12, spinAno.getValue(),
+								0);
+					} else {
+						opTemp = DaoOperacao.carregaBusca(tfBusca.getText(), grupo1, grupo2, mes, mes,
+								spinAno.getValue(), 0);
+					}
+				}
 
-		tvOperacoes.setItems(null);
-		obOperacao = FXCollections.observableArrayList(opTemp);
-		tvOperacoes.setItems(obOperacao);
+				obOperacao = FXCollections.observableArrayList(opTemp);
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						tvOperacoes.setItems(null);
+						tvOperacoes.setItems(obOperacao);
+					}
+				});
+
+				parada = false;
+				return null;
+			}
+		};
+
+		javafx.application.Platform.runLater(() -> {
+			Thread t = new Thread(taskReceita);
+			t.start();
+		});
 	}
 
 	public void setaRadioGrups() {
@@ -571,14 +648,54 @@ public class ViewOperacoesController implements Initializable {
 	public void excluiOperacao() {
 		if (Alerts.showAlertGenerico("AVISO!", "Deseja excluir está operacao?",
 				"*Sera feito um novo cálculo de valores!")) {
-			for (Operacao op : tvOperacoes.getItems()) {
-				if (op.getSelect().isSelected()) {
-					DaoOperacao.excluiOperacao(op.getId());
+			piStatus.setVisible(true);
+			lbStatus.setVisible(true);
+			Task<Void> tarefa = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					while (parada == true) {
+						Thread.sleep(0);
+					}
+					piStatus.setVisible(false);
+					lbStatus.setVisible(false);
+					return null;
 				}
-			}
-			buscaOperacoes();
-			DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
-			calculaMontante();
+			};
+
+			Task<Void> taskReceita = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					parada = true;
+					javafx.application.Platform.runLater(() -> {
+						Thread t = new Thread(tarefa);
+						t.start();
+					});
+
+					for (Operacao op : tvOperacoes.getItems()) {
+						if (op.getSelect().isSelected()) {
+							DaoOperacao.excluiOperacao(op.getId());
+						}
+					}
+
+					parada = false;
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							buscaOperacoes();
+							DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
+
+							calculaMontante();
+						}
+					});
+					return null;
+				}
+			};
+
+			javafx.application.Platform.runLater(() -> {
+				Thread t = new Thread(taskReceita);
+				t.start();
+			});
+
 		} else {
 			Notificacoes.mostraNotificacao("AVISO", "Operação cancelada!");
 		}
