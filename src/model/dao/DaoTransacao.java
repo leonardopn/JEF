@@ -127,11 +127,9 @@ public class DaoTransacao {
 				rs.last();
 				Date data = formataData.parse(dpData.toString());
 				st = DB.getConnection().prepareStatement("REPLACE INTO caixa "
-						+ "(data, fundoDeTroco, montanteAnterior, montanteTotal) " + "VALUES " + "(?, ?, ?, ?)");
+						+ "(data, fundoDeTroco) " + "VALUES " + "(?, ?)");
 				st.setDate(1, new java.sql.Date(data.getTime()));
 				st.setDouble(2, fundoDeTroco);
-				st.setDouble(3, rs.getDouble("montanteTotal"));
-				st.setDouble(4, rs.getDouble("montanteTotal"));
 				st.execute();
 			} else {
 				SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
@@ -213,5 +211,28 @@ public class DaoTransacao {
 			DB.closeConnection();
 		}
 		return 1;
+	}
+
+	public static void salvaMontante(double valorDinheiro, double valorCartao, double valorTotal, double fundoDeTroco,
+			LocalDate data) {
+		try {
+
+			DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			st = DB.getConnection().prepareStatement(
+					"update caixa set totalDoDia = ?, total_dinheiro = ?, total_cartao = ?, fundoDeTroco = ? where data = ?;");
+			st.setDouble(1, valorTotal);
+			st.setDouble(2, valorDinheiro);
+			st.setDouble(3, valorCartao);
+			st.setDouble(4, fundoDeTroco);
+			st.setString(5, localDateFormatadaProcura.format(data));
+			st.execute();
+
+		} catch (SQLException e) {
+			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
+					AlertType.ERROR);
+		} finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
 	}
 }

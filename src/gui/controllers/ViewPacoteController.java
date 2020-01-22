@@ -1,7 +1,10 @@
 package gui.controllers;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.textfield.AutoCompletionBinding;
@@ -28,6 +31,7 @@ import model.collection.Colecao;
 import model.collection.entities.Cliente;
 import model.collection.entities.Pacote;
 import model.collection.entities.PacoteAssociado;
+import model.dao.DaoOperacao;
 import model.dao.DaoPacote;
 
 public class ViewPacoteController implements Initializable {
@@ -145,6 +149,9 @@ public class ViewPacoteController implements Initializable {
 
 	@FXML
 	private ChoiceBox<Pacote> cbPacote;
+
+	@FXML
+	private ChoiceBox<String> cbFormaDePagamento;
 
 	@FXML
 	private ProgressIndicator piStatus;
@@ -382,6 +389,8 @@ public class ViewPacoteController implements Initializable {
 						t.start();
 					});
 					DaoPacote.salvarPacoteAssociado(tfCliente, cbPacote);
+					DaoOperacao.salvaOperacao("Pacote de: " + tfCliente.getText(), LocalDate.now(),
+							String.valueOf(cbPacote.getValue().getValor()), cbFormaDePagamento.getValue());
 					carregaTabelaPacoteAssociado();
 
 					Platform.runLater(new Runnable() {
@@ -452,6 +461,12 @@ public class ViewPacoteController implements Initializable {
 		}
 	}
 
+	public void carregaFormaPagamento() {
+		List<String> listMetPag = Arrays.asList("Dinheiro", "Cartão");
+		ObservableList<String> obFormaPagamento = FXCollections.observableArrayList(listMetPag);
+		cbFormaDePagamento.setItems(obFormaPagamento);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
@@ -471,6 +486,7 @@ public class ViewPacoteController implements Initializable {
 		colunaQuantPeAssociado.setCellValueFactory(new PropertyValueFactory<>("quantPe"));
 		colunaExcluirPacoteAssociado.setCellValueFactory(new PropertyValueFactory<>("select"));
 
+		carregaFormaPagamento();
 		carregaTabelaPacote();
 		carregaTabelaPacoteAssociado();
 		cbPacote.setItems(obPacote);

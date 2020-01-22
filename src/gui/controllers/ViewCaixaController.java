@@ -3,6 +3,7 @@ package gui.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +49,7 @@ import model.collection.entities.Funcionario;
 import model.collection.entities.PacoteAssociado;
 import model.collection.entities.Servico;
 import model.collection.entities.Transacao;
+import model.dao.DaoOperacao;
 import model.dao.DaoPacote;
 import model.dao.DaoTransacao;
 
@@ -449,29 +451,33 @@ public class ViewCaixaController implements Initializable {
 					if (cbPacoteAssociado.isDisable()) {
 						DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
 								cbFormaPagamento, servico, tfObs.getText(), -1);
+						calculaMontante(Double.parseDouble(tfValor.getText().replaceAll(",", ".")),
+								cbFormaPagamento.getValue(), dpData.getValue());
+						DaoOperacao.atualizaMontante(tfValor.getText().replaceAll(",", "."));
 					} else {
 						if (cbPacoteAssociado.getValue().getQuantMao() < 1 & servico.contains("Mão(Pacote")) {
 							Platform.runLater(new Runnable() {
 								@Override
 								public void run() {
-									Alerts.showAlert("AVISO!", "Transação cancelada","Esse cliente não possuí mais mãos em seu pacote!",AlertType.WARNING);
+									Alerts.showAlert("AVISO!", "Transação cancelada",
+											"Esse cliente não possuí mais mãos em seu pacote!", AlertType.WARNING);
 								}
 							});
-							
+
 						} else {
 							if (cbPacoteAssociado.getValue().getQuantPe() < 1 & servico.contains("Pé(Pacote")) {
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
-										Alerts.showAlert("AVISO!", "Transação cancelada","Esse cliente não possuí mais pés em seu pacote!",AlertType.WARNING);
+										Alerts.showAlert("AVISO!", "Transação cancelada",
+												"Esse cliente não possuí mais pés em seu pacote!", AlertType.WARNING);
 									}
 								});
 							} else {
 								PacoteAssociado pac = cbPacoteAssociado.getValue();
 								String text = "Pacote(Mão: " + pac.getQuantMao() + ", Pé: " + pac.getQuantPe() + ")";
 								DaoTransacao.salvarTransacao(tfCliente, cbFuncionario, dpData.getValue(), tfValor,
-										cbFormaPagamento, servico, text,
-										cbPacoteAssociado.getValue().getId());
+										cbFormaPagamento, servico, text, cbPacoteAssociado.getValue().getId());
 								DaoPacote.carregaPacoteAssociado();
 							}
 						}
@@ -553,6 +559,18 @@ public class ViewCaixaController implements Initializable {
 			Thread t = new Thread(taskDaoTransacao);
 			t.start();
 		});
+	}
+
+	public void calculaMontante(double valor, String formaPagamento, LocalDate data) {
+		if (formaPagamento.equals("Dinheiro")) {
+			valorDinheiro += valor;
+			fundoDeTroco += valor;
+			valorTotal += valor;
+		} else {
+			valorCartao += valor;
+			valorTotal += valor;
+		}
+		DaoTransacao.salvaMontante(valorDinheiro, valorCartao, valorTotal, fundoDeTroco, data);
 	}
 
 	public void carregaTransacao() {
@@ -642,9 +660,16 @@ public class ViewCaixaController implements Initializable {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
+					DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 					for (Transacao tran : obTable) {
 						if (tran.getSelect().isSelected()) {
 							DaoTransacao.excluirTransacao(tran);
+							if (!(tran.getObs().contains("Pacote("))) {
+								LocalDate data = LocalDate.parse(tran.getData(), localDateFormatadaProcura);
+								calculaMontante(-tran.getValor(), tran.getFormaPagamento(), data);
+								DaoOperacao.atualizaMontante("-" + String.valueOf(tran.getValor()));
+							}
 						}
 					}
 					DaoPacote.carregaPacoteAssociado();
