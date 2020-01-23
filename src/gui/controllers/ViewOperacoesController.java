@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -201,46 +202,57 @@ public class ViewOperacoesController implements Initializable {
 
 	@FXML
 	void onBtEntradaAction() {
-		if (!(stageReceita.isShowing())) {
-			try {
-				Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewReceita.fxml"));
-				receita = new Scene(fxmlReceita);
-				stageReceita.setScene(receita);
-				stageReceita.centerOnScreen();
-				stageReceita.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-				stageReceita.setTitle("JEF - Receita");
-				stageReceita.showAndWait();
-				buscaOperacoes();
-				DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
-				calculaMontante();
-			} catch (IOException e) {
-				e.printStackTrace();
+		if(stageDespesa.isShowing()) {
+			Alerts.showAlert("AVISO", "Tela de despesa está aberta", "Para abrir a tela de receita, primeiro feche a tela de despesa!", AlertType.INFORMATION);
+		}
+		else {
+			if (!(stageReceita.isShowing())) {
+				try {
+					Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewReceita.fxml"));
+					receita = new Scene(fxmlReceita);
+					stageReceita.setScene(receita);
+					stageReceita.centerOnScreen();
+					stageReceita.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+					stageReceita.setTitle("JEF - Receita");
+					stageReceita.showAndWait();
+					buscaOperacoes();
+					DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
+					calculaMontante();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				stageReceita.requestFocus();
 			}
-		} else {
-			stageReceita.requestFocus();
 		}
 	}
 
 	@FXML
 	void onBtSaidaAction() {
-		if (!(stageDespesa.isShowing())) {
-			try {
-				Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewDespesa.fxml"));
-				despesa = new Scene(fxmlReceita);
-				stageDespesa.setScene(despesa);
-				stageDespesa.centerOnScreen();
-				stageDespesa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-				stageDespesa.setTitle("JEF - Despesa");
-				stageDespesa.showAndWait();
-				buscaOperacoes();
-				DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
-				calculaMontante();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			stageDespesa.requestFocus();
+		if(stageReceita.isShowing()) {
+			Alerts.showAlert("AVISO", "Tela de receita está aberta", "Para abrir a tela de despesa, primeiro feche a tela de receita!", AlertType.INFORMATION);
 		}
+		else {
+			if (!(stageDespesa.isShowing())) {
+				try {
+					Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewDespesa.fxml"));
+					despesa = new Scene(fxmlReceita);
+					stageDespesa.setScene(despesa);
+					stageDespesa.centerOnScreen();
+					stageDespesa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+					stageDespesa.setTitle("JEF - Despesa");
+					stageDespesa.showAndWait();
+					buscaOperacoes();
+					DaoOperacao.carregaOperacao(spinAno.getValue(), mes);
+					calculaMontante();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				stageDespesa.requestFocus();
+			}
+		}
+		
 	}
 
 	public void liberaData() {
@@ -674,16 +686,19 @@ public class ViewOperacoesController implements Initializable {
 						t.start();
 					});
 
+					DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+					
 					for (Operacao op : tvOperacoes.getItems()) {
+						LocalDate data = LocalDate.parse(op.getData(), localDateFormatadaProcura);
 						if (op.getSelect().isSelected()) {
-							DaoOperacao.excluiOperacao(op.getId());
 							if(op.getReceita() == 0.0) {
+								DaoOperacao.excluiOperacao(op.getId(), -op.getDespesa(), data, op.getFormaPagamento());
 								DaoOperacao.atualizaMontante(String.valueOf(op.getDespesa()).replace("-", "+"));
 							}
 							else {
+								DaoOperacao.excluiOperacao(op.getId(), -op.getReceita(), data, op.getFormaPagamento());
 								DaoOperacao.atualizaMontante("-"+String.valueOf(op.getReceita()));
 							}
-							
 						}
 					}
 

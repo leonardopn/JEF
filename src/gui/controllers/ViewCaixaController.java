@@ -84,6 +84,9 @@ public class ViewCaixaController implements Initializable {
 	private Button btAjuda;
 
 	@FXML
+	private Button btAtualizar;
+
+	@FXML
 	private Button btAssociar;
 
 	@FXML
@@ -332,7 +335,6 @@ public class ViewCaixaController implements Initializable {
 			tfCliente.setDisable(true);
 			cbFuncionario.setDisable(true);
 			tfValor.setDisable(true);
-			dpData.setDisable(true);
 			cbFormaPagamento.setDisable(true);
 			cbBloqueiaPreco.setDisable(true);
 			trvServicos.setDisable(true);
@@ -342,7 +344,6 @@ public class ViewCaixaController implements Initializable {
 			btExcluir.setDisable(false);
 			tfCliente.setDisable(false);
 			cbFuncionario.setDisable(false);
-			dpData.setDisable(false);
 			if (!(cbBloqueiaPreco.isSelected())) {
 				tfValor.setDisable(false);
 			}

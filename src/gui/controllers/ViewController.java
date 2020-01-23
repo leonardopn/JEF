@@ -372,13 +372,18 @@ public class ViewController implements Initializable {
 	@FXML
 	public void onBtAbreCaixaAction() {
 		try {
-			Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
-			caixa = new Scene(fxmlCaixa);
-			stageCaixa.setScene(caixa);
-			stageCaixa.show();
-			stageCaixa.centerOnScreen();
-			stageCaixa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-			stageCaixa.setTitle("JEF - Caixa");
+			if(stageCaixa.isShowing()) {
+				stageCaixa.toFront();
+			}
+			else {
+				Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
+				caixa = new Scene(fxmlCaixa);
+				stageCaixa.setScene(caixa);
+				stageCaixa.show();
+				stageCaixa.centerOnScreen();
+				stageCaixa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+				stageCaixa.setTitle("JEF - Caixa");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

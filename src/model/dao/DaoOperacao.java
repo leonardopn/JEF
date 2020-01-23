@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -180,11 +181,19 @@ public class DaoOperacao {
 		return opTemp;
 	}
 
-	public static void excluiOperacao(int id) {
+	public static void excluiOperacao(int id, double valor, LocalDate data, String formaPagamento) {
 		try {
 			st = DB.getConnection().prepareStatement("delete from operacoes where id = ?");
 			st.setInt(1, id);
 			st.execute();
+			if(formaPagamento.equals("Dinheiro")) {
+				DateTimeFormatter localDateFormatadaProcura = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				st = DB.getConnection().prepareStatement("update caixa set fundoDeTroco = fundoDeTroco + ? where data = ?;");
+				st.setDouble(1, valor);
+				st.setString(2, localDateFormatadaProcura.format(data));
+				st.execute();
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -204,6 +213,16 @@ public class DaoOperacao {
 			st.setDouble(3, Double.parseDouble(valor.replaceAll(",", ".")));
 			st.setString(4, formaPagamento);
 			st.execute();
+			
+			if(formaPagamento.equals("Dinheiro")) {
+				st = DB.getConnection().prepareStatement("update caixa set fundoDeTroco = fundoDeTroco + ? where data = ?;");
+				st.setDate(2, new java.sql.Date(date.getTime()));
+				st.setDouble(1, Double.parseDouble(valor.replaceAll(",", ".")));
+				st.execute();
+			}
+			
+			DaoOperacao.atualizaMontante(valor);
+			
 		} catch (SQLException e) {
 			Platform.runLater(new Runnable() {
 				@Override

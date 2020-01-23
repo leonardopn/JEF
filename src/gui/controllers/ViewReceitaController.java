@@ -75,7 +75,7 @@ public class ViewReceitaController implements Initializable {
 						t.start();
 					});
 					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfEntrada.getText(), cbFormaPagamento.getValue());
-					DaoOperacao.atualizaMontante(tfEntrada.getText());
+					
 					parada = false;
 					Platform.runLater(new Runnable() {
 						@Override

@@ -78,7 +78,6 @@ public class ViewDespesaController implements Initializable {
 					}
 					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfSaida.getText(),
 							cbFormaPagamento.getValue());
-					DaoOperacao.atualizaMontante(tfSaida.getText());
 					parada = false;
 					Platform.runLater(new Runnable() {
 						@Override
