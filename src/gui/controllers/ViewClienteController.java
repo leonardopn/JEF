@@ -12,6 +12,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,10 +24,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import model.collection.Colecao;
 import model.collection.entities.Cliente;
 import model.dao.DaoCliente;
@@ -38,6 +44,42 @@ public class ViewClienteController implements Initializable {
 
 	@FXML
 	private Button btCriaCliente;
+
+	@FXML
+	private Tab tabTabela;
+
+	@FXML
+	private Tab tabCliente;
+
+	@FXML
+	private TabPane tpCentral;
+
+	@FXML
+	private AnchorPane apCentral;
+
+	@FXML
+	private RadioButton rbId;
+
+	@FXML
+	private RadioButton rbNome;
+
+	@FXML
+	private RadioButton rbRedeSocial;
+
+	@FXML
+	private RadioButton rbEmail;
+
+	@FXML
+	private RadioButton rbTelefone;
+
+	@FXML
+	private RadioButton rbTodos;
+
+	@FXML
+	private TextField tfBusca;
+
+	@FXML
+	private Button btPesquisar;
 
 	@FXML
 	private Button btAtualizaCliente;
@@ -248,6 +290,14 @@ public class ViewClienteController implements Initializable {
 		}
 	}
 
+	public void alteraTamanhoAnchorPane() {
+		if (apCentral.getPrefHeight() == 625 && apCentral.getPrefWidth() == 838) {
+			apCentral.setPrefSize(621, 189);
+		} else {
+			apCentral.setPrefSize(838, 625);
+		}
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -258,4 +308,5 @@ public class ViewClienteController implements Initializable {
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaCliente();
 	}
+
 }
