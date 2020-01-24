@@ -12,6 +12,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -288,14 +290,14 @@ public class ViewClienteController implements Initializable {
 		}
 	}
 
-	public void alteraTamanhoAnchorPane() {
-		if (apCentral.getPrefHeight() == 625 && apCentral.getPrefWidth() == 838) {
-			apCentral.setPrefSize(621, 189);
-		} else {
-			apCentral.setPrefSize(838, 625);
-		}
-	}
-
+//	public void alteraTamanhoAnchorPane() {
+//		if (apCentral.getPrefHeight() == 625 && apCentral.getPrefWidth() == 838) {
+//			apCentral.setPrefSize(621, 189);
+//		} else {
+//			apCentral.setPrefSize(838, 625);
+//		}
+//	}
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -305,6 +307,25 @@ public class ViewClienteController implements Initializable {
 		colunaRedeSocial.setCellValueFactory(new PropertyValueFactory<>("redeSocial"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		carregaCliente();
+		
+		EventHandler<Event> eventResize = new EventHandler<Event>() {
+            @Override
+            public void handle(Event t) {
+                if (tabCliente.isSelected()) {
+                	ViewController.getStageCliente().setWidth(635);
+                	ViewController.getStageCliente().setHeight(210);
+                	ViewController.getStageCliente().centerOnScreen();
+                }
+                else {
+                	ViewController.getStageCliente().setWidth(845);
+                	ViewController.getStageCliente().setHeight(655);
+                	ViewController.getStageCliente().centerOnScreen();
+                }
+            }
+        };
+		
+		tabCliente.setOnSelectionChanged(eventResize);
+		tabTabela.setOnSelectionChanged(eventResize);
 	}
 
 }

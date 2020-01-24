@@ -77,7 +77,7 @@ public class ViewController implements Initializable {
 
 	@FXML
 	private Button btCriaFuncionario;
-	
+
 	@FXML
 	private Button btOperacoes;
 
@@ -282,7 +282,7 @@ public class ViewController implements Initializable {
 	public static Stage getStageOperacoes() {
 		return stageOperacoes;
 	}
-	
+
 	// abre páginas
 
 	@FXML
@@ -300,7 +300,7 @@ public class ViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void onBtAbreOperacoesAction() {
 		try {
@@ -355,27 +355,33 @@ public class ViewController implements Initializable {
 
 	@FXML
 	public void onBtCriaClienteAction() {
-		try {
-			retornaInformacaoAgenda();
-			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
-			cliente = new Scene(fxmlCliente);
-			stageCliente.setScene(cliente);
-			stageCliente.show();
-			stageCliente.centerOnScreen();
-			stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-			stageCliente.setTitle("JEF - Cliente");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (stageCliente.isShowing()) {
+			stageCliente.requestFocus();
+		} else {
+			try {
+				retornaInformacaoAgenda();
+				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
+				cliente = new Scene(fxmlCliente);
+				stageCliente.setWidth(845);
+				stageCliente.setHeight(655);
+				stageCliente.setScene(cliente);
+				stageCliente.setResizable(false);
+				stageCliente.show();
+				stageCliente.centerOnScreen();
+				stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+				stageCliente.setTitle("JEF - Cliente");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@FXML
 	public void onBtAbreCaixaAction() {
 		try {
-			if(stageCaixa.isShowing()) {
+			if (stageCaixa.isShowing()) {
 				stageCaixa.toFront();
-			}
-			else {
+			} else {
 				Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
 				caixa = new Scene(fxmlCaixa);
 				stageCaixa.setScene(caixa);
