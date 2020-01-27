@@ -3,10 +3,12 @@ package model.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import db.DB;
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import model.collection.Colecao;
 import model.collection.entities.Cliente;
@@ -115,5 +117,66 @@ public class DaoCliente {
 			DB.fechaStatement(st);
 			DB.closeConnection();
 		}
+	}
+
+	public static ArrayList<Cliente> buscaCliente(String busca, int grupo) {
+		ArrayList<Cliente> clienteTemp = new ArrayList<Cliente>();
+		try {
+			if(grupo == 1) {
+				st = DB.getConnection().prepareStatement("select * from cliente where status = 1 and idcliente = ? or status = 1 and nome like ? or status = 1 and telefone like ? or status = 1 and email like ? or status = 1 and rede_social like ?");
+				st.setString(1, busca);
+				st.setString(2, "%"+busca+"%");
+				st.setString(3, "%"+busca+"%");
+				st.setString(4, "%"+busca+"%");
+				st.setString(5, "%"+busca+"%");
+			}
+			else {
+				if(grupo == 2) {
+					st = DB.getConnection().prepareStatement("select * from cliente where idcliente = ? and status = 1;");
+					st.setString(1, busca);
+				}
+				else {
+					if(grupo == 3) {
+						st = DB.getConnection().prepareStatement("select * from cliente where nome like ? and status = 1;");
+						st.setString(1, "%"+busca+"%");
+					}
+					else {
+						if(grupo == 4){
+							st = DB.getConnection().prepareStatement("select * from cliente where email like ? and status = 1;");
+							st.setString(1, "%"+busca+"%");
+						}
+						else {
+							if(grupo == 5) {
+								st = DB.getConnection().prepareStatement("select * from cliente where telefone like ? and status = 1;");
+								st.setString(1, "%"+busca+"%");
+							}
+							else {
+								st = DB.getConnection().prepareStatement("select * from cliente where rede_social like ? and status = 1;");
+								st.setString(1, "%"+busca+"%");
+							}
+						}
+					}
+				}
+			}
+			rs = st.executeQuery();
+			while(rs.next()) {
+				Cliente cli = new Cliente(rs.getInt("idCliente"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rede_social"));
+				clienteTemp.add(cli);
+			}
+			return clienteTemp;
+		}
+		catch(SQLException e) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alerts.showAlert("ERRO", "Erro durante a conexão com o banco!", e.getMessage(), AlertType.ERROR);
+				}
+			});
+		}
+		finally {
+			DB.fechaStatement(st);
+			DB.closeConnection();
+		}
+		return clienteTemp;
 	}
 }
