@@ -6,7 +6,7 @@
 ----
 
 ## Descrição
-> Software escrito em Java para o gerenciamente de caixa, horários, clientes e funcionários de uma esmalteria local.
+> Software escrito em Java para o gerenciamento de caixa, horários, clientes e funcionários de uma esmalteria local.
 
 ---
 
@@ -77,6 +77,8 @@
     Implementação de novos cálculos;</br>
     Modificações visuais para clientes;</br>
     Implementação de busca por filtro - CLIENTES;</br>
+    Modificações visuais para login - LOGIN;</br>
+    Implementação de SPLASH ART de carregamento;</br>
     
 * <b>v2.0</b>
     * <b>FIX:</b> </br>bug no caixa;

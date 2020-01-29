@@ -35,15 +35,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.collection.Colecao;
 import model.collection.entities.Agendamento;
-import model.collection.entities.Caixa;
 import model.collection.entities.Cliente;
 import model.collection.entities.Funcionario;
 import model.dao.DaoAgendamento;
-import model.dao.DaoCliente;
 import model.dao.DaoFuncionario;
-import model.dao.DaoPacote;
-import model.dao.DaoServico;
-import model.dao.DaoTransacao;
 
 public class ViewController implements Initializable {
 
@@ -596,16 +591,6 @@ public class ViewController implements Initializable {
 		tfClienteTemp = this.tfCliente;
 	}
 
-	public static void carregarBase() {
-		DaoServico.carregaServicos();
-		DaoServico.carregaCategoria();
-		DaoCliente.carregaCliente();
-		DaoFuncionario.carregaFuncionario();
-		Caixa.setStatus(DaoTransacao.carregaCaixa());
-		DaoPacote.carregaPacote();
-		DaoPacote.carregaPacoteAssociado();
-	}
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -639,7 +624,7 @@ public class ViewController implements Initializable {
 
 		pb.setVisible(false);
 		dpData.setValue(LocalDate.now());
-		carregarBase();
+
 		carregaFuncionario();
 		carregaAgenda();
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
