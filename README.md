@@ -78,6 +78,7 @@
     Modificações visuais para clientes;</br>
     Implementação de busca por filtro - CLIENTES;</br>
     Modificações visuais para login - LOGIN;</br>
+    Modificações visuais a ViewSobre - SOBRE;</br>
     Implementação de SPLASH ART de carregamento;</br>
     
 * <b>v2.0</b>

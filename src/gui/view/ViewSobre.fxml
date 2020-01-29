@@ -1,28 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="224.0" layoutY="228.0" text="JEF">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Label>
-      <Label layoutX="234.0" layoutY="264.0" text="2.5">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="50.0" layoutY="276.0" prefHeight="107.0" prefWidth="400.0" text="JEF e o acronimo para Java Esmalteria Fiscal, software de codigo livre produzido para uso de gerencimanete de caixa simples, agendamento e registro de clientes e funcionarios" textAlignment="CENTER" wrapText="true" />
-      <ImageView fitHeight="200.0" fitWidth="400.0" layoutX="147.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../model/images/icon.png" />
-         </image>
-      </ImageView>
+      <AnchorPane cacheShape="false" centerShape="false" layoutX="-3.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="720.0" scaleShape="false" style="-fx-background-color: #2c2e33; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" stylesheets="@css/styleLogin.css">
+         <children>
+            <Pane layoutX="-134.0" layoutY="-118.0" prefHeight="479.0" prefWidth="392.0" rotate="15.0" style="-fx-background-color: #545E6A; -fx-border-color: ff5b5b; -fx-border-width: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+               <children>
+                  <ImageView fitHeight="226.0" fitWidth="220.0" layoutX="153.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" rotate="-15.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+                     <image>
+                        <Image url="@../../model/images/icon.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+               </children>
+            </Pane>
+            <AnchorPane layoutX="293.0" layoutY="44.0" minHeight="-Infinity" minWidth="-Infinity" opacity="0.18" prefHeight="333.0" prefWidth="410.0" style="-fx-background-color: white; -fx-background-radius: 2em; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
+            <Label layoutX="314.0" layoutY="89.0" text="JEF v2.5®" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="310.0" layoutY="121.0" text="Copyright® 2019-2020. All rights reserved." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <JFXTextArea editable="false" focusColor="WHITE" layoutX="312.0" layoutY="150.0" prefHeight="59.0" prefWidth="382.0" style="-fx-text-fill: white;" text="JEF é distribuído sob a licença GNU LGPL version v2.1 e inclui softwares de código aberto sob uma variedade de outras licenças." unFocusColor="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXTextArea>
+            <Label layoutX="408.0" layoutY="222.0" text="Leonardo Petta do Nascimento" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="316.0" layoutY="254.0" text="Facebook:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Hyperlink layoutX="382.0" layoutY="252.0" text="leonardo.petta.nascimento" textFill="WHITE" />
+            <Label layoutX="323.0" layoutY="278.0" text="Linkedin:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Hyperlink layoutX="382.0" layoutY="274.0" text="Leonardo Petta Do Nascimento" textFill="WHITE" />
+            <Label layoutX="342.0" layoutY="299.0" text="Email:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Hyperlink layoutX="383.0" layoutY="296.0" text="leonardocps9@protonmail.com" textFill="WHITE" />
+            <Label layoutX="333.0" layoutY="321.0" text="Github:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Hyperlink layoutX="382.0" layoutY="318.0" text="leonardopn" textFill="WHITE" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
