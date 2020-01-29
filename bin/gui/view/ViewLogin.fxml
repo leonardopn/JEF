@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cacheShape="false" centerShape="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="311.0" prefWidth="408.0" scaleShape="false" style="-fx-background-color: #3D4857;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewLoginController">
+<AnchorPane cacheShape="false" centerShape="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="720.0" scaleShape="false" style="-fx-background-color: #2c2e33; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" stylesheets="@css/styleLogin.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewLoginController">
    <children>
-      <ImageView fitHeight="314.0" fitWidth="413.0" layoutX="-5.0" layoutY="-4.0" pickOnBounds="true" AnchorPane.bottomAnchor="-35.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="-36.0" AnchorPane.topAnchor="-4.0">
-         <image>
-            <Image url="@../../model/images/1385482.jpg" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="23.0" layoutY="60.0" minHeight="-Infinity" minWidth="-Infinity" opacity="0.18" prefHeight="218.0" prefWidth="363.0" style="-fx-background-color: white; -fx-background-radius: 2em;" />
-      <Label layoutX="82.0" layoutY="142.0" text="Usuário:" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tfUsuario" layoutX="174.0" layoutY="142.0" promptText="Nome de usuário" style="-fx-border-radius: 5em; -fx-background-radius: 5em;" />
-      <PasswordField fx:id="pfSenha" layoutX="174.0" layoutY="178.0" onAction="#onBtLoginAction" promptText="Senha do usuário" style="-fx-background-radius: 5em; -fx-border-radius: 5em;" />
-      <TextField fx:id="tfSenhaVisivel" editable="false" layoutX="174.0" layoutY="178.0" onAction="#onBtLoginAction" promptText="Não editável" style="-fx-border-radius: 5em; -fx-background-radius: 5em;" visible="false" />
-      <ImageView fitHeight="39.0" fitWidth="25.0" layoutX="57.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+      <Pane layoutX="-134.0" layoutY="-118.0" prefHeight="479.0" prefWidth="392.0" rotate="15.0" style="-fx-background-color: #545E6A; -fx-border-color: ff5b5b; -fx-border-width: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+         <children>
+            <ImageView fitHeight="226.0" fitWidth="220.0" layoutX="153.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" rotate="-15.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+               <image>
+                  <Image url="@../../model/images/icon.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </children>
+      </Pane>
+      <AnchorPane layoutX="297.0" layoutY="57.0" minHeight="-Infinity" minWidth="-Infinity" opacity="0.18" prefHeight="333.0" prefWidth="410.0" style="-fx-background-color: white; -fx-background-radius: 2em; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
+      <ImageView fitHeight="39.0" fitWidth="44.0" layoutX="330.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
          <image>
             <Image url="@../../model/images/icons8_user_male_52px.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="ivOlho" fitHeight="25.0" fitWidth="27.0" layoutX="354.0" layoutY="178.0" onMouseClicked="#onBtOlhoAction" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ivOlho" fitHeight="39.0" fitWidth="44.0" layoutX="653.0" layoutY="221.0" onMouseClicked="#onBtOlhoAction" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
          <image>
             <Image url="@../../model/images/icons8_closed_eye_100px.png" />
          </image>
@@ -39,40 +40,42 @@
             <Rectangle2D />
          </viewport>
       </ImageView>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="70.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="39.0" fitWidth="44.0" layoutX="331.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
          <image>
             <Image url="@../../model/images/icons8_password_60px_1.png" />
          </image>
       </ImageView>
-      <Label layoutX="96.0" layoutY="179.0" text="Senha:" textFill="WHITE">
+      <JFXTextField fx:id="tfUsuario" focusColor="WHITE" layoutX="379.0" layoutY="158.0" prefHeight="39.0" prefWidth="306.0" promptText="Nome de usuário">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
-      </Label>
-      <ImageView fitHeight="92.0" fitWidth="109.0" layoutX="162.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../model/images/icon.png" />
-         </image>
-         <viewport>
-            <Rectangle2D />
-         </viewport>
-      </ImageView>
-      <AnchorPane layoutX="250.0" layoutY="223.0" prefHeight="33.0" prefWidth="92.0" style="-fx-background-radius: 5em; -fx-background-color: black;" />
-      <Button fx:id="btLogin" layoutX="250.0" layoutY="223.0" mnemonicParsing="false" onAction="#onBtLoginAction" prefHeight="33.0" prefWidth="92.0" style="-fx-background-radius: 5em;" text="Entrar">
+      </JFXTextField>
+      <JFXPasswordField fx:id="pfSenha" focusColor="WHITE" layoutX="379.0" layoutY="220.0" prefHeight="39.0" prefWidth="260.0" promptText="Senha do usuário">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXTextField fx:id="tfSenhaVisivel" editable="false" focusColor="WHITE" layoutX="379.0" layoutY="220.0" onAction="#onBtLoginAction" prefHeight="39.0" prefWidth="260.0" visible="false">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="btLogin" layoutX="354.0" layoutY="320.0" onAction="#onBtLoginAction" prefHeight="46.0" prefWidth="291.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Entrar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
          </font>
          <graphic>
-            <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../model/images/icons8_login_64px_1.png" />
+                  <Image url="@../../model/images/icons8_login_64px.png" />
                </image>
             </ImageView>
          </graphic>
-      </Button>
-      <Label layoutX="10.0" layoutY="6.0" text="Versão 2.5" textFill="WHITE">
+      </JFXButton>
+      <Circle fx:id="circuloProfile" fill="#1f93ff" layoutX="499.0" layoutY="67.0" radius="59.0" stroke="BLACK" strokeType="INSIDE" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
+      <Label layoutX="614.0" layoutY="2.0" prefHeight="30.0" prefWidth="106.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Versão 2.5" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
    </children>
