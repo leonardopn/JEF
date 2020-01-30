@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import gui.util.Notificacoes;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +19,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import model.dao.DaoOperacao;
+import model.daos.DaoOperacao;
 
 public class ViewDespesaController implements Initializable {
 
@@ -49,7 +49,7 @@ public class ViewDespesaController implements Initializable {
 	@FXML
 	public void geraDespesa() {
 		if (tfDescricao.getText().isEmpty() || tfSaida.getText().isEmpty() || cbFormaPagamento.getValue() == null) {
-			Notificacoes.mostraNotificacao("AVISO", "Preencha todos os campos!");
+			NotificacoesUtils.mostraNotificacoes("AVISO", "Preencha todos os campos!");
 		} else {
 			piStatus.setVisible(true);
 			lbStatus.setVisible(true);
@@ -69,11 +69,11 @@ public class ViewDespesaController implements Initializable {
 				@Override
 				protected Void call() throws Exception {
 					parada = true;
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
-					if(!(tfSaida.getText().charAt(0) == '-')) {
+					if(tfSaida.getText().charAt(0) != '-') {
 						tfSaida.setText("-"+tfSaida.getText());
 					}
 					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfSaida.getText(),
@@ -89,7 +89,7 @@ public class ViewDespesaController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(taskReceita);
 				t.start();
 			});

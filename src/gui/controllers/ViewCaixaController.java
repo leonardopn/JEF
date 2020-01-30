@@ -13,8 +13,8 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import application.Main;
-import gui.util.Alerts;
-import gui.util.Notificacoes;
+import gui.utils.AlertsUtils;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,17 +40,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
-import model.collection.Colecao;
-import model.collection.entities.Caixa;
-import model.collection.entities.Categoria;
-import model.collection.entities.Cliente;
-import model.collection.entities.Funcionario;
-import model.collection.entities.PacoteAssociado;
-import model.collection.entities.Servico;
-import model.collection.entities.Transacao;
-import model.dao.DaoOperacao;
-import model.dao.DaoPacote;
-import model.dao.DaoTransacao;
+import model.collections.Colecao;
+import model.collections.entities.Caixa;
+import model.collections.entities.Categoria;
+import model.collections.entities.Cliente;
+import model.collections.entities.Funcionario;
+import model.collections.entities.PacoteAssociado;
+import model.collections.entities.Servico;
+import model.collections.entities.Transacao;
+import model.daos.DaoOperacao;
+import model.daos.DaoPacote;
+import model.daos.DaoTransacao;
 
 public class ViewCaixaController implements Initializable {
 
@@ -60,22 +60,18 @@ public class ViewCaixaController implements Initializable {
 	private static double valorCartao;
 	private static int statusCaixa;
 	private static String servico;
-	final Image caixaAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
-	final Image caixaFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
+	private final Image caixaAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
+	private final Image caixaFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
 
-	ObservableList<Cliente> obCliente;
+	private ObservableList<Transacao> obTable;
 
-	ObservableList<Transacao> obTable;
+	private ObservableList<String> obFormaPagamento;
 
-	ObservableList<Transacao> obTableTemp;
+	private static TextField tfClienteTemp;
 
-	ObservableList<String> obFormaPagamento;
+	private static ChoiceBox<Funcionario> cbFuncionarioTemp;
 
-	public static TextField tfClienteTemp;
-
-	public static ChoiceBox<Funcionario> cbFuncionarioTemp;
-
-	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
+	private static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 
 	private boolean parada;
 
@@ -218,6 +214,18 @@ public class ViewCaixaController implements Initializable {
 		return valorCartao;
 	}
 
+	public static TextField getTfClienteTemp() {
+		return tfClienteTemp;
+	}
+
+	public static ChoiceBox<Funcionario> getCbFuncionarioTemp() {
+		return cbFuncionarioTemp;
+	}
+
+	public static AutoCompletionBinding<Cliente> getBindAutoCompleteCliente() {
+		return bindAutoCompleteCliente;
+	}
+
 	public static void setStatusCaixa(int statusCaixa) {
 		ViewCaixaController.statusCaixa = statusCaixa;
 	}
@@ -321,7 +329,7 @@ public class ViewCaixaController implements Initializable {
 	public void onBtAbrirFecharCaixaAction() {
 		Parent parent;
 		try {
-			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewLoginConfirmacao.fxml"));
+			parent = FXMLLoader.load(getClass().getResource("/gui/views/ViewLoginConfirmacao.fxml"));
 			Scene scene = new Scene(parent);
 			Main.getStageLoginConfirmacao().setScene(scene);
 			Main.getStageLoginConfirmacao().centerOnScreen();
@@ -332,14 +340,14 @@ public class ViewCaixaController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (ViewLoginConfirmacaoController.status) {
+		if (ViewLoginConfirmacaoController.isStatus()) {
 			if (!Caixa.isStatus()) {
 				if (statusCaixa == 0) {
-					Alerts.showAlert("AVISO!", "Caixa ja fechado!",
+					AlertsUtils.showAlert("AVISO!", "Caixa ja fechado!",
 							"\nO caixa foi fechado uma vez HOJE, não existe a opção para reabri-lo, por favor, fale com o ADMINISTRADOR!",
 							AlertType.WARNING);
 				} else {
-					lbTotalEmCaixa.setText(Alerts.showAlertGenericoTextField("AVISO!",
+					lbTotalEmCaixa.setText(AlertsUtils.showAlertGenericoTextField("AVISO!",
 							"Informe quanto dinheiro tem no caixa\n*UTILIZE SÓ NÚMEROS", "Valor: "));
 					fundoDeTroco = Double.parseDouble(lbTotalEmCaixa.getText().replaceAll(",", "."));
 					lbStatus.setTextFill(Paint.valueOf("#10bf24"));
@@ -368,7 +376,7 @@ public class ViewCaixaController implements Initializable {
 		if (tfCliente.getText().isEmpty() || tfValor.getText().isEmpty()
 				|| cbFormaPagamento.getSelectionModel().isEmpty() || cbFuncionario.getSelectionModel().isEmpty()
 				|| !(trvServicos.getSelectionModel().getSelectedItem().isLeaf())) {
-			Notificacoes.mostraNotificacao("Aviso!", "Preencha todos os campos!");
+			NotificacoesUtils.mostraNotificacoes("Aviso!", "Preencha todos os campos!");
 		} else {
 			parada = true;
 			Platform.runLater(new Runnable() {
@@ -396,7 +404,7 @@ public class ViewCaixaController implements Initializable {
 			Task<Void> taskEnviaTransacao = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -411,7 +419,7 @@ public class ViewCaixaController implements Initializable {
 							Platform.runLater(new Runnable() {
 								@Override
 								public void run() {
-									Alerts.showAlert("AVISO!", "Transação cancelada",
+									AlertsUtils.showAlert("AVISO!", "Transação cancelada",
 											"Esse cliente não possuí mais mãos em seu pacote!", AlertType.WARNING);
 								}
 							});
@@ -421,7 +429,7 @@ public class ViewCaixaController implements Initializable {
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
-										Alerts.showAlert("AVISO!", "Transação cancelada",
+										AlertsUtils.showAlert("AVISO!", "Transação cancelada",
 												"Esse cliente não possuí mais pés em seu pacote!", AlertType.WARNING);
 									}
 								});
@@ -451,7 +459,7 @@ public class ViewCaixaController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				ViewController.getStagePagamento().hide();
 				Thread t = new Thread(taskEnviaTransacao);
 				t.start();
@@ -492,7 +500,7 @@ public class ViewCaixaController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 				parada = true;
-				javafx.application.Platform.runLater(() -> {
+				Platform.runLater(() -> {
 					Thread t = new Thread(tarefa);
 					t.start();
 				});
@@ -507,14 +515,14 @@ public class ViewCaixaController implements Initializable {
 				return null;
 			}
 		};
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(taskDaoTransacao);
 			t.start();
 		});
 	}
 
 	public void calculaMontante(double valor, String formaPagamento, LocalDate data) {
-		if (formaPagamento.equals("Dinheiro")) {
+		if ("Dinheiro".equals(formaPagamento)) {
 			valorDinheiro += valor;
 			fundoDeTroco += valor;
 			valorTotal += valor;
@@ -552,7 +560,7 @@ public class ViewCaixaController implements Initializable {
 		Task<Void> acaoCarregaTransacao = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				javafx.application.Platform.runLater(() -> {
+				Platform.runLater(() -> {
 					Thread t = new Thread(tarefa);
 					t.start();
 				});
@@ -570,17 +578,17 @@ public class ViewCaixaController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(acaoCarregaTransacao);
 			t.start();
 		});
 	}
 
 	public void excluirTransacao() {
-		if (!(Alerts.showAlertGenerico("Atenção!", "Deseja mesmo excluir algumas transações?",
+		if (!(AlertsUtils.showAlertGenerico("Atenção!", "Deseja mesmo excluir algumas transações?",
 				"A exclusão de transações "
 						+ "Influenciam no salário do funcionário e no controle do caixa, CUIDADO!"))) {
-			Notificacoes.mostraNotificacao("Aviso!", "Exclusão cancelada!");
+			NotificacoesUtils.mostraNotificacoes("Aviso!", "Exclusão cancelada!");
 		} else {
 			parada = true;
 			Platform.runLater(new Runnable() {
@@ -608,7 +616,7 @@ public class ViewCaixaController implements Initializable {
 			Task<Void> acaoExcluirTransacao = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -629,7 +637,7 @@ public class ViewCaixaController implements Initializable {
 						@Override
 						public void run() {
 							carregaTransacao();
-							Notificacoes.mostraNotificacao("Aviso!", "Exclusão Concluída!");
+							NotificacoesUtils.mostraNotificacoes("Aviso!", "Exclusão Concluída!");
 						}
 					});
 
@@ -638,7 +646,7 @@ public class ViewCaixaController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(acaoExcluirTransacao);
 				t.start();
 			});

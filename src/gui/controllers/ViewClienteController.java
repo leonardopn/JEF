@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import gui.util.Alerts;
-import gui.util.Notificacoes;
+import gui.utils.AlertsUtils;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,17 +33,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import model.collection.Colecao;
-import model.collection.entities.Cliente;
-import model.dao.DaoCliente;
-import model.dao.DaoFuncionario;
+import model.collections.Colecao;
+import model.collections.entities.Cliente;
+import model.daos.DaoCliente;
+import model.daos.DaoFuncionario;
 
 public class ViewClienteController implements Initializable {
 
-	ObservableList<Cliente> obCliente;
-	ArrayList<Cliente> clientesTemp;
+	private ObservableList<Cliente> obCliente;
+	private ArrayList<Cliente> clientesTemp;
 
-	boolean parada;
+	private boolean parada;
 
 	@FXML
 	private Button btCriaCliente;
@@ -169,7 +169,7 @@ public class ViewClienteController implements Initializable {
 	public void atualizaCadastro() {
 		Parent parent;
 		try {
-			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaCliente.fxml"));
+			parent = FXMLLoader.load(getClass().getResource("/gui/views/ViewAtualizaCliente.fxml"));
 			Scene scene = new Scene(parent);
 			ViewController.getStageCliente().setScene(scene);
 		} catch (IOException e) {
@@ -199,7 +199,7 @@ public class ViewClienteController implements Initializable {
 	
 	@FXML
 	public void atualizaCliente() {
-		if (Alerts.showAlertAtualizacao()) {
+		if (AlertsUtils.showAlertAtualizacao()) {
 			String nome = txtNomeClienteAtualizacao.getText();
 			String email = txtEmailClienteAtualizacao.getText();
 			String telefone = txtTelefoneClienteAtualizacao.getText();
@@ -222,7 +222,7 @@ public class ViewClienteController implements Initializable {
 			Task<Void> acaoAtualizaCliente = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -237,7 +237,7 @@ public class ViewClienteController implements Initializable {
 								ViewController.bindAutoCompleteCliente = TextFields
 										.bindAutoCompletion(ViewController.getTfClienteTemp(), Colecao.clientes);
 								ViewController.getTvAgendaTemp().refresh();
-								Notificacoes.mostraNotificacao("Concluído!", "Cliente atualizado com sucesso!");
+								NotificacoesUtils.mostraNotificacoes("Concluído!", "Cliente atualizado com sucesso!");
 								limpaCampos();
 							}
 						});
@@ -245,7 +245,7 @@ public class ViewClienteController implements Initializable {
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
-								Alerts.showAlert("Aviso", "Cliente já adicionado", "Já existe cliente com esse nome"
+								AlertsUtils.showAlert("Aviso", "Cliente já adicionado", "Já existe cliente com esse nome"
 										+ " no programa ou o cliente não foi excluído no banco de dados\n\n"
 										+ "Peça ao ADMINISTRADOR para excluir o "
 										+ "registro desse cliente no BANCO ou então coloque um nome mais extenso para ocorrer a diferenciação.",
@@ -258,13 +258,13 @@ public class ViewClienteController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				ViewController.getStageCaixa().hide();
 				Thread t = new Thread(acaoAtualizaCliente);
 				t.start();
 			});
 		} else {
-			Notificacoes.mostraNotificacao("Operação cancelado!", "Cliente não foi atualizado!");
+			NotificacoesUtils.mostraNotificacoes("Operação cancelado!", "Cliente não foi atualizado!");
 		}
 	}
 
@@ -283,15 +283,15 @@ public class ViewClienteController implements Initializable {
 		};
 
 		try {
-			if (Alerts.showAlertGenerico("Confirmação de Inclusão", "Deseja mesmo adicionar um cliente?", null)) {
+			if (AlertsUtils.showAlertGenerico("Confirmação de Inclusão", "Deseja mesmo adicionar um cliente?", null)) {
 				if (txtNomeCliente.getText().isEmpty()) {
-					Alerts.showAlert("Aviso", "Falta informações", "Coloco no mínimo: Nome", AlertType.INFORMATION);
+					AlertsUtils.showAlert("Aviso", "Falta informações", "Coloco no mínimo: Nome", AlertType.INFORMATION);
 				} else {
 					piStatus.setVisible(true);
 					Task<Void> acaoCriarCliente = new Task<Void>() {
 						@Override
 						protected Void call() throws Exception {
-							javafx.application.Platform.runLater(() -> {
+							Platform.runLater(() -> {
 								Thread t = new Thread(tarefa);
 								t.start();
 							});
@@ -311,7 +311,7 @@ public class ViewClienteController implements Initializable {
 										txtEmailCliente.setText("");
 										txtTelefoneCliente.setText("");
 										txtRedeSocialCliente.setText("");
-										Notificacoes.mostraNotificacao("Concluído!", "Cliente criado com sucesso!");
+										NotificacoesUtils.mostraNotificacoes("Concluído!", "Cliente criado com sucesso!");
 									}
 								});
 							} else {
@@ -319,7 +319,7 @@ public class ViewClienteController implements Initializable {
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
-										Alerts.showAlert("Aviso", "Cliente já adicionado",
+										AlertsUtils.showAlert("Aviso", "Cliente já adicionado",
 												"Já existe cliente com esse nome"
 														+ " no programa ou o cliente não foi excluído no banco de dados\n\n"
 														+ "Peça ao ADMINISTRADOR para excluir o "
@@ -332,7 +332,7 @@ public class ViewClienteController implements Initializable {
 						}
 					};
 
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						ViewController.getStageCaixa().hide();
 						ViewController.getStageFuncionario().hide();
 						ViewController.getStagePagamento().hide();
@@ -341,12 +341,12 @@ public class ViewClienteController implements Initializable {
 					});
 				}
 			} else {
-				Alerts.showAlert("Cancelado", "Você cancelou a operação", "Cliente não incluído",
+				AlertsUtils.showAlert("Cancelado", "Você cancelou a operação", "Cliente não incluído",
 						AlertType.INFORMATION);
 				limpaCampos();
 			}
 		} catch (NumberFormatException e) {
-			Alerts.showAlert("Erro", "Erro de conversão, cliente não será criado!", e.getMessage(), AlertType.ERROR);
+			AlertsUtils.showAlert("Erro", "Erro de conversão, cliente não será criado!", e.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -363,12 +363,12 @@ public class ViewClienteController implements Initializable {
 			}
 		};
 
-		if (Alerts.showAlertExclusao()) {
+		if (AlertsUtils.showAlertExclusao()) {
 			piStatus.setVisible(true);
 			Task<Void> acaoExcluirCliente = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -388,7 +388,7 @@ public class ViewClienteController implements Initializable {
 							ViewController.bindAutoCompleteCliente = TextFields
 									.bindAutoCompletion(ViewController.getTfClienteTemp(), Colecao.clientes);
 							ViewController.getStageCaixa().hide();
-							Notificacoes.mostraNotificacao("Concluído!", "Cliente excluído com sucesso!");
+							NotificacoesUtils.mostraNotificacoes("Concluído!", "Cliente excluído com sucesso!");
 							
 						}
 					});
@@ -396,13 +396,13 @@ public class ViewClienteController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(acaoExcluirCliente);
 				t.start();
 			});
 
 		} else {
-			Alerts.showAlert("Cancelado", "Você cancelou a operação", "Cliente não excluído", AlertType.INFORMATION);
+			AlertsUtils.showAlert("Cancelado", "Você cancelou a operação", "Cliente não excluído", AlertType.INFORMATION);
 		}
 	}
 	
@@ -467,7 +467,7 @@ public class ViewClienteController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 				parada = true;
-				javafx.application.Platform.runLater(() -> {
+				Platform.runLater(() -> {
 					Thread t = new Thread(tarefa);
 					t.start();
 				});
@@ -488,7 +488,7 @@ public class ViewClienteController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(taskBuscaCliente);
 			t.start();
 		});

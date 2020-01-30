@@ -7,8 +7,8 @@ import javax.swing.JOptionPane;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import gui.util.Decoracao;
-import gui.util.Notificacoes;
+import gui.utils.DecoracaoUtils;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -19,10 +19,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import model.collection.Colecao;
-import model.collection.entities.Cliente;
-import model.dao.DaoAgendamento;
-import model.dao.DaoFuncionario;
+import model.collections.Colecao;
+import model.collections.entities.Cliente;
+import model.daos.DaoAgendamento;
+import model.daos.DaoFuncionario;
 
 public class ViewAgendaController implements Initializable{
 	
@@ -116,8 +116,8 @@ public class ViewAgendaController implements Initializable{
     @FXML
     public void onBtAgendarAction(){
     	if(txtCliente.getText().isEmpty()) {
-    		Decoracao.setDecoracao(txtCliente);
-			Notificacoes.mostraNotificacao("Campos vazios!", "Preencha o campo nome!");
+    		DecoracaoUtils.setDecoracao(txtCliente);
+			NotificacoesUtils.mostraNotificacoes("Campos vazios!", "Preencha o campo nome!");
     	}
     	else {
     		parada = true;
@@ -136,7 +136,7 @@ public class ViewAgendaController implements Initializable{
     		Task<Void> acaoAgendamento = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 		    			Thread t = new Thread(tarefa);
 		    			t.start();
 		    		});
@@ -161,7 +161,7 @@ public class ViewAgendaController implements Initializable{
 				}
     		};
     		
-    		javafx.application.Platform.runLater(() -> {
+    		Platform.runLater(() -> {
     			Thread t = new Thread(acaoAgendamento);
     			t.start(); 
     		});    		
@@ -176,7 +176,7 @@ public class ViewAgendaController implements Initializable{
 				txtCliente.setText("");
 			}
 		}
-    	if(txtCliente.getText().equals("")) {
+    	if(idCliente == 0) {
     		JOptionPane.showMessageDialog(null,"Primeiro crie um novo cliente com todos os dados"
 					+ " ou então crie um cliente com pelo menos o dado: NOME", "Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
     		ViewController.getStageAgenda().close();

@@ -16,13 +16,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import model.collection.entities.Caixa;
-import model.dao.DaoCliente;
-import model.dao.DaoFuncionario;
-import model.dao.DaoLogin;
-import model.dao.DaoPacote;
-import model.dao.DaoServico;
-import model.dao.DaoTransacao;
+import model.collections.entities.Caixa;
+import model.daos.DaoCliente;
+import model.daos.DaoFuncionario;
+import model.daos.DaoLogin;
+import model.daos.DaoPacote;
+import model.daos.DaoServico;
+import model.daos.DaoTransacao;
 
 public class Main extends Application {
 
@@ -35,7 +35,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			FXMLLoader splashLoader = new FXMLLoader(getClass().getResource("/gui/view/ViewSplashScreen.fxml"));
+			FXMLLoader splashLoader = new FXMLLoader(getClass().getResource("/gui/views/ViewSplashScreen.fxml"));
 			Parent splashPane = splashLoader.load();
 
 			// Cria a Janela do Splash
@@ -82,12 +82,12 @@ public class Main extends Application {
 				protected void succeeded() {
 					splashStage.close(); // Fecha o splash
 					try {
-						Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/view/View.fxml"));
+						Parent fxmlMain = FXMLLoader.load(getClass().getResource("/gui/views/View.fxml"));
 						main = new Scene(fxmlMain);
 						stage = primaryStage;
 						stage.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
 						stage.setTitle("JEF - Início");
-						Parent fxmlLogin = FXMLLoader.load(getClass().getResource("/gui/view/ViewLogin.fxml"));
+						Parent fxmlLogin = FXMLLoader.load(getClass().getResource("/gui/views/ViewLogin.fxml"));
 						login = new Scene(fxmlLogin);
 						stage.setScene(login);
 						stage.centerOnScreen();

@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import gui.util.Notificacoes;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +19,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import model.dao.DaoOperacao;
+import model.daos.DaoOperacao;
 
 public class ViewReceitaController implements Initializable {
 
@@ -49,7 +49,7 @@ public class ViewReceitaController implements Initializable {
 	@FXML
 	public void geraReceita() {
 		if(tfDescricao.getText().isEmpty() || tfEntrada.getText().isEmpty() || cbFormaPagamento.getValue() == null) {
-			Notificacoes.mostraNotificacao("AVISO", "Preencha todos os campos!");
+			NotificacoesUtils.mostraNotificacoes("AVISO", "Preencha todos os campos!");
 		}
 		else {
 			piStatus.setVisible(true);
@@ -70,7 +70,7 @@ public class ViewReceitaController implements Initializable {
 				@Override
 				protected Void call() throws Exception {
 					parada = true;
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -87,7 +87,7 @@ public class ViewReceitaController implements Initializable {
 				}
 			};
 			
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(taskReceita);
 				t.start();
 			});

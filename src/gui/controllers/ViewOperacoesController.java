@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import gui.util.Alerts;
-import gui.util.Notificacoes;
+import gui.utils.AlertsUtils;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,14 +34,14 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.collection.Colecao;
-import model.collection.entities.Operacao;
-import model.dao.DaoOperacao;
+import model.collections.Colecao;
+import model.collections.entities.Operacao;
+import model.daos.DaoOperacao;
 
 public class ViewOperacoesController implements Initializable {
 
-	ObservableList<Operacao> obOperacao;
-	ObservableList<Integer> obAnos;
+	private ObservableList<Operacao> obOperacao;
+	private ObservableList<Integer> obAnos;
 	private int mes;
 	private boolean parada;
 
@@ -50,8 +50,8 @@ public class ViewOperacoesController implements Initializable {
 	private static Scene despesa;
 	private static Stage stageDespesa = new Stage();
 
-	final ToggleGroup group1 = new ToggleGroup();
-	final ToggleGroup group2 = new ToggleGroup();
+	private final ToggleGroup group1 = new ToggleGroup();
+	private final ToggleGroup group2 = new ToggleGroup();
 
 	@FXML
 	private TableView<Operacao> tvOperacoes;
@@ -201,14 +201,14 @@ public class ViewOperacoesController implements Initializable {
 	private Button btAnual;
 
 	@FXML
-	void onBtEntradaAction() {
+	private void onBtEntradaAction() {
 		if(stageDespesa.isShowing()) {
-			Alerts.showAlert("AVISO", "Tela de despesa está aberta", "Para abrir a tela de receita, primeiro feche a tela de despesa!", AlertType.INFORMATION);
+			AlertsUtils.showAlert("AVISO", "Tela de despesa está aberta", "Para abrir a tela de receita, primeiro feche a tela de despesa!", AlertType.INFORMATION);
 		}
 		else {
 			if (!(stageReceita.isShowing())) {
 				try {
-					Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewReceita.fxml"));
+					Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/views/ViewReceita.fxml"));
 					receita = new Scene(fxmlReceita);
 					stageReceita.setScene(receita);
 					stageReceita.centerOnScreen();
@@ -228,14 +228,14 @@ public class ViewOperacoesController implements Initializable {
 	}
 
 	@FXML
-	void onBtSaidaAction() {
+	private void onBtSaidaAction() {
 		if(stageReceita.isShowing()) {
-			Alerts.showAlert("AVISO", "Tela de receita está aberta", "Para abrir a tela de despesa, primeiro feche a tela de receita!", AlertType.INFORMATION);
+			AlertsUtils.showAlert("AVISO", "Tela de receita está aberta", "Para abrir a tela de despesa, primeiro feche a tela de receita!", AlertType.INFORMATION);
 		}
 		else {
 			if (!(stageDespesa.isShowing())) {
 				try {
-					Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/view/ViewDespesa.fxml"));
+					Parent fxmlReceita = FXMLLoader.load(getClass().getResource("/gui/views/ViewDespesa.fxml"));
 					despesa = new Scene(fxmlReceita);
 					stageDespesa.setScene(despesa);
 					stageDespesa.centerOnScreen();
@@ -407,7 +407,7 @@ public class ViewOperacoesController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 				parada = true;
-				javafx.application.Platform.runLater(() -> {
+				Platform.runLater(() -> {
 					Thread t = new Thread(tarefa);
 					t.start();
 				});
@@ -424,7 +424,7 @@ public class ViewOperacoesController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(taskOperacao);
 			t.start();
 		});
@@ -591,7 +591,7 @@ public class ViewOperacoesController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 				parada = true;
-				javafx.application.Platform.runLater(() -> {
+				Platform.runLater(() -> {
 					Thread t = new Thread(tarefa);
 					t.start();
 				});
@@ -624,7 +624,7 @@ public class ViewOperacoesController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(taskOperacao);
 			t.start();
 		});
@@ -660,7 +660,7 @@ public class ViewOperacoesController implements Initializable {
 	}
 
 	public void excluiOperacao() {
-		if (Alerts.showAlertGenerico("AVISO!", "Deseja excluir está operacao?",
+		if (AlertsUtils.showAlertGenerico("AVISO!", "Deseja excluir está operacao?",
 				"*Sera feito um novo cálculo de valores!")) {
 			piStatus.setVisible(true);
 			lbStatus.setVisible(true);
@@ -681,7 +681,7 @@ public class ViewOperacoesController implements Initializable {
 				@Override
 				protected Void call() throws Exception {
 					parada = true;
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -716,13 +716,13 @@ public class ViewOperacoesController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(taskExclusao);
 				t.start();
 			});
 
 		} else {
-			Notificacoes.mostraNotificacao("AVISO", "Operação cancelada!");
+			NotificacoesUtils.mostraNotificacoes("AVISO", "Operação cancelada!");
 		}
 	}
 

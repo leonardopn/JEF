@@ -3,7 +3,8 @@ package gui.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import gui.util.Notificacoes;
+import gui.utils.NotificacoesUtils;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -15,13 +16,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.collection.Colecao;
-import model.collection.entities.Funcionario;
-import model.dao.DaoFuncionario;
+import model.collections.Colecao;
+import model.collections.entities.Funcionario;
+import model.daos.DaoFuncionario;
 
 public class ViewSalarioController implements Initializable {
 
-	ObservableList<Funcionario> obFuncionario;
+	private ObservableList<Funcionario> obFuncionario;
 
 	@FXML
 	private TextField tfSalario;
@@ -45,9 +46,9 @@ public class ViewSalarioController implements Initializable {
 	private TableColumn<Funcionario, Double> colunaSalario;
 
 	@FXML
-	void onBtPagarAction(ActionEvent event) {
+	public void onBtPagarAction(ActionEvent event) {
 		if (tfSalario.getText().equals("0.0")) {
-			Notificacoes.mostraNotificacao("Valor vazio", "Esse funcion�rio n�o tem o qu� receber");
+			NotificacoesUtils.mostraNotificacoes("Valor vazio", "Esse funcion�rio n�o tem o qu� receber");
 		} else {
 			Double salarioAtualizado = Double.parseDouble(tfSalario.getText());
 			DaoFuncionario.atualizarSalario(tfCpf.getText(), (-salarioAtualizado));
@@ -56,7 +57,7 @@ public class ViewSalarioController implements Initializable {
 			tfCpf.clear();
 			tfSalario.clear();
 			populaTabela();
-			Notificacoes.mostraNotificacao("Notificação", "Pagamento efetuado!!");
+			NotificacoesUtils.mostraNotificacoes("Notificação", "Pagamento efetuado!!");
 		}
 	}
 
@@ -72,7 +73,7 @@ public class ViewSalarioController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(acaoPopulaTabela);
 			t.start();
 		});

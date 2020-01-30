@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
-import gui.util.Alerts;
+import gui.utils.AlertsUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,12 +33,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.collection.Colecao;
-import model.collection.entities.Agendamento;
-import model.collection.entities.Cliente;
-import model.collection.entities.Funcionario;
-import model.dao.DaoAgendamento;
-import model.dao.DaoFuncionario;
+import model.collections.Colecao;
+import model.collections.entities.Agendamento;
+import model.collections.entities.Cliente;
+import model.collections.entities.Funcionario;
+import model.daos.DaoAgendamento;
+import model.daos.DaoFuncionario;
 
 public class ViewController implements Initializable {
 
@@ -61,11 +61,12 @@ public class ViewController implements Initializable {
 	private static LocalDate dpDataTemp;
 	private static TableView<Funcionario> tvAgendaTemp;
 	private static TableView<Funcionario> tvFuncionarioTemp;
+	private ObservableList<Agendamento> obAgendamento;
+	
+	
 	public static TextField tfClienteTemp;
 	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 	public boolean parada;
-
-	ObservableList<Agendamento> obAgendamento;
 
 	@FXML
 	private SplitPane splitPaneCentral;
@@ -284,7 +285,7 @@ public class ViewController implements Initializable {
 	public void onBtCriaFuncionarioAction() {
 		try {
 			retornaInformacaoAgenda();
-			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
+			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/views/ViewFuncionario.fxml"));
 			funcionario = new Scene(fxmlfuncionario);
 			stageFuncionario.setScene(funcionario);
 			stageFuncionario.show();
@@ -300,7 +301,7 @@ public class ViewController implements Initializable {
 	public void onBtAbreOperacoesAction() {
 		try {
 			retornaInformacaoAgenda();
-			Parent fxmlOperacoes = FXMLLoader.load(getClass().getResource("/gui/view/ViewOperacoes.fxml"));
+			Parent fxmlOperacoes = FXMLLoader.load(getClass().getResource("/gui/views/ViewOperacoes.fxml"));
 			operacoes = new Scene(fxmlOperacoes);
 			stageOperacoes.setScene(operacoes);
 			stageOperacoes.show();
@@ -316,7 +317,7 @@ public class ViewController implements Initializable {
 	public void onBtAbrePacoteAction() {
 		try {
 			retornaInformacaoAgenda();
-			Parent fxmlPacote = FXMLLoader.load(getClass().getResource("/gui/view/ViewPacote.fxml"));
+			Parent fxmlPacote = FXMLLoader.load(getClass().getResource("/gui/views/ViewPacote.fxml"));
 			pacote = new Scene(fxmlPacote);
 			stagePacote.setScene(pacote);
 			stagePacote.show();
@@ -333,7 +334,7 @@ public class ViewController implements Initializable {
 		if (!(tvAgenda.getSelectionModel().isEmpty()) && !(stageAgenda.isShowing())) {
 			retornaInformacaoAgenda();
 			try {
-				Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
+				Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/views/ViewAgenda.fxml"));
 				Scene agenda = new Scene(fxmlAgenda);
 				stageAgenda.setScene(agenda);
 				stageAgenda.show();
@@ -357,7 +358,7 @@ public class ViewController implements Initializable {
 		} else {
 			try {
 				retornaInformacaoAgenda();
-				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
+				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/views/ViewCliente.fxml"));
 				cliente = new Scene(fxmlCliente);
 				stageCliente.setWidth(888);
 				stageCliente.setHeight(680);
@@ -379,7 +380,7 @@ public class ViewController implements Initializable {
 			if (stageCaixa.isShowing()) {
 				stageCaixa.toFront();
 			} else {
-				Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
+				Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/views/ViewCaixa.fxml"));
 				caixa = new Scene(fxmlCaixa);
 				stageCaixa.setScene(caixa);
 				stageCaixa.show();
@@ -395,7 +396,7 @@ public class ViewController implements Initializable {
 	@FXML
 	public void onBtAbrePagamentoAction() {
 		try {
-			Parent fxmlPagamento = FXMLLoader.load(getClass().getResource("/gui/view/ViewSalario.fxml"));
+			Parent fxmlPagamento = FXMLLoader.load(getClass().getResource("/gui/views/ViewSalario.fxml"));
 			pagamento = new Scene(fxmlPagamento);
 			stagePagamento.setScene(pagamento);
 			stagePagamento.show();
@@ -410,7 +411,7 @@ public class ViewController implements Initializable {
 	@FXML
 	public void onBtAbreSobreAction() {
 		try {
-			Parent fxmlSobre = FXMLLoader.load(getClass().getResource("/gui/view/ViewSobre.fxml"));
+			Parent fxmlSobre = FXMLLoader.load(getClass().getResource("/gui/views/ViewSobre.fxml"));
 			sobre = new Scene(fxmlSobre);
 			stageSobre.setScene(sobre);
 			stageSobre.show();
@@ -454,7 +455,7 @@ public class ViewController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(tarefa);
 			t.start();
 		});
@@ -474,7 +475,7 @@ public class ViewController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(acaoCarregarAgenda);
 			t.start();
 		});
@@ -506,7 +507,7 @@ public class ViewController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(tarefa);
 			t.start();
 		});
@@ -522,7 +523,7 @@ public class ViewController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(acaoPesquisaAgendamento);
 			t.start();
 		});
@@ -530,7 +531,7 @@ public class ViewController implements Initializable {
 
 	@FXML
 	public void onBtExcluirAgendamento() {
-		if (Alerts.showAlertExclusao()) {
+		if (AlertsUtils.showAlertExclusao()) {
 			pb.setVisible(true);
 			labelStatus.setVisible(true);
 			Task<Void> acaoExcluir = new Task<Void>() {
@@ -548,7 +549,7 @@ public class ViewController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(acaoExcluir);
 				t.start();
 			});
@@ -567,7 +568,7 @@ public class ViewController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(tarefa);
 				t.start();
 			});

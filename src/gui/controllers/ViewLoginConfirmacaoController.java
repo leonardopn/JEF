@@ -1,12 +1,10 @@
 package gui.controllers;
 
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import application.Main;
-import gui.util.Notificacoes;
+import gui.utils.NotificacoesUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,16 +12,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import model.collection.entities.Login;
-import model.dao.DaoLogin;
+import model.collections.entities.Login;
+import model.daos.DaoLogin;
 
 public class ViewLoginConfirmacaoController implements Initializable {
-	static Statement st = null;
-	static ResultSet rs = null;
-	public static boolean status = false;
+	private static boolean status = false;
 
-	final Image olhoFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_closed_eye_48px.png")));
-	final Image olhoAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_eye_60px_1.png")));
+	private final Image olhoFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_closed_eye_48px.png")));
+	private final Image olhoAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_eye_60px_1.png")));
 
 	@FXML
 	private ImageView ivOlho;
@@ -46,7 +42,7 @@ public class ViewLoginConfirmacaoController implements Initializable {
 		String passTemp = pfSenha.getText();
 		Login login = new Login(useTemp, passTemp);
 		if (useTemp.isEmpty() || passTemp.isEmpty()) {
-			Notificacoes.mostraNotificacao("Aviso!", "Há campos vazios, preencha usuário ou senha!");
+			NotificacoesUtils.mostraNotificacoes("Aviso!", "Há campos vazios, preencha usuário ou senha!");
 		} else {
 			ivOlho.setImage(olhoFechado);
 			tfSenhaVisivel.setVisible(false);
@@ -60,6 +56,10 @@ public class ViewLoginConfirmacaoController implements Initializable {
 		}
 	}
 
+	public static boolean isStatus() {
+		return status;
+	}
+	
 	@FXML
 	public void onBtOlhoAction() {
 		if (ivOlho.getImage() == olhoAberto) {
@@ -79,4 +79,6 @@ public class ViewLoginConfirmacaoController implements Initializable {
 		status = false;
 		btLogin.setDefaultButton(true);
 	}
+
+	
 }
