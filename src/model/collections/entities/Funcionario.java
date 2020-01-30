@@ -40,27 +40,7 @@ public class Funcionario implements Comparable<Funcionario> {
 		this.salario = salario;
 		this.select = new CheckBox();
 		this.setStatus(status);
-		this.h8 = "Livre";
-		this.h8_3 = "Livre";
-		this.h9 = "Livre";
-		this.h9_3 = "Livre";
-		this.h10 = "Livre";
-		this.h10_3 = "Livre";
-		this.h11 = "Livre";
-		this.h11_3 = "Livre";
-		this.h12 = "Livre";
-		this.h12_3 = "Livre";
-		this.h13 = "Livre";
-		this.h13_3 = "Livre";
-		this.h14 = "Livre";
-		this.h14_3 = "Livre";
-		this.h15 = "Livre";
-		this.h15_3 = "Livre";
-		this.h16 = "Livre";
-		this.h16_3 = "Livre";
-		this.h17 = "Livre";
-		this.h17_3 = "Livre";
-		this.h18 = "Livre";
+		zeraHorarios();
 	}
 
 	public String getH8() {

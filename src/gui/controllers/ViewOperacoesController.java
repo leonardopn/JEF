@@ -41,7 +41,7 @@ import model.daos.DaoOperacao;
 public class ViewOperacoesController implements Initializable {
 
 	private ObservableList<Operacao> obOperacao;
-	private ObservableList<Integer> obAnos;
+	
 	private int mes;
 	private boolean parada;
 
@@ -271,7 +271,7 @@ public class ViewOperacoesController implements Initializable {
 	}
 
 	public void carregaAno() {
-		obAnos = FXCollections.observableArrayList(DaoOperacao.carregaAno());
+		ObservableList<Integer> obAnos = FXCollections.observableArrayList(DaoOperacao.carregaAno());
 		SpinnerValueFactory<Integer> valueFactory = //
 				new SpinnerValueFactory.ListSpinnerValueFactory<Integer>(obAnos);
 

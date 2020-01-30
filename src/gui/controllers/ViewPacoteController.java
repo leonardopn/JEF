@@ -36,7 +36,6 @@ import model.daos.DaoPacote;
 public class ViewPacoteController implements Initializable {
 
 	private ObservableList<Pacote> obPacote;
-	private ObservableList<PacoteAssociado> obPacotesAssociados;
 	private static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 	private boolean parada;
 
@@ -358,7 +357,7 @@ public class ViewPacoteController implements Initializable {
 
 	public void carregaTabelaPacoteAssociado() {
 		tvPacotesAssociados.setItems(null);
-		obPacotesAssociados = FXCollections.observableArrayList(Colecao.pacoteAssociados);
+		ObservableList<PacoteAssociado> obPacotesAssociados = FXCollections.observableArrayList(Colecao.pacoteAssociados);
 		tvPacotesAssociados.setItems(obPacotesAssociados);
 		tvPacotesAssociados.refresh();
 	}

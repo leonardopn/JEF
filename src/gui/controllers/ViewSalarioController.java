@@ -22,8 +22,6 @@ import model.daos.DaoFuncionario;
 
 public class ViewSalarioController implements Initializable {
 
-	private ObservableList<Funcionario> obFuncionario;
-
 	@FXML
 	private TextField tfSalario;
 
@@ -66,7 +64,7 @@ public class ViewSalarioController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 				DaoFuncionario.carregaFuncionario();
-				obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
+				ObservableList<Funcionario> obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 				tvFuncionario.setItems(obFuncionario);
 				tvFuncionario.refresh();
 				return null;
