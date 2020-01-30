@@ -120,14 +120,14 @@ public class DaoTransacao {
 
 	public static void abreFechaCaixa(LocalDate dpData, double fundoDeTroco, boolean status) {
 		try {
-			if (status == true) {
+			if (status) {
 				SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 				st = DB.getConnection().prepareStatement("select * from caixa order by data");
 				rs = st.executeQuery();
 				rs.last();
 				Date data = formataData.parse(dpData.toString());
-				st = DB.getConnection().prepareStatement("REPLACE INTO caixa "
-						+ "(data, fundoDeTroco) " + "VALUES " + "(?, ?)");
+				st = DB.getConnection()
+						.prepareStatement("REPLACE INTO caixa " + "(data, fundoDeTroco) " + "VALUES " + "(?, ?)");
 				st.setDate(1, new java.sql.Date(data.getTime()));
 				st.setDouble(2, fundoDeTroco);
 				st.execute();
@@ -196,7 +196,7 @@ public class DaoTransacao {
 			st = DB.getConnection().prepareStatement("select * from caixa where data = ?");
 			st.setString(1, localDateFormatadaProcura.format(data));
 			rs = st.executeQuery();
-			while (rs.next()) {
+			if (rs.next()) {
 				ViewCaixaController.setValorCartao(rs.getDouble("total_cartao"));
 				ViewCaixaController.setValorDinheiro(rs.getDouble("total_dinheiro"));
 				ViewCaixaController.setValorTotal(rs.getDouble("totalDoDia"));

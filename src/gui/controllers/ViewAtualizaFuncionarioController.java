@@ -107,7 +107,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 				Task<Void> tarefa = new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-						while (parada == true) {
+						while (parada) {
 							Thread.sleep(0);
 						}
 						piStatus.setVisible(false);

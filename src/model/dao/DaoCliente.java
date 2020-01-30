@@ -78,7 +78,7 @@ public class DaoCliente {
 			st.setString(1, nome);
 			rs = st.executeQuery();
 			count = rs.next();
-			if(count == false || rs.getInt(1) == id) {
+			if(!(count) || rs.getInt(1) == id) {
 				st = DB.getConnection().prepareStatement(
 						"UPDATE cliente "
 						+"SET nome = ?, email = ?, telefone = ?, rede_social = ?"

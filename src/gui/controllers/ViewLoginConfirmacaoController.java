@@ -51,7 +51,7 @@ public class ViewLoginConfirmacaoController implements Initializable {
 			ivOlho.setImage(olhoFechado);
 			tfSenhaVisivel.setVisible(false);
 			pfSenha.setVisible(true);
-			if (DaoLogin.carregaLoginConfirmacao(login, tfUsuario, pfSenha) == false) {
+			if (!DaoLogin.carregaLoginConfirmacao(login, tfUsuario, pfSenha)) {
 				status = false;
 			} else {
 				status = true;

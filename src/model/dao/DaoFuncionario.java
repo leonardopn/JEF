@@ -26,7 +26,7 @@ public class DaoFuncionario {
 			st.setString(1, txtCpfFuncionario.getText());
 			rs = st.executeQuery();
 			count = rs.next();
-			if(count == false) {
+			if(!count) {
 				st = DB.getConnection().prepareStatement(
 						"INSERT INTO funcionario "
 						+ "(cpffuncionario, nome, telefone) "

@@ -56,7 +56,7 @@ public class ViewDespesaController implements Initializable {
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
@@ -73,7 +73,7 @@ public class ViewDespesaController implements Initializable {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
-					if(!(tfSaida.getText().startsWith("-"))) {
+					if(!(tfSaida.getText().charAt(0) == '-')) {
 						tfSaida.setText("-"+tfSaida.getText());
 					}
 					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfSaida.getText(),

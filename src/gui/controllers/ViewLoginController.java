@@ -59,7 +59,7 @@ public class ViewLoginController implements Initializable {
 			ivOlho.setImage(olhoFechado);
 			tfSenhaVisivel.setVisible(false);
 			pfSenha.setVisible(true);
-			if (DaoLogin.carregaLogin(login, tfUsuario, pfSenha) == false && tentativas > 4) {
+			if (!(DaoLogin.carregaLogin(login, tfUsuario, pfSenha)) && tentativas > 4) {
 				Main.getStage().close();
 			}
 		}

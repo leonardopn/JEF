@@ -48,7 +48,7 @@ public class DB {
 	
 	private static Properties loadProperties() {
 		String caminho = System.getProperty("user.home")+File.separatorChar+"Documents"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"db.properties";
-		if (IdentificadorSO.sistema() == "linux"){
+		if (IdentificadorSO.sistema().equals("linux")){
 				caminho = System.getProperty("user.home")+File.separatorChar+"Documentos"+File.separatorChar+"JEF_DATA"+ File.separatorChar+"db.properties";
 		}
 		try(FileInputStream fs = new FileInputStream(caminho)){

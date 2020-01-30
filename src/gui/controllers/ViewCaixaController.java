@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.controlsfx.control.PopOver;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -81,13 +80,7 @@ public class ViewCaixaController implements Initializable {
 	private boolean parada;
 
 	@FXML
-	private Button btAjuda;
-
-	@FXML
 	private Button btAtualizar;
-
-	@FXML
-	private Button btAssociar;
 
 	@FXML
 	private TreeView<String> trvServicos;
@@ -103,9 +96,6 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Button btEnviarTransacao;
-
-	@FXML
-	private Button btCalTroco;
 
 	@FXML
 	private Button btBuscar;
@@ -126,9 +116,6 @@ public class ViewCaixaController implements Initializable {
 	private ChoiceBox<PacoteAssociado> cbPacoteAssociado;
 
 	@FXML
-	private TextField tfDinheiroDado;
-
-	@FXML
 	private TextField tfCliente;
 
 	@FXML
@@ -145,9 +132,6 @@ public class ViewCaixaController implements Initializable {
 
 	@FXML
 	private Label lbTotalEmCaixa;
-
-	@FXML
-	private Label lbTroco;
 
 	@FXML
 	private Label lbValorTotal;
@@ -238,13 +222,6 @@ public class ViewCaixaController implements Initializable {
 		ViewCaixaController.statusCaixa = statusCaixa;
 	}
 
-	// Botão AJUDA
-	@FXML
-	public void onBtAjudaAction() {
-		PopOver popOver = new PopOver();
-		popOver.show(btAjuda);
-	}
-
 	@FXML
 	public void buscaPacoteAssociado() {
 		ObservableList<PacoteAssociado> obPacoteAssociados;
@@ -259,22 +236,11 @@ public class ViewCaixaController implements Initializable {
 		tfObs.setText(" ");
 		if (obPacoteAssociados.isEmpty()) {
 			cbPacoteAssociado.setDisable(true);
-			btAssociar.setDisable(true);
 			cbPacoteAssociado.setItems(obPacoteAssociados);
 		} else {
 			cbPacoteAssociado.setDisable(false);
-			btAssociar.setDisable(false);
 			cbPacoteAssociado.setItems(obPacoteAssociados);
 			cbPacoteAssociado.getSelectionModel().select(0);
-		}
-	}
-
-	@FXML
-	public void setPacote() {
-		if (cbPacoteAssociado.getSelectionModel().getSelectedItem() != null) {
-			PacoteAssociado pacote = cbPacoteAssociado.getSelectionModel().getSelectedItem();
-			String text = "Pacote(Mão: " + pacote.getQuantMao() + ", Pé: " + pacote.getQuantPe() + ")";
-			tfObs.setText(text);
 		}
 	}
 
@@ -301,35 +267,20 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	public void selecionaServico() {
-		if (trvServicos.getSelectionModel().getSelectedItem() != null) {
-			if (trvServicos.getSelectionModel().getSelectedItem().isLeaf()) {
-				String servico = trvServicos.getSelectionModel().getSelectedItem().getValue();
-				for (Servico servi : Colecao.servicos) {
-					if (servi.getNome().equals(servico)) {
-						tfValor.setText(String.valueOf(servi.getPreco()));
-						ViewCaixaController.servico = servi.getNome();
-					}
+		if (trvServicos.getSelectionModel().getSelectedItem() != null
+				&& trvServicos.getSelectionModel().getSelectedItem().isLeaf()) {
+			String servico = trvServicos.getSelectionModel().getSelectedItem().getValue();
+			for (Servico servi : Colecao.servicos) {
+				if (servi.getNome().equals(servico)) {
+					tfValor.setText(String.valueOf(servi.getPreco()));
+					ViewCaixaController.servico = servi.getNome();
 				}
 			}
 		}
 	}
 
-	@FXML
-	public void calculaTroco() {
-		if (tfValorServico.getText().isEmpty() || tfDinheiroDado.getText().isEmpty()) {
-			lbTroco.setText("Troco de: ");
-		} else {
-			double val = Double.parseDouble(tfDinheiroDado.getText()) - Double.parseDouble(tfValorServico.getText());
-			if (val < 0) {
-				lbTroco.setText("Troco de: ");
-			} else {
-				lbTroco.setText("Troco de: R$ " + val);
-			}
-		}
-	}
-
 	public void bloqueio() {
-		if (Caixa.isStatus() != true) {
+		if (!Caixa.isStatus()) {
 			btEnviarTransacao.setDisable(true);
 			btExcluir.setDisable(true);
 			tfCliente.setDisable(true);
@@ -355,7 +306,7 @@ public class ViewCaixaController implements Initializable {
 	}
 
 	public void mudaCaixa() {
-		if (Caixa.isStatus() == false) {
+		if (!Caixa.isStatus()) {
 			ivCaixa.setImage(caixaAberto);
 			lbStatus.setTextFill(Paint.valueOf("#ff0606"));
 			lbStatus.setText("Fechado");
@@ -381,8 +332,8 @@ public class ViewCaixaController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (ViewLoginConfirmacaoController.status == true) {
-			if (Caixa.isStatus() == false) {
+		if (ViewLoginConfirmacaoController.status) {
+			if (!Caixa.isStatus()) {
 				if (statusCaixa == 0) {
 					Alerts.showAlert("AVISO!", "Caixa ja fechado!",
 							"\nO caixa foi fechado uma vez HOJE, não existe a opção para reabri-lo, por favor, fale com o ADMINISTRADOR!",
@@ -433,7 +384,7 @@ public class ViewCaixaController implements Initializable {
 				@Override
 				protected Void call() throws Exception {
 
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
@@ -528,7 +479,7 @@ public class ViewCaixaController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
@@ -589,7 +540,7 @@ public class ViewCaixaController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
@@ -645,7 +596,7 @@ public class ViewCaixaController implements Initializable {
 				@Override
 				protected Void call() throws Exception {
 
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
@@ -734,7 +685,6 @@ public class ViewCaixaController implements Initializable {
 
 	public void limpaPacotes() {
 		cbPacoteAssociado.setDisable(true);
-		btAssociar.setDisable(true);
 		ObservableList<PacoteAssociado> obPacoteAssociados = FXCollections.observableArrayList();
 		cbPacoteAssociado.setItems(obPacoteAssociados);
 	}
@@ -745,8 +695,10 @@ public class ViewCaixaController implements Initializable {
 		carregaFormaPagamento();
 		mudaCaixa();
 		bloqueio();
+
 		dpData.setValue(LocalDate.now());
 		dpSelecao.setValue(LocalDate.now());
+
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
 		colunaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
@@ -756,13 +708,15 @@ public class ViewCaixaController implements Initializable {
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 		colunaObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 		colunaServico.setCellValueFactory(new PropertyValueFactory<>("servico"));
+
 		tfClienteTemp = this.tfCliente;
 		cbFuncionarioTemp = this.cbFuncionario;
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);
+
 		carregaTransacao();
 		carregaTreeView();
 		bloqDesbloqValor();
+
 		cbPacoteAssociado.setDisable(true);
-		btAssociar.setDisable(true);
 	}
 }

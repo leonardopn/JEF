@@ -330,21 +330,23 @@ public class ViewController implements Initializable {
 
 	@FXML
 	public void carregaAgendamento() {
-		if (!(tvAgenda.getSelectionModel().isEmpty())) {
-			if (!(stageAgenda.isShowing())) {
-				retornaInformacaoAgenda();
-				try {
-					Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
-					Scene agenda = new Scene(fxmlAgenda);
-					stageAgenda.setScene(agenda);
-					stageAgenda.show();
-					stageAgenda.centerOnScreen();
-					stageAgenda.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-					stageAgenda.setTitle("JEF - Agendamento");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		if (!(tvAgenda.getSelectionModel().isEmpty()) && !(stageAgenda.isShowing())) {
+			retornaInformacaoAgenda();
+			try {
+				Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
+				Scene agenda = new Scene(fxmlAgenda);
+				stageAgenda.setScene(agenda);
+				stageAgenda.show();
+				stageAgenda.centerOnScreen();
+				stageAgenda.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+				stageAgenda.setTitle("JEF - Agendamento");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+		}
+		else {
+			stageAgenda.close();
+			carregaAgendamento();
 		}
 	}
 
@@ -443,7 +445,7 @@ public class ViewController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				pb.setVisible(false);
@@ -495,7 +497,7 @@ public class ViewController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				pb.setVisible(false);
@@ -556,7 +558,7 @@ public class ViewController implements Initializable {
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(1);
 					}
 					pb.setVisible(false);

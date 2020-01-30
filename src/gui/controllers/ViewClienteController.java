@@ -210,7 +210,7 @@ public class ViewClienteController implements Initializable {
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
@@ -226,7 +226,7 @@ public class ViewClienteController implements Initializable {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
-					if (DaoCliente.atualizarCliente(id, nome, email, telefone, redeSocial) == false) {
+					if (!DaoCliente.atualizarCliente(id, nome, email, telefone, redeSocial)) {
 						DaoCliente.carregaCliente();
 						carregaCliente();
 						DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
@@ -274,7 +274,7 @@ public class ViewClienteController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
@@ -296,8 +296,8 @@ public class ViewClienteController implements Initializable {
 								t.start();
 							});
 
-							if (DaoCliente.salvarCliente(txtNomeCliente, txtEmailCliente, txtTelefoneCliente,
-									txtRedeSocialCliente) == false) {
+							if (!DaoCliente.salvarCliente(txtNomeCliente, txtEmailCliente, txtTelefoneCliente,
+									txtRedeSocialCliente)) {
 								DaoCliente.carregaCliente();
 								carregaCliente();
 								parada = false;
@@ -355,7 +355,7 @@ public class ViewClienteController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
@@ -431,7 +431,7 @@ public class ViewClienteController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);

@@ -74,7 +74,6 @@ public class DaoLogin {
 			}
 			if (arrayLogin.contains(login)) {
 				arrayLogin.clear();
-				;
 				return true;
 			} else {
 				Notificacoes.mostraNotificacao("Erro de login!!", "Usuário ou senha incorreto");
@@ -85,7 +84,6 @@ public class DaoLogin {
 		} catch (SQLException e) {
 			Alerts.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
-			System.exit(0);
 		} finally {
 			DB.closeConnection();
 			DB.fechaResultSet(rs);

@@ -97,7 +97,7 @@ public class ViewFuncionarioController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
@@ -122,8 +122,8 @@ public class ViewFuncionarioController implements Initializable {
 								Thread t = new Thread(tarefa);
 								t.start();
 							});
-							if (DaoFuncionario.salvarFuncionario(txtCpfFuncionario, txtTelefoneFuncionario,
-									txtNomeFuncionario) == false) {
+							if (!DaoFuncionario.salvarFuncionario(txtCpfFuncionario, txtTelefoneFuncionario,
+									txtNomeFuncionario)) {
 								DaoFuncionario.carregaFuncionario();
 								DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 								carregaFuncionario();
@@ -183,7 +183,7 @@ public class ViewFuncionarioController implements Initializable {
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
