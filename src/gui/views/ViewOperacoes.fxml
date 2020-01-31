@@ -20,9 +20,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="622.0" prefWidth="961.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewOperacoesController">
+<AnchorPane prefHeight="622.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewOperacoesController">
    <children>
-      <TableView fx:id="tvOperacoes" layoutX="10.0" layoutY="279.0" prefHeight="333.0" prefWidth="943.0">
+      <TableView fx:id="tvOperacoes" layoutX="10.0" layoutY="279.0" prefHeight="333.0" prefWidth="1012.0">
         <columns>
           <TableColumn fx:id="colunaId" prefWidth="101.99996948242188" text="ID">
                <graphic>
@@ -33,7 +33,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-          <TableColumn fx:id="colunaDescricao" prefWidth="249.00003051757812" text="Descrição">
+          <TableColumn fx:id="colunaDescricao" prefWidth="248.99999237060547" text="Descrição">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -42,7 +42,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="colunaData" prefWidth="117.0" text="Data">
+            <TableColumn fx:id="colunaData" prefWidth="113.0" text="Data">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -51,7 +51,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="colunaReceita" prefWidth="107.0" text="Receita">
+            <TableColumn fx:id="colunaReceita" prefWidth="122.0" text="Receita">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -60,7 +60,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="colunaDespesa" prefWidth="105.0" text="Despesa">
+            <TableColumn fx:id="colunaDespesa" prefWidth="110.0" text="Despesa">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -69,7 +69,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="ColunaFormaPagamento" prefWidth="167.0" text="Forma de Pagamento">
+            <TableColumn fx:id="ColunaFormaPagamento" prefWidth="204.0" text="Forma de Pagamento">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -78,7 +78,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="colunaExcluir" prefWidth="94.0" text="Excluir?">
+            <TableColumn fx:id="colunaExcluir" prefWidth="111.0" text="Excluir?">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -89,19 +89,19 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Pane layoutX="347.0" layoutY="41.0" prefHeight="124.0" prefWidth="323.0" style="-fx-background-color: #a6fca6;" AnchorPane.rightAnchor="291.0">
+      <Pane layoutX="373.0" layoutY="41.0" prefHeight="124.0" prefWidth="352.0" style="-fx-background-color: #a6fca6;">
          <children>
-            <Pane layoutX="9.0" layoutY="10.0" prefHeight="104.0" prefWidth="304.0" style="-fx-border-color: #7a7a7a;">
+            <Pane layoutX="9.0" layoutY="10.0" prefHeight="104.0" prefWidth="336.0" style="-fx-border-color: #7a7a7a;">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="-8.0" prefHeight="17.0" prefWidth="144.0" style="-fx-background-color: #a6fca6;" text="Entrada e Saída do Dia" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="-8.0" prefHeight="17.0" prefWidth="164.0" style="-fx-background-color: #a6fca6;" text="Entrada e Saída do Dia" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Line endX="179.0" layoutX="114.0" layoutY="67.0" startX="-104.0" strokeWidth="0.5" />
-                  <Label fx:id="labelTotalDia" layoutX="12.0" layoutY="69.0" text="Total do dia:" textFill="#0b611b">
+                  <Line endX="212.0" layoutX="114.0" layoutY="67.0" startX="-104.0" strokeWidth="0.5" />
+                  <Label fx:id="labelTotalDia" layoutX="12.0" layoutY="72.0" text="Total do dia:" textFill="#0b611b">
                      <font>
-                        <Font name="System Bold" size="22.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <GridPane layoutX="159.0" layoutY="70.0" prefHeight="30.0" prefWidth="175.0">
@@ -113,9 +113,9 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="lbTotalDia" text="200,00" textFill="#0b611b" GridPane.columnIndex="1">
+                        <Label fx:id="lbTotalDia" prefHeight="25.0" prefWidth="128.0" text="200,00" textFill="#0b611b" GridPane.columnIndex="1">
                            <font>
-                              <Font name="System Bold" size="22.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                         <Label fx:id="labelCifrao2" prefHeight="32.0" prefWidth="36.0" text="R$" textFill="#0b611b">
@@ -144,7 +144,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label fx:id="lbReceitaDia" text="200,00" textFill="#0b611b" GridPane.columnIndex="1">
+                        <Label fx:id="lbReceitaDia" prefHeight="25.0" prefWidth="137.0" text="200,00" textFill="#0b611b" GridPane.columnIndex="1">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
@@ -165,7 +165,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label fx:id="lbDespesaDia" text="200,00" textFill="#f20303" GridPane.columnIndex="1">
+                        <Label fx:id="lbDespesaDia" prefHeight="25.0" prefWidth="137.0" text="200,00" textFill="#f20303" GridPane.columnIndex="1">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
@@ -181,19 +181,19 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="9.0" layoutY="41.0" prefHeight="124.0" prefWidth="323.0" style="-fx-background-color: #a6fca6;" AnchorPane.rightAnchor="629.0">
+      <Pane layoutX="12.0" layoutY="41.0" prefHeight="124.0" prefWidth="352.0" style="-fx-background-color: #a6fca6;">
          <children>
-            <Pane layoutX="9.0" layoutY="10.0" prefHeight="104.0" prefWidth="304.0" style="-fx-border-color: #7a7a7a;">
+            <Pane layoutX="9.0" layoutY="10.0" prefHeight="104.0" prefWidth="336.0" style="-fx-border-color: #7a7a7a;">
                <children>
-                  <Label fx:id="lbResumoMes" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="-8.0" prefHeight="17.0" prefWidth="104.0" style="-fx-background-color: #a6fca6;" text="Resumo do Mês" textAlignment="CENTER">
+                  <Label fx:id="lbResumoMes" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="-8.0" prefHeight="17.0" prefWidth="118.0" style="-fx-background-color: #a6fca6;" text="Resumo do Mês" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Line endX="179.0" layoutX="114.0" layoutY="67.0" startX="-104.0" strokeWidth="0.5" />
-                  <Label fx:id="labelTotalMesAno" layoutX="12.0" layoutY="69.0" text="Total do mês:" textFill="#0b611b">
+                  <Line endX="211.0" layoutX="114.0" layoutY="67.0" startX="-104.0" strokeWidth="0.5" />
+                  <Label fx:id="labelTotalMesAno" layoutX="6.0" layoutY="73.0" text="Total do mês:" textFill="#0b611b">
                      <font>
-                        <Font name="System Bold" size="22.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <GridPane layoutX="159.0" layoutY="70.0" prefHeight="30.0" prefWidth="175.0">
@@ -205,9 +205,9 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label fx:id="lbTotalMes" text="200,00" textFill="#0b611b" GridPane.columnIndex="1">
+                        <Label fx:id="lbTotalMes" prefHeight="25.0" prefWidth="125.0" text="200,00" textFill="#0b611b" GridPane.columnIndex="1">
                            <font>
-                              <Font name="System Bold" size="22.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                         <Label fx:id="labelCifrao" prefHeight="32.0" prefWidth="36.0" text="R$" textFill="#0b611b">
@@ -236,7 +236,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label fx:id="lbReceitaMes" text="200,00" textFill="#0b611b" GridPane.columnIndex="1">
+                        <Label fx:id="lbReceitaMes" prefHeight="25.0" prefWidth="133.0" text="200,00" textFill="#0b611b" GridPane.columnIndex="1">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
@@ -257,7 +257,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label fx:id="lbDespesaMes" text="200,00" textFill="#f20303" GridPane.columnIndex="1">
+                        <Label fx:id="lbDespesaMes" prefHeight="25.0" prefWidth="131.0" text="200,00" textFill="#f20303" GridPane.columnIndex="1">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
@@ -273,7 +273,7 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="680.0" layoutY="39.0" prefHeight="231.0" prefWidth="270.0" style="-fx-background-color: #E9E9E9;">
+      <Pane layoutX="748.0" layoutY="39.0" prefHeight="231.0" prefWidth="270.0" style="-fx-background-color: #E9E9E9;">
          <children>
             <Pane layoutX="9.0" layoutY="10.0" prefHeight="214.0" prefWidth="250.0" style="-fx-border-color: #7a7a7a;">
                <children>
@@ -282,7 +282,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="dpData" layoutX="14.0" layoutY="40.0" prefHeight="25.0" prefWidth="149.0" />
+                  <DatePicker fx:id="dpData" layoutX="14.0" layoutY="40.0" prefHeight="26.0" prefWidth="127.0" />
                   <TextField fx:id="tfBusca" layoutX="14.0" layoutY="96.0" prefHeight="25.0" prefWidth="225.0" />
                   <Label layoutX="50.0" layoutY="22.0" text="Data:" />
                   <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -296,7 +296,7 @@
                         <Image url="@../../model/images/icons8_search_48px_1.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btExcluir" layoutX="161.0" layoutY="174.0" mnemonicParsing="false" onAction="#excluiOperacao" prefHeight="29.0" prefWidth="78.0" text="Excluir">
+                  <Button fx:id="btExcluir" layoutX="143.0" layoutY="174.0" mnemonicParsing="false" onAction="#excluiOperacao" prefHeight="31.0" prefWidth="96.0" text="Excluir">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -305,7 +305,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btPesquisar" layoutX="135.0" layoutY="136.0" mnemonicParsing="false" onAction="#buscaOperacoes" prefHeight="29.0" prefWidth="104.0" text="Pesquisar">
+                  <Button fx:id="btPesquisar" layoutX="121.0" layoutY="136.0" mnemonicParsing="false" onAction="#buscaOperacoes" prefHeight="31.0" prefWidth="118.0" text="Pesquisar">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -314,21 +314,21 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <CheckBox fx:id="cbData" layoutX="166.0" layoutY="44.0" mnemonicParsing="false" onAction="#liberaData" text="Data Única" />
+                  <CheckBox fx:id="cbData" layoutX="146.0" layoutY="44.0" mnemonicParsing="false" onAction="#liberaData" text="Data Única" />
                </children>
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="9.0" layoutY="175.0" prefHeight="95.0" prefWidth="662.0" style="-fx-background-color: #E9E9E9;">
+      <Pane layoutX="9.0" layoutY="175.0" prefHeight="95.0" prefWidth="713.0" style="-fx-background-color: #E9E9E9;">
          <children>
-            <Pane layoutX="257.0" layoutY="9.0" prefHeight="37.0" prefWidth="375.0" style="-fx-border-color: #7a7a7a;">
+            <Pane layoutX="257.0" layoutY="9.0" prefHeight="37.0" prefWidth="398.0" style="-fx-border-color: #7a7a7a;">
                <children>
-                  <GridPane layoutX="21.0" layoutY="3.0" prefHeight="32.0" prefWidth="352.0">
+                  <GridPane layoutX="11.0" layoutY="3.0" prefHeight="32.0" prefWidth="411.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="87.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="144.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="49.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="68.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="96.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="173.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="43.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="95.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -354,7 +354,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btSaida" layoutX="112.0" layoutY="21.0" mnemonicParsing="false" onAction="#onBtSaidaAction" prefHeight="37.0" prefWidth="90.0" text="Saída">
+                  <Button fx:id="btSaida" layoutX="116.0" layoutY="21.0" mnemonicParsing="false" onAction="#onBtSaidaAction" prefHeight="37.0" prefWidth="90.0" text="Saída">
                      <graphic>
                         <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -363,7 +363,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btEntrada" layoutX="12.0" layoutY="20.0" mnemonicParsing="false" onAction="#onBtEntradaAction" text="Entrada">
+                  <Button fx:id="btEntrada" layoutX="7.0" layoutY="21.0" mnemonicParsing="false" onAction="#onBtEntradaAction" text="Entrada">
                      <graphic>
                         <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -374,13 +374,13 @@
                   </Button>
                </children>
             </Pane>
-            <Pane layoutX="257.0" layoutY="53.0" prefHeight="37.0" prefWidth="225.0" style="-fx-border-color: #7a7a7a;">
+            <Pane layoutX="257.0" layoutY="53.0" prefHeight="37.0" prefWidth="250.0" style="-fx-border-color: #7a7a7a;">
                <children>
-                  <GridPane layoutX="17.0" layoutY="3.0" prefHeight="32.0" prefWidth="202.0">
+                  <GridPane layoutX="10.0" layoutY="4.0" prefHeight="32.0" prefWidth="234.0">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="75.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="67.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="63.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="87.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="75.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="61.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -398,7 +398,7 @@
                   </Label>
                </children>
             </Pane>
-            <GridPane layoutX="505.0" layoutY="57.0" prefHeight="30.0" prefWidth="149.0">
+            <GridPane layoutX="539.0" layoutY="57.0" prefHeight="30.0" prefWidth="149.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="113.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="36.0" />
@@ -415,67 +415,67 @@
       </Pane>
       <Pane prefHeight="32.0" prefWidth="961.0" style="-fx-background-color: #243a51;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Spinner fx:id="spinAno" layoutX="3.0" layoutY="3.0" onMouseClicked="#selecionaMes" style="-fx-background-color: #dddddd;" />
-            <Button fx:id="btJaneiro" layoutX="162.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 1em 0em 0em 1em; -fx-background-color: #dddddd;" text="Janeiro" textFill="#243a51">
+            <Spinner fx:id="spinAno" layoutX="3.0" layoutY="3.0" onMouseClicked="#selecionaMes" prefHeight="26.0" prefWidth="118.0" style="-fx-background-color: #dddddd;" />
+            <Button fx:id="btJaneiro" layoutX="136.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 1em 0em 0em 1em; -fx-background-color: #dddddd;" text="Janeiro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="btFevereiro" layoutX="221.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Fevereiro" textFill="#243a51">
+            <Button fx:id="btFevereiro" layoutX="203.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Fevereiro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btMarco" layoutX="292.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Março" textFill="#243a51">
+            <Button fx:id="btMarco" layoutX="287.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Março" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btAbril" layoutX="346.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Abril" textFill="#243a51">
+            <Button fx:id="btAbril" layoutX="347.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Abril" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btMaio" layoutX="391.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Maio" textFill="#243a51">
+            <Button fx:id="btMaio" layoutX="398.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Maio" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btJunho" layoutX="438.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Junho" textFill="#243a51">
+            <Button fx:id="btJunho" layoutX="449.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Junho" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btJulho" layoutX="491.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Julho" textFill="#243a51">
+            <Button fx:id="btJulho" layoutX="506.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Julho" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btAgosto" layoutX="540.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Agosto" textFill="#243a51">
+            <Button fx:id="btAgosto" layoutX="559.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Agosto" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btStembro" layoutX="599.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Setembro" textFill="#243a51">
+            <Button fx:id="btStembro" layoutX="625.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Setembro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btOutubro" layoutX="672.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Outubro" textFill="#243a51">
+            <Button fx:id="btOutubro" layoutX="710.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Outubro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btNovembro" layoutX="738.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Novembro" textFill="#243a51">
+            <Button fx:id="btNovembro" layoutX="785.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Novembro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btDezembro" layoutX="817.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em 1em 1em 0em; -fx-background-color: #dddddd;" text="Dezembro" textFill="#243a51">
+            <Button fx:id="btDezembro" layoutX="873.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em 1em 1em 0em; -fx-background-color: #dddddd;" text="Dezembro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btAnual" layoutX="910.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #a6fca6;" text="Anual" textFill="#243a51">
+            <Button fx:id="btAnual" layoutX="971.0" layoutY="3.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #a6fca6;" text="Anual" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

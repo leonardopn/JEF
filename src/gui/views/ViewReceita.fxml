@@ -21,7 +21,7 @@
          <children>
             <Pane prefHeight="32.0" prefWidth="320.0" style="-fx-background-color: #0b611b; -fx-border-color: #7a7a7a];">
                <children>
-                  <Label layoutX="10.0" layoutY="1.0" text="Receita" textFill="WHITE">
+                  <Label layoutX="8.0" layoutY="3.0" text="Receita" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="21.0" />
                      </font>
@@ -31,7 +31,7 @@
             <TextField fx:id="tfDescricao" layoutX="49.0" layoutY="83.0" prefHeight="25.0" prefWidth="225.0" promptText=" Descrição da receita" />
             <DatePicker fx:id="dpData" disable="true" layoutX="48.0" layoutY="145.0" prefHeight="25.0" prefWidth="149.0" />
             <TextField fx:id="tfEntrada" layoutX="48.0" layoutY="206.0" promptText="Valor de receita" />
-            <Button fx:id="btEnviar" layoutX="233.0" layoutY="301.0" mnemonicParsing="false" onAction="#geraReceita" text="Enviar">
+            <Button fx:id="btEnviar" layoutX="221.0" layoutY="301.0" mnemonicParsing="false" onAction="#geraReceita" text="Enviar">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
