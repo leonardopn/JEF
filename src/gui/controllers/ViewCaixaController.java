@@ -60,8 +60,10 @@ public class ViewCaixaController implements Initializable {
 	private static double valorCartao;
 	private static int statusCaixa;
 	private static String servico;
-	private final Image caixaAberto = new Image((getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
-	private final Image caixaFechado = new Image((getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
+	private final Image caixaAberto = new Image(
+			(getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
+	private final Image caixaFechado = new Image(
+			(getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
 
 	private ObservableList<Transacao> obTable;
 
