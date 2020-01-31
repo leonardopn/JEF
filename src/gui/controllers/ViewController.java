@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
-import gui.util.Alerts;
+import gui.utils.AlertsUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,27 +33,24 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.collection.Colecao;
-import model.collection.entities.Agendamento;
-import model.collection.entities.Caixa;
-import model.collection.entities.Cliente;
-import model.collection.entities.Funcionario;
-import model.dao.DaoAgendamento;
-import model.dao.DaoCliente;
-import model.dao.DaoFuncionario;
-import model.dao.DaoPacote;
-import model.dao.DaoServico;
-import model.dao.DaoTransacao;
+import model.collections.Colecao;
+import model.collections.entities.Agendamento;
+import model.collections.entities.Cliente;
+import model.collections.entities.Funcionario;
+import model.daos.DaoAgendamento;
+import model.daos.DaoFuncionario;
 
 public class ViewController implements Initializable {
 
 	private static Scene caixa;
 	private static Scene pagamento;
 	private static Scene funcionario;
+	private static Scene operacoes;
 	private static Scene cliente;
 	private static Scene sobre;
 	private static Scene pacote;
 	private static Stage stageAgenda = new Stage();
+	private static Stage stageOperacoes = new Stage();
 	private static Stage stageFuncionario = new Stage();
 	private static Stage stageCliente = new Stage();
 	private static Stage stageCaixa = new Stage();
@@ -64,17 +61,21 @@ public class ViewController implements Initializable {
 	private static LocalDate dpDataTemp;
 	private static TableView<Funcionario> tvAgendaTemp;
 	private static TableView<Funcionario> tvFuncionarioTemp;
+	private ObservableList<Agendamento> obAgendamento;
+	
+	
 	public static TextField tfClienteTemp;
 	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 	public boolean parada;
-
-	ObservableList<Agendamento> obAgendamento;
 
 	@FXML
 	private SplitPane splitPaneCentral;
 
 	@FXML
 	private Button btCriaFuncionario;
+
+	@FXML
+	private Button btOperacoes;
 
 	@FXML
 	private DatePicker dpData;
@@ -274,13 +275,17 @@ public class ViewController implements Initializable {
 		return stagePacote;
 	}
 
+	public static Stage getStageOperacoes() {
+		return stageOperacoes;
+	}
+
 	// abre páginas
 
 	@FXML
 	public void onBtCriaFuncionarioAction() {
 		try {
 			retornaInformacaoAgenda();
-			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
+			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/views/ViewFuncionario.fxml"));
 			funcionario = new Scene(fxmlfuncionario);
 			stageFuncionario.setScene(funcionario);
 			stageFuncionario.show();
@@ -293,10 +298,26 @@ public class ViewController implements Initializable {
 	}
 
 	@FXML
+	public void onBtAbreOperacoesAction() {
+		try {
+			retornaInformacaoAgenda();
+			Parent fxmlOperacoes = FXMLLoader.load(getClass().getResource("/gui/views/ViewOperacoes.fxml"));
+			operacoes = new Scene(fxmlOperacoes);
+			stageOperacoes.setScene(operacoes);
+			stageOperacoes.show();
+			stageOperacoes.centerOnScreen();
+			stageOperacoes.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+			stageOperacoes.setTitle("JEF - Operações");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
 	public void onBtAbrePacoteAction() {
 		try {
 			retornaInformacaoAgenda();
-			Parent fxmlPacote = FXMLLoader.load(getClass().getResource("/gui/view/ViewPacote.fxml"));
+			Parent fxmlPacote = FXMLLoader.load(getClass().getResource("/gui/views/ViewPacote.fxml"));
 			pacote = new Scene(fxmlPacote);
 			stagePacote.setScene(pacote);
 			stagePacote.show();
@@ -310,50 +331,63 @@ public class ViewController implements Initializable {
 
 	@FXML
 	public void carregaAgendamento() {
-		if (!(tvAgenda.getSelectionModel().isEmpty())) {
-			if (!(stageAgenda.isShowing())) {
-				retornaInformacaoAgenda();
-				try {
-					Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/view/ViewAgenda.fxml"));
-					Scene agenda = new Scene(fxmlAgenda);
-					stageAgenda.setScene(agenda);
-					stageAgenda.show();
-					stageAgenda.centerOnScreen();
-					stageAgenda.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-					stageAgenda.setTitle("JEF - Agendamento");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		if (!(tvAgenda.getSelectionModel().isEmpty()) && !(stageAgenda.isShowing())) {
+			retornaInformacaoAgenda();
+			try {
+				Parent fxmlAgenda = FXMLLoader.load(getClass().getResource("/gui/views/ViewAgenda.fxml"));
+				Scene agenda = new Scene(fxmlAgenda);
+				stageAgenda.setScene(agenda);
+				stageAgenda.show();
+				stageAgenda.centerOnScreen();
+				stageAgenda.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+				stageAgenda.setTitle("JEF - Agendamento");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+		}
+		else {
+			stageAgenda.close();
+			carregaAgendamento();
 		}
 	}
 
 	@FXML
 	public void onBtCriaClienteAction() {
-		try {
-			retornaInformacaoAgenda();
-			Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/view/ViewCliente.fxml"));
-			cliente = new Scene(fxmlCliente);
-			stageCliente.setScene(cliente);
-			stageCliente.show();
-			stageCliente.centerOnScreen();
-			stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-			stageCliente.setTitle("JEF - Cliente");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (stageCliente.isShowing()) {
+			stageCliente.requestFocus();
+		} else {
+			try {
+				retornaInformacaoAgenda();
+				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/views/ViewCliente.fxml"));
+				cliente = new Scene(fxmlCliente);
+				stageCliente.setWidth(885);
+				stageCliente.setHeight(695);
+				stageCliente.setScene(cliente);
+				//stageCliente.setResizable(false);
+				stageCliente.show();
+				stageCliente.centerOnScreen();
+				stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+				stageCliente.setTitle("JEF - Cliente");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@FXML
 	public void onBtAbreCaixaAction() {
 		try {
-			Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/view/ViewCaixa.fxml"));
-			caixa = new Scene(fxmlCaixa);
-			stageCaixa.setScene(caixa);
-			stageCaixa.show();
-			stageCaixa.centerOnScreen();
-			stageCaixa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
-			stageCaixa.setTitle("JEF - Caixa");
+			if (stageCaixa.isShowing()) {
+				stageCaixa.toFront();
+			} else {
+				Parent fxmlCaixa = FXMLLoader.load(getClass().getResource("/gui/views/ViewCaixa.fxml"));
+				caixa = new Scene(fxmlCaixa);
+				stageCaixa.setScene(caixa);
+				stageCaixa.show();
+				stageCaixa.centerOnScreen();
+				stageCaixa.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
+				stageCaixa.setTitle("JEF - Caixa");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -362,7 +396,7 @@ public class ViewController implements Initializable {
 	@FXML
 	public void onBtAbrePagamentoAction() {
 		try {
-			Parent fxmlPagamento = FXMLLoader.load(getClass().getResource("/gui/view/ViewSalario.fxml"));
+			Parent fxmlPagamento = FXMLLoader.load(getClass().getResource("/gui/views/ViewSalario.fxml"));
 			pagamento = new Scene(fxmlPagamento);
 			stagePagamento.setScene(pagamento);
 			stagePagamento.show();
@@ -377,7 +411,7 @@ public class ViewController implements Initializable {
 	@FXML
 	public void onBtAbreSobreAction() {
 		try {
-			Parent fxmlSobre = FXMLLoader.load(getClass().getResource("/gui/view/ViewSobre.fxml"));
+			Parent fxmlSobre = FXMLLoader.load(getClass().getResource("/gui/views/ViewSobre.fxml"));
 			sobre = new Scene(fxmlSobre);
 			stageSobre.setScene(sobre);
 			stageSobre.show();
@@ -412,7 +446,7 @@ public class ViewController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				pb.setVisible(false);
@@ -421,7 +455,7 @@ public class ViewController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(tarefa);
 			t.start();
 		});
@@ -441,7 +475,7 @@ public class ViewController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(acaoCarregarAgenda);
 			t.start();
 		});
@@ -464,7 +498,7 @@ public class ViewController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				pb.setVisible(false);
@@ -473,7 +507,7 @@ public class ViewController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(tarefa);
 			t.start();
 		});
@@ -489,7 +523,7 @@ public class ViewController implements Initializable {
 			}
 		};
 
-		javafx.application.Platform.runLater(() -> {
+		Platform.runLater(() -> {
 			Thread t = new Thread(acaoPesquisaAgendamento);
 			t.start();
 		});
@@ -497,7 +531,7 @@ public class ViewController implements Initializable {
 
 	@FXML
 	public void onBtExcluirAgendamento() {
-		if (Alerts.showAlertExclusao()) {
+		if (AlertsUtils.showAlertExclusao()) {
 			pb.setVisible(true);
 			labelStatus.setVisible(true);
 			Task<Void> acaoExcluir = new Task<Void>() {
@@ -515,7 +549,7 @@ public class ViewController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(acaoExcluir);
 				t.start();
 			});
@@ -525,7 +559,7 @@ public class ViewController implements Initializable {
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(1);
 					}
 					pb.setVisible(false);
@@ -534,7 +568,7 @@ public class ViewController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(tarefa);
 				t.start();
 			});
@@ -558,16 +592,6 @@ public class ViewController implements Initializable {
 		tvAgendaTemp = this.tvAgenda;
 		tvFuncionarioTemp = this.tvFuncionario;
 		tfClienteTemp = this.tfCliente;
-	}
-
-	public static void carregarBase() {
-		DaoServico.carregaServicos();
-		DaoServico.carregaCategoria();
-		DaoCliente.carregaCliente();
-		DaoFuncionario.carregaFuncionario();
-		Caixa.setStatus(DaoTransacao.carregaCaixa());
-		DaoPacote.carregaPacote();
-		DaoPacote.carregaPacoteAssociado();
 	}
 
 	@Override
@@ -603,7 +627,7 @@ public class ViewController implements Initializable {
 
 		pb.setVisible(false);
 		dpData.setValue(LocalDate.now());
-		carregarBase();
+
 		carregaFuncionario();
 		carregaAgenda();
 		bindAutoCompleteCliente = TextFields.bindAutoCompletion(tfCliente, Colecao.clientes);

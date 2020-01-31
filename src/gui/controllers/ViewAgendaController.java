@@ -7,8 +7,8 @@ import javax.swing.JOptionPane;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import gui.util.Decoracao;
-import gui.util.Notificacoes;
+import gui.utils.DecoracaoUtils;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -19,10 +19,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import model.collection.Colecao;
-import model.collection.entities.Cliente;
-import model.dao.DaoAgendamento;
-import model.dao.DaoFuncionario;
+import model.collections.Colecao;
+import model.collections.entities.Cliente;
+import model.daos.DaoAgendamento;
+import model.daos.DaoFuncionario;
 
 public class ViewAgendaController implements Initializable{
 	
@@ -116,15 +116,15 @@ public class ViewAgendaController implements Initializable{
     @FXML
     public void onBtAgendarAction(){
     	if(txtCliente.getText().isEmpty()) {
-    		Decoracao.setDecoracao(txtCliente);
-			Notificacoes.mostraNotificacao("Campos vazios!", "Preencha o campo nome!");
+    		DecoracaoUtils.setDecoracao(txtCliente);
+			NotificacoesUtils.mostraNotificacoes("Campos vazios!", "Preencha o campo nome!");
     	}
     	else {
     		parada = true;
     		Task<Void> tarefa = new Task<Void>() {
     			@Override
     			protected Void call() throws Exception {
-    				while (parada == true) {
+    				while (parada) {
     					Thread.sleep(0);
     				}
     				piCarregando.setVisible(false);
@@ -136,7 +136,7 @@ public class ViewAgendaController implements Initializable{
     		Task<Void> acaoAgendamento = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 		    			Thread t = new Thread(tarefa);
 		    			t.start();
 		    		});
@@ -161,7 +161,7 @@ public class ViewAgendaController implements Initializable{
 				}
     		};
     		
-    		javafx.application.Platform.runLater(() -> {
+    		Platform.runLater(() -> {
     			Thread t = new Thread(acaoAgendamento);
     			t.start(); 
     		});    		
@@ -173,10 +173,10 @@ public class ViewAgendaController implements Initializable{
     	for(Cliente cli : Colecao.clientes) {
 			if(txtCliente.getText().equals(cli.getNome())) {
 				idCliente = cli.getId();
-				txtCliente.setText("");;
+				txtCliente.setText("");
 			}
 		}
-    	if(txtCliente.getText() == "") {
+    	if(idCliente == 0) {
     		JOptionPane.showMessageDialog(null,"Primeiro crie um novo cliente com todos os dados"
 					+ " ou então crie um cliente com pelo menos o dado: NOME", "Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
     		ViewController.getStageAgenda().close();
@@ -250,87 +250,87 @@ public class ViewAgendaController implements Initializable{
     
     @FXML
     public void carregaHorarios() {
-    	if(ViewController.getFunTemp().getH8() != "Livre") {
+    	if(!ViewController.getFunTemp().getH8().equals("Livre")) {
     		cb8.setSelected(true);
     		cb8.setDisable(true);
     	}
-    	if(ViewController.getFunTemp().getH8_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH8_3().equals("Livre")) {
     		cb8_3.setSelected(true);
     		cb8_3.setDisable(true);
     	}
-    	if(ViewController.getFunTemp().getH9() != "Livre") {
+    	if(!ViewController.getFunTemp().getH9().equals("Livre")) {
     		cb9.setSelected(true);
     		cb9.setDisable(true);
     	}
-    	if(ViewController.getFunTemp().getH9_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH9_3().equals("Livre")) {
     		cb9_3.setSelected(true);
     		cb9_3.setDisable(true);
     	}
-    	if(ViewController.getFunTemp().getH10() != "Livre") {
+    	if(!ViewController.getFunTemp().getH10().equals("Livre")) {
     		cb10.setSelected(true);
     		cb10.setDisable(true);
     	}
-    	if(ViewController.getFunTemp().getH10_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH10_3().equals("Livre")) {
     		cb10_3.setSelected(true);
     		cb10_3.setDisable(true);
     	}
-    	if(ViewController.getFunTemp().getH11() != "Livre") {
+    	if(!ViewController.getFunTemp().getH11().equals("Livre")) {
     		cb11.setSelected(true);
     		cb11.setDisable(true);
     	}
-    	if(ViewController.getFunTemp().getH11_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH11_3().equals("Livre")) {
     		cb11_3.setSelected(true);
     		cb11_3.setDisable(true);
     	}
-    	if(ViewController.getFunTemp().getH12() != "Livre") {
+    	if(!ViewController.getFunTemp().getH12().equals("Livre")) {
 			cb12.setSelected(true);
 			cb12.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH12_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH12_3().equals("Livre")) {
 			cb12_3.setSelected(true);
 			cb12_3.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH13() != "Livre") {
+    	if(!ViewController.getFunTemp().getH13().equals("Livre")) {
 			cb13.setSelected(true);
 			cb13.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH13_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH13_3().equals("Livre")) {
 			cb13_3.setSelected(true);
 			cb13_3.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH14() != "Livre") {
+    	if(!ViewController.getFunTemp().getH14().equals("Livre")) {
 			cb14.setSelected(true);
 			cb14.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH14_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH14_3().equals("Livre")) {
 			cb14_3.setSelected(true);
 			cb14_3.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH15() != "Livre") {
+    	if(!ViewController.getFunTemp().getH15().equals("Livre")) {
 			cb15.setSelected(true);
 			cb15.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH15_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH15_3().equals("Livre")) {
 			cb15_3.setSelected(true);
 			cb15_3.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH16() != "Livre") {
+    	if(!ViewController.getFunTemp().getH16().equals("Livre")) {
 			cb16.setSelected(true);
 			cb16.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH16_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH16_3().equals("Livre")) {
 			cb16_3.setSelected(true);
 			cb16_3.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH17() != "Livre") {
+    	if(!ViewController.getFunTemp().getH17().equals("Livre")) {
 			cb17.setSelected(true);
 			cb17.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH17_3() != "Livre") {
+    	if(!ViewController.getFunTemp().getH17_3().equals("Livre")) {
 			cb17_3.setSelected(true);
 			cb17_3.setDisable(true);
 		}
-    	if(ViewController.getFunTemp().getH18() != "Livre") {
+    	if(!ViewController.getFunTemp().getH18().equals("Livre")) {
 			cb18.setSelected(true);
 			cb18.setDisable(true);
 		}

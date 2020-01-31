@@ -1,14 +1,16 @@
 package gui.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
-import gui.util.Alerts;
-import gui.util.Notificacoes;
+import gui.utils.AlertsUtils;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,18 +26,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.collection.Colecao;
-import model.collection.entities.Cliente;
-import model.collection.entities.Pacote;
-import model.collection.entities.PacoteAssociado;
-import model.dao.DaoPacote;
+import model.collections.Colecao;
+import model.collections.entities.Cliente;
+import model.collections.entities.Pacote;
+import model.collections.entities.PacoteAssociado;
+import model.daos.DaoOperacao;
+import model.daos.DaoPacote;
 
 public class ViewPacoteController implements Initializable {
 
-	ObservableList<Pacote> obPacote;
-	ObservableList<PacoteAssociado> obPacotesAssociados;
-	ArrayList<Cliente> teste = new ArrayList<>();
-	public static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
+	private ObservableList<Pacote> obPacote;
+	private static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 	private boolean parada;
 
 	@FXML
@@ -147,17 +148,24 @@ public class ViewPacoteController implements Initializable {
 	private ChoiceBox<Pacote> cbPacote;
 
 	@FXML
+	private ChoiceBox<String> cbFormaDePagamento;
+
+	@FXML
 	private ProgressIndicator piStatus;
 
 	@FXML
 	private Label labelStatus;
+
+	public static AutoCompletionBinding<Cliente> getBindAutoCompleteCliente() {
+		return bindAutoCompleteCliente;
+	}
 
 	@FXML
 	public void onBtCriaPacoteAction() {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
@@ -168,7 +176,7 @@ public class ViewPacoteController implements Initializable {
 
 		if (tfNome.getText().isEmpty() || tfValor.getText().isEmpty() || tfValorMao.getText().isEmpty()
 				|| tfQuantMao.getText().isEmpty() || tfQuantPe.getText().isEmpty() || tfValorPe.getText().isEmpty()) {
-			Notificacoes.mostraNotificacao("Aviso!", "Preencha todos os campos!");
+			NotificacoesUtils.mostraNotificacoes("Aviso!", "Preencha todos os campos!");
 		} else {
 			piStatus.setVisible(true);
 			labelStatus.setVisible(true);
@@ -177,7 +185,7 @@ public class ViewPacoteController implements Initializable {
 			Task<Void> acaoSalvaPacote = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -201,7 +209,7 @@ public class ViewPacoteController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(acaoSalvaPacote);
 				t.start();
 			});
@@ -213,7 +221,7 @@ public class ViewPacoteController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
@@ -221,7 +229,7 @@ public class ViewPacoteController implements Initializable {
 				return null;
 			}
 		};
-		if (Alerts.showAlertGenerico("ATENÇÃO!", "Deseja mesmo excluír um pacote?",
+		if (AlertsUtils.showAlertGenerico("ATENÇÃO!", "Deseja mesmo excluír um pacote?",
 				"Pacotes só serão desativados, para excluí-los no " + "banco de dados, contate o ADMINISTRADOR!")) {
 			piStatus.setVisible(true);
 			labelStatus.setVisible(true);
@@ -230,7 +238,7 @@ public class ViewPacoteController implements Initializable {
 			Task<Void> acaoExcluiPacote = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -255,12 +263,12 @@ public class ViewPacoteController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(acaoExcluiPacote);
 				t.start();
 			});
 		} else {
-			Notificacoes.mostraNotificacao("Aviso!", "Operação cancelada");
+			NotificacoesUtils.mostraNotificacoes("Aviso!", "Operação cancelada");
 		}
 	}
 
@@ -279,14 +287,14 @@ public class ViewPacoteController implements Initializable {
 	@FXML
 	public void onBtAtualizaPacoteAction() {
 		if (tfIdPacote.getText().isEmpty()) {
-			Notificacoes.mostraNotificacao("AVISO!", "Selecione um pacote primeiro!");
+			NotificacoesUtils.mostraNotificacoes("AVISO!", "Selecione um pacote primeiro!");
 		} else {
-			if (Alerts.showAlertGenerico("AVISO!", "Deseja mesmo atualizar um pacote?",
+			if (AlertsUtils.showAlertGenerico("AVISO!", "Deseja mesmo atualizar um pacote?",
 					"ATENÇÃO\n\nAtualizar um pacote não vai alterar pacotes antigos associados a um cliente!")) {
 				Task<Void> tarefa = new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-						while (parada == true) {
+						while (parada) {
 							Thread.sleep(0);
 						}
 						piStatus.setVisible(false);
@@ -303,7 +311,7 @@ public class ViewPacoteController implements Initializable {
 				Task<Void> acaoAtualizaPacote = new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-						javafx.application.Platform.runLater(() -> {
+						Platform.runLater(() -> {
 							Thread t = new Thread(tarefa);
 							t.start();
 						});
@@ -330,12 +338,12 @@ public class ViewPacoteController implements Initializable {
 					}
 				};
 
-				javafx.application.Platform.runLater(() -> {
+				Platform.runLater(() -> {
 					Thread t = new Thread(acaoAtualizaPacote);
 					t.start();
 				});
 			} else {
-				Notificacoes.mostraNotificacao("AVISO!", "Operação cancelada!");
+				NotificacoesUtils.mostraNotificacoes("AVISO!", "Operação cancelada!");
 			}
 		}
 	}
@@ -349,7 +357,7 @@ public class ViewPacoteController implements Initializable {
 
 	public void carregaTabelaPacoteAssociado() {
 		tvPacotesAssociados.setItems(null);
-		obPacotesAssociados = FXCollections.observableArrayList(Colecao.pacoteAssociados);
+		ObservableList<PacoteAssociado> obPacotesAssociados = FXCollections.observableArrayList(Colecao.pacoteAssociados);
 		tvPacotesAssociados.setItems(obPacotesAssociados);
 		tvPacotesAssociados.refresh();
 	}
@@ -357,12 +365,12 @@ public class ViewPacoteController implements Initializable {
 	@FXML
 	public void onBtCriaAssociacaoAction() {
 		if (tfCliente.getText().isEmpty()) {
-			Notificacoes.mostraNotificacao("AVISO!", "Preencha todos os dados!");
+			NotificacoesUtils.mostraNotificacoes("AVISO!", "Preencha todos os dados!");
 		} else {
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
@@ -377,11 +385,13 @@ public class ViewPacoteController implements Initializable {
 			Task<Void> acaoAdicionaPacoteAssociado = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
 					DaoPacote.salvarPacoteAssociado(tfCliente, cbPacote);
+					DaoOperacao.salvaOperacao("Pacote de: " + tfCliente.getText(), LocalDate.now(),
+							String.valueOf(cbPacote.getValue().getValor()), cbFormaDePagamento.getValue());
 					carregaTabelaPacoteAssociado();
 
 					Platform.runLater(new Runnable() {
@@ -395,7 +405,7 @@ public class ViewPacoteController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(acaoAdicionaPacoteAssociado);
 				t.start();
 			});
@@ -404,13 +414,13 @@ public class ViewPacoteController implements Initializable {
 
 	@FXML
 	public void onBtExcluiAssociacaoAction() {
-		if (Alerts.showAlertGenerico("ATENÇÃO!", "Deseja mesmo excluír uma associação?",
+		if (AlertsUtils.showAlertGenerico("ATENÇÃO!", "Deseja mesmo excluír uma associação?",
 				"O cliente que estiver associado perdera o pacote!")) {
 
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
@@ -425,7 +435,7 @@ public class ViewPacoteController implements Initializable {
 			Task<Void> acaoExcluiPacoteAssociado = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -442,14 +452,20 @@ public class ViewPacoteController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				Thread t = new Thread(acaoExcluiPacoteAssociado);
 				t.start();
 			});
 
 		} else {
-			Notificacoes.mostraNotificacao("AVISO!", "Operação cancelada!");
+			NotificacoesUtils.mostraNotificacoes("AVISO!", "Operação cancelada!");
 		}
+	}
+
+	public void carregaFormaPagamento() {
+		List<String> listMetPag = Arrays.asList("Dinheiro", "Cartão");
+		ObservableList<String> obFormaPagamento = FXCollections.observableArrayList(listMetPag);
+		cbFormaDePagamento.setItems(obFormaPagamento);
 	}
 
 	@Override
@@ -471,6 +487,7 @@ public class ViewPacoteController implements Initializable {
 		colunaQuantPeAssociado.setCellValueFactory(new PropertyValueFactory<>("quantPe"));
 		colunaExcluirPacoteAssociado.setCellValueFactory(new PropertyValueFactory<>("select"));
 
+		carregaFormaPagamento();
 		carregaTabelaPacote();
 		carregaTabelaPacoteAssociado();
 		cbPacote.setItems(obPacote);

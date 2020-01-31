@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="apCentral" maxHeight="50000.0" maxWidth="50000.0" minHeight="0.0" minWidth="0.0" prefHeight="695.0" prefWidth="880.0" stylesheets="@css/styleTabCliente.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewClienteController">
+   <children>
+      <TabPane fx:id="tpCentral" layoutX="-6.0" layoutY="-6.0" prefHeight="625.0" prefWidth="887.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="-6.0">
+        <tabs>
+          <Tab fx:id="tabTabela" closable="false">
+            <content>
+              <AnchorPane fx:id="tabTabelaAp" minHeight="0.0" minWidth="0.0" prefHeight="625.0" prefWidth="801.0">
+                     <children>
+                        <Pane layoutX="27.0" layoutY="15.0" opacity="0.09" prefHeight="451.0" prefWidth="778.0" style="-fx-background-color: white; -fx-background-radius: 1em;" />
+                        <TableView fx:id="tvCliente" layoutX="37.0" layoutY="56.0" prefHeight="401.0" prefWidth="758.0" style="-fx-border-radius: 1em; -fx-background-radius: 0em 0em  1em 1em; -fx-background-color: bfbfbf;">
+                          <columns>
+                            <TableColumn fx:id="colunaId" minWidth="0.0" prefWidth="60.0" text="ID">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_tags_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                            <TableColumn fx:id="colunaNome" prefWidth="194.0" text="Nome">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_businesswoman_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="colunaRedeSocial" prefWidth="124.0" text="Rede Social">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_instagram_40px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="colunaEmail" prefWidth="172.0" text="Email">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_envelope_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="colunaTelefone" prefWidth="106.0" text="Telefone">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_office_phone_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="colunaSelect" prefWidth="101.0" text="Excluir?">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_trash_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                          </columns>
+                        </TableView>
+                        <Pane layoutX="27.0" layoutY="477.0" opacity="0.09" prefHeight="166.0" prefWidth="339.0" style="-fx-background-color: white; -fx-background-radius: 1em;" />
+                        <Label layoutX="79.0" layoutY="517.0" text="Busca:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="33.0" fitWidth="35.0" layoutX="40.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_search_60px_1.png" />
+                           </image>
+                        </ImageView>
+                        <JFXTextField fx:id="tfBusca" focusColor="WHITE" layoutX="39.0" layoutY="543.0" onAction="#buscaOperacoes" prefHeight="19.0" prefWidth="311.0" promptText="Palavra chave" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXButton fx:id="btExcluiCliente" layoutX="74.0" layoutY="595.0" onAction="#excluirCliente" prefHeight="17.0" prefWidth="123.0" ripplerFill="WHITE" text="Excluir" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_trash_60px_1.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="btPesquisar" layoutX="207.0" layoutY="595.0" onAction="#buscaOperacoes" prefHeight="37.0" prefWidth="142.0" ripplerFill="WHITE" text="Pesquisar" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_reset_64px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </JFXButton>
+                        <Pane layoutX="424.0" layoutY="478.0" opacity="0.09" prefHeight="145.0" prefWidth="339.0" style="-fx-background-color: white; -fx-background-radius: 1em;" />
+                        <GridPane layoutX="435.0" layoutY="524.0" prefHeight="74.0" prefWidth="320.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="84.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="107.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="128.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <JFXRadioButton fx:id="rbId" style="-jfx-selected-color: #ff4747;" text="ID" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></JFXRadioButton>
+                              <JFXRadioButton fx:id="rbNome" style="-jfx-selected-color: #ff4747;" text="Nome" textFill="WHITE" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </JFXRadioButton>
+                              <JFXRadioButton fx:id="rbEmail" style="-jfx-selected-color: #ff4747;" text="Email" textFill="WHITE" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </JFXRadioButton>
+                              <JFXRadioButton fx:id="rbTelefone" style="-jfx-selected-color: #ff4747;" text="Telefone" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </JFXRadioButton>
+                              <JFXRadioButton fx:id="rbRedeSocial" style="-jfx-selected-color: #ff4747;" text="Rede Social" textFill="WHITE" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </JFXRadioButton>
+                              <JFXRadioButton fx:id="rbTodos" selected="true" style="-jfx-selected-color: #ff4747;" text="Todos" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </JFXRadioButton>
+                           </children>
+                        </GridPane>
+                        <Pane layoutX="407.0" layoutY="478.0" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: white; -fx-background-radius: 1em; -fx-background-color: bfbfbf;">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="28.0" prefWidth="88.0" text="Filtros" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Pane>
+                        <Pane layoutX="10.0" layoutY="15.0" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: white; -fx-background-radius: 1em; -fx-background-color: bfbfbf;">
+                           <children>
+                              <Label alignment="CENTER" layoutX="1.0" prefHeight="28.0" prefWidth="88.0" text="Clientes" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Pane>
+                        <Pane layoutX="10.0" layoutY="478.0" prefHeight="30.0" prefWidth="102.0" style="-fx-background-color: white; -fx-background-radius: 1em; -fx-background-color: bfbfbf;">
+                           <children>
+                              <Label alignment="CENTER" layoutX="-2.0" prefHeight="28.0" prefWidth="103.0" text="Pesquisa" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Pane>
+                     </children></AnchorPane>
+            </content>
+               <graphic>
+                  <ImageView fitHeight="43.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_search_folder_60px_1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+          <Tab fx:id="tabCliente" closable="false">
+            <content>
+              <AnchorPane fx:id="tabClienteAp" minHeight="0.0" minWidth="0.0" prefHeight="642.0" prefWidth="790.0">
+                     <children>
+                        <Pane layoutX="23.0" layoutY="26.0" opacity="0.09" prefHeight="442.0" prefWidth="345.0" style="-fx-background-color: white; -fx-background-radius: 1em;" />
+                        <Label layoutX="162.0" layoutY="55.0" text="Campo mínimo: Nome" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <JFXButton fx:id="btCriaCliente" layoutX="40.0" layoutY="405.0" onAction="#onBtCriaClienteAction" prefHeight="44.0" prefWidth="314.0" ripplerFill="WHITE" text="Criar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/add_30px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label layoutX="81.0" layoutY="48.0" text="Nome:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="43.0" fitWidth="41.0" layoutX="37.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_businesswoman_60px.png" />
+                           </image>
+                        </ImageView>
+                        <JFXTextField fx:id="txtNomeCliente" focusColor="WHITE" layoutX="38.0" layoutY="73.0" prefHeight="0.0" prefWidth="311.0" promptText="Nome do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="txtEmailCliente" focusColor="WHITE" layoutX="40.0" layoutY="158.0" prefHeight="0.0" prefWidth="311.0" promptText="Email do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label layoutX="89.0" layoutY="133.0" text="Email:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="37.0" fitWidth="43.0" layoutX="43.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_important_mail_60px.png" />
+                           </image>
+                        </ImageView>
+                        <JFXTextField fx:id="txtRedeSocialCliente" focusColor="WHITE" layoutX="43.0" layoutY="250.0" prefHeight="15.0" prefWidth="311.0" promptText="Rede Social do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label layoutX="89.0" layoutY="224.0" text="Rede Social:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="43.0" fitWidth="41.0" layoutX="42.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_instagram_60px.png" />
+                           </image>
+                        </ImageView>
+                        <JFXTextField fx:id="txtTelefoneCliente" focusColor="WHITE" layoutX="44.0" layoutY="338.0" prefHeight="0.0" prefWidth="311.0" promptText="Telefone do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label layoutX="89.0" layoutY="312.0" text="Telefone:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="40.0" fitWidth="47.0" layoutX="44.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_phone_64px.png" />
+                           </image>
+                        </ImageView>
+                     </children></AnchorPane>
+            </content>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_businesswoman_60px_2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+            <Tab fx:id="tabReplace">
+              <content>
+                <AnchorPane fx:id="tabReplaceAp" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="410.0" layoutY="613.0" text="Telefone:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="40.0" fitWidth="47.0" layoutX="361.0" layoutY="598.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_phone_64px.png" />
+                           </image>
+                        </ImageView>
+                        <Pane layoutX="27.0" layoutY="15.0" opacity="0.09" prefHeight="451.0" prefWidth="778.0" style="-fx-background-color: white; -fx-background-radius: 1em;" />
+                        <TableView fx:id="tvClienteAtualizacao" layoutX="37.0" layoutY="56.0" onMouseClicked="#selecionaCliente" prefHeight="401.0" prefWidth="758.0" style="-fx-border-radius: 1em; -fx-background-radius: 0em 0em  1em 1em; -fx-background-color: bfbfbf;">
+                           <columns>
+                              <TableColumn fx:id="colunaIdAtualizacao" minWidth="0.0" prefWidth="61.0" text="ID">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_tags_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="colunaNomeAtualizacao" prefWidth="241.0" text="Nome">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_businesswoman_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="colunaRedeSocialAtualizacao" prefWidth="129.0" text="Rede Social">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_instagram_40px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="colunaEmailAtualizacao" prefWidth="217.0" text="Email">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_envelope_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="colunaTelefoneAtualizacao" prefWidth="109.0" text="Telefone">
+                                 <graphic>
+                                    <ImageView fitHeight="71.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../model/images/icons8_office_phone_48px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                           </columns>
+                        </TableView>
+                        <Pane layoutX="10.0" layoutY="15.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: white; -fx-background-radius: 1em; -fx-background-color: bfbfbf;">
+                           <children>
+                              <Label alignment="CENTER" layoutX="5.0" layoutY="1.0" prefHeight="28.0" prefWidth="88.0" text="Clientes" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Pane>
+                        <Pane layoutX="28.0" layoutY="476.0" opacity="0.09" prefHeight="211.0" prefWidth="777.0" style="-fx-background-color: white; -fx-background-radius: 1em;" />
+                        <Pane layoutX="10.0" layoutY="476.0" prefHeight="30.0" prefWidth="135.0" style="-fx-background-color: white; -fx-background-radius: 1em; -fx-background-color: bfbfbf;">
+                           <children>
+                              <Label alignment="CENTER" layoutX="5.0" prefHeight="28.0" prefWidth="127.0" text="Atualização" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Pane>
+                        <Label layoutX="75.0" layoutY="517.0" text="Nome:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="43.0" fitWidth="41.0" layoutX="34.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_businesswoman_60px.png" />
+                           </image>
+                        </ImageView>
+                        <JFXTextField fx:id="txtNomeClienteAtualizacao" focusColor="WHITE" layoutX="38.0" layoutY="544.0" prefHeight="0.0" prefWidth="311.0" promptText="Nome do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="txtEmailClienteAtualizacao" focusColor="WHITE" layoutX="359.0" layoutY="544.0" prefHeight="32.0" prefWidth="234.0" promptText="Email do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="txtRedeSocialClienteAtualizacao" focusColor="WHITE" layoutX="39.0" layoutY="636.0" prefHeight="15.0" prefWidth="311.0" promptText="Rede Social do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="txtTelefoneClienteAtualizacao" focusColor="WHITE" layoutX="360.0" layoutY="636.0" prefHeight="32.0" prefWidth="234.0" promptText="Telefone do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label layoutX="408.0" layoutY="518.0" text="Email:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="37.0" fitWidth="43.0" layoutX="362.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_important_mail_60px.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="80.0" layoutY="608.0" text="Rede Social:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="43.0" fitWidth="41.0" layoutX="37.0" layoutY="596.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_instagram_60px.png" />
+                           </image>
+                        </ImageView>
+                        <JFXButton fx:id="btAtualizaCliente" layoutX="620.0" layoutY="633.0" onAction="#atualizaCliente" prefHeight="44.0" prefWidth="169.0" ripplerFill="WHITE" text=" Atualizar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_reset_64px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXTextField fx:id="txtIdCliente" disable="true" focusColor="WHITE" layoutX="602.0" layoutY="543.0" prefHeight="32.0" prefWidth="193.0" promptText="ID do cliente" style="-fx-border-color: #545E6A; -fx-text-fill: #00ff94; -fx-prompt-text-fill: #e1e1e1; -fx-background-color: #545E6A; -fx-background-radius: 0.5em; -fx-border-radius: 0.5em; -fx-border-color: #e1e1e1;" unFocusColor="#2c2e33">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label layoutX="647.0" layoutY="517.0" text="ID:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="37.0" fitWidth="43.0" layoutX="603.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../model/images/icons8_tags_60px_2.png" />
+                           </image>
+                        </ImageView>
+                        <JFXButton fx:id="btLimpar" layoutX="657.0" layoutY="586.0" onAction="#limpaCampos" prefHeight="44.0" prefWidth="132.0" ripplerFill="WHITE" text="Limpar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../model/images/icons8_trash_60px_1.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+              </content>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_replace_60px_3.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Pane layoutY="545.0" prefHeight="74.0" prefWidth="68.0" AnchorPane.bottomAnchor="0.0">
+         <children>
+            <JFXSpinner fx:id="piStatus" layoutX="9.0" layoutY="12.0" visible="false" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

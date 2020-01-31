@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import gui.util.Alerts;
-import gui.util.Notificacoes;
+import gui.utils.AlertsUtils;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,15 +24,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.collection.Colecao;
-import model.collection.entities.Funcionario;
-import model.dao.DaoFuncionario;
+import model.collections.Colecao;
+import model.collections.entities.Funcionario;
+import model.daos.DaoFuncionario;
 
 public class ViewFuncionarioController implements Initializable {
 
-	ObservableList<Funcionario> obFuncionario;
-	Scene main;
-	boolean parada;
+	private ObservableList<Funcionario> obFuncionario;
+	private boolean parada;
 
 	@FXML
 	private Button btAtualizar;
@@ -77,7 +76,7 @@ public class ViewFuncionarioController implements Initializable {
 	public void atualizaFuncionario() {
 		Parent parent;
 		try {
-			parent = FXMLLoader.load(getClass().getResource("/gui/view/ViewAtualizaFuncionario.fxml"));
+			parent = FXMLLoader.load(getClass().getResource("/gui/views/ViewAtualizaFuncionario.fxml"));
 			Scene scene = new Scene(parent);
 			ViewController.getStageFuncionario().setScene(scene);
 		} catch (IOException e) {
@@ -97,7 +96,7 @@ public class ViewFuncionarioController implements Initializable {
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				while (parada == true) {
+				while (parada) {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
@@ -107,9 +106,9 @@ public class ViewFuncionarioController implements Initializable {
 		};
 
 		try {
-			if (Alerts.showAlertGenerico("Confirmação de inclusão", "Deseja mesmo incluir um funcionário?", null)) {
+			if (AlertsUtils.showAlertGenerico("Confirmação de inclusão", "Deseja mesmo incluir um funcionário?", null)) {
 				if (txtCpfFuncionario.getText().isEmpty() || txtNomeFuncionario.getText().isEmpty()) {
-					Alerts.showAlert("Aviso", "Falta informações", "Coloco no mínimo: CPF e Nome",
+					AlertsUtils.showAlert("Aviso", "Falta informações", "Coloco no mínimo: CPF e Nome",
 							AlertType.INFORMATION);
 				} else {
 					piStatus.setVisible(true);
@@ -118,12 +117,12 @@ public class ViewFuncionarioController implements Initializable {
 					Task<Void> acaoCriaFuncionario = new Task<Void>() {
 						@Override
 						protected Void call() throws Exception {
-							javafx.application.Platform.runLater(() -> {
+							Platform.runLater(() -> {
 								Thread t = new Thread(tarefa);
 								t.start();
 							});
-							if (DaoFuncionario.salvarFuncionario(txtCpfFuncionario, txtTelefoneFuncionario,
-									txtNomeFuncionario) == false) {
+							if (!DaoFuncionario.salvarFuncionario(txtCpfFuncionario, txtTelefoneFuncionario,
+									txtNomeFuncionario)) {
 								DaoFuncionario.carregaFuncionario();
 								DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
 								carregaFuncionario();
@@ -136,14 +135,14 @@ public class ViewFuncionarioController implements Initializable {
 										txtCpfFuncionario.setText("");
 										txtNomeFuncionario.setText("");
 										txtTelefoneFuncionario.setText("");
-										Notificacoes.mostraNotificacao("Concluído!", "Funcionário criado com sucesso!");
+										NotificacoesUtils.mostraNotificacoes("Concluído!", "Funcionário criado com sucesso!");
 									}
 								});
 							} else {
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
-										Alerts.showAlert("Aviso", "Funcionário já adicionado",
+										AlertsUtils.showAlert("Aviso", "Funcionário já adicionado",
 												"Já existe funcionário com esse cpf"
 														+ " no programa ou o funcionário não foi excluído no banco de dados\n\n"
 														+ "Peça ao ADMINISTRADOR para excluir o "
@@ -157,7 +156,7 @@ public class ViewFuncionarioController implements Initializable {
 						}
 					};
 
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						ViewController.getStageCaixa().hide();
 						ViewController.getStageCliente().hide();
 						ViewController.getStagePagamento().hide();
@@ -166,24 +165,24 @@ public class ViewFuncionarioController implements Initializable {
 					});
 				}
 			} else {
-				Alerts.showAlert("Cancelado", "Você cancelou a operação", "Funcionário não incluído",
+				AlertsUtils.showAlert("Cancelado", "Você cancelou a operação", "Funcionário não incluído",
 						AlertType.INFORMATION);
 				txtCpfFuncionario.setText("");
 				txtNomeFuncionario.setText("");
 				txtTelefoneFuncionario.setText("");
 			}
 		} catch (NumberFormatException e) {
-			Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
+			AlertsUtils.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
 		}
 	}
 
 	public void excluirFuncionario() {
-		if (Alerts.showAlertExclusao()) {
+		if (AlertsUtils.showAlertExclusao()) {
 			parada = true;
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					while (parada == true) {
+					while (parada) {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
@@ -196,7 +195,7 @@ public class ViewFuncionarioController implements Initializable {
 
 				@Override
 				protected Void call() throws Exception {
-					javafx.application.Platform.runLater(() -> {
+					Platform.runLater(() -> {
 						piStatus.setVisible(true);
 						labelStatus.setVisible(true);
 						labelStatus.setText("Excluíndo Funcionário");
@@ -219,7 +218,7 @@ public class ViewFuncionarioController implements Initializable {
 							obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 							ViewController.getTvAgendaTemp().setItems(obFuncionario);
 							ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
-							Notificacoes.mostraNotificacao("Concluído!", "Funcionário excluído com sucesso!");
+							NotificacoesUtils.mostraNotificacoes("Concluído!", "Funcionário excluído com sucesso!");
 						}
 					});
 					parada = false;
@@ -227,7 +226,7 @@ public class ViewFuncionarioController implements Initializable {
 				}
 			};
 
-			javafx.application.Platform.runLater(() -> {
+			Platform.runLater(() -> {
 				ViewController.getStageCaixa().hide();
 				ViewController.getStageCliente().hide();
 				ViewController.getStagePagamento().hide();
@@ -236,7 +235,7 @@ public class ViewFuncionarioController implements Initializable {
 			});
 
 		} else {
-			Alerts.showAlert("Cancelado", "Você cancelou a operação", "Funcionário não excluído",
+			AlertsUtils.showAlert("Cancelado", "Você cancelou a operação", "Funcionário não excluído",
 					AlertType.INFORMATION);
 		}
 	}

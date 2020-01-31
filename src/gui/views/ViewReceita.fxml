@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="344.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewReceitaController">
+   <children>
+      <Pane prefHeight="344.0" prefWidth="320.0" style="-fx-border-color: #7a7a7a; -fx-background-color: #E9E9E9;">
+         <children>
+            <Pane prefHeight="32.0" prefWidth="320.0" style="-fx-background-color: #0b611b; -fx-border-color: #7a7a7a];">
+               <children>
+                  <Label layoutX="8.0" layoutY="3.0" text="Receita" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TextField fx:id="tfDescricao" layoutX="49.0" layoutY="83.0" prefHeight="25.0" prefWidth="225.0" promptText=" Descrição da receita" />
+            <DatePicker fx:id="dpData" disable="true" layoutX="48.0" layoutY="145.0" prefHeight="25.0" prefWidth="149.0" />
+            <TextField fx:id="tfEntrada" layoutX="48.0" layoutY="206.0" promptText="Valor de receita" />
+            <Button fx:id="btEnviar" layoutX="221.0" layoutY="301.0" mnemonicParsing="false" onAction="#geraReceita" text="Enviar">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../model/images/icons8_add_96px_1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <ChoiceBox fx:id="cbFormaPagamento" layoutX="47.0" layoutY="264.0" prefHeight="25.0" prefWidth="169.0" />
+            <Label layoutX="79.0" layoutY="66.0" text="Descrição" />
+            <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="49.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_talk_80px.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="80.0" layoutY="128.0" text="Data" />
+            <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="46.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_calendar_48px.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="80.0" layoutY="189.0" text="Entrada" />
+            <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="48.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_increase_96px.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="81.0" layoutY="247.0" text="Forma de Pegamento" />
+            <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="48.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_card_payment_40px_1.png" />
+               </image>
+            </ImageView>
+            <GridPane layoutX="11.0" layoutY="304.0" prefHeight="30.0" prefWidth="132.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="27.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="63.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ProgressIndicator fx:id="piStatus" visible="false" />
+                  <Label fx:id="lbStatus" prefHeight="17.0" prefWidth="94.0" text="Criando" visible="false" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

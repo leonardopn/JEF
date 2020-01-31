@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import gui.util.Alerts;
-import gui.util.Notificacoes;
+import gui.utils.AlertsUtils;
+import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,14 +22,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.collection.Colecao;
-import model.collection.entities.Funcionario;
-import model.dao.DaoFuncionario;
+import model.collections.Colecao;
+import model.collections.entities.Funcionario;
+import model.daos.DaoFuncionario;
 
 public class ViewAtualizaFuncionarioController implements Initializable{
 	
-	ObservableList<Funcionario> obFuncionario;
-	boolean parada;
+	private ObservableList<Funcionario> obFuncionario;
+	private boolean parada;
 	
 	@FXML
 	private Button btAtualiza;
@@ -77,7 +77,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	
 	public void voltaScene() {
 		try {
-			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/view/ViewFuncionario.fxml"));
+			Parent fxmlfuncionario = FXMLLoader.load(getClass().getResource("/gui/views/ViewFuncionario.fxml"));
 			Scene funcionario = new Scene(fxmlfuncionario);
 			ViewController.getStageFuncionario().setScene(funcionario);
 			ViewController.getStageFuncionario().centerOnScreen();
@@ -95,19 +95,19 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 	
 	@FXML
 	public void onAtualizaFuncionarioAction() {
-		if(Alerts.showAlertAtualizacao()) {
+		if(AlertsUtils.showAlertAtualizacao()) {
 			String cpf = txtCpfFuncionario.getText();
 			String nome = txtNomeFuncionario.getText();
 			String telefone = txtTelefoneFuncionario.getText();
 			if(cpf.isEmpty() || nome.isEmpty()) {
-				Notificacoes.mostraNotificacao("Atenção!", "Campos de nome ou cpf estão vazios!");
+				NotificacoesUtils.mostraNotificacoes("Atenção!", "Campos de nome ou cpf estão vazios!");
 			}
 			else {
 				parada = true;
 				Task<Void> tarefa = new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-						while (parada == true) {
+						while (parada) {
 							Thread.sleep(0);
 						}
 						piStatus.setVisible(false);
@@ -122,7 +122,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 
 					@Override
 					protected Void call() throws Exception {
-						javafx.application.Platform.runLater(() -> {
+						Platform.runLater(() -> {
 							Thread t = new Thread(tarefa);
 							t.start();
 						});
@@ -140,7 +140,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 								ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
 								ViewController.getTvAgendaTemp().refresh();
 								ViewController.getTvFuncionarioTemp().refresh();
-								Notificacoes.mostraNotificacao("Concluído!", "Funcionário atualizado com sucesso!");
+								NotificacoesUtils.mostraNotificacoes("Concluído!", "Funcionário atualizado com sucesso!");
 							}
 						});
 						parada = false;
@@ -148,7 +148,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 					}
 				};
 				
-				javafx.application.Platform.runLater(() -> {
+				Platform.runLater(() -> {
 					ViewController.getStageCaixa().hide();
 					ViewController.getStageCliente().hide();
 					ViewController.getStagePagamento().hide();
@@ -158,7 +158,7 @@ public class ViewAtualizaFuncionarioController implements Initializable{
 			}
 		}
 		else {
-			Notificacoes.mostraNotificacao("Operação cancelada!", "Funcionário não foi atualizado!");
+			NotificacoesUtils.mostraNotificacoes("Operação cancelada!", "Funcionário não foi atualizado!");
 		}
 	}
 
