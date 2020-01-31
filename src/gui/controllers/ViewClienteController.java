@@ -494,6 +494,35 @@ public class ViewClienteController implements Initializable {
 		});
 	}
 	
+	public void eventTab() {
+		EventHandler<Event> eventResize = new EventHandler<Event>() {
+            @Override
+            public void handle(Event t) {
+                if (tabCliente.isSelected()) {
+                	ViewController.getStageCliente().setWidth(460.0);
+                	ViewController.getStageCliente().setHeight(508.0);
+                	ViewController.getStageCliente().centerOnScreen();
+                }
+                else {
+                	if(tabTabela.isSelected()) {
+                		ViewController.getStageCliente().setWidth(885.0);
+                    	ViewController.getStageCliente().setHeight(690.0);
+                    	ViewController.getStageCliente().centerOnScreen();
+                	}
+                	else {
+                		ViewController.getStageCliente().setWidth(885.0);
+                    	ViewController.getStageCliente().setHeight(730.0);
+                    	ViewController.getStageCliente().centerOnScreen();
+                	}
+                }
+            }
+        };
+		
+		tabCliente.setOnSelectionChanged(eventResize);
+		tabTabela.setOnSelectionChanged(eventResize);
+		tabReplace.setOnSelectionChanged(eventResize);
+	}
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -513,31 +542,8 @@ public class ViewClienteController implements Initializable {
 		
 		setaRadioGrups();
 		
-		EventHandler<Event> eventResize = new EventHandler<Event>() {
-            @Override
-            public void handle(Event t) {
-                if (tabCliente.isSelected()) {
-                	ViewController.getStageCliente().setWidth(460);
-                	ViewController.getStageCliente().setHeight(508);
-                	ViewController.getStageCliente().centerOnScreen();
-                }
-                else {
-                	if(tabTabela.isSelected()) {
-                		ViewController.getStageCliente().setWidth(888);
-                    	ViewController.getStageCliente().setHeight(680);
-                    	ViewController.getStageCliente().centerOnScreen();
-                	}
-                	else {
-                		ViewController.getStageCliente().setWidth(888);
-                    	ViewController.getStageCliente().setHeight(725);
-                    	ViewController.getStageCliente().centerOnScreen();
-                	}
-                }
-            }
-        };
+		eventTab();
 		
-		tabCliente.setOnSelectionChanged(eventResize);
-		tabTabela.setOnSelectionChanged(eventResize);
 	}
 
 }
