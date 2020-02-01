@@ -24,7 +24,7 @@ public class DaoCliente {
 			st.setString(1, txtNomeCliente.getText());
 			rs = st.executeQuery();
 			count = rs.next();
-			if(count) {
+			if(!count) {
 				st = DbUtils.getConnection().prepareStatement(
 						"INSERT INTO cliente "
 						+ "(email, nome, rede_social, telefone) "
