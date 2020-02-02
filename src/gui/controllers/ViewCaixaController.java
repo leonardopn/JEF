@@ -369,6 +369,7 @@ public class ViewCaixaController implements Initializable {
 				statusCaixa = 0;
 				DaoTransacao.abreFechaCaixa(dpData.getValue(), fundoDeTroco, false);
 				ivCaixa.setImage(caixaAberto);
+				DaoOperacao.salvaOperacao("Fechamento de caixa", LocalDate.now(), String.valueOf(valorTotal), "Cartão");
 			}
 		}
 	}

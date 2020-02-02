@@ -76,7 +76,7 @@ public class ViewDespesaController implements Initializable {
 					if(tfSaida.getText().charAt(0) != '-') {
 						tfSaida.setText("-"+tfSaida.getText());
 					}
-					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfSaida.getText(),
+					DaoOperacao.salvaOperacao(tfDescricao.getText().replaceAll(",", "."), dpData.getValue(), tfSaida.getText(),
 							cbFormaPagamento.getValue());
 					parada = false;
 					Platform.runLater(new Runnable() {

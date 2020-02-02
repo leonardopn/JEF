@@ -223,8 +223,10 @@ public class DaoOperacao {
 				st.execute();
 			}
 
-			DaoOperacao.atualizaMontante(valor);
-
+			if(!"Fechamento de caixa".contains(descricao)) {
+				DaoOperacao.atualizaMontante(valor);
+			}
+			
 		} catch (SQLException e) {
 			Platform.runLater(new Runnable() {
 				@Override
