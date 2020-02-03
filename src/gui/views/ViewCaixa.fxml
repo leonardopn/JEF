@@ -278,7 +278,7 @@
          </image>
       </ImageView>
       <CheckBox fx:id="cbBloqueiaPreco" layoutX="170.0" layoutY="370.0" mnemonicParsing="false" onAction="#bloqDesbloqValor" selected="true" text="Liberar /" wrapText="true" />
-      <DatePicker fx:id="dpSelecao" editable="false" layoutX="1119.0" layoutY="4.0" onAction="#carregaTransacao" prefHeight="26.0" prefWidth="140.0" />
+      <DatePicker fx:id="dpSelecao" editable="false" layoutX="1097.0" layoutY="4.0" onAction="#carregaTransacao" prefHeight="26.0" prefWidth="140.0" />
       <TabPane layoutX="-1.0" layoutY="138.0" prefHeight="148.0" prefWidth="255.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Transação">
@@ -340,7 +340,7 @@
         </tabs>
       </TabPane>
       <Label layoutX="194.0" layoutY="386.0" text="Bloq" />
-      <Button fx:id="btAtualizar" layoutX="1268.0" layoutY="3.0" mnemonicParsing="false" onAction="#carregaTransacao" prefHeight="27.0" prefWidth="88.0" text="Atualizar">
+      <Button fx:id="btAtualizar" layoutX="1248.0" layoutY="3.0" mnemonicParsing="false" onAction="#carregaTransacao" prefHeight="29.0" prefWidth="108.0" text="Atualizar">
          <graphic>
             <ImageView fitHeight="19.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                <image>

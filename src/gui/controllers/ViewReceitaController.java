@@ -74,7 +74,7 @@ public class ViewReceitaController implements Initializable {
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
-					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfEntrada.getText(), cbFormaPagamento.getValue());
+					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfEntrada.getText().replaceAll(",","."), cbFormaPagamento.getValue());
 					
 					parada = false;
 					Platform.runLater(new Runnable() {

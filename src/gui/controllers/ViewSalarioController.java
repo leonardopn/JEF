@@ -1,6 +1,9 @@
 package gui.controllers;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import gui.utils.NotificacoesUtils;
@@ -12,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -19,11 +23,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.collections.Colecao;
 import model.collections.entities.Funcionario;
 import model.daos.DaoFuncionario;
+import model.daos.DaoOperacao;
 
 public class ViewSalarioController implements Initializable {
 
 	@FXML
 	private TextField tfSalario;
+	
+	@FXML
+	private ComboBox<String> cbFormaPagamento;
 
 	@FXML
 	private TextField tfFuncionario;
@@ -50,6 +58,11 @@ public class ViewSalarioController implements Initializable {
 		} else {
 			Double salarioAtualizado = Double.parseDouble(tfSalario.getText());
 			DaoFuncionario.atualizarSalario(tfCpf.getText(), (-salarioAtualizado));
+			if(tfSalario.getText().charAt(0) != '-') {
+				tfSalario.setText("-"+tfSalario.getText());
+			}
+			DaoOperacao.salvaOperacao("Pagamento de salário: " + tfFuncionario.getText(), LocalDate.now(),
+					tfSalario.getText(), cbFormaPagamento.getValue());
 			DaoFuncionario.carregaFuncionario();
 			tfFuncionario.clear();
 			tfCpf.clear();
@@ -84,12 +97,19 @@ public class ViewSalarioController implements Initializable {
 		tfCpf.setText(String.valueOf(fun.getCpf()));
 		tfSalario.setText(String.valueOf(fun.getSalario()));
 	}
+	
+	public void carregaFormaPagamento() {
+		List<String> listMetPag = Arrays.asList("Dinheiro", "Cartão");
+		ObservableList<String>obFormaPagamento = FXCollections.observableArrayList(listMetPag);
+		cbFormaPagamento.setItems(obFormaPagamento);
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaFuncionario.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		colunaSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
 		populaTabela();
+		carregaFormaPagamento();
 
 	}
 
