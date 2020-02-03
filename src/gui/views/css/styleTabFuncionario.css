@@ -1,0 +1,65 @@
+#tabFuncionarioAp, #tabReplaceAp{
+	-fx-background-color: #2c2e33;
+	-fx-border-width: 8;
+	-fx-effect:  dropshadow(three-pass-box, rgba(0.8,0.8,0.8,0.8), 10, 0, 0, 0);
+}
+
+#btCriaFuncionario{
+	-fx-background-color: #04C582;
+	-fx-background-radius: 5em;
+	-fx-border-radius: 5em;
+	-fx-border-color:  #e1e1e1;
+	 -fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+#btAtualizaFuncionario{
+	-fx-background-color: #4c7fff;
+	-fx-background-radius: 5em;
+	-fx-border-radius: 5em;
+	-fx-border-color:  #e1e1e1;
+	-fx-effect:  dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
+}
+
+#btExcluiFuncionario{
+	-fx-background-color: #ff4747;
+	-fx-background-radius: 5em;
+	-fx-border-radius: 5em;
+	-fx-border-color:  #e1e1e1;
+	 -fx-effect:  dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
+}
+
+.tab-pane{
+	-fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.tab:selected {
+	-fx-border-style: solid none none none;
+	-fx-border-width: 8;
+	-fx-border-color: #ff5b5b;  
+	-fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-padding: 15 0 15 0;
+    -fx-focus-color: transparent;
+}
+
+.tab {
+	-fx-border-style: solid none none none;
+	-fx-border-width: 8;
+	-fx-border-color: transparent;
+	-fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-padding: 15 0 15 0;
+    -fx-background-color:  #545E6A;
+    -fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.text-field {
+	-fx-border-color:  #545E6A;
+	-fx-text-fill:  #00ff94;
+	-fx-prompt-text-fill:  #e1e1e1;
+	-fx-background-color:  #545E6A;
+	-fx-background-radius: 0.5em;
+	-fx-border-radius: 0.5em;
+	-fx-border-color:  #e1e1e1;
+	-fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
