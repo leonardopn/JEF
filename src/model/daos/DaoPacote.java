@@ -8,7 +8,7 @@ import dataBase.DbUtils;
 import gui.utils.AlertsUtils;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import model.collections.Colecao;
 import model.collections.entities.Cliente;
@@ -144,7 +144,7 @@ public class DaoPacote {
 		}
 	}
 
-	public static void salvarPacoteAssociado(TextField tfCliente, ChoiceBox<Pacote> cbPacote) {
+	public static void salvarPacoteAssociado(TextField tfCliente, ComboBox<Pacote> cbPacote) {
 		try {
 			int idCliente = -1;
 			st = DbUtils.getConnection().prepareStatement("insert into pacotes_associados "
