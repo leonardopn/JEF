@@ -1,75 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="151.0" prefWidth="418.0" style="-fx-border-color: #cccccc;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewLoginConfirmacaoController">
+<AnchorPane prefHeight="209.0" prefWidth="558.0" style="-fx-background-color: #2c2e33;" stylesheets="@css/styleLogin.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewLoginConfirmacaoController">
    <children>
-      <Pane layoutX="121.0" layoutY="11.0" prefHeight="134.0" prefWidth="286.0" style="-fx-border-color: #cccccc;">
-         <children>
-            <GridPane layoutX="11.0" layoutY="17.0" prefHeight="105.0" prefWidth="234.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="71.0" />
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="184.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label prefHeight="17.0" prefWidth="61.0" text="Usuário:">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="17.0" prefWidth="53.0" text="Senha:" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfUsuario" style="-fx-background-radius: 5em;" GridPane.columnIndex="1" />
-                  <PasswordField fx:id="pfSenha" style="-fx-background-radius: 5em;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="btLogin" mnemonicParsing="false" onAction="#onBtLoginAction" text="Entrar" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <graphic>
-                        <ImageView fitHeight="21.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../model/images/icons8_login_64px_1.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <TextField fx:id="tfSenhaVisivel" editable="false" style="-fx-background-radius: 5em;" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               </children>
-            </GridPane>
-            <ImageView fx:id="ivOlho" fitHeight="25.0" fitWidth="27.0" layoutX="252.0" layoutY="58.0" onMouseClicked="#onBtOlhoAction" pickOnBounds="true" preserveRatio="true">
+      <Pane layoutX="195.0" layoutY="15.0" opacity="0.18" prefHeight="181.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 2em; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
+      <Pane layoutX="-67.0" layoutY="-76.0" prefHeight="252.0" prefWidth="232.0" rotate="-71.6" style="-fx-background-color: #545E6A; -fx-border-color: ff5b5b; -fx-border-width: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
+      <JFXTextField fx:id="tfUsuario" focusColor="WHITE" layoutX="279.0" layoutY="36.0" promptText="Nome de Usuário">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXTextField>
+      <ImageView fitHeight="39.0" fitWidth="58.0" layoutX="231.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+         <image>
+            <Image url="@../../model/images/icons8_businesswoman_60px.png" />
+         </image>
+      </ImageView>
+      <JFXPasswordField fx:id="pfSenha" focusColor="WHITE" layoutX="281.0" layoutY="88.0" promptText="Senha de Usuário">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXPasswordField>
+      <ImageView fitHeight="39.0" fitWidth="58.0" layoutX="231.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+         <image>
+            <Image url="@../../model/images/icons8_password_60px_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ivOlho" fitHeight="39.0" fitWidth="39.0" layoutX="492.0" layoutY="88.0" onMouseClicked="#onBtOlhoAction" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+         <image>
+            <Image url="@../../model/images/icons8_closed_eye_100px.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btLogin" layoutX="230.0" layoutY="141.0" onAction="#onBtLoginAction" prefHeight="44.0" prefWidth="280.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Logar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../model/images/icons8_closed_eye_48px.png" />
+                  <Image url="@../../model/images/icons8_login_64px.png" />
                </image>
             </ImageView>
-         </children>
-      </Pane>
-      <Pane layoutX="16.0" layoutY="22.0" prefHeight="112.0" prefWidth="89.0" style="-fx-border-color: #cccccc; -fx-border-radius: 3em;">
-         <children>
-            <ImageView fitHeight="77.0" fitWidth="76.0" layoutX="7.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../model/images/icons8_female_worker_48px.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
+         </graphic>
+      </JFXButton>
+      <JFXTextField fx:id="tfSenhaVisivel" focusColor="WHITE" layoutX="280.0" layoutY="88.0" visible="false">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXTextField>
+      <Circle fx:id="circuloProfile" fill="DODGERBLUE" layoutX="81.0" layoutY="82.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>
