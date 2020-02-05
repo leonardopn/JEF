@@ -1,84 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="344.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewDespesaController">
+<AnchorPane fx:id="apCentral" prefHeight="411.0" prefWidth="322.0" stylesheets="@css/styleViewDespesa.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewDespesaController">
    <children>
-      <Pane prefHeight="344.0" prefWidth="320.0" style="-fx-border-color: #7a7a7a; -fx-background-color: #E9E9E9;">
+      <Pane fx:id="paneCentral" layoutX="25.0" layoutY="65.0" opacity="0.83" prefHeight="263.0" prefWidth="276.0" />
+      <Pane prefHeight="46.0" prefWidth="322.0" style="-fx-background-color: #ff4747;">
          <children>
-            <Pane prefHeight="32.0" prefWidth="320.0" style="-fx-background-color: #f20303; -fx-border-color: #7a7a7a];">
-               <children>
-                  <Label layoutX="10.0" layoutY="3.0" text="Despesa" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="21.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <TextField fx:id="tfDescricao" layoutX="49.0" layoutY="83.0" prefHeight="25.0" prefWidth="225.0" promptText=" Descrição da receita" />
-            <DatePicker fx:id="dpData" disable="true" layoutX="48.0" layoutY="145.0" prefHeight="25.0" prefWidth="149.0" />
-            <TextField fx:id="tfSaida" layoutX="48.0" layoutY="206.0" promptText="Valor da despesa" />
-            <Button fx:id="btEnviar" layoutX="221.0" layoutY="300.0" mnemonicParsing="false" onAction="#geraDespesa" text="Enviar">
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../model/images/icons8_add_96px_1.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <ChoiceBox fx:id="cbFormaPagamento" layoutX="47.0" layoutY="264.0" prefHeight="25.0" prefWidth="169.0" />
-            <Label layoutX="79.0" layoutY="66.0" text="Descrição" />
-            <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="49.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../model/images/icons8_talk_80px.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="80.0" layoutY="128.0" text="Data" />
-            <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="46.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../model/images/icons8_calendar_48px.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="80.0" layoutY="189.0" text="Saída" />
-            <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="48.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../model/images/icons8_decrease_96px.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="81.0" layoutY="247.0" text="Forma de Pegamento" />
-            <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="48.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../model/images/icons8_card_payment_40px_1.png" />
-               </image>
-            </ImageView>
-            <GridPane layoutX="11.0" layoutY="304.0" prefHeight="30.0" prefWidth="132.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="27.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="63.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ProgressIndicator fx:id="piStatus" visible="false" />
-                  <Label fx:id="lbStatus" prefHeight="17.0" prefWidth="94.0" text="Criando" visible="false" GridPane.columnIndex="1" />
-               </children>
-            </GridPane>
+            <Label layoutX="10.0" layoutY="4.0" text="Despesa" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="27.0" />
+               </font>
+            </Label>
+            <JFXSpinner fx:id="piStatus" layoutX="278.0" layoutY="2.0" prefHeight="39.0" prefWidth="38.0" visible="false" />
          </children>
       </Pane>
+      <JFXTextField fx:id="tfDescricao" focusColor="WHITE" layoutX="87.0" layoutY="84.0" promptText="Descrição da Receita" />
+      <ImageView fitHeight="150.0" fitWidth="114.0" layoutX="-66.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="51.0" fitWidth="48.0" layoutX="37.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);">
+         <image>
+            <Image url="@../../model/images/icons8_voice_recognition_60px_1.png" />
+         </image>
+      </ImageView>
+      <DatePicker fx:id="dpData" disable="true" layoutX="89.0" layoutY="145.0" prefHeight="39.0" prefWidth="195.0" />
+      <ImageView fitHeight="51.0" fitWidth="48.0" layoutX="33.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);">
+         <image>
+            <Image url="@../../model/images/icons8_calendar_1_60px_1.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="tfSaida" focusColor="WHITE" layoutX="88.0" layoutY="206.0" promptText="Valor da Despesa">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXTextField>
+      <ImageView fitHeight="51.0" fitWidth="48.0" layoutX="33.0" layoutY="203.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);">
+         <image>
+            <Image url="@../../model/images/icons8_money_60px_1.png" />
+         </image>
+      </ImageView>
+      <JFXComboBox fx:id="cbFormaPagamento" focusColor="WHITE" layoutX="87.0" layoutY="266.0" prefHeight="39.0" prefWidth="195.0" promptText="Forma de Pagamento" />
+      <JFXButton fx:id="btEnviar" layoutX="25.0" layoutY="346.0" onAction="#geraDespesa" prefHeight="46.0" prefWidth="276.0" text="Enviar" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/add_30px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="51.0" fitWidth="48.0" layoutX="32.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);">
+         <image>
+            <Image url="@../../model/images/icons8_card_payment_60px_1.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
