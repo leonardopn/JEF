@@ -25,9 +25,6 @@ import model.daos.DaoAgendamento;
 import model.daos.DaoFuncionario;
 
 public class ViewAgendaController implements Initializable{
-	
- 	@FXML
-    private Button btVoltar;
 
     @FXML
     private DatePicker dpData;
@@ -107,9 +104,6 @@ public class ViewAgendaController implements Initializable{
     @FXML
 	private ProgressIndicator piCarregando;
     
-    @FXML
-    private Label labelStatus;
-    
     private boolean parada;
 	    
     
@@ -128,7 +122,6 @@ public class ViewAgendaController implements Initializable{
     					Thread.sleep(0);
     				}
     				piCarregando.setVisible(false);
-    				labelStatus.setVisible(false);
     				return null;
     			}
     		};
@@ -141,7 +134,6 @@ public class ViewAgendaController implements Initializable{
 		    			t.start();
 		    		});
 					piCarregando.setVisible(true);
-    				labelStatus.setVisible(true);
 					salvaHorario();
 		    		DaoFuncionario.carregaAgendaFuncionario(dpData.getValue());
 		    		ViewController.getTvAgendaTemp().refresh();
