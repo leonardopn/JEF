@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,9 +21,10 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="622.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewOperacoesController">
+<AnchorPane fx:id="apCentral" prefHeight="672.0" prefWidth="1034.0" stylesheets="@css/styleViewOperacoes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewOperacoesController">
    <children>
-      <TableView fx:id="tvOperacoes" layoutX="10.0" layoutY="279.0" prefHeight="333.0" prefWidth="1012.0">
+      <Pane fx:id="paneCentral" layoutX="4.0" layoutY="307.0" opacity="0.53" prefHeight="354.0" prefWidth="1026.0" style="-fx-border-color: white;" />
+      <TableView fx:id="tvOperacoes" layoutX="10.0" layoutY="317.0" prefHeight="333.0" prefWidth="1012.0">
         <columns>
           <TableColumn fx:id="colunaId" prefWidth="101.99996948242188" text="ID">
                <graphic>
@@ -89,17 +91,17 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Pane layoutX="373.0" layoutY="41.0" prefHeight="124.0" prefWidth="352.0" style="-fx-background-color: #a6fca6;">
+      <Pane layoutX="373.0" layoutY="64.0" prefHeight="124.0" prefWidth="352.0" style="-fx-background-color: #00ff94; -fx-background-radius: 3em; -fx-border-color: white; -fx-border-radius: 3em;">
          <children>
-            <Pane layoutX="9.0" layoutY="10.0" prefHeight="104.0" prefWidth="336.0" style="-fx-border-color: #7a7a7a;">
+            <Pane layoutX="9.0" layoutY="10.0" prefHeight="104.0" prefWidth="336.0" style="-fx-border-color: #7a7a7a; -fx-border-radius: 3em;">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="-8.0" prefHeight="17.0" prefWidth="164.0" style="-fx-background-color: #a6fca6;" text="Entrada e Saída do Dia" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="-8.0" prefHeight="17.0" prefWidth="164.0" style="-fx-background-color: #00ff94; -fx-background-radius: 3em;" text="Entrada e Saída do Dia" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <Line endX="212.0" layoutX="114.0" layoutY="67.0" startX="-104.0" strokeWidth="0.5" />
-                  <Label fx:id="labelTotalDia" layoutX="12.0" layoutY="72.0" text="Total do dia:" textFill="#0b611b">
+                  <Label fx:id="labelTotalDia" layoutX="25.0" layoutY="72.0" text="Total do dia:" textFill="#0b611b">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -125,17 +127,17 @@
                         </Label>
                      </children>
                   </GridPane>
-                  <Label layoutX="11.0" layoutY="35.0" text="Despesa:" textFill="#f20303">
+                  <Label layoutX="25.0" layoutY="35.0" text="Despesa:" textFill="#f20303">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="11.0" layoutY="8.0" text="Receita:" textFill="#0b611b">
+                  <Label layoutX="25.0" layoutY="8.0" text="Receita:" textFill="#0b611b">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="129.0" layoutY="9.0" prefHeight="30.0" prefWidth="175.0">
+                  <GridPane layoutX="139.0" layoutY="9.0" prefHeight="30.0" prefWidth="175.0">
                      <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="43.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="132.0" />
@@ -156,7 +158,7 @@
                         </Label>
                      </children>
                   </GridPane>
-                  <GridPane layoutX="129.0" layoutY="35.0" prefHeight="30.0" prefWidth="175.0">
+                  <GridPane layoutX="140.0" layoutY="35.0" prefHeight="30.0" prefWidth="175.0">
                      <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="43.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="132.0" />
@@ -181,22 +183,22 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="12.0" layoutY="41.0" prefHeight="124.0" prefWidth="352.0" style="-fx-background-color: #a6fca6;">
+      <Pane layoutX="12.0" layoutY="64.0" prefHeight="124.0" prefWidth="336.0" style="-fx-background-color: #00ff94; -fx-background-radius: 3em; -fx-border-color: white; -fx-border-radius: 3em;">
          <children>
-            <Pane layoutX="9.0" layoutY="10.0" prefHeight="104.0" prefWidth="336.0" style="-fx-border-color: #7a7a7a;">
+            <Pane layoutX="9.0" layoutY="10.0" prefHeight="104.0" prefWidth="317.0" style="-fx-border-color: #7a7a7a; -fx-border-radius: 3em;">
                <children>
-                  <Label fx:id="lbResumoMes" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="-8.0" prefHeight="17.0" prefWidth="118.0" style="-fx-background-color: #a6fca6;" text="Resumo do Mês" textAlignment="CENTER">
+                  <Label fx:id="lbResumoMes" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="-8.0" prefHeight="17.0" prefWidth="118.0" style="-fx-background-color: #00ff94; -fx-background-radius: 3em;" text="Resumo do Mês" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Line endX="211.0" layoutX="114.0" layoutY="67.0" startX="-104.0" strokeWidth="0.5" />
-                  <Label fx:id="labelTotalMesAno" layoutX="6.0" layoutY="73.0" text="Total do mês:" textFill="#0b611b">
+                  <Line endX="187.0" layoutX="114.0" layoutY="67.0" startX="-100.0" strokeWidth="0.5" />
+                  <Label fx:id="labelTotalMesAno" layoutX="19.0" layoutY="70.0" text="Total do mês:" textFill="#0b611b">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="159.0" layoutY="70.0" prefHeight="30.0" prefWidth="175.0">
+                  <GridPane layoutX="149.0" layoutY="70.0" prefHeight="30.0" prefWidth="175.0">
                      <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="43.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="132.0" />
@@ -217,17 +219,17 @@
                         </Label>
                      </children>
                   </GridPane>
-                  <Label layoutX="11.0" layoutY="35.0" text="Despesa:" textFill="#f20303">
+                  <Label layoutX="19.0" layoutY="37.0" text="Despesa:" textFill="#f20303">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="11.0" layoutY="8.0" text="Receita:" textFill="#0b611b">
+                  <Label layoutX="20.0" layoutY="8.0" text="Receita:" textFill="#0b611b">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="129.0" layoutY="9.0" prefHeight="30.0" prefWidth="175.0">
+                  <GridPane layoutX="128.0" layoutY="8.0" prefHeight="30.0" prefWidth="175.0">
                      <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="43.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="132.0" />
@@ -248,7 +250,7 @@
                         </Label>
                      </children>
                   </GridPane>
-                  <GridPane layoutX="129.0" layoutY="35.0" prefHeight="30.0" prefWidth="175.0">
+                  <GridPane layoutX="128.0" layoutY="37.0" prefHeight="30.0" prefWidth="175.0">
                      <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="43.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="132.0" />
@@ -273,153 +275,16 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="748.0" layoutY="39.0" prefHeight="231.0" prefWidth="270.0" style="-fx-background-color: #E9E9E9;">
+      <Pane fx:id="paneCentral" layoutX="748.0" layoutY="66.0" opacity="0.53" prefHeight="231.0" prefWidth="270.0" style="-fx-border-color: white;" />
+      <Pane fx:id="paneCentral" layoutX="9.0" layoutY="216.0" opacity="0.57" prefHeight="76.0" prefWidth="251.0" style="-fx-border-color: white;" />
+      <Pane prefHeight="50.0" prefWidth="1034.0" style="-fx-background-color: #545E6A;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Pane layoutX="9.0" layoutY="10.0" prefHeight="214.0" prefWidth="250.0" style="-fx-border-color: #7a7a7a;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="-8.0" prefHeight="17.0" prefWidth="47.0" style="-fx-background-color: #E9E9E9;" text="Busca" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="dpData" layoutX="14.0" layoutY="40.0" prefHeight="26.0" prefWidth="127.0" />
-                  <TextField fx:id="tfBusca" layoutX="14.0" layoutY="96.0" prefHeight="25.0" prefWidth="225.0" />
-                  <Label layoutX="50.0" layoutY="22.0" text="Data:" />
-                  <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../model/images/icons8_calendar_48px.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="48.0" layoutY="77.0" text="Busca:" />
-                  <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="12.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../model/images/icons8_search_48px_1.png" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="btExcluir" layoutX="143.0" layoutY="174.0" mnemonicParsing="false" onAction="#excluiOperacao" prefHeight="31.0" prefWidth="96.0" text="Excluir">
-                     <graphic>
-                        <ImageView fitHeight="28.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../model/images/icons8_trash_48px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btPesquisar" layoutX="121.0" layoutY="136.0" mnemonicParsing="false" onAction="#buscaOperacoes" prefHeight="31.0" prefWidth="118.0" text="Pesquisar">
-                     <graphic>
-                        <ImageView fitHeight="28.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../model/images/icons8_search_48px_1.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <CheckBox fx:id="cbData" layoutX="146.0" layoutY="44.0" mnemonicParsing="false" onAction="#liberaData" text="Data Única" />
-               </children>
-            </Pane>
-         </children>
-      </Pane>
-      <Pane layoutX="9.0" layoutY="175.0" prefHeight="95.0" prefWidth="713.0" style="-fx-background-color: #E9E9E9;">
-         <children>
-            <Pane layoutX="257.0" layoutY="9.0" prefHeight="37.0" prefWidth="398.0" style="-fx-border-color: #7a7a7a;">
-               <children>
-                  <GridPane layoutX="11.0" layoutY="3.0" prefHeight="32.0" prefWidth="411.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="96.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="173.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="43.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="95.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <RadioButton fx:id="rbDescricao" mnemonicParsing="false" onAction="#bloqComponents" text="Descrição" />
-                        <RadioButton fx:id="rbId" mnemonicParsing="false" onAction="#bloqComponents" text="ID" GridPane.columnIndex="2" />
-                        <RadioButton fx:id="rbFormaPagamento" mnemonicParsing="false" onAction="#bloqComponents" text="Forma de Pagamento" GridPane.columnIndex="1" />
-                        <RadioButton fx:id="rbTodos" mnemonicParsing="false" onAction="#bloqComponents" selected="true" text="Todos" GridPane.columnIndex="3" />
-                     </children>
-                  </GridPane>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="-8.0" prefHeight="17.0" prefWidth="52.0" style="-fx-background-color: #E9E9E9;" text="Filtros" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <Pane layoutX="11.0" layoutY="9.0" prefHeight="78.0" prefWidth="213.0" style="-fx-border-color: #7a7a7a;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="-8.0" prefHeight="17.0" prefWidth="74.0" style="-fx-background-color: #E9E9E9;" text="Operações" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="btSaida" layoutX="116.0" layoutY="21.0" mnemonicParsing="false" onAction="#onBtSaidaAction" prefHeight="37.0" prefWidth="90.0" text="Saída">
-                     <graphic>
-                        <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../model/images/icons8_decrease_96px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btEntrada" layoutX="7.0" layoutY="21.0" mnemonicParsing="false" onAction="#onBtEntradaAction" text="Entrada">
-                     <graphic>
-                        <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../model/images/icons8_increase_96px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-            </Pane>
-            <Pane layoutX="257.0" layoutY="53.0" prefHeight="37.0" prefWidth="250.0" style="-fx-border-color: #7a7a7a;">
-               <children>
-                  <GridPane layoutX="10.0" layoutY="4.0" prefHeight="32.0" prefWidth="234.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="87.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="75.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="61.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <RadioButton fx:id="rbDespesa" mnemonicParsing="false" onAction="#bloqComponents" text="Despesa" />
-                        <RadioButton fx:id="rbReceita" mnemonicParsing="false" onAction="#bloqComponents" text="Receita" GridPane.columnIndex="1" />
-                        <RadioButton fx:id="rbTodos1" mnemonicParsing="false" selected="true" text="Todos" GridPane.columnIndex="2" />
-                     </children>
-                  </GridPane>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="-7.0" prefHeight="17.0" prefWidth="52.0" style="-fx-background-color: #E9E9E9;" text="Filtros" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <GridPane layoutX="539.0" layoutY="57.0" prefHeight="30.0" prefWidth="149.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="113.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="36.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label fx:id="lbStatus" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="108.0" text="Carregando" visible="false" />
-                  <ProgressIndicator fx:id="piStatus" prefHeight="30.0" prefWidth="84.0" visible="false" GridPane.columnIndex="1" />
-               </children>
-            </GridPane>
-         </children>
-      </Pane>
-      <Pane prefHeight="32.0" prefWidth="961.0" style="-fx-background-color: #243a51;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <Spinner fx:id="spinAno" layoutX="3.0" layoutY="3.0" onMouseClicked="#selecionaMes" prefHeight="26.0" prefWidth="118.0" style="-fx-background-color: #dddddd;" />
+            <Spinner fx:id="spinAno" layoutX="3.0" layoutY="6.0" onMouseClicked="#selecionaMes" prefHeight="39.0" prefWidth="118.0" style="-fx-background-color: #dddddd;" />
             <Button fx:id="btJaneiro" layoutX="136.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 1em 0em 0em 1em; -fx-background-color: #dddddd;" text="Janeiro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
-               </font></Button>
+               </font>
+            </Button>
             <Button fx:id="btFevereiro" layoutX="203.0" layoutY="4.0" mnemonicParsing="false" onAction="#selecionaMes" style="-fx-background-radius: 0em; -fx-background-color: #dddddd;" text="Fevereiro" textFill="#243a51">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -482,5 +347,160 @@
             </Button>
          </children>
       </Pane>
+      <DatePicker fx:id="dpData" layoutX="803.0" layoutY="102.0" prefHeight="39.0" prefWidth="186.0" promptText="Data" />
+      <Pane fx:id="paneCentral" layoutX="271.0" layoutY="197.0" opacity="0.57" prefHeight="95.0" prefWidth="461.0" style="-fx-border-color: white;">
+         <children>
+            <GridPane layoutX="539.0" layoutY="57.0" prefHeight="30.0" prefWidth="149.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="113.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="36.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label fx:id="lbStatus1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="108.0" text="Carregando" visible="false" />
+                  <ProgressIndicator fx:id="piStatus1" prefHeight="30.0" prefWidth="84.0" visible="false" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="278.0" layoutY="57.0" prefHeight="30.0" prefWidth="149.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="113.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="36.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="lbStatus" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="108.0" text="Carregando" visible="false" />
+                  <ProgressIndicator fx:id="piStatus" prefHeight="30.0" prefWidth="84.0" visible="false" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <GridPane layoutX="283.0" layoutY="213.0" prefHeight="32.0" prefWidth="411.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="107.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="57.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="46.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <JFXRadioButton fx:id="rbTodos" onAction="#bloqComponents" selected="true" text="Todos" textFill="WHITE" GridPane.columnIndex="3">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="rbId" onAction="#bloqComponents" text="ID" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="rbFormaPagamento" onAction="#bloqComponents" prefHeight="24.0" prefWidth="198.0" text="Forma de Pagamento" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="rbDescricao" onAction="#bloqComponents" text="Descrição" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXRadioButton>
+         </children>
+      </GridPane>
+      <GridPane layoutX="284.0" layoutY="251.0" prefHeight="32.0" prefWidth="279.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="87.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="75.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="61.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <JFXRadioButton fx:id="rbTodos1" selected="true" text="Todos" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="rbReceita" onAction="#bloqComponents" text="Receita" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="rbDespesa" onAction="#bloqComponents" text="Despesa" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXRadioButton>
+         </children>
+      </GridPane>
+      <JFXButton fx:id="btEntrada" layoutX="20.0" layoutY="234.0" onAction="#onBtEntradaAction" prefHeight="39.0" prefWidth="118.0" text="Entrada" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_increase_64px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btSaida" layoutX="152.0" layoutY="234.0" onAction="#onBtSaidaAction" prefHeight="39.0" prefWidth="96.0" text="Saída" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_decrease_64px_1.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXCheckBox fx:id="cbData" layoutX="803.0" layoutY="77.0" onAction="#liberaData" text="Habilitar Data" textFill="WHITE" unCheckedColor="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXCheckBox>
+      <JFXTextField fx:id="tfBusca" focusColor="WHITE" layoutX="801.0" layoutY="154.0" prefHeight="39.0" prefWidth="186.0" promptText="Buscar" />
+      <ImageView fitHeight="39.0" fitWidth="57.0" layoutX="759.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_search_60px_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="57.0" layoutX="755.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../model/images/icons8_calendar_1_60px_1.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btPesquisar" layoutX="772.0" layoutY="204.0" onAction="#buscaOperacoes" prefHeight="39.0" prefWidth="222.0" text="Pesquisar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_search_60px_1.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btExcluir" layoutX="772.0" layoutY="249.0" onAction="#excluiOperacao" prefHeight="39.0" prefWidth="222.0" text="Excluir" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../model/images/icons8_trash_60px_1.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>
