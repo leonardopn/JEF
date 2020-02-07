@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public abstract class GeraLogUtils {
+public class GeraLogUtils {
 
 	public static void gravarLogQuery(String txt) {
 		String caminho = System.getProperty("user.home") + File.separatorChar + "Documents" + File.separatorChar
