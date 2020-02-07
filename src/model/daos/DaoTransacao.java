@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import dataBase.DbUtils;
 import gui.controllers.ViewCaixaController;
 import gui.utils.AlertsUtils;
+import gui.utils.GeraLogUtils;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
@@ -62,11 +63,13 @@ public class DaoTransacao {
 				st.setString(6, obs);
 				st.setString(7, servico);
 				st.setInt(8, idPacote);
+				GeraLogUtils.gravarLogQuery(st.toString());
 				st.execute();
 			}
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} catch (ParseException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
@@ -114,6 +117,7 @@ public class DaoTransacao {
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		return false;
 	}
@@ -130,17 +134,20 @@ public class DaoTransacao {
 						.prepareStatement("REPLACE INTO caixa " + "(data, fundoDeTroco) " + "VALUES " + "(?, ?)");
 				st.setDate(1, new java.sql.Date(data.getTime()));
 				st.setDouble(2, fundoDeTroco);
+				GeraLogUtils.gravarLogQuery(st.toString());
 				st.execute();
 			} else {
 				SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
 				Date data = formataData.parse(dpData.toString());
 				st = DbUtils.getConnection().prepareStatement("update caixa set status = 0 where data = ?;");
 				st.setDate(1, new java.sql.Date(data.getTime()));
+				GeraLogUtils.gravarLogQuery(st.toString());
 				st.executeQuery();
 			}
 		} catch (SQLException | ParseException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.fechaStatement(st);
 			DbUtils.closeConnection();
@@ -168,6 +175,7 @@ public class DaoTransacao {
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaResultSet(rs);
@@ -179,10 +187,12 @@ public class DaoTransacao {
 		try {
 			st = DbUtils.getConnection().prepareStatement("DELETE FROM transacao " + "WHERE id= " + "(?)");
 			st.setInt(1, tran.getId());
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.fechaStatement(st);
 			DbUtils.closeConnection();
@@ -206,6 +216,7 @@ public class DaoTransacao {
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.fechaStatement(st);
 			DbUtils.closeConnection();
@@ -225,11 +236,13 @@ public class DaoTransacao {
 			st.setDouble(3, valorCartao);
 			st.setDouble(4, fundoDeTroco);
 			st.setString(5, localDateFormatadaProcura.format(data));
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.fechaStatement(st);
 			DbUtils.closeConnection();

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import dataBase.DbUtils;
 import gui.utils.AlertsUtils;
+import gui.utils.GeraLogUtils;
 import javafx.scene.control.Alert.AlertType;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
@@ -20,7 +21,8 @@ public class DaoCliente {
 	public static boolean salvarCliente(TextField txtNomeCliente, TextField txtEmailCliente, TextField txtTelefoneCliente, TextField txtRedeSocialCliente) {
 		boolean count = true;
 		try {
-			st = DbUtils.getConnection().prepareStatement("select nome from cliente where nome = ?");
+			String query = "select nome from cliente where nome = ?";
+			st = DbUtils.getConnection().prepareStatement(query);
 			st.setString(1, txtNomeCliente.getText());
 			rs = st.executeQuery();
 			count = rs.next();
@@ -34,11 +36,13 @@ public class DaoCliente {
 				st.setString(2, txtNomeCliente.getText());
 				st.setString(3, txtRedeSocialCliente.getText());
 				st.setString(4, txtTelefoneCliente.getText());
+				GeraLogUtils.gravarLogQuery(st.toString());
 				st.execute();
 			}
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO "+e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);
@@ -63,6 +67,7 @@ public class DaoCliente {
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.closeConnection();
@@ -74,26 +79,29 @@ public class DaoCliente {
 	public static boolean atualizarCliente(int id, String nome, String email, String telefone, String redeSocial ) {
 		boolean count = true;
 		try {
-			st = DbUtils.getConnection().prepareStatement("select idcliente from cliente where nome = ?");
+			String query = "select idcliente from cliente where nome = ?";
+			st = DbUtils.getConnection().prepareStatement(query);
 			st.setString(1, nome);
 			rs = st.executeQuery();
 			count = rs.next();
 			if(!(count) || rs.getInt(1) == id) {
 				st = DbUtils.getConnection().prepareStatement(
 						"UPDATE cliente "
-						+"SET nome = ?, email = ?, telefone = ?, rede_social = ?"
+						+"SET nome = ?, email = ?, telefone = ?, rede_social = ? "
 						+"WHERE idcliente=(?)");
 				st.setString(1, nome);
 				st.setString(2, email);
 				st.setString(3, telefone);
 				st.setString(4, redeSocial); 
 				st.setInt(5, id); 
+				GeraLogUtils.gravarLogQuery(st.toString());
 				st.execute();
 				return false;
 			}
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO "+e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);
@@ -105,13 +113,15 @@ public class DaoCliente {
 	
 	public static void excluirCliente(Cliente cli) {
 		try {
-			st = DbUtils.getConnection().prepareStatement("UPDATE cliente "
-													+ "SET status = 0 WHERE idcliente= (?)");
+			String query = "UPDATE cliente SET status = 0 WHERE idcliente= (?)";
+			st = DbUtils.getConnection().prepareStatement(query);
 			st.setInt(1, cli.getId()); 
 			st.execute();
+			GeraLogUtils.gravarLogQuery(st.toString());
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO "+e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);
@@ -170,6 +180,7 @@ public class DaoCliente {
 				@Override
 				public void run() {
 					AlertsUtils.showAlert("ERRO", "Erro durante a conexão com o banco!", e.getMessage(), AlertType.ERROR);
+					GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 				}
 			});
 		}

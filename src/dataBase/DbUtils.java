@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import gui.utils.GeraLogUtils;
 import gui.utils.IdentificadorSoUtils;
 import model.exceptions.DbException;
 
@@ -26,6 +27,7 @@ public class DbUtils {
 				try {
 					conn = DriverManager.getConnection(url, props);
 				} catch (SQLException e) {
+					GeraLogUtils.gravarLogQuery("ERRO "+e.getMessage());
 					JOptionPane.showMessageDialog(null, e.getMessage()+
 							"\n\nAperte enter para fechar a mensagem e encerrar seu programa!",
 							"Problemas com a conexão", JOptionPane.ERROR_MESSAGE);

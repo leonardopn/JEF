@@ -12,6 +12,7 @@ import java.util.Date;
 
 import dataBase.DbUtils;
 import gui.utils.AlertsUtils;
+import gui.utils.GeraLogUtils;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
 import model.collections.Colecao;
@@ -44,6 +45,7 @@ public class DaoOperacao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaResultSet(rs);
@@ -64,6 +66,7 @@ public class DaoOperacao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaResultSet(rs);
@@ -173,6 +176,7 @@ public class DaoOperacao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaResultSet(rs);
@@ -184,6 +188,7 @@ public class DaoOperacao {
 	public static void excluiOperacao(int id, double valor, LocalDate data, String formaPagamento) {
 		try {
 			st = DbUtils.getConnection().prepareStatement("delete from operacoes where id = ?");
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.setInt(1, id);
 			st.execute();
 			if (formaPagamento.equals("Dinheiro")) {
@@ -192,11 +197,13 @@ public class DaoOperacao {
 						.prepareStatement("update caixa set fundoDeTroco = fundoDeTroco + ? where data = ?;");
 				st.setDouble(1, valor);
 				st.setString(2, localDateFormatadaProcura.format(data));
+				GeraLogUtils.gravarLogQuery(st.toString());
 				st.execute();
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaStatement(st);
@@ -213,6 +220,7 @@ public class DaoOperacao {
 			st.setString(2, descricao);
 			st.setDouble(3, Double.parseDouble(valor.replaceAll(",", ".")));
 			st.setString(4, formaPagamento);
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 
 			if ("Dinheiro".equals(formaPagamento)) {
@@ -220,6 +228,7 @@ public class DaoOperacao {
 						.prepareStatement("update caixa set fundoDeTroco = fundoDeTroco + ? where data = ?;");
 				st.setDate(2, new java.sql.Date(date.getTime()));
 				st.setDouble(1, Double.parseDouble(valor.replaceAll(",", ".")));
+				GeraLogUtils.gravarLogQuery(st.toString());
 				st.execute();
 			}
 
@@ -233,6 +242,7 @@ public class DaoOperacao {
 				public void run() {
 					AlertsUtils.showAlert("ERRO", "Erro durante a conexão com o banco!", e.getMessage(),
 							AlertType.ERROR);
+					GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 				}
 			});
 		} catch (ParseException e) {
@@ -257,6 +267,7 @@ public class DaoOperacao {
 		try {
 			st = DbUtils.getConnection().prepareStatement("UPDATE contas set montante = montante + ?;");
 			st.setString(1, valor);
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 		} catch (SQLException e) {
 			Platform.runLater(new Runnable() {
@@ -264,6 +275,7 @@ public class DaoOperacao {
 				public void run() {
 					AlertsUtils.showAlert("ERRO", "Erro durante a conexão com o banco!", e.getMessage(),
 							AlertType.ERROR);
+					GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 				}
 			});
 		} catch (NumberFormatException e) {
