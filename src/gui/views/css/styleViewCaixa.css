@@ -12,7 +12,7 @@
 	-fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
-#btBuscar{
+#btBuscar, #btAtualizar, #btAbrirFecharCaixa{
 	-fx-background-color: #4c7fff;
 	-fx-background-radius: 5em;
 	-fx-border-radius: 5em;
@@ -20,7 +20,7 @@
 	-fx-effect:  dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
 }
 
-#btLimpar{
+#btLimpar, #btExcluir{
 	-fx-background-color: #ff4747;
 	-fx-background-radius: 5em;
 	-fx-border-radius: 5em;
@@ -28,8 +28,16 @@
 	-fx-effect:  dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
 }
 
+#btEnviarTransacao{
+	-fx-background-color: #00ff94;
+	-fx-background-radius: 5em;
+	-fx-border-radius: 5em;
+	-fx-border-color:  #e1e1e1;
+	 -fx-effect:  dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
+}
+
 .tab-pane{
-	-fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+	/*-fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);*/
 }
 
 .tab:selected {
@@ -62,6 +70,7 @@
 	-fx-border-radius: 0.5em;
 	-fx-border-color:  #e1e1e1;
 	-fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+	
 }
 
 .table-view{

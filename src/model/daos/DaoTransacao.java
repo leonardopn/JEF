@@ -17,7 +17,7 @@ import gui.utils.AlertsUtils;
 import gui.utils.GeraLogUtils;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import model.collections.Colecao;
 import model.collections.entities.Caixa;
@@ -29,8 +29,8 @@ public class DaoTransacao {
 	private static PreparedStatement st = null;
 	private static ResultSet rs = null;
 
-	public static void salvarTransacao(TextField tfCliente, ChoiceBox<Funcionario> cbFuncionario, LocalDate dpData,
-			TextField tfValor, ChoiceBox<String> cbFormaPagamento, String servico, String obs, int idPacote) {
+	public static void salvarTransacao(TextField tfCliente, ComboBox<Funcionario> cbFuncionario, LocalDate dpData,
+			TextField tfValor, ComboBox<String> cbFormaPagamento, String servico, String obs, int idPacote) {
 		try {
 			int clienteId = 0;
 			SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");

@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
+import com.jfoenix.controls.JFXTreeView;
+
 import application.Main;
 import gui.utils.AlertsUtils;
 import gui.utils.NotificacoesUtils;
@@ -27,7 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -35,7 +37,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -61,9 +62,9 @@ public class ViewCaixaController implements Initializable {
 	private static int statusCaixa;
 	private static String servico;
 	private final Image caixaAberto = new Image(
-			(getClass().getResourceAsStream("/model/images/icons8_open_sign_96px.png")));
+			(getClass().getResourceAsStream("/model/images/icons8_open_sign_60px_2.png")));
 	private final Image caixaFechado = new Image(
-			(getClass().getResourceAsStream("/model/images/icons8_close_sign_160px.png")));
+			(getClass().getResourceAsStream("/model/images/icons8_close_sign_60px_3.png")));
 
 	private ObservableList<Transacao> obTable;
 
@@ -71,7 +72,7 @@ public class ViewCaixaController implements Initializable {
 
 	private static TextField tfClienteTemp;
 
-	private static ChoiceBox<Funcionario> cbFuncionarioTemp;
+	private static ComboBox<Funcionario> cbFuncionarioTemp;
 
 	private static AutoCompletionBinding<Cliente> bindAutoCompleteCliente;
 
@@ -81,7 +82,7 @@ public class ViewCaixaController implements Initializable {
 	private Button btAtualizar;
 
 	@FXML
-	private TreeView<String> trvServicos;
+	private JFXTreeView<String> trvServicos;
 
 	@FXML
 	private ImageView ivCaixa;
@@ -111,7 +112,7 @@ public class ViewCaixaController implements Initializable {
 	private CheckBox cbBloqueiaPreco;
 
 	@FXML
-	private ChoiceBox<PacoteAssociado> cbPacoteAssociado;
+	private ComboBox<PacoteAssociado> cbPacoteAssociado;
 
 	@FXML
 	private TextField tfCliente;
@@ -120,10 +121,10 @@ public class ViewCaixaController implements Initializable {
 	private TextField tfObs;
 
 	@FXML
-	private ChoiceBox<Funcionario> cbFuncionario;
+	private ComboBox<Funcionario> cbFuncionario;
 
 	@FXML
-	private ChoiceBox<String> cbFormaPagamento;
+	private ComboBox<String> cbFormaPagamento;
 
 	@FXML
 	private Label lbStatus;
@@ -220,7 +221,7 @@ public class ViewCaixaController implements Initializable {
 		return tfClienteTemp;
 	}
 
-	public static ChoiceBox<Funcionario> getCbFuncionarioTemp() {
+	public static ComboBox<Funcionario> getCbFuncionarioTemp() {
 		return cbFuncionarioTemp;
 	}
 
