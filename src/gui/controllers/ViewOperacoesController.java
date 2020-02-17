@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import model.collections.Colecao;
 import model.collections.entities.Operacao;
 import model.daos.DaoOperacao;
+import model.daos.DaoTransacao;
 
 public class ViewOperacoesController implements Initializable {
 
@@ -680,10 +681,12 @@ public class ViewOperacoesController implements Initializable {
 						if (op.getSelect().isSelected()) {
 							if(op.getReceita() == 0.0) {
 								DaoOperacao.excluiOperacao(op.getId(), -op.getDespesa(), data, op.getFormaPagamento());
+								DaoTransacao.carregaTotalCaixa(LocalDate.now());
 								DaoOperacao.atualizaMontante(String.valueOf(op.getDespesa()).replace("-", "+"));
 							}
 							else {
 								DaoOperacao.excluiOperacao(op.getId(), -op.getReceita(), data, op.getFormaPagamento());
+								DaoTransacao.carregaTotalCaixa(LocalDate.now());
 								DaoOperacao.atualizaMontante("-"+String.valueOf(op.getReceita()));
 							}
 						}

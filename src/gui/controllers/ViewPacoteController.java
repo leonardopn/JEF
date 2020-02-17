@@ -32,6 +32,7 @@ import model.collections.entities.Pacote;
 import model.collections.entities.PacoteAssociado;
 import model.daos.DaoOperacao;
 import model.daos.DaoPacote;
+import model.daos.DaoTransacao;
 
 public class ViewPacoteController implements Initializable {
 
@@ -377,6 +378,7 @@ public class ViewPacoteController implements Initializable {
 					DaoPacote.salvarPacoteAssociado(tfCliente, cbPacote);
 					DaoOperacao.salvaOperacao("Pacote de: " + tfCliente.getText(), LocalDate.now(),
 							String.valueOf(cbPacote.getValue().getValor()), cbFormaDePagamento.getValue());
+					DaoTransacao.carregaTotalCaixa(LocalDate.now());
 					carregaTabelaPacoteAssociado();
 
 					Platform.runLater(new Runnable() {

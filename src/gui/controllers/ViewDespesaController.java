@@ -19,6 +19,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import model.daos.DaoOperacao;
+import model.daos.DaoTransacao;
 
 public class ViewDespesaController implements Initializable {
 
@@ -72,6 +73,7 @@ public class ViewDespesaController implements Initializable {
 					}
 					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfSaida.getText().replaceAll(",", "."),
 							cbFormaPagamento.getValue());
+					DaoTransacao.carregaTotalCaixa(LocalDate.now());
 					parada = false;
 					Platform.runLater(new Runnable() {
 						@Override

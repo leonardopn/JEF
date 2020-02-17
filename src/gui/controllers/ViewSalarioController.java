@@ -24,6 +24,7 @@ import model.collections.Colecao;
 import model.collections.entities.Funcionario;
 import model.daos.DaoFuncionario;
 import model.daos.DaoOperacao;
+import model.daos.DaoTransacao;
 
 public class ViewSalarioController implements Initializable {
 
@@ -67,6 +68,7 @@ public class ViewSalarioController implements Initializable {
 					DaoFuncionario.atualizarSalario(tfCpf.getText(), salarioAtualizado);
 					DaoOperacao.salvaOperacao("Pagamento de salário: " + tfFuncionario.getText(), LocalDate.now(),
 							tfSalario.getText(), cbFormaPagamento.getValue());
+					DaoTransacao.carregaTotalCaixa(LocalDate.now());
 					DaoFuncionario.carregaFuncionario();
 
 					Platform.runLater(new Runnable() {
