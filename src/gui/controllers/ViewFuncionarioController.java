@@ -1,6 +1,5 @@
 package gui.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,14 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,13 +29,10 @@ public class ViewFuncionarioController implements Initializable {
 	private boolean parada;
 
 	@FXML
-	private Button btAtualizar;
+	private Button btAtualizaFuncionario;
 
 	@FXML
 	private ProgressIndicator piStatus;
-
-	@FXML
-	private Label labelStatus;
 
 	@FXML
 	private Button btCriaFuncionario;
@@ -52,42 +44,56 @@ public class ViewFuncionarioController implements Initializable {
 	private TextField txtCpfFuncionario;
 
 	@FXML
+	private TextField txtCpfFuncionarioAtualizado;
+
+	@FXML
 	private TextField txtNomeFuncionario;
+
+	@FXML
+	private TextField txtNomeFuncionarioAtualizado;
 
 	@FXML
 	private TextField txtTelefoneFuncionario;
 
 	@FXML
+	private TextField txtTelefoneFuncionarioAtualizado;
+
+	@FXML
 	private TableView<Funcionario> tvFuncionario = new TableView<>();
+
+	@FXML
+	private TableView<Funcionario> tvFuncionarioAtualizado = new TableView<>();
 
 	@FXML
 	private TableColumn<Funcionario, String> colunaNome;
 
 	@FXML
+	private TableColumn<Funcionario, String> colunaNomeAtualizado;
+
+	@FXML
 	private TableColumn<Funcionario, String> colunaCpf;
+
+	@FXML
+	private TableColumn<Funcionario, String> colunaCpfAtualizado;
+
+	@FXML
+	private TableColumn<Funcionario, String> colunaAtualizado;
 
 	@FXML
 	private TableColumn<Funcionario, String> colunaTelefone;
 
 	@FXML
-	private TableColumn<Funcionario, CheckBox> colunaSelect;
+	private TableColumn<Funcionario, String> colunaTelefoneAtualizado;
 
 	@FXML
-	public void atualizaFuncionario() {
-		Parent parent;
-		try {
-			parent = FXMLLoader.load(getClass().getResource("/gui/views/ViewAtualizaFuncionario.fxml"));
-			Scene scene = new Scene(parent);
-			ViewController.getStageFuncionario().setScene(scene);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	private TableColumn<Funcionario, CheckBox> colunaSelect;
 
-	public void carregaFuncionario() {//colocar task futuramente
+	public void carregaFuncionario() {
 		obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
 		tvFuncionario.setItems(obFuncionario);
+		tvFuncionarioAtualizado.setItems(obFuncionario);
 		tvFuncionario.refresh();
+		tvFuncionarioAtualizado.refresh();
 	}
 
 	@FXML
@@ -100,20 +106,18 @@ public class ViewFuncionarioController implements Initializable {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
-				labelStatus.setVisible(false);
 				return null;
 			}
 		};
 
 		try {
-			if (AlertsUtils.showAlertGenerico("Confirmação de inclusão", "Deseja mesmo incluir um funcionário?", null)) {
+			if (AlertsUtils.showAlertGenerico("Confirmação de inclusão", "Deseja mesmo incluir um funcionário?",
+					null)) {
 				if (txtCpfFuncionario.getText().isEmpty() || txtNomeFuncionario.getText().isEmpty()) {
 					AlertsUtils.showAlert("Aviso", "Falta informações", "Coloco no mínimo: CPF e Nome",
 							AlertType.INFORMATION);
 				} else {
 					piStatus.setVisible(true);
-					labelStatus.setVisible(true);
-					labelStatus.setText("Criando funcionário");
 					Task<Void> acaoCriaFuncionario = new Task<Void>() {
 						@Override
 						protected Void call() throws Exception {
@@ -125,17 +129,18 @@ public class ViewFuncionarioController implements Initializable {
 									txtNomeFuncionario)) {
 								DaoFuncionario.carregaFuncionario();
 								DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
-								carregaFuncionario();
+
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
-										obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
+										carregaFuncionario();
 										ViewController.getTvAgendaTemp().setItems(obFuncionario);
 										ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
-										txtCpfFuncionario.setText("");
-										txtNomeFuncionario.setText("");
-										txtTelefoneFuncionario.setText("");
-										NotificacoesUtils.mostraNotificacoes("Concluído!", "Funcionário criado com sucesso!");
+										txtCpfFuncionario.clear();
+										txtNomeFuncionario.clear();
+										txtTelefoneFuncionario.clear();
+										NotificacoesUtils.mostraNotificacoes("Concluído!",
+												"Funcionário criado com sucesso!");
 									}
 								});
 							} else {
@@ -167,9 +172,9 @@ public class ViewFuncionarioController implements Initializable {
 			} else {
 				AlertsUtils.showAlert("Cancelado", "Você cancelou a operação", "Funcionário não incluído",
 						AlertType.INFORMATION);
-				txtCpfFuncionario.setText("");
-				txtNomeFuncionario.setText("");
-				txtTelefoneFuncionario.setText("");
+				txtCpfFuncionario.clear();
+				txtNomeFuncionario.clear();
+				txtTelefoneFuncionario.clear();
 			}
 		} catch (NumberFormatException e) {
 			AlertsUtils.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
@@ -186,7 +191,6 @@ public class ViewFuncionarioController implements Initializable {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
-					labelStatus.setVisible(false);
 					return null;
 				}
 			};
@@ -197,8 +201,6 @@ public class ViewFuncionarioController implements Initializable {
 				protected Void call() throws Exception {
 					Platform.runLater(() -> {
 						piStatus.setVisible(true);
-						labelStatus.setVisible(true);
-						labelStatus.setText("Excluíndo Funcionário");
 						Thread t = new Thread(tarefa);
 						t.start();
 					});
@@ -210,12 +212,11 @@ public class ViewFuncionarioController implements Initializable {
 					}
 					DaoFuncionario.carregaFuncionario();
 					DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
-					carregaFuncionario();
 
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							obFuncionario = FXCollections.observableArrayList(Colecao.funcionarios);
+							carregaFuncionario();
 							ViewController.getTvAgendaTemp().setItems(obFuncionario);
 							ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
 							NotificacoesUtils.mostraNotificacoes("Concluído!", "Funcionário excluído com sucesso!");
@@ -240,12 +241,96 @@ public class ViewFuncionarioController implements Initializable {
 		}
 	}
 
+	@FXML
+	public void selecionaFuncionario() {
+		Funcionario fun = tvFuncionarioAtualizado.getSelectionModel().getSelectedItem();
+		if (fun != null) {
+			txtCpfFuncionarioAtualizado.setText(fun.getCpf());
+			txtTelefoneFuncionarioAtualizado.setText(fun.getTelefone());
+			txtCpfFuncionarioAtualizado.setDisable(true);
+			txtNomeFuncionarioAtualizado.setText(fun.getNome());
+		}
+	}
+
+	@FXML
+	public void onAtualizaFuncionarioAction() {
+		if (AlertsUtils.showAlertAtualizacao()) {
+			String cpf = txtCpfFuncionarioAtualizado.getText();
+			String nome = txtNomeFuncionarioAtualizado.getText();
+			String telefone = txtTelefoneFuncionarioAtualizado.getText();
+			if (cpf.isEmpty() || nome.isEmpty()) {
+				NotificacoesUtils.mostraNotificacoes("Atenção!", "Campos de nome ou cpf estão vazios!");
+			} else {
+				parada = true;
+				Task<Void> tarefa = new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+						while (parada) {
+							Thread.sleep(0);
+						}
+						piStatus.setVisible(false);
+						return null;
+					}
+				};
+				piStatus.setVisible(true);
+
+				Task<Void> acaoAtualizaFuncionario = new Task<Void>() {
+
+					@Override
+					protected Void call() throws Exception {
+						Platform.runLater(() -> {
+							Thread t = new Thread(tarefa);
+							t.start();
+						});
+
+						DaoFuncionario.atualizarFuncionario(nome, telefone, cpf);
+						DaoFuncionario.carregaFuncionario();
+						DaoFuncionario.carregaAgendaFuncionario(ViewController.getDpDataTemp());
+
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								carregaFuncionario();
+								ViewController.getTvAgendaTemp().setItems(obFuncionario);
+								ViewController.getTvFuncionarioTemp().setItems(obFuncionario);
+								ViewController.getTvAgendaTemp().refresh();
+								ViewController.getTvFuncionarioTemp().refresh();
+								NotificacoesUtils.mostraNotificacoes("Concluído!",
+										"Funcionário atualizado com sucesso!");
+								txtCpfFuncionarioAtualizado.clear();
+								txtTelefoneFuncionarioAtualizado.clear();
+								txtNomeFuncionarioAtualizado.clear();
+							}
+						});
+						parada = false;
+						return null;
+					}
+				};
+
+				Platform.runLater(() -> {
+					ViewController.getStageCaixa().hide();
+					ViewController.getStageCliente().hide();
+					ViewController.getStagePagamento().hide();
+					Thread t = new Thread(acaoAtualizaFuncionario);
+					t.start();
+				});
+			}
+		} else {
+			NotificacoesUtils.mostraNotificacoes("Operação cancelada!", "Funcionário não foi atualizado!");
+		}
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
 		colunaSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
+
+		colunaNomeAtualizado.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		colunaCpfAtualizado.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		colunaTelefoneAtualizado.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+
 		carregaFuncionario();
 	}
 }

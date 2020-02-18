@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
+import com.jfoenix.controls.JFXComboBox;
+
 import gui.utils.AlertsUtils;
 import gui.utils.NotificacoesUtils;
 import javafx.application.Platform;
@@ -19,8 +21,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,6 +32,7 @@ import model.collections.entities.Pacote;
 import model.collections.entities.PacoteAssociado;
 import model.daos.DaoOperacao;
 import model.daos.DaoPacote;
+import model.daos.DaoTransacao;
 
 public class ViewPacoteController implements Initializable {
 
@@ -145,16 +146,13 @@ public class ViewPacoteController implements Initializable {
 	private TextField tfCliente;
 
 	@FXML
-	private ChoiceBox<Pacote> cbPacote;
+	private JFXComboBox<Pacote> cbPacote;
 
 	@FXML
-	private ChoiceBox<String> cbFormaDePagamento;
+	private JFXComboBox<String> cbFormaDePagamento;
 
 	@FXML
 	private ProgressIndicator piStatus;
-
-	@FXML
-	private Label labelStatus;
 
 	public static AutoCompletionBinding<Cliente> getBindAutoCompleteCliente() {
 		return bindAutoCompleteCliente;
@@ -169,7 +167,6 @@ public class ViewPacoteController implements Initializable {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
-				labelStatus.setVisible(false);
 				return null;
 			}
 		};
@@ -178,9 +175,7 @@ public class ViewPacoteController implements Initializable {
 				|| tfQuantMao.getText().isEmpty() || tfQuantPe.getText().isEmpty() || tfValorPe.getText().isEmpty()) {
 			NotificacoesUtils.mostraNotificacoes("Aviso!", "Preencha todos os campos!");
 		} else {
-			piStatus.setVisible(true);
-			labelStatus.setVisible(true);
-			labelStatus.setText("Criando pacote!");
+			piStatus.setVisible(true);		
 			parada = true;
 			Task<Void> acaoSalvaPacote = new Task<Void>() {
 				@Override
@@ -190,13 +185,13 @@ public class ViewPacoteController implements Initializable {
 						t.start();
 					});
 
-					DaoPacote.salvarPacote(tfNome, tfValor, tfValorMao, tfQuantMao, tfQuantPe, tfValorPe);
-					carregaTabelaPacote();
-					cbPacote.setItems(obPacote);
+					DaoPacote.salvarPacote(tfNome, tfValor, tfValorMao, tfQuantMao, tfQuantPe, tfValorPe);				
 					parada = false;
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
+							carregaTabelaPacote();
+							cbPacote.setItems(obPacote);
 							tfValor.setText("");
 							tfNome.setText("");
 							tfValorMao.setText("");
@@ -225,15 +220,12 @@ public class ViewPacoteController implements Initializable {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
-				labelStatus.setVisible(false);
 				return null;
 			}
 		};
 		if (AlertsUtils.showAlertGenerico("ATENÇÃO!", "Deseja mesmo excluír um pacote?",
 				"Pacotes só serão desativados, para excluí-los no " + "banco de dados, contate o ADMINISTRADOR!")) {
 			piStatus.setVisible(true);
-			labelStatus.setVisible(true);
-			labelStatus.setText("Excluíndo pacote!");
 			parada = true;
 			Task<Void> acaoExcluiPacote = new Task<Void>() {
 				@Override
@@ -298,14 +290,11 @@ public class ViewPacoteController implements Initializable {
 							Thread.sleep(0);
 						}
 						piStatus.setVisible(false);
-						labelStatus.setVisible(false);
 						return null;
 					}
 				};
 
 				piStatus.setVisible(true);
-				labelStatus.setVisible(true);
-				labelStatus.setText("Atualizando pacote!");
 
 				parada = true;
 				Task<Void> acaoAtualizaPacote = new Task<Void>() {
@@ -318,13 +307,13 @@ public class ViewPacoteController implements Initializable {
 						DaoPacote.atualizaPacote(tfNomeAtualizado, tfValorAtualizado, tfValorMaoAtualizado,
 								tfQuantMaoAtualizado, tfQuantPeAtualizado, tfValorPeAtualizado, tfIdPacote);
 						DaoPacote.carregaPacoteAssociado();
-						carregaTabelaPacote();
-						carregaTabelaPacoteAssociado();
-						cbPacote.setItems(obPacote);
 						parada = false;
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
+								carregaTabelaPacote();
+								carregaTabelaPacoteAssociado();
+								cbPacote.setItems(obPacote);
 								tfValorAtualizado.setText("");
 								tfNomeAtualizado.setText("");
 								tfValorMaoAtualizado.setText("");
@@ -374,13 +363,10 @@ public class ViewPacoteController implements Initializable {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
-					labelStatus.setVisible(false);
 					return null;
 				}
 			};
 			piStatus.setVisible(true);
-			labelStatus.setVisible(true);
-			labelStatus.setText("Associando pacote!");
 			parada = true;
 			Task<Void> acaoAdicionaPacoteAssociado = new Task<Void>() {
 				@Override
@@ -392,6 +378,7 @@ public class ViewPacoteController implements Initializable {
 					DaoPacote.salvarPacoteAssociado(tfCliente, cbPacote);
 					DaoOperacao.salvaOperacao("Pacote de: " + tfCliente.getText(), LocalDate.now(),
 							String.valueOf(cbPacote.getValue().getValor()), cbFormaDePagamento.getValue());
+					DaoTransacao.carregaTotalCaixa(LocalDate.now());
 					carregaTabelaPacoteAssociado();
 
 					Platform.runLater(new Runnable() {
@@ -424,13 +411,10 @@ public class ViewPacoteController implements Initializable {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
-					labelStatus.setVisible(false);
 					return null;
 				}
 			};
 			piStatus.setVisible(true);
-			labelStatus.setVisible(true);
-			labelStatus.setText("Excluindo associação!");
 			parada = true;
 			Task<Void> acaoExcluiPacoteAssociado = new Task<Void>() {
 				@Override

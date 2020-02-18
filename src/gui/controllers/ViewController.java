@@ -360,10 +360,9 @@ public class ViewController implements Initializable {
 				retornaInformacaoAgenda();
 				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/views/ViewCliente.fxml"));
 				cliente = new Scene(fxmlCliente);
-				stageCliente.setWidth(885);
+				stageCliente.setWidth(880);
 				stageCliente.setHeight(695);
 				stageCliente.setScene(cliente);
-				//stageCliente.setResizable(false);
 				stageCliente.show();
 				stageCliente.centerOnScreen();
 				stageCliente.getIcons().add(new Image(getClass().getResourceAsStream("/model/images/icon.png")));
@@ -580,7 +579,7 @@ public class ViewController implements Initializable {
 	public void abreFechaSplit() {
 		double[] divisor = splitPaneCentral.getDividerPositions();
 		if (divisor[0] < 0.12290909090909091) {
-			splitPaneCentral.setDividerPositions(0.135);
+			splitPaneCentral.setDividerPositions(0.147);
 		} else {
 			splitPaneCentral.setDividerPositions(0.0022);
 		}

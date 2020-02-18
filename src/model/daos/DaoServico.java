@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dataBase.DbUtils;
+import gui.utils.GeraLogUtils;
 import model.collections.Colecao;
 import model.collections.entities.Categoria;
 import model.collections.entities.Servico;
@@ -25,6 +26,7 @@ public class DaoServico {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.fechaResultSet(rs);
 			DbUtils.fechaStatement(st);
@@ -42,6 +44,7 @@ public class DaoServico {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.fechaResultSet(rs);
 			DbUtils.fechaStatement(st);

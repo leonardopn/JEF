@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import dataBase.DbUtils;
 import gui.utils.AlertsUtils;
+import gui.utils.GeraLogUtils;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import model.collections.Colecao;
@@ -35,11 +36,13 @@ public class DaoFuncionario {
 				st.setString(1, txtCpfFuncionario.getText());
 				st.setString(2, txtNomeFuncionario.getText());
 				st.setString(3, txtTelefoneFuncionario.getText());  
+				GeraLogUtils.gravarLogQuery(st.toString());
 				st.execute();
 			}
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);
@@ -63,6 +66,7 @@ public class DaoFuncionario {
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.closeConnection();
@@ -92,6 +96,7 @@ public class DaoFuncionario {
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.closeConnection();
@@ -107,10 +112,12 @@ public class DaoFuncionario {
 					+ "SET status = 0 WHERE cpffuncionario= "
 					+ "(?)");
 			st.setString(1, fun.getCpf()); 
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);
@@ -127,10 +134,12 @@ public class DaoFuncionario {
 			st.setString(1, nome);
 			st.setString(2, telefone); 
 			st.setString(3, cpf); 
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);
@@ -146,10 +155,12 @@ public class DaoFuncionario {
 					+"WHERE cpffuncionario = ?");
 			st.setDouble(1, salario);
 			st.setString(2, cpf); 
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);

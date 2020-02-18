@@ -6,9 +6,10 @@ import java.sql.SQLException;
 
 import dataBase.DbUtils;
 import gui.utils.AlertsUtils;
+import gui.utils.GeraLogUtils;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import model.collections.Colecao;
 import model.collections.entities.Cliente;
@@ -30,12 +31,14 @@ public class DaoPacote {
 			st.setInt(4, Integer.parseInt(tfQuantPe.getText().replaceAll(",", ".")));
 			st.setDouble(5, Double.parseDouble(tfValorMao.getText().replaceAll(",", ".")));
 			st.setDouble(6, Double.parseDouble(tfValorPe.getText().replaceAll(",", ".")));
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.executeQuery();
 			carregaPacote();
 
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} catch (NumberFormatException e) {
 			Platform.runLater(new Runnable() {
 				@Override
@@ -66,6 +69,7 @@ public class DaoPacote {
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaResultSet(rs);
@@ -77,10 +81,12 @@ public class DaoPacote {
 		try {
 			st = DbUtils.getConnection().prepareStatement("update pacotes set status = 0 where id = ?");
 			st.setInt(1, pacote.getId());
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.executeQuery();
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaStatement(st);
@@ -99,11 +105,13 @@ public class DaoPacote {
 			st.setDouble(5, Double.parseDouble(tfValorMao.getText().replaceAll(",", ".")));
 			st.setDouble(6, Double.parseDouble(tfValorPe.getText().replaceAll(",", ".")));
 			st.setInt(7, Integer.parseInt(tfIdPacote.getText()));
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.executeQuery();
 			carregaPacote();
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} catch (NumberFormatException e) {
 			Platform.runLater(new Runnable() {
 				@Override
@@ -127,6 +135,7 @@ public class DaoPacote {
 				if (rs.getInt("pa.quant_mao") == 0 & rs.getInt("pa.quant_pe") == 0) {
 					st = DbUtils.getConnection().prepareStatement("delete from pacotes_associados where id = ?");
 					st.setInt(1, rs.getInt("pa.id"));
+					GeraLogUtils.gravarLogQuery(st.toString());
 					st.execute();
 				} else {
 					PacoteAssociado pacoteAssociado = new PacoteAssociado(rs.getInt("pa.id"), rs.getString("c.nome"),
@@ -137,6 +146,7 @@ public class DaoPacote {
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaStatement(st);
@@ -144,7 +154,7 @@ public class DaoPacote {
 		}
 	}
 
-	public static void salvarPacoteAssociado(TextField tfCliente, ChoiceBox<Pacote> cbPacote) {
+	public static void salvarPacoteAssociado(TextField tfCliente, ComboBox<Pacote> cbPacote) {
 		try {
 			int idCliente = -1;
 			st = DbUtils.getConnection().prepareStatement("insert into pacotes_associados "
@@ -156,6 +166,7 @@ public class DaoPacote {
 					st.setInt(2, cbPacote.getValue().getId());
 					st.setInt(3, cbPacote.getValue().getQuantMao());
 					st.setInt(4, cbPacote.getValue().getQuantPe());
+					GeraLogUtils.gravarLogQuery(st.toString());
 					st.executeQuery();
 					carregaPacoteAssociado();
 				}
@@ -173,6 +184,7 @@ public class DaoPacote {
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaStatement(st);
@@ -183,10 +195,12 @@ public class DaoPacote {
 		try {
 			st = DbUtils.getConnection().prepareStatement("delete from pacotes_associados where id = ?");
 			st.setInt(1, pacote.getId());
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.executeQuery();
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaStatement(st);

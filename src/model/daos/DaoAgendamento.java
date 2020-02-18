@@ -11,6 +11,7 @@ import java.util.Date;
 
 import dataBase.DbUtils;
 import gui.utils.AlertsUtils;
+import gui.utils.GeraLogUtils;
 import javafx.scene.control.Alert.AlertType;
 import model.collections.Colecao;
 import model.collections.entities.Agendamento;
@@ -42,10 +43,12 @@ public class DaoAgendamento {
 			st.setString(2, cpfFuncionario);
 			st.setDate(3, new java.sql.Date(data.getTime()));
 			st.setTime(4, new java.sql.Time(formataHora.parse(horario).getTime()));
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 		}
 		catch(SQLException | ParseException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);
@@ -79,6 +82,7 @@ public class DaoAgendamento {
 		}
 		catch(SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.closeConnection();
@@ -102,10 +106,12 @@ public class DaoAgendamento {
 			st.setDate(2, new java.sql.Date(dataFormatada.getTime())); 
 			st.setTime(3, new java.sql.Time(formataHora.parse(age.getHorario()).getTime())); 
 			st.setString(4, age.getCpfFuncionario());
+			GeraLogUtils.gravarLogQuery(st.toString());
 			st.execute();
 		}
 		catch(SQLException | ParseException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(), AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		}
 		finally {
 			DbUtils.fechaStatement(st);

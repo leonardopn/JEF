@@ -14,12 +14,12 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import model.daos.DaoOperacao;
+import model.daos.DaoTransacao;
 
 public class ViewDespesaController implements Initializable {
 
@@ -38,13 +38,10 @@ public class ViewDespesaController implements Initializable {
 	private Button btEnviar;
 
 	@FXML
-	private ChoiceBox<String> cbFormaPagamento;
+	private ComboBox<String> cbFormaPagamento;
 
 	@FXML
 	private ProgressIndicator piStatus;
-
-	@FXML
-	private Label lbStatus;
 
 	@FXML
 	public void geraDespesa() {
@@ -52,7 +49,6 @@ public class ViewDespesaController implements Initializable {
 			NotificacoesUtils.mostraNotificacoes("AVISO", "Preencha todos os campos!");
 		} else {
 			piStatus.setVisible(true);
-			lbStatus.setVisible(true);
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
@@ -60,7 +56,6 @@ public class ViewDespesaController implements Initializable {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
-					lbStatus.setVisible(false);
 					return null;
 				}
 			};
@@ -78,6 +73,7 @@ public class ViewDespesaController implements Initializable {
 					}
 					DaoOperacao.salvaOperacao(tfDescricao.getText(), dpData.getValue(), tfSaida.getText().replaceAll(",", "."),
 							cbFormaPagamento.getValue());
+					DaoTransacao.carregaTotalCaixa(LocalDate.now());
 					parada = false;
 					Platform.runLater(new Runnable() {
 						@Override

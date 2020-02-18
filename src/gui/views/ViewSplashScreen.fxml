@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane cacheShape="false" centerShape="false" layoutY="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="720.0" scaleShape="false" style="-fx-background-color: #2c2e33; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" stylesheets="@css/styleLogin.css">
          <children>
@@ -27,7 +26,7 @@
                   <JFXSpinner layoutX="112.0" layoutY="100.0" prefHeight="226.0" prefWidth="282.0" />
                </children>
             </Pane>
-            <Label layoutX="4.0" layoutY="334.0" prefHeight="30.0" prefWidth="106.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Version 2.5" textFill="WHITE">
+            <Label layoutX="4.0" layoutY="334.0" prefHeight="30.0" prefWidth="106.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Version 2.5.5" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

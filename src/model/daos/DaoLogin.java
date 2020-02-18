@@ -9,6 +9,7 @@ import application.Main;
 import dataBase.DbUtils;
 import gui.controllers.ViewLoginController;
 import gui.utils.AlertsUtils;
+import gui.utils.GeraLogUtils;
 import gui.utils.NotificacoesUtils;
 import javafx.scene.control.Alert.AlertType;
 import model.collections.entities.Login;
@@ -34,6 +35,7 @@ public class DaoLogin {
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 			System.exit(0);
 		} finally {
 			DbUtils.closeConnection();
@@ -84,6 +86,7 @@ public class DaoLogin {
 		} catch (SQLException e) {
 			AlertsUtils.showAlert("ERRO", "Algum problema aconteceu, contate o ADMINISTRADOR", e.getMessage(),
 					AlertType.ERROR);
+			GeraLogUtils.gravarLogQuery("ERRO" + e.getMessage());
 		} finally {
 			DbUtils.closeConnection();
 			DbUtils.fechaResultSet(rs);

@@ -24,12 +24,13 @@ import model.collections.Colecao;
 import model.collections.entities.Funcionario;
 import model.daos.DaoFuncionario;
 import model.daos.DaoOperacao;
+import model.daos.DaoTransacao;
 
 public class ViewSalarioController implements Initializable {
 
 	@FXML
 	private TextField tfSalario;
-	
+
 	@FXML
 	private ComboBox<String> cbFormaPagamento;
 
@@ -56,19 +57,38 @@ public class ViewSalarioController implements Initializable {
 		if (tfSalario.getText().equals("0.0")) {
 			NotificacoesUtils.mostraNotificacoes("Valor vazio", "Esse funcion�rio n�o tem o qu� receber");
 		} else {
-			Double salarioAtualizado = Double.parseDouble(tfSalario.getText());
-			DaoFuncionario.atualizarSalario(tfCpf.getText(), (-salarioAtualizado));
-			if(tfSalario.getText().charAt(0) != '-') {
-				tfSalario.setText("-"+tfSalario.getText());
+			if (tfSalario.getText().charAt(0) != '-') {
+				tfSalario.setText("-" + tfSalario.getText());
 			}
-			DaoOperacao.salvaOperacao("Pagamento de salário: " + tfFuncionario.getText(), LocalDate.now(),
-					tfSalario.getText(), cbFormaPagamento.getValue());
-			DaoFuncionario.carregaFuncionario();
-			tfFuncionario.clear();
-			tfCpf.clear();
-			tfSalario.clear();
-			populaTabela();
-			NotificacoesUtils.mostraNotificacoes("Notificação", "Pagamento efetuado!!");
+			Double salarioAtualizado = Double.parseDouble(tfSalario.getText());
+
+			Task<Void> acaoPagaFUncionario = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					DaoFuncionario.atualizarSalario(tfCpf.getText(), salarioAtualizado);
+					DaoOperacao.salvaOperacao("Pagamento de salário: " + tfFuncionario.getText(), LocalDate.now(),
+							tfSalario.getText(), cbFormaPagamento.getValue());
+					DaoTransacao.carregaTotalCaixa(LocalDate.now());
+					DaoFuncionario.carregaFuncionario();
+
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							tfFuncionario.clear();
+							tfCpf.clear();
+							tfSalario.clear();
+							populaTabela();
+							NotificacoesUtils.mostraNotificacoes("Notificação", "Pagamento efetuado!!");
+						}
+					});
+					return null;
+				}
+			};
+
+			Platform.runLater(() -> {
+				Thread t = new Thread(acaoPagaFUncionario);
+				t.start();
+			});
 		}
 	}
 
@@ -97,11 +117,12 @@ public class ViewSalarioController implements Initializable {
 		tfCpf.setText(String.valueOf(fun.getCpf()));
 		tfSalario.setText(String.valueOf(fun.getSalario()));
 	}
-	
+
 	public void carregaFormaPagamento() {
 		List<String> listMetPag = Arrays.asList("Dinheiro", "Cartão");
-		ObservableList<String>obFormaPagamento = FXCollections.observableArrayList(listMetPag);
+		ObservableList<String> obFormaPagamento = FXCollections.observableArrayList(listMetPag);
 		cbFormaPagamento.setItems(obFormaPagamento);
+		cbFormaPagamento.setValue(obFormaPagamento.get(0));
 	}
 
 	@Override

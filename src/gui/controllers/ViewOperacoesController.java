@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import model.collections.Colecao;
 import model.collections.entities.Operacao;
 import model.daos.DaoOperacao;
+import model.daos.DaoTransacao;
 
 public class ViewOperacoesController implements Initializable {
 
@@ -79,9 +80,6 @@ public class ViewOperacoesController implements Initializable {
 
 	@FXML
 	private Label lbTotalDia;
-
-	@FXML
-	private Label lbStatus;
 
 	@FXML
 	private ProgressIndicator piStatus;
@@ -389,8 +387,6 @@ public class ViewOperacoesController implements Initializable {
 		}
 
 		piStatus.setVisible(true);
-		lbStatus.setVisible(true);
-		lbStatus.setText("Carregando");
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -398,7 +394,6 @@ public class ViewOperacoesController implements Initializable {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
-				lbStatus.setVisible(false);
 				return null;
 			}
 		};
@@ -548,9 +543,6 @@ public class ViewOperacoesController implements Initializable {
 		int grupo1;
 		int grupo2;
 		piStatus.setVisible(true);
-		lbStatus.setVisible(true);
-		lbStatus.setText("Carregando");
-
 		Task<Void> tarefa = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -558,7 +550,6 @@ public class ViewOperacoesController implements Initializable {
 					Thread.sleep(0);
 				}
 				piStatus.setVisible(false);
-				lbStatus.setVisible(false);
 				return null;
 			}
 		};
@@ -663,8 +654,6 @@ public class ViewOperacoesController implements Initializable {
 		if (AlertsUtils.showAlertGenerico("AVISO!", "Deseja excluir está operacao?",
 				"*Sera feito um novo cálculo de valores!")) {
 			piStatus.setVisible(true);
-			lbStatus.setVisible(true);
-			lbStatus.setText("Excluindo");
 			Task<Void> tarefa = new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
@@ -672,7 +661,6 @@ public class ViewOperacoesController implements Initializable {
 						Thread.sleep(0);
 					}
 					piStatus.setVisible(false);
-					lbStatus.setVisible(false);
 					return null;
 				}
 			};
@@ -693,10 +681,12 @@ public class ViewOperacoesController implements Initializable {
 						if (op.getSelect().isSelected()) {
 							if(op.getReceita() == 0.0) {
 								DaoOperacao.excluiOperacao(op.getId(), -op.getDespesa(), data, op.getFormaPagamento());
+								DaoTransacao.carregaTotalCaixa(LocalDate.now());
 								DaoOperacao.atualizaMontante(String.valueOf(op.getDespesa()).replace("-", "+"));
 							}
 							else {
 								DaoOperacao.excluiOperacao(op.getId(), -op.getReceita(), data, op.getFormaPagamento());
+								DaoTransacao.carregaTotalCaixa(LocalDate.now());
 								DaoOperacao.atualizaMontante("-"+String.valueOf(op.getReceita()));
 							}
 						}
