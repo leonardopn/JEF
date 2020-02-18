@@ -12,7 +12,7 @@
 
 ## Status
 
-![](https://img.shields.io/badge/version-v2.5-green)
+![](https://img.shields.io/badge/version-v2.5.5-green)
 [![GitHub issues](https://img.shields.io/github/issues/leonardopn/JEF)](https://github.com/leonardopn/JEF/issues)
 [![GitHub forks](https://img.shields.io/github/forks/leonardopn/JEF)](https://github.com/leonardopn/JEF/network)
 [![(Version)](https://img.shields.io/badge/license-GNU%20LGPL%20version%202.1-green.svg?style=flat-square)](https://github.com/leonardopn/JEF/blob/master/LICENSE.md)
@@ -57,17 +57,29 @@
     dburl=jdbc:mariadb://ENDERECO_DO_BANCO:3306/NOME_DO_BANCO
     useSSL=false
     ```
+
+    * <b>Crie o arquivo vazico de LOGS (</b><u>logQuery.txt</u><b>) dentro da seguinte localização:</b>
+
+    *Windows: C:\Users\USUARIO\Documents\JEF_DATA\Logs*
+
+    *Linux: /home/USUARIO/Documentos/JEF_DATA/logs*
 ---
 
 ## Funcionamento
 
->Na atual versão do programa (v2.5) o design apresentava o seguinte visual:
+>Na atual versão do programa (v2.5.5) o design apresentava o seguinte visual:
 
-[![Video_15802146765c1b486e9b9eff44.gif](https://s5.gifyu.com/images/Video_15802146765c1b486e9b9eff44.gif)](https://gifyu.com/image/qg2E)
+[![deepin-screen-recorder_Select-area_20200217212959.gif](https://s5.gifyu.com/images/deepin-screen-recorder_Select-area_20200217212959.gif)](https://gifyu.com/image/7WcL)
 
 
 ----
 ## Histórico de Versão
+* <b>v2.5.5</b>
+    * <b>FIX:</b> </br>Resolvido bug no caixa onde não atualizava o valor de dinheiro em caixa quando fazia uma operação de receita, despesa, pacote ou pagamento sem atualizar a tela de caixa;
+
+    * <b>MUDANÇAS:</b> 
+    </br>Atualização geral no visual do programa;
+    </br>Implementação de um LOG de operações e erros durante a execução do programa;</br>
 * <b>v2.5</b>
     * <b>FIX:</b> </br>bug no caixa;
 
