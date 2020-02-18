@@ -23,7 +23,7 @@
          </font>
       </Label>
       <Pane fx:id="paneCentral" layoutX="24.0" layoutY="177.0" opacity="0.87" prefHeight="180.0" prefWidth="538.0" />
-      <GridPane layoutX="43.0" layoutY="192.0">
+      <GridPane layoutX="38.0" layoutY="192.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -148,14 +148,14 @@
       </GridPane>
       <Pane fx:id="paneCentral" layoutX="30.0" layoutY="54.0" opacity="0.87" prefHeight="110.0" prefWidth="526.0" />
       <DatePicker fx:id="dpData" disable="true" layoutX="232.0" layoutY="116.0" prefHeight="39.0" prefWidth="162.0" style="-fx-opacity: 1;" />
-      <JFXTextField fx:id="txtCliente" focusColor="WHITE" layoutX="80.0" layoutY="61.0" promptText="Nome do Cliente" />
-      <JFXTextField fx:id="txtFuncionario" focusColor="WHITE" layoutX="343.0" layoutY="62.0" promptText="Nome do Funcionário" />
-      <ImageView fitHeight="39.0" fitWidth="44.0" layoutX="38.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+      <JFXTextField fx:id="txtCliente" focusColor="WHITE" layoutX="71.0" layoutY="61.0" promptText="Nome do Cliente" />
+      <JFXTextField fx:id="txtFuncionario" focusColor="WHITE" layoutX="334.0" layoutY="62.0" promptText="Nome do Funcionário" />
+      <ImageView fitHeight="39.0" fitWidth="44.0" layoutX="29.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_businesswoman_60px.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="39.0" fitWidth="44.0" layoutX="299.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="39.0" fitWidth="44.0" layoutX="290.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../model/images/icons8_female_worker_60px_1.png" />
          </image>
@@ -167,7 +167,7 @@
       </ImageView>
       <Pane layoutX="-1.0" prefHeight="39.0" prefWidth="577.0" style="-fx-background-color: #00ff94;">
          <children>
-            <Label layoutX="238.0" layoutY="-2.0" text="Agenda" textFill="WHITE">
+            <Label layoutX="238.0" layoutY="1.0" text="Agenda" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>
@@ -175,7 +175,7 @@
             <JFXSpinner fx:id="piCarregando" layoutX="542.0" layoutY="4.0" prefHeight="30.0" prefWidth="31.0" visible="false" />
          </children>
       </Pane>
-      <JFXButton fx:id="btAgendar" layoutX="437.0" layoutY="303.0" onAction="#onBtAgendarAction" text="Agendar" textFill="WHITE">
+      <JFXButton fx:id="btAgendar" layoutX="432.0" layoutY="309.0" onAction="#onBtAgendarAction" prefHeight="35.0" prefWidth="126.0" text="Agendar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

@@ -16,7 +16,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="598.0" prefWidth="683.0" stylesheets="@css/styleViewPacote.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewPacoteController">
    <children>
-      <TabPane layoutX="-5.0" layoutY="-5.0" prefHeight="603.0" prefWidth="690.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="-6.0" layoutY="-7.0" prefHeight="605.0" prefWidth="691.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab>
               <content>
@@ -259,10 +259,10 @@
                             </Tab>
                           </tabs>
                         </TabPane>
-                        <Pane layoutX="-41.0" layoutY="277.0" prefHeight="7.0" prefWidth="112.0" style="-fx-background-color: #2c2e33; -fx-border-color: transparent transparent #939393 transparent;" />
-                        <Pane layoutX="5.0" layoutY="389.0" prefHeight="141.0" prefWidth="66.0" style="-fx-background-color: #2c2e33;">
+                        <Pane layoutX="-41.0" layoutY="277.0" prefHeight="7.0" prefWidth="119.0" style="-fx-background-color: #2c2e33; -fx-border-color: transparent transparent #939393 transparent;" />
+                        <Pane layoutY="391.0" prefHeight="141.0" prefWidth="74.0" style="-fx-background-color: #2c2e33;">
                            <children>
-                              <Pane layoutX="-282.0" layoutY="-1.0" opacity="0.57" prefHeight="116.0" prefWidth="348.0" style="-fx-border-color: #cccccc; -fx-border-style: solid solid none none;" />
+                              <Pane layoutX="-273.0" opacity="0.57" prefHeight="113.0" prefWidth="348.0" style="-fx-border-color: #cccccc; -fx-border-style: solid solid none none;" />
                            </children>
                         </Pane>
                         <Pane layoutX="1.0" prefHeight="7.0" prefWidth="112.0" style="-fx-background-color: #2c2e33; -fx-border-color: #939393  transparent transparent transparent;" />
@@ -315,7 +315,7 @@
                               <Image url="@../../model/images/icons8_box_60px_1.png" />
                            </image>
                         </ImageView>
-                        <JFXButton fx:id="btAddAssociacao" layoutX="323.0" layoutY="468.0" onAction="#onBtCriaAssociacaoAction" prefHeight="42.0" prefWidth="134.0" text="Adicionar" textFill="WHITE">
+                        <JFXButton fx:id="btAddAssociacao" layoutX="313.0" layoutY="468.0" onAction="#onBtCriaAssociacaoAction" prefHeight="42.0" prefWidth="144.0" text="Adicionar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -352,11 +352,11 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Pane layoutX="108.0" layoutY="-6.0" prefHeight="75.0" prefWidth="579.0" style="-fx-background-color: #2c2e33; -fx-border-color: transparent  transparent #939393 #939393;">
+      <Pane layoutX="107.0" layoutY="-5.0" prefHeight="75.0" prefWidth="579.0" style="-fx-background-color: #2c2e33; -fx-border-color: transparent  transparent #939393 #939393;">
          <children>
             <JFXSpinner fx:id="piStatus" layoutX="518.0" layoutY="15.0" visible="false" />
          </children>
       </Pane>
-      <Pane layoutY="68.0" prefHeight="7.0" prefWidth="112.0" style="-fx-background-color: #2c2e33; -fx-border-color: #939393  transparent transparent transparent;" />
+      <Pane layoutY="68.0" prefHeight="7.0" prefWidth="697.0" style="-fx-background-color: #2c2e33; -fx-border-color: #939393  transparent transparent transparent;" />
    </children>
 </AnchorPane>

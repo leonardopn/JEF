@@ -27,7 +27,7 @@
                </children>
             </Pane>
             <AnchorPane layoutX="293.0" layoutY="44.0" minHeight="-Infinity" minWidth="-Infinity" opacity="0.18" prefHeight="333.0" prefWidth="569.0" style="-fx-background-color: white; -fx-background-radius: 2em; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
-            <Label layoutX="314.0" layoutY="89.0" text="JEF v2.5®" textFill="WHITE">
+            <Label layoutX="314.0" layoutY="89.0" text="JEF v2.5.5®" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

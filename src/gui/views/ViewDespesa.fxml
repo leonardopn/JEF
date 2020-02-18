@@ -25,7 +25,7 @@
             <JFXSpinner fx:id="piStatus" layoutX="278.0" layoutY="2.0" prefHeight="39.0" prefWidth="38.0" visible="false" />
          </children>
       </Pane>
-      <JFXTextField fx:id="tfDescricao" focusColor="WHITE" layoutX="87.0" layoutY="84.0" promptText="Descrição da Receita" />
+      <JFXTextField fx:id="tfDescricao" focusColor="WHITE" layoutX="87.0" layoutY="84.0" prefHeight="34.0" prefWidth="195.0" promptText="Descrição da Receita" />
       <ImageView fitHeight="150.0" fitWidth="114.0" layoutX="-66.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="51.0" fitWidth="48.0" layoutX="37.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);">
          <image>
@@ -38,7 +38,7 @@
             <Image url="@../../model/images/icons8_calendar_1_60px_1.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="tfSaida" focusColor="WHITE" layoutX="88.0" layoutY="206.0" promptText="Valor da Despesa">
+      <JFXTextField fx:id="tfSaida" focusColor="WHITE" layoutX="88.0" layoutY="206.0" prefHeight="34.0" prefWidth="195.0" promptText="Valor da Despesa">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

@@ -26,7 +26,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1377.0" stylesheets="@css/styleView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ViewController">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="1287.0" style="-fx-background-color: #545E6A;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar layoutY="-2.0" prefHeight="25.0" prefWidth="1287.0" style="-fx-background-color: #545E6A;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
         <menus>
           <Menu mnemonicParsing="false" onAction="#onBtAbreSobreAction" style="-fx-background-color: WHITE;" text="Ajuda">
             <items>
@@ -35,7 +35,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <SplitPane fx:id="splitPaneCentral" dividerPositions="0.002181818181818182" layoutX="84.0" layoutY="25.0" prefHeight="671.0" prefWidth="1407.0" style="-fx-background-color: #2c2e33;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <SplitPane fx:id="splitPaneCentral" dividerPositions="0.002909090909090909" layoutX="84.0" layoutY="25.0" prefHeight="671.0" prefWidth="1407.0" style="-fx-background-color: #2c2e33;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
           <AnchorPane fx:id="apCentral" minHeight="0.0" minWidth="0.0" prefHeight="669.0" prefWidth="0.0">
                <children>
@@ -44,7 +44,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="100.0" layoutY="649.0" prefHeight="15.0" prefWidth="77.0" text="Versão 2.5" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="7.0">
+                  <Label layoutX="100.0" layoutY="649.0" prefHeight="15.0" prefWidth="77.0" text="Versão 2.5.5" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="7.0">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -313,17 +313,16 @@
                   </ScrollPane>
                   <ImageView fx:id="iVSplit" fitHeight="57.0" fitWidth="45.0" layoutX="3.0" onMouseClicked="#abreFechaSplit" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../AppData/Local/Temp/icons8_menu_60px.png" />
+                        <Image url="@../../model/images/icons8-menu-do-xbox-80.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="152.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="143.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../model/images/icons8_female_worker_48px.png" />
                      </image>
                   </ImageView>
-                  <Pane layoutY="539.0" prefHeight="131.0" prefWidth="67.0" style="-fx-background-color: #2c2e33;" />
-                  <Pane layoutY="539.0" prefHeight="121.0" prefWidth="67.0" style="-fx-border-color: #cccccc; -fx-border-style: solid solid none none;" />
-                  <Pane layoutY="484.0" prefHeight="7.0" prefWidth="67.0" rotate="180.0" style="-fx-border-color: #cccccc; -fx-border-style: solid none none none; -fx-background-color: #2c2e33;" />
+                  <Pane layoutX="-14.0" layoutY="543.0" prefHeight="131.0" prefWidth="83.0" style="-fx-background-color: #2c2e33;" />
+                  <Pane layoutX="-13.0" layoutY="484.0" prefHeight="7.0" prefWidth="83.0" rotate="180.0" style="-fx-border-color: #cccccc; -fx-border-style: solid none none none; -fx-background-color: #2c2e33;" />
                   <JFXButton fx:id="btExcluir" layoutX="873.0" layoutY="608.0" onAction="#onBtExcluirAgendamento" prefHeight="39.0" prefWidth="118.0" text="Excluir" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />

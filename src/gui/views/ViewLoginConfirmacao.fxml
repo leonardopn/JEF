@@ -14,22 +14,22 @@
    <children>
       <Pane layoutX="195.0" layoutY="15.0" opacity="0.18" prefHeight="181.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 2em; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
       <Pane layoutX="-67.0" layoutY="-76.0" prefHeight="252.0" prefWidth="232.0" rotate="-71.6" style="-fx-background-color: #545E6A; -fx-border-color: ff5b5b; -fx-border-width: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
-      <JFXTextField fx:id="tfUsuario" focusColor="WHITE" layoutX="279.0" layoutY="36.0" promptText="Nome de Usuário">
+      <JFXTextField fx:id="tfUsuario" focusColor="WHITE" layoutX="264.0" layoutY="36.0" promptText="Nome de Usuário">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </JFXTextField>
-      <ImageView fitHeight="39.0" fitWidth="58.0" layoutX="231.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+      <ImageView fitHeight="39.0" fitWidth="58.0" layoutX="216.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
          <image>
             <Image url="@../../model/images/icons8_businesswoman_60px.png" />
          </image>
       </ImageView>
-      <JFXPasswordField fx:id="pfSenha" focusColor="WHITE" layoutX="281.0" layoutY="88.0" promptText="Senha de Usuário">
+      <JFXPasswordField fx:id="pfSenha" focusColor="WHITE" layoutX="266.0" layoutY="88.0" promptText="Senha de Usuário">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </JFXPasswordField>
-      <ImageView fitHeight="39.0" fitWidth="58.0" layoutX="231.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+      <ImageView fitHeight="39.0" fitWidth="58.0" layoutX="216.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
          <image>
             <Image url="@../../model/images/icons8_password_60px_1.png" />
          </image>
@@ -51,7 +51,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXTextField fx:id="tfSenhaVisivel" focusColor="WHITE" layoutX="280.0" layoutY="88.0" visible="false">
+      <JFXTextField fx:id="tfSenhaVisivel" focusColor="WHITE" layoutX="265.0" layoutY="88.0" prefHeight="34.0" prefWidth="214.0" visible="false">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
