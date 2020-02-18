@@ -122,6 +122,7 @@ public class ViewSalarioController implements Initializable {
 		List<String> listMetPag = Arrays.asList("Dinheiro", "Cartão");
 		ObservableList<String> obFormaPagamento = FXCollections.observableArrayList(listMetPag);
 		cbFormaPagamento.setItems(obFormaPagamento);
+		cbFormaPagamento.setValue(obFormaPagamento.get(0));
 	}
 
 	@Override

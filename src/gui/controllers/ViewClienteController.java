@@ -505,12 +505,12 @@ public class ViewClienteController implements Initializable {
                 }
                 else {
                 	if(tabTabela.isSelected()) {
-                		ViewController.getStageCliente().setWidth(885.0);
+                		ViewController.getStageCliente().setWidth(880.0);
                     	ViewController.getStageCliente().setHeight(690.0);
                     	ViewController.getStageCliente().centerOnScreen();
                 	}
                 	else {
-                		ViewController.getStageCliente().setWidth(885.0);
+                		ViewController.getStageCliente().setWidth(880.0);
                     	ViewController.getStageCliente().setHeight(730.0);
                     	ViewController.getStageCliente().centerOnScreen();
                 	}

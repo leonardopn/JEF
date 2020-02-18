@@ -360,7 +360,7 @@ public class ViewController implements Initializable {
 				retornaInformacaoAgenda();
 				Parent fxmlCliente = FXMLLoader.load(getClass().getResource("/gui/views/ViewCliente.fxml"));
 				cliente = new Scene(fxmlCliente);
-				stageCliente.setWidth(885);
+				stageCliente.setWidth(880);
 				stageCliente.setHeight(695);
 				stageCliente.setScene(cliente);
 				stageCliente.show();
