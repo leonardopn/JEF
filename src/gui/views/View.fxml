@@ -193,7 +193,7 @@
                                        <children>
                                           <Label fx:id="labelStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="150.0" textAlignment="CENTER" textFill="WHITE" visible="false" GridPane.rowIndex="1">
                                              <font>
-                                                <Font name="System Bold" size="12.0" />
+                                                <Font name="System Bold" size="10.0" />
                                              </font></Label>
                                           <JFXSpinner fx:id="pb" />
                                        </children>
